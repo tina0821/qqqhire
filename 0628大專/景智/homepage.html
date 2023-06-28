@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 頁面重置CSS -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <!-- 首頁CSS -->
+    <link rel="stylesheet" href="./css/homepage.css">
+
+    <!-- 首頁JS -->
+    <script src="./js/homepage.js"></script>
+
+    <!-- icon CDN 連結 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- 標題列 -->
+    <!-- 計畫:左邊LOGO 最右邊三個按鈕 接三個icon 依序是愛心/購物車/會員 -->
+    <!-- 目前預設 字體3vw 會根據寬度變化較不會跑版-->
+    <header class="header">
+        <!-- LOGO -->
+        <div class="header-logo">
+            <!-- LOGO超連結? -->
+            <a href="">
+                <!-- LOGO 用圖片還是文字? -->
+                LOGO
+                <!-- <img src=""> -->
+            </a>
+        </div>
+
+        <!-- 右邊按鈕/icon -->
+        <div class="header-button-icon">
+
+            <!-- 按鈕 -->
+            <ul class="header-button">
+                <li><a button class="btn-98" href="">租借列表</a></li>
+                <li><a button class="btn-98" href="">快速上架</a></li>
+                <li><a button class="btn-98" href="">關於我們</a></li>
+            </ul>
+
+            <!-- icon -->
+            <ul class="header-icon">
+                <li><a href=""><i class="fa-regular fa-heart"></i></a></li>
+                <li><a href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li><a href=""><i class="fa-regular fa-circle-user"></i></i></a></li>
+
+                <!-- 測試icon變化 -->
+                <!-- 目前icon圖案太粗 要設定細框需要再找問題 -->
+                <!-- <li><i class="fa-thin fa-cart-shopping" style="color: #ffffff;" aria-hidden="true"></i></li> -->
+
+            </ul>
+        </div>
+    </header>
+
+    <!-- 主頁畫面 -->
+    <!-- 目前預計先上大圖在思考畫面配置跟JS特效 -->
+    <div class="outdoor">
+        <img src="./img/homepage/surf1.jpg" alt="">
+        <div class="outdoor-word">
+            <p>Hire outdoor</p>
+            <br>
+            <p>海爾戶外</p>
+        </div>
+        <img src="./img/AAA.svg" class="btn-101">
+    </div>
+
+    <!-- 主頁畫面2 -->
+    <!-- 一個背景圖片 模糊處理 中間一個大區塊 分割左右兩側功能 -->
+    <div class="outdoor2 blur">
+        
+            <div class="outdoor2box1">
+                <img src="./img/returnImage/diver-woman-resting.jpg" alt="">
+                <a href="" class="more1"><p>more1</p></a>
+            </div>
+            <div class="outdoor2box2">
+                <img src="./img/returnImage/beach-g7b0bf9194_1280.jpg" alt="">
+                <a href=""><p>more2</p></a>
+            </div>
+        
+    </div>
+
+    
+    <!-- 主頁畫面3 -->
+    <div class="outdoor3">
+        <div class="outdoor3box4">
+            <div class="outdoor3box1">
+                <p>當季熱門活動</p>
+            </div>
+            <div class="outdoor3box2">
+                <!-- <a href="" class="hotActivity A1"><p class="B1">hahaha</p><img src="./img/hotActivity/climbing直的.jpg" alt=""></a> -->
+                <div href="" class="hotActivity A1">
+
+                    <img src="./img/hotActivity/climbing直的.jpg" alt="">
+                    <div class="hotActivityWord">
+                        <a href="" class="B1">MORE</a>
+                    </div>
+
+                </div>
+
+                <a href="" class="hotActivity A2">
+                    <p class="B1">hahaha</p><img src="./img/hotActivity/bicycle.jpg" alt="">
+                </a>
+                <a href="" class="hotActivity A3">
+                    <p class="B1">hahaha</p><img src="./img/hotActivity/surf2.jpg" alt="">
+                </a>
+                <a href="" class="hotActivity A4">
+                    <p class="B1">hahaha</p><img src="./img/hotActivity/fishing3.jpg" alt="">
+                </a>
+                <a href="" class="hotActivity A5">
+                    <p class="B1">hahaha</p><img src="./img/hotActivity/photography直得.jpg" alt="">
+                </a>
+            </div>
+        </div>
+
+        <div class="outdoor3box3">
+            <div class="outdoor3box3-a">
+                <p>熱門出租</p>
+                <a href="" class="btn-99">潛水服</a>
+                <a href="" class="btn-99">衝浪板</a>
+                <a href="" class="btn-99">滑雪板</a>
+            </div>
+
+            <!-- Slideshow container -->
+            <div class="slideshow-container">
+
+                <!-- Full-width images with number and caption text -->
+                <div class="mySlides fade">
+                    <img src="./img/returnImage/beach-g7b0bf9194_1280.jpg">
+                </div>
+                <div class="mySlides fade">
+                    <img src="./img/returnImage/wallpaperflare.com_wallpaper (2).jpg">
+                </div>
+                <div class="mySlides fade">
+                    <img src="./img/returnImage/diver-woman-resting.jpg">
+                </div>
+                <div class="mySlides fade">
+                    <img src="./img/returnImage/e5b081e99da2.webp">
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!-- 主頁畫面4:關於我們 -->
+    <div class="outdoor4">
+        <img src="./img/returnImage/e5b081e99da2.webp" alt="">
+        <img src="./img/AAA.svg" class="btn-100">
+    </div>
+
+    <footer class="footer-1">
+
+        <div class="footer-3">
+            <p>LOGO</p>
+            <P>Social media validation business model canvas graphical user interface launch party creative facebook
+                iPad twitter.</P>
+            <p>All rights reserved.</p>
+        </div>
+
+        <div class="footer-4">
+
+            <p class="C1">Landings</p>
+            <a href="" class="C2">Home</a>
+            <a href="" class="C3">Porduct</a>
+            <a href="" class="C4">Services</a>
+            <p class="C5">Company</p>
+            <a href="" class="C6">IG</a>
+            <a href="" class="C7">FB</a>
+            <a href="" class="C8">YT</a>
+            <p class="C9">Resources</p>
+            <a href="" class="C10">Blog</a>
+            <a href="" class="C11">Careers</a>
+            <a href="" class="C12">Phone</a>
+
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>

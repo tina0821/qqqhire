@@ -1,0 +1,178 @@
+<!DOCTYPE html>product
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>租借列表</title>
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap-grid.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../css/product.css">
+
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
+
+
+  <!-- 分頁 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.4/jquery.simplePagination.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.4/simplePagination.css">
+
+
+
+
+</head>
+
+<body>
+  <div class="navbar"></div>
+  <div class="category-section">
+
+    <div class="category-section-title">
+      <form id="search-form">
+        <div class="form-group">
+          <!-- <label for="category-select">主類:</label> -->
+          <select class="form-control" id="category-select">
+            <option value="">類別</option>
+            <option value="camping">露營用品</option>
+            <option value="mountain">登山用品</option>
+            <option value="waterSports">水上活動用品</option>
+            <option value="cycling">自行車及單車旅行用品</option>
+            <option value="skiing">滑雪用品</option>
+            <option value="diving">潛水用品</option>
+            <option value="sportsLeisure">運動休閒用品</option>
+            <option value="photography">攝影器材</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <!-- <label for="sub-category-select">分類:</label> -->
+          <select class="form-control" id="sub-category-select">
+            <option value="">小類</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <!-- <label for="location-select">地區:</label> -->
+          <select class="form-control" id="location-select">
+            <option value="">選擇縣市</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <!-- <label for="location-area-select">區域:</label> -->
+          <select class="form-control" id="location-area-select">
+            <option value="">選擇區域</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <!-- <label for="keyW">關鍵字:</label> -->
+          <input type="text" id="keyW" placeholder="關鍵字">
+        </div>
+        <button type="submit" id="search-button "><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+  </div>
+  <div class="container">
+
+    <div class="product">
+      <aside>
+        <div class="filterMenu">
+          <div class="filter-title">篩選</div>
+          <div class="filter-body">
+            <div class="filter-group">
+              <p>租借金額篩選</p>
+              <div class="filter-option">
+                <div>
+                  <input class="money" type="text" placeholder="  $  最低金額">
+                </div>
+              </div>
+              <div class="filter-option">
+                <div>
+                  <input class="money" type="text" placeholder="  $  最高金額">
+                </div>
+              </div>
+            </div>
+            <div class="filter-group">
+              <p>出租狀態</p>
+              <div class="filter-option">
+                <input type="checkbox" id="rental-checkbox">
+                <label for="rental-checkbox">租借中</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="nottuzu">
+                <label for="nottuzu">未出租</label>
+              </div>
+            </div>
+            <div class="filter-group">
+              <p>運送方式</p>
+              <div class="filter-option">
+                <input type="checkbox" id="7-11">
+                <label for="7-11">7-11</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="raifu">
+                <label for="raifu">萊爾富</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="okmarket">
+                <label for="okmarket">OK超商</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="delivery">
+                <label for="delivery">宅配/快遞</label>
+              </div>
+            </div>
+          </div>
+          <div class="filter-footer">
+            <button>清空所有條件</button>
+            <button>開始篩選</button>
+          </div>
+        </div>
+      </aside>
+      <div class="rental">
+        <div class="rental-title">
+          <span>排序</span>
+          <ul class="sort-group">
+            <li class="sort-item"><a href="#">熱門度</a></li>
+            <li class="sort-item"><a href="#">租金</a></li>
+            <li class="sort-item"><a href="#">最新上架</a></li>
+            <li class="sort-item"><a href="#">賣場評價</a></li>
+          </ul>
+        </div>
+        <div class="rental-body">
+          <div class="row rental-goods" id="list-wrapper">
+            <div class="col-md-4 rental-goods-group list-item">
+              <div class="card">
+                <div class="card-img">
+                  <img src="https://gcs.rimg.com.tw/g4/8f4/345/foxuyirte/1/52/b3/22323890303667_734_m.jpg"
+                    class="card-img-top" alt="Product 1">
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">SUP槳板 站立式充氣漿板</h4>
+                  <div class="card-text2">
+                    <span>台中市</span>
+                    <span>南屯區</span>
+                    <span></span>
+                    <span>可出租</span>
+                  </div>
+                  <p class="card-text">$400/日</p>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+          <div id="pagination-container"></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../js/product.js"></script>
+</body>
+
+</html>

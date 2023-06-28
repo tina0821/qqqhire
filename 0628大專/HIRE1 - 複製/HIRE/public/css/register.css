@@ -1,0 +1,111 @@
+:root {
+  --fontsize: 1.75rem;
+  --color: #ffff
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-image: url('istockphoto-495508534-612x612.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.box_1 {
+  /* width: 80vw; */
+  height: 80vh;
+  /* border: #007bff2d 1px solid; */
+  display: flex;
+  /* background-color: #ff9500f5; */
+  border-radius: 30px;
+  font-size: var(--fontsize-bg);
+}
+
+
+.title_1 {
+  font-size: 2rem;
+  color: #fff;
+  font-weight: bold;
+}
+
+form {
+  width: 40vw;
+  height: 80vh;
+  /* margin: 50px 40px; */
+  /* background-color: rgba(250, 250, 250, 0.616); */
+  padding: 20px;
+  /* border-radius: 30px; */
+
+  border-radius: 19px;
+  background: linear-gradient(145deg, #08394e, #08394ead);
+  box-shadow: 32px 32px 64px #93a5b0,
+    -32px -32px 64px #d7f3ff;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+  font-size: var(--fontsize);
+  color: var(--color);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="tel"],
+input[type="email"] {
+  width: 70%;
+  padding: 10px;
+  margin-bottom: 15px;
+  /* border: 1px solid #ccc; */
+  /* border-radius: 4px; */
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"] {
+  width: 80%;
+
+}
+
+.navigation-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation-buttons button {
+  background-color: #333;
+}
+
+.google-login-box {
+  padding: 10px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.google-login-box button {
+  background-color: #dd4b39;
+}
+
+#page2 {
+  display: none;
+}
+span{
+  color: white;
+}

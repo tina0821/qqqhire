@@ -1,0 +1,712 @@
+/* --- header --- */
+.header {
+    /* background-color:transparent; */
+    margin: 0px;
+    width: 100%;
+    height: 90px;
+    /* height: 200%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 100;
+}
+
+.header ul {
+    display: flex;
+    list-style: none;
+    /* height: 100%;    */
+    /* width: 100%; */
+}
+
+.header-button-icon ul li a {
+    text-decoration: none;
+    color: rgb(254, 254, 254);
+    /* color: #000; */
+    /* padding: 10px; */
+    display: block;
+    /* font-size: 3vw; */
+    font-size: 2rem;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+
+
+/* header JS效果 */
+.header a {
+    transition: 0.5s;
+}
+
+/* 第一組CSS特效 */
+.changeColor {
+    color: #000 !important;
+}
+
+/* 第二組CSS hover特效 */
+.changeColor-hover:hover {
+    color: #14B09B !important;
+}
+
+
+/* ------------------------ */
+
+/* --- 標題列 選項 --- */
+.header-button-icon {
+    /* border: 2px solid blue; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end
+}
+
+
+
+/* 標題列 選單 縮放 */
+/* @media (max-width:768px), print{
+    .header-button-icon{
+        display: none;
+    }
+} */
+
+/* ------------------------ */
+
+/* --- 標題列 logo --- */
+/* 原始圖片 400*130 */
+.header-logo {
+    /* border: 2px solid red; */
+    /* width: 200px; */
+    /* height: 60px; */
+    /* padding: 5px; */
+    display: flex;
+    margin-left: 10px;
+}
+
+/* .header-logo img { */
+/* border: 2px solid yellow; */
+/* width: 200px; */
+/* height: 60px; */
+/* } */
+
+.header-logo a {
+    text-decoration: none;
+    /* font-size: 3vw; */
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+
+/* 標題列按鈕特效 */
+.btn-98 {
+    font-size: 60px;
+    display: block;
+    position: relative;
+    line-height: 40px;
+
+    &::before {
+        content: "";
+        display: block;
+        border-bottom: 3px solid;
+        /* background-color: white; */
+        position: absolute;
+        height: 3px;
+        bottom: 0;
+        right: 0;
+        width: 0;
+        z-index: -1;
+        transition: width 0.5s;
+    }
+
+    &:hover {
+        &::before {
+            width: 100%;
+            left: 0;
+            transition: width position 0.5s;
+        }
+    }
+}
+
+/* -------------------------- */
+
+
+/* ==================== 主頁頁面配置 ================= */
+
+/* outdoor 照片設定 */
+.outdoor {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.outdoor img {
+    width: 100%;
+    /* height: 100%; */
+    /* border: 5px solid yellow; */
+}
+
+/* --- outdoor 文字設定 --- */
+.outdoor-word {
+    /* border: 2px red solid; */
+    position: absolute;
+    top: 35%;
+    left: 4%;
+}
+
+.outdoor-word :first-child {
+    font-size: 4vw;
+    color: rgba(252, 252, 252, 0.779);
+
+}
+
+.outdoor-word :last-child {
+    font-size: 2vw;
+    color: aliceblue;
+}
+
+/* 主頁第一頁中間按鈕 */
+.btn-101 {
+    height: 10rem;
+    width: 10rem;
+    position: absolute;
+    top: 65%;
+    overflow:hidden;
+}
+
+
+
+
+/* ================ 主頁頁面2配置 =============== */
+/* outdoor2 照片設定 */
+.outdoor2 {
+    
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #14B09B;
+    width: 100%;
+    height: 600px;
+   
+}
+
+.blur .outdoor2box1 img {
+    width: 100%;
+    filter: brightness(80%) blur(2px);
+    transition: 1.5s;
+}
+.blur .outdoor2box2 img {
+    width: 100%;
+    filter: brightness(80%) blur(2px);
+    transition: 1.5s;
+}
+
+    /* 負片效果 */
+    /* filter:invert(40%) */
+    /* 亮度效果 */
+    /* filter:brightness(40%); */
+    /* 模糊效果(邊緣) */
+    /* filter: blur(2px); */
+    /* 透明度 */
+    /* filter: opacity(80%); */
+    /* 影像對比度 */
+    /* filter: contrast(60%); */
+    /* 復古 */
+    /* filter:sepia(0.4); */
+
+.outdoor2box1 {
+    /* border: 2px solid red; */
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    transform: translate(-50%,-50%);
+    transition: all 1.5s ease .3s;
+}
+
+.outdoor2box2 {
+    /* border: 2px solid red; */
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%);
+    transform: translate(-50%,-50%);
+    transition: all 1.5s ease .3s;
+}
+
+.outdoor2box1:hover{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 1;
+}
+.outdoor2box2:hover{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 1;
+}
+
+.outdoor2box1 img:hover{
+    filter: brightness(100%) blur(0);
+    transition: 1.5s
+}
+.outdoor2box2 img:hover{
+    filter: brightness(100%) blur(0);
+    transition: 1.5s
+}
+
+/* outdoor2顏色框設定 */
+/* --- outdoor2 文字設定 --- */
+
+/* more1 */
+.outdoor2box1 p {
+    font-size: 4vw;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    top: 25%;
+    left: 15%;
+    /* z-index: 1; */
+    /* border: 2px solid red; */
+}
+
+/* more2 */
+.outdoor2box2 p {
+    font-size: 4vw;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    top: 65%;
+    left: 68%;
+}
+
+
+/* ======================= 主頁頁面3配置 ==================== */
+.outdoor3 {
+    /* border: 4px solid blue; */
+    /* margin: 10px; */
+    padding: 20px;
+    position: relative;
+    width: 100%;
+    height: 900px;
+}
+
+/* 當季熱門活動 */
+.outdoor3box1 {
+    border-left: 2px solid #14B09B;
+    color: #14B09B;
+    font-size: 2rem;
+    padding-left: 10px;
+    margin-left: 50px;
+    margin-top: 5vh;
+}
+
+/* 圖片區域 */
+.outdoor3box2 {
+    /* border: 2px solid red; */
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    /* position: relative; */
+
+    /* 邊框設定 */
+    gap: 10px;
+    margin-top: 30px;
+
+    /* grid-template-areas:
+    "A B E"
+    "A C E"
+    "A D E" */
+}
+
+.B1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+
+}
+
+.hotActivity {
+    position: relative;
+}
+
+.hotActivityWord a {
+    /* width: 100%; */
+    /* background-color: #ffffff75; */
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.A1 {
+    /* grid-area: A;    */
+    grid-row: 1 / span 3;
+}
+
+/* .A2{
+    grid-area: B;
+}
+.A3{
+    grid-area: C;
+}
+.A4{
+    grid-area: D;
+} */
+.A5 {
+    /* grid-area: E; */
+    /* 第三排做為開始 */
+    grid-column-start: 3;
+    grid-row: 1 / span 3;
+}
+
+.A1 img {
+    height: 100%;
+    width: 100%;
+}
+
+.A2 img {
+    height: 100%;
+    width: 100%;
+}
+
+.A3 img {
+    height: 100%;
+    width: 100%;
+}
+
+.A4 img {
+    height: 100%;
+    width: 100%;
+}
+
+.A5 img {
+    height: 100%;
+    width: 100%;
+}
+
+/* .A1 img:hover {
+    opacity: 0.5;
+}
+.A2 img:hover {}
+
+.A3 img:hover {}
+
+.A4 img:hover {}
+
+.A4 img:hover {}
+
+.A5 img:hover {} */
+
+/* .outdoor3box2 a img {
+    border: 2px solid blue;
+    margin: 10px;
+    padding: 10px;
+} */
+
+/* 熱門出租 */
+.outdoor3box3 {
+    background-color: #14B09B;
+    border-radius: 15px;
+    position: absolute;
+    top: 11%;
+    left: 60%;
+    width: 30%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.outdoor3box3-a {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.outdoor3box3 a {
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    text-decoration: none;
+    margin-top: 30px;
+}
+
+.outdoor3box3 p {
+    color: #14B09B;
+    font-size: 2rem;
+    height: 3rem;
+    width: 25vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+
+/* 熱門出租a標籤特效 */
+.btn-99:hover {
+    color: #000;
+    transition: 0.8s;
+}
+
+/* 當季熱門/圖片 區域 */
+.outdoor3box4 {
+    /* border: 2px solid yellow; */
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 5%;
+    left: 5%;
+}
+
+
+/* 輪播測試 */
+/* Slideshow container */
+.slideshow-container {
+    /* border: 2px solid red; */
+    width: 100%;
+}
+
+.slideshow-container img {
+    width: 80%;
+    height: 25vh;
+    padding-left: 10%;
+    /* height: 50vh; */
+
+}
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0.2
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+/*  ======================== 主頁畫面4:關於我們 ===================== */
+.outdoor4 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.outdoor4 img {
+    /* border: #000 2px solid; */
+    border-radius: 30px;
+    width: 90%;
+}
+
+.btn-100 {
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    color: black;
+    font-size: 2rem;
+    position: absolute;
+    top: 60%;
+
+}
+
+/* 熱門當季活動 圖片特效 */
+/* ================================== */
+
+/* 測試 版本一 */
+/* .outdoor3box2 .hotActivityWord {
+    position: absolute;
+    bottom: 0%;
+    background-color: antiquewhite;
+    width: 100%;
+    height: 0%;
+    color: #14b09b00;
+    transition: 1s;
+    opacity: 0;
+}
+
+.hotActivity:hover .hotActivityWord {
+    color: #f1fffdfe;
+    height: 25%;
+    background-color: #14B09B;
+    opacity: 0.7;
+} */
+
+
+
+/* 測試 版本二 */
+.hotActivity:hover>img {
+    opacity: .8;
+    
+}
+
+.hotActivityWord:hover>a {
+    
+    transform: translate(-50%,-70%);
+    opacity: 1;
+}
+
+/* .hotActivityword img {
+    pointer-events: none;
+} */
+
+.hotActivityWord>a {
+    /* border: 2px solid red; */
+    
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    align-items:end;
+    justify-content:center;
+
+    /* text-align: center; */
+    
+    font-size: 2rem;
+    color:rgb(0, 0, 0);
+    transform:translate(-50%,-50%);
+    opacity: 0;
+    transition: transform 1s, opacity .5s;
+}
+
+
+
+
+/* ===================================== */
+
+
+
+
+/* footer 設定 */
+.footer-1 {
+    /* border: 2px solid black; */
+    background-color: #14B09B;
+    display: flex;
+    margin-top: 20%;
+}
+
+/* footer 右邊連結設定 */
+.footer-4 {
+    /* border: 2px solid red; */
+    width: 50%;
+    display: grid;
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+
+
+    grid-template-areas:
+        "C1 C5 C9"
+        "C2 C6 C10"
+        "C3 C7 C11"
+        "C4 C8 C12"
+}
+
+.C1 {
+    grid-area: C1;
+}
+
+.C2 {
+    grid-area: C2;
+}
+
+.C3 {
+    grid-area: C3;
+}
+
+.C4 {
+    grid-area: C4;
+}
+
+.C5 {
+    grid-area: C5;
+}
+
+.C6 {
+    grid-area: C6;
+}
+
+.C7 {
+    grid-area: C7;
+}
+
+.C8 {
+    grid-area: C8;
+}
+
+.C9 {
+    grid-area: C9;
+}
+
+.C10 {
+    grid-area: C10;
+}
+
+.C11 {
+    grid-area: C11;
+}
+
+.C12 {
+    grid-area: C12;
+}
+
+
+/* footer 右邊連結設定 */
+.footer-4 a {
+    color: rgba(255, 255, 255, 0.774);
+    text-decoration: none;
+    font-size: 1.5rem;
+    margin: 10px;
+}
+
+.footer-4 a:hover {
+    color: #000000b4;
+    transition: 1s;
+}
+
+.footer-4 p {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+/* footer 左邊設定 */
+.footer-3 {
+    /* border: 2px solid blue; */
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: center */
+}
+
+.footer-3 p {
+    /* font-size: 1.5rem; */
+    color: white;
+}
+
+.footer-3 p:nth-child(1){
+    font-size: 2rem;
+}
+.footer-3 p:nth-child(2){
+    font-size: 1rem;
+    line-height:20px;
+}
+.footer-3 p:nth-child(3){
+    font-size: 1.2rem;
+}

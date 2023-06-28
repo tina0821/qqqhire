@@ -1,0 +1,128 @@
+.BBB{
+    border: 2px solid red;
+    position: relative;
+    width: 100%;
+    height: 600px;
+    /* padding: 20px; */
+    
+
+}
+
+.CCC{
+    border: 2px solid blue;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    background-image: url(./images/outdoor露營車.jpg);
+    background-size:cover;
+    background-repeat:no-repeat ;
+    transition: 1s;
+    
+    /* z-index: 100; */
+    /* background-position: 20% 0; */
+}
+
+.DDD{
+    border: 2px solid yellow;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%);
+    background-image: url(./images/surfer2.jpg);
+    background-size:cover;
+    background-repeat:no-repeat ;
+    transition: 1s;
+
+    /* z-index: 100; */
+    
+}
+
+/* .BBB:has(.CCC:hover) .DDD {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    filter:sepia(0.6);
+    transition: 1s;
+} */
+
+/* .BBB:has(.DDD:hover) .CCC {
+    opacity: 0.8;
+    transition: 1s;
+} */
+
+
+
+.CCC:hover{
+    /* clip-path: polygon(60% 0, 100% 0, 100% 100%, 40% 100%); */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    filter:sepia(0.4);
+    transition: 1s;
+    z-index: 1;
+}
+
+.DDD:hover{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    filter:sepia(0.4);
+    transition: 1s;
+    z-index: 1;
+}
+
+/* ---------------------------------------------------- */
+
+
+.photo1{
+    position: absolute;
+    width: 100%;
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    transition: all 1.5s ease .3s;
+    
+}
+
+
+.photo2{
+    position: absolute;
+    width: 100%;
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%);
+    transition: all 1.5s ease .3s;
+    
+}
+
+
+.photo1:hover {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 1;
+}
+.photo2:hover {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: 1;
+}
+
+.word{
+    position: absolute;
+    color:black;
+    font-size: 40px;
+    z-index: 100;
+    /* border: 2px solid red; */
+    top: 25%;
+    left: 25%;
+    transform: translate(-50%,-50%);
+    /* opacity: .5; */
+    transition:opacity .5s ease-in;
+}
+
+
+.word:hover:before{
+    border-top: 1px solid rgb(0, 0, 0);
+    border-bottom: 1px solid rgb(0, 0, 0);
+    transform: scale(1,1);
+    /* z-index: 10;   */
+
+}
+
+
+.word:hover:after{
+    border-right: 1px solid rgb(0, 0, 0);
+    border-left: 1px solid rgb(0, 0, 0);
+    transform: scale(1,1);   
+    /* z-index: 10; */
+}
+

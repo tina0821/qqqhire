@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            width: 100%;
+        }
+
+        .container {
+            width: 800px;
+            height: 300px;
+            position: relative;
+        }
+
+        .first,
+        .second {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: clip-path 1.5s;
+        }
+
+        .first {
+            clip-path: polygon(80% 0, 100% 0, 100% 100%, 20% 100%);
+        }
+
+        .first:hover {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            z-index: 1;
+        }
+
+        .second {
+            clip-path: polygon(0 0, 80% 0, 20% 100%, 0 100%);
+        }
+
+        .second:hover {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            z-index: 1;
+        }
+
+        .text{
+            position: absolute;
+            font-size: 50px;
+            top: 50%;
+            left: 80%;
+            color: #000;
+          
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="first">
+            <p class="text">313515</p>
+            <img src='https://picsum.photos/300/200?ramdom=10'>
+        </div>
+        <div class="second">
+            <img src='https://picsum.photos/300/200?ramdom=20'>
+        </div>
+    </div>
+    <script>
+        const first = document.getElementsByClassName("first");
+        // const second = document.getElementsByClassName("second");
+        first[0].addEventListener('mouseout', function () {
+            // console.log(first);
+            this.style.zIndex = 1;
+            setTimeout(() => {
+                this.style.zIndex = "";
+            }, 1500);
+        });
+    </script>
+</body>
+
+</html>

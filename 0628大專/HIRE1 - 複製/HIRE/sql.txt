@@ -1,0 +1,9 @@
+SELECT id, pokename, pokeimage, memo, pokedate FROM pokemon WHERE 1;
+
+SELECT * FROM pokemon WHERE 1
+
+INSERT INTO pokemon(id, pokename, pokeimage, memo, pokedate) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]');
+
+INSERT INTO pokemon(pokename) VALUES ('爆鯉龍');
+
+SELECT * FROM 資料表 limit 0 , 10
