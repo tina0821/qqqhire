@@ -9,7 +9,7 @@ class ShopingCart extends Component {
         {this.props.data.map((item,index) => {
           return (
             <div key={item.productAccount}>
-              <div className="d-flex ps-2 pe-5 align-items-center">
+              <div className="gridActive align-items-center">
                 <input
                   className="imgActive"
                   type="checkbox"
@@ -29,12 +29,11 @@ class ShopingCart extends Component {
                 <div className="ps-5">聯絡賣家</div>
               </div>
               <div className="likeHr d-flex" ></div>
-              <div className="gridActive justify-content-between align-items-center ps-2 pe-5 pt-3 pb-3 align-item[i]s-center cartFontSize" >
+              <div className="gridActive pt-3 pb-3 cartFontSize" >
               <div>勾選</div>
               <div>圖片</div>
               <div>商品名稱</div>
-              <div>租借日期</div>
-              <div>歸還日期</div>
+              <div>日期</div>
               <div>天數</div>
               <div>租金/天</div>
               <div>押金</div>

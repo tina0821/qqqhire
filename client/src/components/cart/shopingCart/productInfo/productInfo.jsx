@@ -8,9 +8,7 @@ class ProductInfo extends Component {
         {this.props.data.map((item, index) => {
           return (
             <React.Fragment key={item.cMID}>
-              <div               
-                className="gridActive justify-content-between align-items-center ps-2 pe-5 pt-3 pb-3 cartFontSize"
-              >
+              <div className="gridActive pt-3 pb-3 cartFontSize">
                 <input
                   type="checkbox"
                   className="imgActive"
@@ -25,19 +23,30 @@ class ProductInfo extends Component {
                     );
                   }}
                 />
-                <img
-                  className="img100"
-                  src={item.images}
-                  alt="aa"
-                />
+                <div className="d-flex justify-content-center">
+                  <img className="img100" src={item.images} alt="aa" />
+                </div>
                 <div>{item.productName}</div>
-                <div className="dateFontSize">{item.rentStart}</div>
-                <div className="dateFontSize">{item.rentEnd}</div>
+                <div className="dateFontSize">
+                  {item.rentStart}
+                  <br />~{item.rentEnd}
+                </div>
                 <div>{item.day}</div>
                 <div>{item.rent}</div>
                 <div>{item.deposit}</div>
                 <div>{item.total}</div>
-                <Button className="" type="primary" size="large" danger={true} onClick={(a)=>{this.props.deleteItem(a)}} >X</Button>
+                <Button
+                  type="primary"
+                  shape="round"
+                  size="large"
+                  danger={true}
+                  onClick={(a) => {
+                    this.props.deleteItem(a);
+                  }}
+                  style={{borderRadius:'50px',width:'50px',height:'50px'}}
+                >
+                  X
+                </Button>
               </div>
             </React.Fragment>
           );

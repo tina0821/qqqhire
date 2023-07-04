@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { ConfigProvider } from "antd";
 import { Button, message, Steps } from "antd";
+import {onLogin,checkLogin,logOut} from '../cookie/cookie'
 
 // import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ShopingCart from "./shopingCart/index";
 import "dayjs/locale/zh-cn";
 import zhCN from "antd/locale/zh_TW";
+import DeletePrompt from "./shopingCart/productInfo/deletePrompt/deletePrompt";
 import './css/css.css'
 
 Object.prototype.isComplete=0
+
 class Cart extends Component {
   state = {
     date: undefined,
@@ -104,7 +107,6 @@ class Cart extends Component {
         isComplete: 1,
       },
     ],
-    new:0
   };
 
   render() {
@@ -145,6 +147,7 @@ class Cart extends Component {
                   結帳
                 </Button>
               )}
+              <DeletePrompt/>
             </div>
           </div>
           <div className="d-none">sss</div>
