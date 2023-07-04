@@ -22,6 +22,7 @@ const App = () => {
   return (
     <>
       <Router>
+        
         <div className='d-flex'>
         <Link className='m-3' to="/">Home</Link> <br />
         <Link className='m-3' to="/product">product</Link><br/>
