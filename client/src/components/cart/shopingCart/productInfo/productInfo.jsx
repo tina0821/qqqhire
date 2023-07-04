@@ -38,6 +38,7 @@ class ProductInfo extends Component {
                 <Button
                   type="primary"
                   shape="round"
+                  value={item.cMID}
                   size="large"
                   danger={true}
                   onClick={(a) => {

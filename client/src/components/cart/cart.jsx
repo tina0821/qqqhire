@@ -107,6 +107,7 @@ class Cart extends Component {
         isComplete: 1,
       },
     ],
+    show:0
   };
 
   render() {
@@ -147,11 +148,10 @@ class Cart extends Component {
                   結帳
                 </Button>
               )}
-              <DeletePrompt/>
             </div>
           </div>
-          <div className="d-none">sss</div>
         </ConfigProvider>
+        <DeletePrompt show={this.state.show}/> 
       </React.Fragment>
     );
   }
@@ -212,7 +212,10 @@ class Cart extends Component {
   };
   
   deleteItem = (e) =>{
-    console.log(e.value)
+    console.log(e.target.value)
+    let newstate = { ...this.state };
+    newstate.show=1
+    this.setState(newstate)
   }
 }
 
