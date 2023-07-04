@@ -9,7 +9,8 @@ var app=express();
 app.use(urlencoded);
 app.use('/img',express.static('public/img'))
 app.get('/',function(req,res){
-    let a = sha1('simon'+'#$hgN/><?a');
+    let a = sha1('1234','kjdsfkjds');
+    ['$','#',]
     res.send(a);
 });
 app.get('/cart',function(req,res){
