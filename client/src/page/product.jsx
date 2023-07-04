@@ -5,6 +5,7 @@ import ProductCard from '../components/product/productCard';
 import ProductSort from '../components/product/productSort';
 import './product.scss';
 
+
 function Product() {
   return (
     <>

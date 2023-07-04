@@ -6,6 +6,10 @@ import 'jquery/dist/jquery'
 import 'jquery-ui/dist/jquery-ui'
 import 'jquery-ui-css/jquery-ui'
 
+import ReactDOM from 'react-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+
 // 其他引入的組件
 // import Home from './page/Home';
 // import About from './page/About';
@@ -16,20 +20,20 @@ import RegisterForm from './components/login/q'
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
 import Cart from "./components/cart/index";
-
+import Navbar from './components/Home/navbar/navbar';
 
 const App = () => {
   return (
     <>
       <Router>
-        
         <div className='d-flex'>
-        <Link className='m-3' to="/">Home</Link> <br />
-        <Link className='m-3' to="/product">product</Link><br/>
-        <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br/>
-        <Link className='m-3' to="/cart">Cart</Link><br/>
-        <Link className='m-3' to="/tqq">tqq</Link>
+          <Link className='m-3' to="/">Home</Link> <br />
+          <Link className='m-3' to="/product">product</Link><br />
+          <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br />
+          <Link className='m-3' to="/cart">Cart</Link><br />
+          <Link className='m-3' to="/tqq">tqq</Link>
         </div>
+        <Navbar />
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/about" element={<About />} /> */}
