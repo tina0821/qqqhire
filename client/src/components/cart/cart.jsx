@@ -107,7 +107,8 @@ class Cart extends Component {
         isComplete: 1,
       },
     ],
-    show:0
+    show:0,
+    deletePrompt:<DeletePrompt />
   };
 
   render() {
@@ -151,7 +152,7 @@ class Cart extends Component {
             </div>
           </div>
         </ConfigProvider>
-        <DeletePrompt show={this.state.show}/> 
+        {this.state.deletePrompt}
       </React.Fragment>
     );
   }
@@ -212,9 +213,17 @@ class Cart extends Component {
   };
   
   deleteItem = (e) =>{
-    console.log(e.target.value)
     let newstate = { ...this.state };
+    let product
+    newstate.cartMap.map((item,index)=>{
+      item.product.map((value,index)=>{
+        value.cMID ===e && (product = value)
+        }
+        )
+      })
+      // console.log(product)
     newstate.show=1
+    newstate.deletePrompt=<DeletePrompt show={newstate.show} productInfo={product}/>
     this.setState(newstate)
   }
 }

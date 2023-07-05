@@ -7,6 +7,7 @@ var querystring = require('querystring');
 var coon = require('./routes/db');
 var app=express();
 app.use(urlencoded);
+app.use(cors());
 app.use('/img',express.static('public/img'))
 app.get('/',function(req,res){
     let a = sha1('1234','kjdsfkjds');

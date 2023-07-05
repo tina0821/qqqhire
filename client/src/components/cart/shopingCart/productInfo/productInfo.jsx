@@ -1,5 +1,6 @@
 import { Button } from "antd";
 import React, { Component } from "react";
+import {CloseOutlined} from '@ant-design/icons';
 
 class ProductInfo extends Component {
   render() {
@@ -37,16 +38,16 @@ class ProductInfo extends Component {
                 <div>{item.total}</div>
                 <Button
                   type="primary"
-                  shape="round"
+                  icon={<CloseOutlined />}
+                  shape="circle"
                   value={item.cMID}
                   size="large"
                   danger={true}
-                  onClick={(a) => {
-                    this.props.deleteItem(a);
+                  onClick={() => {
+                    this.props.deleteItem(item.cMID);
                   }}
                   style={{borderRadius:'50px',width:'50px',height:'50px'}}
                 >
-                  X
                 </Button>
               </div>
             </React.Fragment>
