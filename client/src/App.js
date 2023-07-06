@@ -12,10 +12,12 @@ import 'jquery-ui-css/jquery-ui'
 // import Contact from './page/Contact';
 import NotFound from './page/NotFound';
 import Product from './page/product';
+import Order from './page/order';
 import RegisterForm from './components/login/q'
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
 import Cart from "./components/cart/index";
+
 
 
 const App = () => {
@@ -24,19 +26,22 @@ const App = () => {
       <Router>
         <div className='d-flex'>
         <Link className='m-3' to="/">Home</Link> <br />
-        <Link className='m-3' to="/product">product</Link><br/>
+        <Link className='m-3' to="/product">product</Link><br/> 
         <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br/>
         <Link className='m-3' to="/cart">Cart</Link><br/>
+        <Link className='m-3' to="/order">order</Link><br/>
         <Link className='m-3' to="/tqq">tqq</Link>
+
         </div>
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/about" element={<About />} /> */}
-          <Route path="/product" element={<Product />} />
+          <Route path="/product" element={<Product />} />      
           <Route path="/" element={<RegisterForm />} />
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
           <Route path="/RegistrationForm" element={<RegistrationForm />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<Order />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
