@@ -1,6 +1,6 @@
-import { Button } from "antd";
 import React, { Component } from "react";
-import {CloseOutlined} from '@ant-design/icons';
+import { Button } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 
 class ProductInfo extends Component {
   render() {
@@ -9,16 +9,16 @@ class ProductInfo extends Component {
         {this.props.data.map((item, index) => {
           return (
             <React.Fragment key={item.cMID}>
-              <div className="gridActive pt-3 pb-3 cartFontSize">
+              <div className="gridActive pt-3 pb-3 cartFontSize  align-items-center">
                 <input
                   type="checkbox"
                   className="imgActive"
                   value={item.cMID}
-                  checked={item.isComplete}
+                  checked={item.isComplete && item.isComplete}
                   onChange={(e) => {
                     this.props.changeOne(
                       e,
-                      item.isComplete,
+                      item.isComplete ? item.isComplete : 0,
                       index,
                       this.props.cartMapIndex
                     );
@@ -44,11 +44,14 @@ class ProductInfo extends Component {
                   size="large"
                   danger={true}
                   onClick={() => {
-                    this.props.deleteItem(item.cMID);
+                    this.props.showDeleteWindow(item);
                   }}
-                  style={{borderRadius:'50px',width:'50px',height:'50px'}}
-                >
-                </Button>
+                  style={{
+                    borderRadius: "50px",
+                    width: "50px",
+                    height: "50px",
+                  }}
+                ></Button>
               </div>
             </React.Fragment>
           );

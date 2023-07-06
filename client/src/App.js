@@ -23,21 +23,21 @@ const App = () => {
     <>
       <Router>
         <div className='d-flex'>
-        <Link className='m-3' to="/">Home</Link> <br />
-        <Link className='m-3' to="/product">product</Link><br/>
-        <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br/>
+        {/* <Link className='m-3' to="/">Home</Link> <br /> */}
+        {/* <Link className='m-3' to="/product">product</Link><br/> */}
+        {/* <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br/> */}
         <Link className='m-3' to="/cart">Cart</Link><br/>
-        <Link className='m-3' to="/tqq">tqq</Link>
+        {/* <Link className='m-3' to="/tqq">tqq</Link> */}
         </div>
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/about" element={<About />} /> */}
-          <Route path="/product" element={<Product />} />
-          <Route path="/" element={<RegisterForm />} />
+          {/* <Route path="/product" element={<Product />} /> */}
+          {/* <Route path="/" element={<RegisterForm />} /> */}
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
-          <Route path="/RegistrationForm" element={<RegistrationForm />} />
+          {/* <Route path="/RegistrationForm" element={<RegistrationForm />} /> */}
           <Route path="/cart" element={<Cart />} />
-          <Route path="*" element={<NotFound />} />
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </Router>
     </>
