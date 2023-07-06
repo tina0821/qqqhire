@@ -1,0 +1,36 @@
+$primaryColor: #0B7597;
+$secondaryColor: #021434;
+$largeFontSize: 2.5rem;
+$mediumFontSize: 2rem;
+$margin: 20px;
+$paddingTop: 10vh;
+
+.bgset {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../assets/img/misc/wave.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: $paddingTop;
+  }
+  
+
+.text {
+    text-align: center;
+    color: $secondaryColor;
+    font-size: $mediumFontSize;
+    margin: $margin;
+}
+
+.title {
+    color: $primaryColor;
+    font-size: $largeFontSize;
+    font-weight: bold;
+    margin: $margin;
+}
