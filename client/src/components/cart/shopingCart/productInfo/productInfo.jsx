@@ -14,11 +14,11 @@ class ProductInfo extends Component {
                   type="checkbox"
                   className="imgActive"
                   value={item.cMID}
-                  checked={item.isComplete && item.isComplete}
+                  checked={item.iscomplete && item.iscomplete}
                   onChange={(e) => {
                     this.props.changeOne(
                       e,
-                      item.isComplete ? item.isComplete : 0,
+                      item.iscomplete ? item.iscomplete : 0,
                       index,
                       this.props.cartMapIndex
                     );
@@ -29,8 +29,9 @@ class ProductInfo extends Component {
                 </div>
                 <div>{item.productName}</div>
                 <div className="dateFontSize">
-                  {item.rentStart}
-                  <br />~{item.rentEnd}
+                  {item.rentStart}~
+                  <br />
+                  {item.rentEnd}
                 </div>
                 <div>{item.day}</div>
                 <div>{item.rent}</div>

@@ -1,0 +1,10 @@
+[
+    {
+        "paymentMethod" : "信用卡"
+        ,"payTypeEngName":"creditCards"
+    },
+    {
+        "paymentMethod" : "貨到付款"
+        ,"payTypeEngName":"cashOnDelivery"
+    }
+]

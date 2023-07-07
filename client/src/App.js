@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import 'jquery/dist/jquery'
 import 'jquery-ui/dist/jquery-ui'
 import 'jquery-ui-css/jquery-ui'
@@ -10,11 +11,11 @@ import 'jquery-ui-css/jquery-ui'
 // import Home from './page/Home';
 // import About from './page/About';
 // import Contact from './page/Contact';
-import NotFound from './page/NotFound';
-import Product from './page/product';
-import RegisterForm from './components/login/q'
+// import NotFound from './page/NotFound';
+// import Product from './page/product';
+// import RegisterForm from './components/login/q'
 // import Tqqq from './components/login/q';
-import RegistrationForm from './components/login/q1';
+// import RegistrationForm from './components/login/q1';
 import Cart from "./components/cart/index";
 
 
