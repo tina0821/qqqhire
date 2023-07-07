@@ -12,6 +12,7 @@ import 'jquery-ui-css/jquery-ui'
 // import Contact from './page/Contact';
 import NotFound from './page/NotFound';
 import Product from './page/product';
+import Aboutus from './page/aboutus';
 import Order from './page/order';
 import Mypro from './page/mypro';
 import RegisterForm from './components/login/q'
@@ -28,6 +29,7 @@ const App = () => {
         <div className='d-flex'>
         <Link className='m-3' to="/">Home</Link> <br />
         <Link className='m-3' to="/product">product</Link><br/> 
+        <Link className='m-3' to="/aboutus">aboutus</Link><br/> 
         <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br/>
         <Link className='m-3' to="/cart">Cart</Link><br/>
         <Link className='m-3' to="/order">order</Link><br/>
@@ -39,6 +41,7 @@ const App = () => {
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/about" element={<About />} /> */}
           <Route path="/product" element={<Product />} />      
+          <Route path="/aboutus" element={<Aboutus />} />      
           <Route path="/" element={<RegisterForm />} />
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
           <Route path="/RegistrationForm" element={<RegistrationForm />} />

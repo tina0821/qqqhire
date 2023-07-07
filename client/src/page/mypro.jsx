@@ -14,7 +14,7 @@ function Mypro() {
       <div>
         <div className="text">
           <div className="title">| 會員中心 |</div>
-          <div>訂單追蹤</div>
+          <div>商品管理</div>
         </div>
         <Cmgbtn displayedComponent={displayedComponent} handleButtonClick={handleButtonClick} />
       </div>
