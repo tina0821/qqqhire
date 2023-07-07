@@ -21,6 +21,7 @@ import RegisterForm from './components/login/q'
 import RegistrationForm from './components/login/q1';
 import Cart from "./components/cart/index";
 import Navbar from './components/Home/navbar/navbar';
+import Footer from './components/Home/footer/footer';
 
 const App = () => {
   return (
@@ -33,18 +34,24 @@ const App = () => {
           <Link className='m-3' to="/cart">Cart</Link><br />
           <Link className='m-3' to="/tqq">tqq</Link>
         </div>
+
         <Navbar />
+        
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/about" element={<About />} /> */}
+          
           <Route path="/product" element={<Product />} />
           <Route path="/" element={<RegisterForm />} />
+          
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
+          
           <Route path="/RegistrationForm" element={<RegistrationForm />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      <Footer />
     </>
   );
 };
