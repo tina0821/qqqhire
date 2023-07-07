@@ -2,8 +2,9 @@ $primaryColor: #0B7597;
 $secondaryColor: #021434;
 $largeFontSize: 2.5rem;
 $mediumFontSize: 2rem;
+$littleFontSize: 1.5rem;
 $margin: 20px;
-$paddingTop: 10vh;
+$paddingTop: 5vh;
 
 .bgset {
     position: relative;
@@ -18,8 +19,8 @@ $paddingTop: 10vh;
     justify-content: flex-start;
     align-items: center;
     padding-top: $paddingTop;
-  }
-  
+}
+
 
 .text {
     text-align: center;
@@ -33,4 +34,28 @@ $paddingTop: 10vh;
     font-size: $largeFontSize;
     font-weight: bold;
     margin: $margin;
+}
+
+.orderbtn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    button {
+        display: inline-block;
+    }
+}
+
+button {
+    font-size: $littleFontSize;
+    margin-left: 20px;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+
+    &.active {
+        /* 被点击按钮的样式 */
+        background-color: #0B7597;
+        color: white;
+    }
 }
