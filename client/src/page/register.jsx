@@ -1,5 +1,5 @@
 import React from 'react';
-import Registration from '../components/login/register';
+import Registration from '../components/register/register';
 
 
 
