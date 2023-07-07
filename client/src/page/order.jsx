@@ -1,12 +1,10 @@
+// Order.js
 import React, { useState } from 'react';
-// import miscImage from '../assets/img/misc/wave.jpg';
-import Myorder from '../components/MemberCentre/order/myorder';
-import Historyorder from '../components/MemberCentre/order/historyorder';
-import './centre.scss'; // 匯入 Order.scss 檔案
+import Orderbtn from '../components/MemberCentre/order/orderbtn';
+import './centre.scss';
 
 function Order() {
   const [displayedComponent, setDisplayedComponent] = useState('Myorder');
-
   const handleButtonClick = (component) => {
     setDisplayedComponent(component);
   };
@@ -18,23 +16,7 @@ function Order() {
           <div className="title">| 會員中心 |</div>
           <div>訂單追蹤</div>
         </div>
-        <div className="btnset">
-        <button
-          onClick={() => handleButtonClick('Myorder')}
-          className={displayedComponent === 'Myorder' ? 'active' : ''}
-        >
-          我的訂單
-        </button>
-        <button
-          onClick={() => handleButtonClick('Historyorder')}
-          className={displayedComponent === 'Historyorder' ? 'active' : ''}
-        >
-          歷史紀錄
-        </button>
-        </div>
-        {displayedComponent === 'Myorder' && <Myorder />}
-        {displayedComponent === 'Historyorder' && <Historyorder />}
-      
+        <Orderbtn displayedComponent={displayedComponent} handleButtonClick={handleButtonClick} />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import Rentalreq from './cmgpage/rentalreq';
 import Renthistory from './cmgpage/renthistory';
 import Rentout from './cmgpage/rentout';
 
-const BtnSection = ({ displayedComponent, handleButtonClick }) => {
+const Cmgbtn = ({ displayedComponent, handleButtonClick }) => {
   return (
     <div>
       <div className="btnset">
@@ -30,4 +30,4 @@ const BtnSection = ({ displayedComponent, handleButtonClick }) => {
   );
 };
 
-export default BtnSection;
+export default Cmgbtn;
