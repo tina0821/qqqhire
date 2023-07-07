@@ -2,16 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'jquery/dist/jquery'
-import 'jquery-ui/dist/jquery-ui'
-import 'jquery-ui-css/jquery-ui'
+// import 'jquery/dist/jquery'
+// import 'jquery-ui/dist/jquery-ui'
+// import 'jquery-ui-css/jquery-ui'
 
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 // 其他引入的組件
-// import Home from './page/Home';
+import Home from './page/home';
 // import About from './page/About';
 // import Contact from './page/Contact';
 import NotFound from './page/NotFound';
@@ -35,14 +35,13 @@ const App = () => {
           <Link className='m-3' to="/tqq">tqq</Link>
         </div>
 
-        <Navbar />
+        {/* <Navbar /> */}
         
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Home />} />
           {/* <Route path="/about" element={<About />} /> */}
           
           <Route path="/product" element={<Product />} />
-          <Route path="/" element={<RegisterForm />} />
           
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
           
@@ -51,7 +50,9 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-      <Footer />
+
+      {/* <Footer /> */}
+    
     </>
   );
 };
