@@ -19,43 +19,42 @@ $paddingTop: 5vh;
     justify-content: flex-start;
     align-items: center;
     padding-top: $paddingTop;
-}
 
+    .text {
+        text-align: center;
+        color: $secondaryColor;
+        font-size: $mediumFontSize;
+        margin: $margin;
+    }
 
-.text {
-    text-align: center;
-    color: $secondaryColor;
-    font-size: $mediumFontSize;
-    margin: $margin;
-}
+    .title {
+        color: $primaryColor;
+        font-size: $largeFontSize;
+        font-weight: bold;
+        margin: $margin;
+    }
 
-.title {
-    color: $primaryColor;
-    font-size: $largeFontSize;
-    font-weight: bold;
-    margin: $margin;
-}
-
-.orderbtn {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    .btnset {
+        display: flex;
+        // justify-content: flex-start;
+        // justify-content: space-around;
+        align-items: center;
+    }
 
     button {
-        display: inline-block;
-    }
-}
+        // margin: 0;
+        margin-left: 20px;
+        margin-right: 20px;
+        font-size: $littleFontSize;
+        border: none;
+        border-radius: 20px;
+        padding: 5px 10px;
 
-button {
-    font-size: $littleFontSize;
-    margin-left: 20px;
-    border: none;
-    border-radius: 20px;
-    padding: 5px 10px;
-
-    &.active {
-        /* 被点击按钮的样式 */
-        background-color: #0B7597;
-        color: white;
+        &.active {
+            /* 被点击按钮的样式 */
+            background-color: #0B7597;
+            color: white;
+        }
     }
+
 }

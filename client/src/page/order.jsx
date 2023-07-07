@@ -18,6 +18,7 @@ function Order() {
           <div className="title">| 會員中心 |</div>
           <div>訂單追蹤</div>
         </div>
+        <div className="btnset">
         <button
           onClick={() => handleButtonClick('Myorder')}
           className={displayedComponent === 'Myorder' ? 'active' : ''}
@@ -30,8 +31,10 @@ function Order() {
         >
           歷史紀錄
         </button>
+        </div>
         {displayedComponent === 'Myorder' && <Myorder />}
         {displayedComponent === 'Historyorder' && <Historyorder />}
+      
       </div>
     </div>
   );
