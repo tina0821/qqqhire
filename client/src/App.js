@@ -14,7 +14,7 @@ import NotFound from './page/NotFound';
 import Product from './page/product';
 import Aboutus from './page/aboutus';
 import Order from './page/order';
-import Mypro from './page/mypro';
+import Cmmgmt from './page/cmmgmt';
 import RegisterForm from './components/login/q'
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
@@ -33,7 +33,7 @@ const App = () => {
         <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br/>
         <Link className='m-3' to="/cart">Cart</Link><br/>
         <Link className='m-3' to="/order">order</Link><br/>
-        <Link className='m-3' to="/mypro">mypro</Link><br/>
+        <Link className='m-3' to="/cmmgmt">cmmgmt</Link><br/>
         <Link className='m-3' to="/tqq">tqq</Link>
 
         </div>
@@ -47,7 +47,7 @@ const App = () => {
           <Route path="/RegistrationForm" element={<RegistrationForm />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<Order />} />
-          <Route path="/mypro" element={<Mypro />} />
+          <Route path="/cmmgmt" element={<Cmmgmt />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
