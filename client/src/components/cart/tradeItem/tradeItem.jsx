@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import Listname from "../listname/listname";
 import TradeItemInfo from "./tradeItemInfo/tradeItemInfo";
+import ShippingMethod from "./ShippingMethod/ShippingMethod";
+import PostAddress from "./postAddress/postAddress";
+import HomeDelivery from "./homeDelivery/homeDelivery";
+import InStorePickup from "./InStorePickup/InStorePickup";
+// import Test from "./test/test";
 
 class TradeItem extends Component {
   render() {
-    console.log(this.props.cityCountyData);
+    // console.log(this.props.data.state.chooseAreaList);
     return (
       <React.Fragment>
         <div className="border-bottom border-dark border-2 fw-bolder p-4">
@@ -35,13 +40,19 @@ class TradeItem extends Component {
             );
           })}
         <div className="d-flex flex-wrap justify-content-between mt-5 pb-5 align-items-center">
-        <div className="col-12 p-4 fw-bolder">寄送資訊</div>
-        <div className="col-12 p-4 d-flex align-items-center">
-                寄送方式:
-                <select name="type" className="ms-5">
-                  <option value="type1"></option>
-                </select>
-              </div>
+          <div className="col-12 p-4 fw-bolder">寄送資訊</div>
+          {/* 寄送方式選擇 */}
+          <ShippingMethod data={this.props.data} />
+          {/* 依寄送選擇顯示表單 */}
+          {this.props.data.state.shippingMethod === "post" && (
+            <PostAddress data={this.props.data} />
+            )}
+          {this.props.data.state.shippingMethod === "homeDelivery" && (
+            <HomeDelivery data={this.props.data} />
+          )}
+          {this.props.data.state.shippingMethod === "InStorePickup" && (
+            <InStorePickup data={this.props.data} />
+          )}
         </div>
       </React.Fragment>
     );

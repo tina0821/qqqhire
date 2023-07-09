@@ -11,7 +11,7 @@ class ShopingCart extends Component {
           return (
             this.props.data.state.cartMap[index].product.length !== 0 && (
               <div key={item.productAccount}>
-                <div className="gridActive align-items-center">
+                <div className="d-flex align-items-center">
                   <input
                     className="imgActive"
                     type="checkbox"
@@ -23,12 +23,12 @@ class ShopingCart extends Component {
                   <Link to="/">
                     <img
                       className="imgActive"
-                      src="/images/icon/Home.png"
+                      src="/images/icon/user-interface 4.png"
                       alt="ops"
                     />
                   </Link>
-                  <div className="ps-5">{item.productAccount}</div>
-                  <div className="ps-5">聯絡賣家</div>
+                  <div className="">{item.productAccount}</div>
+                  <div className="ms-3 btn btnColor d-flex cartFontSize">聊聊<i className="ps-2 bi bi-messenger"></i></div>
                 </div>
                 <div className="likeHr d-flex"></div>
                 <Listname type={0}/>

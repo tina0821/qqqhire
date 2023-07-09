@@ -1,137 +1,93 @@
 import React, { Component } from "react";
 import { ConfigProvider } from "antd";
 import { Button, message, Steps } from "antd";
+// import axios from "axios";
 // import { onLogin, checkLogin, logOut } from "../cookie/cookie";
-
 // import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
+//引用自做檔案
 import ShopingCart from "./shopingCart/index";
 import DeletePrompt from "./shopingCart/productInfo/deletePrompt/deletePrompt";
-import TradeItem from "./tradeItem/tradeItem ";
+import TradeItem from "./tradeItem/tradeItem";
 import zhCN from "antd/locale/zh_TW";
-import cityCountyData from '../../data/CityCountyData.json'
-import paymentMethod from '../../data/paymentMethod.json'
+import cityCountyData from "../../data/CityCountyData.json";
+import cartTest from "../../data/cartTest.json";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
+// import paymentMethod from '../../data/paymentMethod.json'
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
 
-Object.prototype.iscomplete = 1;
+Object.prototype.iscomplete = 0;
 
 class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cityCountyData:cityCountyData,
+      //縣市鄉鎮資料
+      cityCountyData: cityCountyData,
+      //選擇當前的縣市對應出現相對鄉鎮
+      chooseCityCountyData: cityCountyData[0],
+      //日期
       date: undefined,
+      //步驟名稱
       steps: [
-        {
-          title: "租物清單",
-          content: null,
-        },
-        {
-          title: "訂單確認",
-          content: null,
-        },
-        {
-          title: "訂單送出",
-          content: null,
-        },
+        { title: "租物清單" },
+        { title: "訂單確認" },
+        { title: "訂單送出" },
       ],
+      //步驟顯示器
       items: [{ key: "", title: "" }],
+      //當前步驟頁面計數器
       current: 1,
-      contentStyle: {
-        textAlign: "center",
-        borderRadius: "10px",
-        border: "2px solid black",
-        marginTop: 30,
-      },
-      cartMap: [
-        {
-          productAccount: "kevin",
-          product: [
-            {
-              cMID: "aaaaa",
-              productID: "商品一",
-              productName: "咖啡機",
-              images: "/images/product/coffee006冰滴咖啡去背.png",
-              rent: 450,
-              deposit: 888,
-              rentStart: "112-04-11",
-              rentEnd: "112-04-15",
-              day: 15 - 11,
-              total: 450 * 4 + 888,
-              productCity: "臺北市",
-            },
-            {
-              cMID: "bbbb",
-              productID: "商品2",
-              productName: "娃娃",
-              images: "/images/product/coffee006冰滴咖啡去背.png",
-              rent: 450,
-              deposit: 888,
-              rentStart: "112-04-11",
-              rentEnd: "112-04-15",
-              day: 15 - 11,
-              total: 450 * 4 + 888,
-              productCity: "臺北市",
-            },
-          ],
-        },
-        {
-          productAccount: "simon",
-          product: [
-            {
-              cMID: "cccc",
-              productID: "商品一",
-              productName: "咖啡機",
-              images: "/images/product/coffee006冰滴咖啡去背.png",
-              rent: 450,
-              deposit: 888,
-              rentStart: "112-04-11",
-              rentEnd: "112-04-15",
-              day: 15 - 11,
-              total: 450 * 4 + 888,
-              productCity: "臺北市",
-            },
-            {
-              cMID: "dddd",
-              productID: "商品2",
-              productName: "娃娃",
-              images: "/images/product/coffee006冰滴咖啡去背.png",
-              rent: 450,
-              deposit: 888,
-              rentStart: "112-04-11",
-              rentEnd: "112-04-15",
-              day: 15 - 11,
-              total: 450 * 4 + 888,
-              productCity: "臺北市",
-            },
-          ],
-        },
-      ],
-      show: 0,
+      //預設租物車商品資訊
+      cartMap: cartTest,
+      //全選觸發器
       selectAll: 0,
-      deletePrompt:null,
-      tradeItem:null,
+      //顯示提示視窗
+      show: 0,
+      //提示視窗呈現的內容
+      deletePromptType: 1,
+      //要從購物車刪除商品的資訊
+      deletePrompt: null,
+      //進入第二頁結帳商品的資訊
+      tradeItem: null,
+      //手動輸入的地址
+      address: null,
+      //最後運送的地址
+      finaladdress: null,
+      //錯誤訊息
+      err: [{ message: "address", count: 0 }],
+      //寄送方式
+      shippingMethod: "post",
     };
   }
 
   render() {
     return (
       <React.Fragment>
+        {/* 提示框框 */}
+        <DeletePrompt
+          show={this.state.show}
+          data={this}
+          productInfo={this.state.deletePrompt}
+        />
+        {/* antd步驟元件內建中文 */}
         <ConfigProvider locale={zhCN}>
-          <div className="container">
+          <div className="container-xl">
+            {/* 步驟條 */}
             <Steps
               className="steps"
               current={this.state.current}
               items={this.state.items}
             />
-            <div style={this.state.contentStyle}>
-              {(this.state.current === 0 && <ShopingCart data={this} />)}
-              {(this.state.current === 1 && <TradeItem data={this} cityCountyData={this.state.cityCountyData}/>)}
-              {(this.state.current === 2 && <ShopingCart data={this} />)}
-              {/* {this.state.steps[this.state.current].content} */}
+            {/* 步驟內容物 */}
+            <div className="contentStyle">
+              {this.state.current === 0 && <ShopingCart data={this} />}
+              {this.state.current === 1 && <TradeItem data={this} />}
+              {this.state.current === 2 && <ShopingCart data={this} />}
             </div>
+            {/* 切換步驟選單 */}
             <div className="d-flex justify-content-end mt-5">
               {this.state.current > 0 && (
                 <Button
@@ -163,11 +119,6 @@ class Cart extends Component {
             </div>
           </div>
         </ConfigProvider>
-        <DeletePrompt 
-        show={this.state.show}
-        close={this.cancel}
-        deleteItem={this.deleteItem}
-        productInfo={this.state.deletePrompt}/>
       </React.Fragment>
     );
   }
@@ -183,23 +134,35 @@ class Cart extends Component {
     this.setState(newstate);
   };
 
-  moveSteps = async(e) => {
+  moveSteps = async (e) => {
     let newstate = this.sendDataToStep2();
     newstate.current += e;
-  switch (newstate.current) {
-    case 0:
-      this.setState(newstate);
-    break;
-    case 1: 
-      newstate.tradeItem.length!==0?this.setState(newstate):alert('未勾選商品!!!');
-    break;
-    case 2:
-      this.setState(newstate)
-    break;
- 
-  default:
-    break;
- }
+    //切換頁面做依判斷做事
+    switch (newstate.current) {
+      case 0:
+        this.setState(newstate);
+        break;
+      //訂單頁面沒訂單要擋住，顯示提示框type2告訴使用者沒有勾選商品
+      case 1:
+        if (newstate.tradeItem.length === 0) {
+          newstate.current = 0;
+          newstate.deletePromptType = 2;
+          newstate.show = 1;
+        }
+
+        break;
+      case 2:
+        !newstate.address
+          ? (newstate.err[0] = { message: "address", count: 1 })
+          : (newstate.err[0] = { message: "address", count: 0 });
+        let checkerr = newstate.err.filter((value) => value.count === 1);
+        checkerr.length !== 0 && (newstate.current = 1);
+        break;
+
+      default:
+        break;
+    }
+    this.setState(newstate);
   };
   //全選商品
   changeAll = (e) => {
@@ -261,9 +224,10 @@ class Cart extends Component {
   };
 
   //確認刪除購物車裡的內容視窗
-  showDeleteWindow = (e) => {
+  showDeleteWindow = (e, type) => {
     let newstate = { ...this.state };
     newstate.show = 1;
+    newstate.deletePromptType = type;
     newstate.deletePrompt = e;
     this.setState(newstate);
   };
@@ -305,6 +269,29 @@ class Cart extends Component {
       return item.product.length !== 0;
     });
     return newstate;
+  };
+
+  //切換運送方式
+  changeShippingMethod = (e) => {
+    console.log(e);
+    let newstate = { ...this.state };
+    newstate.shippingMethod = e;
+    this.setState(newstate);
+  };
+  //更變運送地址的縣市調出該縣市的鄉鎮
+  changeCityCounty = (e) => {
+    let newstate = { ...this.state };
+    newstate.chooseCityCountyData = newstate.cityCountyData[e];
+    this.setState(newstate);
+  };
+
+  //記錄寄送地址(取得手動輸入值和完整地址)
+  addAddress = (addressValue, finaladdress) => {
+    let newstate = { ...this.state };
+    //資料修改新增
+    newstate.address = addressValue;
+    newstate.finaladdress = finaladdress;
+    this.setState(newstate);
   };
 }
 

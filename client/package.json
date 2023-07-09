@@ -11,6 +11,8 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.10.5",
+    "cors": "^2.8.5",
+    "ecpay_logistics_nodejs": "^1.0.2",
     "jquery": "^3.7.0",
     "jquery-ui": "^1.13.2",
     "jquery-ui-css": "^1.11.5",

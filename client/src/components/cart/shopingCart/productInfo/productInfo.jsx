@@ -25,7 +25,7 @@ class ProductInfo extends Component {
                   }}
                 />
                 <div className="d-flex justify-content-center">
-                  <img className="img100" src={item.images} alt="aa" />
+                  <img className="imgActive2" src={item.images} alt="aa" />
                 </div>
                 <div>{item.productName}</div>
                 <div className="dateFontSize">
@@ -42,16 +42,12 @@ class ProductInfo extends Component {
                   icon={<CloseOutlined />}
                   shape="circle"
                   value={item.cMID}
-                  size="large"
+                  size="small"
                   danger={true}
                   onClick={() => {
-                    this.props.showDeleteWindow(item);
+                    this.props.showDeleteWindow(item,1);
                   }}
-                  style={{
-                    borderRadius: "50px",
-                    width: "50px",
-                    height: "50px",
-                  }}
+                  className="borderBtn"
                 ></Button>
               </div>
             </React.Fragment>

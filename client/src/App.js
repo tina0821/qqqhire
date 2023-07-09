@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'jquery/dist/jquery'
 import 'jquery-ui/dist/jquery-ui'
 import 'jquery-ui-css/jquery-ui'
+import 'cors'
 
 // 其他引入的組件
 // import Home from './page/Home';

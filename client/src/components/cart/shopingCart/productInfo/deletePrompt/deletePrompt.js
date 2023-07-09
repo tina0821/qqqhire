@@ -7,30 +7,95 @@ class DeletedPrompt extends Component {
       <div
         style={{
           display: `${this.props.show ? "flex" : "none"}`,
+          top: "0px",
           justifyContent: "center",
           alignItems: "center",
-          top: "50vh",
-          left: "50%",
-          marginLeft: "-200px",
-          marginTop: "-200px",
-          width: "400px",
-          position: "absolute",
-          height: "400px",
-          border:"1px solid black",
-          backgroundColor:"white",
-          borderRadius:'20px'
-          
+          width: "100%",
+          position: "fixed",
+          height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.209)",
+          zIndex: "1",
         }}
       >
-        <div className="col-12 d-flex flex-wrap">
-          <div className="col-12 d-flex justify-content-center mb-5">
-            確定刪除
-            {this.props.productInfo && this.props.productInfo.productName}?
-          </div>
-          <div className="col-12 d-flex justify-content-center ">
-            <Button className="m-5" onClick={()=>{this.props.deleteItem(this.props.productInfo && this.props.productInfo)}} type="primary" danger style={{fontSize:'2rem',width:'auto',height:'auto'}}>是</Button>
-            <Button className="m-5" onClick={()=>{this.props.close()}} type="primary"  style={{fontSize:'2rem',width:'auto',height:'auto'}}>否</Button>
-          </div>
+        <div
+          style={{
+            display: `${this.props.show ? "flex" : "none"}`,
+            justifyContent: "center",
+            alignItems: "center",
+            top: "50%",
+            left: "50%",
+            width: "400px",
+            height: "400px",
+            border: "1px solid black",
+            backgroundColor: "white",
+            borderRadius: "20px",
+          }}
+        >
+          {this.props.data.state.deletePromptType === 1 &&
+            this.props.data.state.deletePrompt && (
+              <React.Fragment>
+                <div className="col-12 d-flex flex-wrap">
+                  <div className="col-12 d-flex justify-content-center mb-5">
+                    確定刪除{this.props.data.state.deletePrompt.productName}?
+                  </div>
+                  <div className="col-12 d-flex justify-content-center ">
+                    <Button
+                      className="m-5"
+                      onClick={() => {
+                        this.props.data.deleteItem(
+                          this.props.data.state.deletePrompt &&
+                            this.props.data.state.deletePrompt
+                        );
+                      }}
+                      type="primary"
+                      danger
+                      style={{
+                        fontSize: "2rem",
+                        width: "auto",
+                        height: "auto",
+                      }}
+                    >
+                      是
+                    </Button>
+                    <Button
+                      className="m-5"
+                      onClick={() => {
+                        this.props.data.cancel();
+                      }}
+                      type="primary"
+                      style={{
+                        fontSize: "2rem",
+                        width: "auto",
+                        height: "auto",
+                      }}
+                    >
+                      否
+                    </Button>
+                  </div>
+                </div>
+              </React.Fragment>
+            )}
+          {this.props.data.state.deletePromptType === 2 && (
+            <React.Fragment>
+              <div className="col-12 d-flex flex-wrap">
+                <div className="col-12 d-flex justify-content-center mb-3">
+                  未勾選商品!!!
+                </div>
+                <div className="col-12 d-flex justify-content-center ">
+                  <Button
+                    className="m-3"
+                    onClick={() => {
+                      this.props.data.cancel();
+                    }}
+                    type="primary"
+                    style={{ fontSize: "2rem", width: "auto", height: "auto" }}
+                  >
+                    確定
+                  </Button>
+                </div>
+              </div>
+            </React.Fragment>
+          )}
         </div>
       </div>
     );

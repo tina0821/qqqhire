@@ -1,0 +1,14 @@
+[
+    {
+        "method":"郵局寄送"
+        ,"value":"post"
+    },
+    {
+        "method":"宅配"
+        ,"value":"homeDelivery"
+    },
+    {
+        "method":"超商取貨"
+        ,"value":"InStorePickup"
+    }
+]

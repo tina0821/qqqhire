@@ -16,6 +16,9 @@ ul {
   width: 40px;
   height: 40px;
 }
+.imgActive2 {
+  width: 100%;
+}
 .img900 {
   width: 900px;
 }
@@ -38,7 +41,7 @@ ul {
 }
 .gridActive {
   display: grid;
-  grid-template-columns: 5% 15% 20% 15% 10% 10% 10% 10% 5%;
+  grid-template-columns: 7% 15% 20% 15% 10% 10% 10% 10% 3%;
 }
 .gridActive2 {
   display: grid;
@@ -112,7 +115,6 @@ a {
   font-weight: 900;
   display: flex;
   align-items: center;
-  /* background-color: black; */
 }
 
 .likeHr::before {
@@ -121,6 +123,22 @@ a {
   width: 100%;
 }
 
+.contentStyle{
+  text-align: center;
+  border-radius: 10px;
+  border:2px solid black;
+  margin-top: 30px;
+}
+
+/* 按鈕顏色 */
+.btnColor{
+  background-color: #D1DDDB;
+}
+/* 碰到按鈕 */
+.btnColor:hover{
+  background-color: #d1dddb9b ;
+  border: 1px solid black;
+}
 @media screen and (max-width: 1200px) {
   body {
     font-size: 1.5rem;
@@ -132,6 +150,27 @@ a {
     font-size: 1rem;
   }
   .imgActive {
+    width: 20px;
+    height: 20px;
+  }
+  .steps .ant-steps-item-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 400px) {
+  .gridActive {
+    display: grid;
+    grid-template-columns: 7% 0% 35% 15% 10% 10% 10% 10% 3%;
+  }
+  .displayNone{
+    display: none;
+  }
+  .imgActive2 {
+    /* margin: 15px; */
+    display: none;
     width: 20px;
     height: 20px;
   }

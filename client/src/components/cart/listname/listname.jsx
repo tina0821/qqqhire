@@ -7,7 +7,7 @@ class Listname extends Component {
         {this.props.type === 0 && (
           <div className="gridActive ps-1 pt-3 pb-3 cartFontSize fw-bolder">
             <div>勾選</div>
-            <div>圖片</div>
+            <div className="displayNone">圖片</div>
             <div>商品名稱</div>
             <div>日期</div>
             <div>天數</div>
