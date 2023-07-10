@@ -26,21 +26,32 @@ function Myorder() {
           <tr>
             <th>訂單編號</th>
             <th>商品</th>
+            <th>預約日期</th>
+            <th>歸還日期</th>
+            <th>租金</th>
+            <th>押金</th>
             <th>訂單狀態</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
           {tradeitems.map((tradeitem) => (
-            <tr key={tradeitem.tradeitemId}>
+            <tr id='trtd' key={tradeitem.tradeitemId}>
               <td>{tradeitem.tradeitemId}</td>
               <td>{tradeitem.productName}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>
                 {tradeitem.state === 0
                   ? '等待回應中'
                   : tradeitem.state === 1
-                  ? '等待租借中'
-                  : tradeitem.state}
+                    ? '等待租借中'
+                    : tradeitem.state === 2
+                      ? '租借中'
+                      : tradeitem.state
+                }
               </td>
               <td>
                 取消
@@ -51,7 +62,7 @@ function Myorder() {
       </table>
     </div>
   );
-  
+
 }
 
 export default Myorder;
