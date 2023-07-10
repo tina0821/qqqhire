@@ -7,10 +7,10 @@ const Orderbtn = ({ displayedComponent, handleButtonClick }) => {
   return (
     <div>
       <div className="btnset">
-        <button onClick={() => handleButtonClick('Myorder')} className={displayedComponent === 'Myorder' ? 'active' : ''}>
+        <button id='mainbtn' onClick={() => handleButtonClick('Myorder')} className={displayedComponent === 'Myorder' ? 'active' : ''}>
           我的訂單
         </button>
-        <button onClick={() => handleButtonClick('Historyorder')} className={displayedComponent === 'Historyorder' ? 'active' : ''}>
+        <button id='mainbtn' onClick={() => handleButtonClick('Historyorder')} className={displayedComponent === 'Historyorder' ? 'active' : ''}>
           歷史訂單
         </button>
       </div>

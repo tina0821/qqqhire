@@ -9,16 +9,16 @@ const Cmgbtn = ({ displayedComponent, handleButtonClick }) => {
   return (
     <div>
       <div className="btnset">
-        <button onClick={() => handleButtonClick('Mycm')} className={displayedComponent === 'Mycm' ? 'active' : ''}>
+        <button id='mainbtn' onClick={() => handleButtonClick('Mycm')} className={displayedComponent === 'Mycm' ? 'active' : ''}>
           我的商品
         </button>
-        <button onClick={() => handleButtonClick('Rentalreq')} className={displayedComponent === 'Rentalreq' ? 'active' : ''}>
+        <button id='mainbtn' onClick={() => handleButtonClick('Rentalreq')} className={displayedComponent === 'Rentalreq' ? 'active' : ''}>
           租借請求
         </button>
-        <button onClick={() => handleButtonClick('Renthistory')} className={displayedComponent === 'Renthistory' ? 'active' : ''}>
+        <button id='mainbtn' onClick={() => handleButtonClick('Renthistory')} className={displayedComponent === 'Renthistory' ? 'active' : ''}>
           出租中
         </button>
-        <button onClick={() => handleButtonClick('Rentout')} className={displayedComponent === 'Rentout' ? 'active' : ''}>
+        <button id='mainbtn' onClick={() => handleButtonClick('Rentout')} className={displayedComponent === 'Rentout' ? 'active' : ''}>
           歷史紀錄
         </button>
       </div>

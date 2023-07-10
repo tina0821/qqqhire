@@ -33,6 +33,16 @@ function Myorder() {
     return `${year}-${month}-${day}`;
   };
 
+  const handleCancel = async (tradeitemId) => {
+    try {
+      await axios.post('http://localhost:8000/api/cancelOrder', { tradeitemId });
+      // 在此處執行取消訂單的相關邏輯
+      // 例如更新訂單狀態或重新加載資料等
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="order-component">
       <table className="order-table">
@@ -51,6 +61,13 @@ function Myorder() {
         <tbody>
           {tradeitems.map((tradeitem) => {
             if (tradeitem.state < 3) {
+              let action = null;
+              if (tradeitem.state === 0) {
+                action = (
+                  <button id='actbtn' onClick={() => handleCancel(tradeitem.tradeitemId)}>取消</button>
+                );
+              }
+              
               return (
                 <tr id="trtd" key={tradeitem.tradeitemId}>
                   <td>{tradeitem.tradeitemId}</td>
@@ -68,7 +85,7 @@ function Myorder() {
                           ? '租借中'
                           : tradeitem.state}
                   </td>
-                  <td>取消</td>
+                  <td>{action}</td>
                 </tr>
               );
             }
