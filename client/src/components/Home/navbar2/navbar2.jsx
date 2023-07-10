@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./navbar_share.css"
+import "./navbar2.css"
 
 // 引入 Font Awesome的icon ?
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,7 +8,7 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 
-function NavbarShare() {
+function Navbar2() {
     return (
         <>
             <header className="header">
@@ -46,4 +46,4 @@ function NavbarShare() {
     );
 }
 
-export default NavbarShare;
+export default Navbar2;

@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import "./outdoor2.css"
 
 function Outdoor2() {

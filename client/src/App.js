@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
-// import 'jquery/dist/jquery'
-// import 'jquery-ui/dist/jquery-ui'
-// import 'jquery-ui-css/jquery-ui'
+import 'jquery/dist/jquery'
+import 'jquery-ui/dist/jquery-ui'
+import 'jquery-ui-css/jquery-ui'
 
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,8 +20,9 @@ import RegisterForm from './components/login/q'
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
 import Cart from "./components/cart/index";
-import NavbarShare from './components/Home/navbar_share/navbar_share';
+import Navbar2 from './components/Home/navbar2/navbar2';
 import Footer from './components/Home/footer/footer';
+import Navbar from './components/Home/navbar/navbar';
 
 const App = () => {
   return (
@@ -34,7 +35,7 @@ const App = () => {
           <Link className='m-3' to="/cart">Cart</Link><br />
           <Link className='m-3' to="/tqq">tqq</Link>
         </div>
-     
+        <Navbar2/>
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/about" element={<About />} /> */}
