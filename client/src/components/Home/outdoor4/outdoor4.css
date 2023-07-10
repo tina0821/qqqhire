@@ -5,7 +5,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
 
+.outdoor4 img {
+    width: 100%;
 }
 
 .outdoor4-wordBox{

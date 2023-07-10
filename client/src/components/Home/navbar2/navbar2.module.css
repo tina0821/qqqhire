@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: center;
     border: 2px solid red;
+    
 }
 
 .header ul {
@@ -99,11 +100,11 @@ height: 70px;
     position: relative;
     line-height: 40px;
 
-    &::before {
+    /* &::before {
         content: "";
         display: block;
         border-bottom: 3px solid;
-        /* background-color: white; */
+        background-color: white;
         position: absolute;
         height: 3px;
         bottom: 0;
@@ -119,13 +120,13 @@ height: 70px;
             left: 0;
             transition: width position 0.5s;
         }
-    }
+    } */
 }
 
 /* -------------------------- */
 /* icon 底下選項 */
 .header-icon{
-    height: 100%;
+    height: 115%;
     margin-right: 15px;
     display: flex;
     align-items: center
@@ -148,8 +149,9 @@ height: 70px;
 
 /* 選單 style 設定 */
 ul.drop-menu{
+    border: 2px solid red;
     position: absolute;
-    top: 31%;
+    top: 25%;
     left: 0;
     width: 100%;
     padding: 0;

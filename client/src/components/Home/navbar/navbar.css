@@ -8,7 +8,6 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    z-index: 100;
 }
 
 .header ul {

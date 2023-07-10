@@ -20,7 +20,7 @@ function Navbar() {
                     {/* LOGO超連結? */}
                     <a href>
                         {/* LOGO 用圖片還是文字? */}
-                        <img className="logoImg" src="http://localhost:8000/img/home/Logo%E7%99%BD.png" />                    
+                        <img src="http://localhost:8000/img/home/Logo%E7%99%BD.png" />    
                     </a>
                 </div>
                 {/* 右邊按鈕/icon */}
@@ -36,15 +36,19 @@ function Navbar() {
                         <li><a href className="iconMove"><FontAwesomeIcon icon={faHeart} className="icon"/></a></li>
                         <li><a href className="iconMove"><FontAwesomeIcon icon={faCartShopping} className="icon"/></a></li>
                         <li>
-                            <a href className="iconMove"><FontAwesomeIcon icon={faCircleUser} className="icon" /></a>
+                            <a href className="iconMove"><FontAwesomeIcon icon={faCircleUser} className="icon"/></a>
                             <ul className="drop-menu limenu-2">
                                 <li><a href>會員登入</a></li>
                                 <li><a href>會員註冊</a></li>
                             </ul>
-                        </li>                        
+                        </li>
+                        {/* 測試icon變化 */}
+                        {/* 目前icon圖案太粗 要設定細框需要再找問題 */}
+                        {/* <li><i class="fa-thin fa-cart-shopping" style="color: #ffffff;" aria-hidden="true"></i></li> */}
                     </ul>
                 </div>
             </header>
+
         </>
     )
 }
