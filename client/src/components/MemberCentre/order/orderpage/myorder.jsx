@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../order.scss';
 
 function Myorder() {
   const [tradeitems, setTradeitems] = useState([]);
@@ -11,7 +10,7 @@ function Myorder() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/tradeitems');
+      const response = await axios.get('http://localhost:8000/api/myorder');
       const tradeitems = response.data;
       console.log(tradeitems);
       setTradeitems(tradeitems);
@@ -21,30 +20,35 @@ function Myorder() {
   };
 
   return (
-    <div>
-      {tradeitems.map((tradeitem) => (
-        <div key={tradeitem.tradeitemId} className="trade-item">
-          <div>
-            <h4>訂單編號</h4>
-            <p>{tradeitem.tradeitemId}</p>
-          </div>
-          <div>
-            <h4>商品</h4>
-            <p>{tradeitem.productName}</p>
-          </div>
-          <div>
-            <h4>訂單狀態</h4>
-            <p>
-              {tradeitem.state === 0
-                ? '等待回應中'
-                : tradeitem.state === 1
-                ? '等待租借中'
-                : tradeitem.state}
-            </p>
-          </div>
-          <hr />
-        </div>
-      ))}
+    <div className="order-component">
+      <table className="order-table">
+        <thead>
+          <tr>
+            <th>訂單編號</th>
+            <th>商品</th>
+            <th>訂單狀態</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tradeitems.map((tradeitem) => (
+            <tr key={tradeitem.tradeitemId}>
+              <td>{tradeitem.tradeitemId}</td>
+              <td>{tradeitem.productName}</td>
+              <td>
+                {tradeitem.state === 0
+                  ? '等待回應中'
+                  : tradeitem.state === 1
+                  ? '等待租借中'
+                  : tradeitem.state}
+              </td>
+              <td>
+                取消
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
   

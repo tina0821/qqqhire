@@ -2,6 +2,7 @@ $primaryColor: #0B7597;
 $secondaryColor: #021434;
 $largeFontSize: 2.5rem;
 $mediumFontSize: 2rem;
+$medtwoFontSize: 1.75rem;
 $littleFontSize: 1.5rem;
 $margin: 20px;
 $paddingTop: 5vh;
@@ -56,5 +57,29 @@ $paddingTop: 5vh;
             color: white;
         }
     }
+
+    .order-table {
+      margin-top: 20px;
+      width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      th,
+      td {
+        padding: 20px;
+      }
+    
+      th {
+        font-weight: bold;
+        text-align: center;
+        font-size: $mediumFontSize;
+      }
+
+      td {
+        font-size: $medtwoFontSize;
+      }
+
+    }
+    
 
 }

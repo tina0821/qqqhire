@@ -29,9 +29,7 @@ app.get('/cart',function(req,res){
 //   });
 // });
 
-// ...其餘程式碼
-
-app.get('/api/tradeitems', function(req, res) {
+app.get('/api/myorder', function(req, res) {
   const query = 'SELECT tradeitemId, productId, state FROM tradeitem';
   coon.query(query, function(error, results) {
     if (error) {
@@ -64,19 +62,6 @@ app.get('/api/tradeitems', function(req, res) {
   });
 });
 
-// ...其餘程式碼
-
-
-// ...其餘程式碼
-
-
-
-// app.get('/api/tradeitem', (req, res) => {
-//     const qur = 'SELECT * FROM tradeitem WHERE 1'
-//     coon.query(qur, (err, data) => {
-//         res.json(data)
-//     })
-// })
 app.listen(8000,function(){
     // console.clear();
     console.log(new Date().toLocaleDateString());
