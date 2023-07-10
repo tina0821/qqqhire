@@ -7,20 +7,17 @@ class InStorePickup extends Component {
       <React.Fragment>
         <div className="col-12 p-4 d-flex align-items-center">
           寄送地址:
-          <Test />
+          <Test data={this.props.data} />
           <input
             type="text"
-            placeholder="請輸入地址"
-            className="ms-3 me-3"
-            defaultValue={this.props.data.state.address}
-            onBlur={(e) => {
-              this.props.data.addAddress(
-                e.target.value,
-                this.props.data.state.chooseCityCountyData.CityName +
-                  document.getElementById("areaName").value +
-                  e.target.value
-              );
-            }}
+            placeholder="超商地址"
+            className="ms-3 me-3 col-8"
+            disabled={true}
+            defaultValue={
+              this.props.data.state.cookieData &&
+              this.props.data.state.cookieData.CVSAddress +
+                this.props.data.state.cookieData.CVSStoreName
+            }
           />
           {/* 判斷有沒有輸入地址，沒有錯誤計數會+1讓錯誤訊息跳出來 */}
           <div

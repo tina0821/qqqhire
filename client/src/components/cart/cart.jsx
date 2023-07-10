@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { ConfigProvider } from "antd";
 import { Button, message, Steps } from "antd";
-// import axios from "axios";
+// import io from 'socket.io-client';
+import axios from "axios";
 // import { onLogin, checkLogin, logOut } from "../cookie/cookie";
 // import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ import cityCountyData from "../../data/CityCountyData.json";
 import cartTest from "../../data/cartTest.json";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
+// import { ajax } from "jquery";
 // import paymentMethod from '../../data/paymentMethod.json'
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
@@ -24,6 +26,8 @@ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      //cookie資料
+      cookieData: null,
       //縣市鄉鎮資料
       cityCountyData: cityCountyData,
       //選擇當前的縣市對應出現相對鄉鎮
@@ -56,6 +60,8 @@ class Cart extends Component {
       address: null,
       //最後運送的地址
       finaladdress: null,
+      //超商地址
+      CVSAddress: null,
       //錯誤訊息
       err: [{ message: "address", count: 0 }],
       //寄送方式
@@ -124,13 +130,35 @@ class Cart extends Component {
   }
 
   //第一次更新資訊
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    await axios.get("http://localhost:8000/cart", {}).then((res) => {
+      // console.log(res.data);
+    });
+
     let newstate = { ...this.state };
+
     let newitems = this.state.steps.map((item) => ({
       key: item.title,
       title: item.title,
     }));
+
+    let cookieData = document.cookie
+      .split(";")
+      .map((cookie) => cookie.trim())
+      .find((cookie) => cookie.startsWith("data="));
+
+    if (cookieData) {
+      let encodedValue = cookieData.split("=")[1];
+      let decodedValue = decodeURIComponent(encodedValue);
+      let newData = JSON.parse(decodedValue);
+
+      newstate.cookieData = newData;
+    }
+
     newstate.items = newitems;
+
+    document.addEventListener("cookiechange", this.handleCookieChange());
+    
     this.setState(newstate);
   };
 
@@ -271,9 +299,29 @@ class Cart extends Component {
     return newstate;
   };
 
+  // 定义一个函数用于处理 Cookie 变化的逻辑
+  handleCookieChange = () => {
+    let newstate = { ...this.state };
+    // 读取名为 "data" 的 Cookie 值
+    let cookieData = document.cookie
+      .split(";")
+      .map((cookie) => cookie.trim())
+      .find((cookie) => cookie.startsWith("data="));
+
+    if (cookieData) {
+      let encodedValue = cookieData.split("=")[1];
+      let decodedValue = decodeURIComponent(encodedValue);
+      let newData = JSON.parse(decodedValue);
+
+      newstate.cookieData = newData;
+    }
+    // 更新组件状态
+    this.setState(newstate);
+    console.log(this.state.cookieData);
+  };
+
   //切換運送方式
   changeShippingMethod = (e) => {
-    console.log(e);
     let newstate = { ...this.state };
     newstate.shippingMethod = e;
     this.setState(newstate);
@@ -292,6 +340,12 @@ class Cart extends Component {
     newstate.address = addressValue;
     newstate.finaladdress = finaladdress;
     this.setState(newstate);
+  };
+
+  //
+  send = async () => {
+    let getmap = document.getElementById("getmap");
+    getmap.submit();
   };
 }
 
