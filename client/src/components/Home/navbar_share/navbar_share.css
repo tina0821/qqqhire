@@ -1,51 +1,47 @@
 /* --- header --- */
 .header {
-    /* background-color:transparent; */
+    /* background-color:white; */
     margin: 0px;
     width: 100%;
     height: 90px;
-    /* height: 200%; */
     display: flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
-    z-index: 100;
+    border: 2px solid red;
 }
 
 .header ul {
     display: flex;
     list-style: none;
-    /* height: 100%;    */
-    /* width: 100%; */
 }
 
 .header-button-icon ul li a {
     text-decoration: none;
-    color: rgb(254, 254, 254);
+    color: rgb(0, 0, 0);
     /* color: #000; */
     /* padding: 10px; */
-    display: block;
-    /* font-size: 3vw; */
     font-size: 2rem;
     margin-left: 10px;
     margin-right: 15px;
+    /* border: 2px solid red; */
+    display: block;
 }
 
 
 /* header JS效果 */
-.header a {
+/* .header a {
     transition: 0.5s;
-}
+} */
 
 /* 第一組CSS特效 */
-.changeColor {
+/* .changeColor {
     color: #000 !important;
-}
+} */
 
 /* 第二組CSS hover特效 */
-.changeColor-hover:hover {
+/* .changeColor-hover:hover {
     color: #14B09B !important;
-}
+} */
 
 
 /* ------------------------ */
@@ -83,17 +79,16 @@
     margin-left: 10px;
 }
 
-/* .header-logo img { */
+.header-logo img { 
 /* border: 2px solid yellow; */
-/* width: 200px; */
-/* height: 60px; */
-/* } */
+width: 200px;
+height: 70px;
+}
 
 .header-logo a {
     text-decoration: none;
-    /* font-size: 3vw; */
     font-size: 2rem;
-    color: #ffffff;
+    color: #000000;
 }
 
 
@@ -130,39 +125,38 @@
 /* -------------------------- */
 /* icon 底下選項 */
 .header-icon{
-    border: 2px solid blue;
     height: 100%;
     margin-right: 15px;
-    /* display: flex; */
-    /* align-items: center */
+    display: flex;
+    align-items: center
 }
 
 .header-icon .iconMove{
-    border: 2px solid red;
     padding-top: 50%;
 }
 
 .header-icon ul {
-    display: flex;
     flex-direction: column;
     align-items: flex-end;
+    border: 2px solid rgba(255, 255, 255, 0);
+   
 }
 
-/* .header-icon ul li{
-    margin-right: 3px;
-} */
+.header-icon li{
+    height: 100%;
+}
 
 /* 選單 style 設定 */
 ul.drop-menu{
     position: absolute;
-    top: 100%;
+    top: 31%;
     left: 0;
     width: 100%;
     padding: 0;
 }
 
 ul.drop-menu li a{
-    color:rgb(255, 255, 255);
+    color:rgb(0, 0, 0);
     font-size: 1.3rem;
     margin-right: 15px;
     line-height: 2;
@@ -170,6 +164,7 @@ ul.drop-menu li a{
 
 /* 選單出現跟消失 */
 ul.drop-menu li{
+    /* border: 1px solid blue; */
     display: none;
     /* 消失 */
 }
@@ -226,4 +221,26 @@ li:hover > ul.drop-menu.limenu-2 li:nth-child(5){
         opacity: 1;
         transform: rotateX(0deg)
     }
+}
+
+
+/* ================================================= */
+/* body{
+    background: #000;
+} */
+
+.AAA{
+    width: 100%;
+    height: 800px;
+    background:rgb(220, 67, 67);
+}
+.BBB{
+    width: 100%;
+    height: 800px;
+    background: yellow;
+}
+.CCC{
+    width: 100%;
+    height: 800px;
+    background:blue;
 }

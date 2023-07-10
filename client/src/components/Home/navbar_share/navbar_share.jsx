@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
-import "./navbar.css";
+import "./navbar_share.css"
 
-// 引入 Font Awesome icon
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// 引入個別 icon
+// 引入 Font Awesome的icon ?
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 
-
-function Navbar() {
+function NavbarShare() {
     return (
         <>
-            {/* 標題列 */}
             <header className="header">
                 {/* LOGO */}
                 <div className="header-logo">
                     {/* LOGO超連結? */}
                     <a href>
                         {/* LOGO 用圖片還是文字? */}
-                        <img className="logoImg" src="http://localhost:8000/img/home/Logo%E7%99%BD.png" />                    </a>
+                        <img className="logoImg" src="/images/home/01.png" />
+                    </a>
                 </div>
                 {/* 右邊按鈕/icon */}
                 <div className="header-button-icon">
@@ -40,12 +38,12 @@ function Navbar() {
                                 <li><a href>會員登入</a></li>
                                 <li><a href>會員註冊</a></li>
                             </ul>
-                        </li>                        
+                        </li>
                     </ul>
                 </div>
             </header>
         </>
-    )
+    );
 }
 
-export default Navbar;
+export default NavbarShare;
