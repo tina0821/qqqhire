@@ -1,42 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Carousel, Button, Checkbox, Form, Input, Col, Row } from 'antd';
+import React, { useState } from 'react';
+import { Button, Checkbox, Form, Input, Col, Row } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import "./login.scss"
 
 const Login = () => {
-    const onChange = (currentSlide) => {
-        console.log(currentSlide);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const onFinish = () => {
+        // 在这里处理登录逻辑
+        console.log('用户名:', username);
+        console.log('密码:', password);
+        // 发起登录请求或执行其他操作
     };
+
     return (
+
         <div id='loginout' >
             <Row id='login'>
                 <Col span={12}>
-                    <Carousel afterChange={onChange}>
-                        <div>
-                            <img
-                                // style={contentStyle}
-                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
-                                alt="Carousel Image 1"
-                            />
-                        </div>
-                        <div>
-                            <img
-                                // style={contentStyle}
-                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
-                                alt="Carousel Image 1"
-                            />
-                        </div>
-                        <div>
-                            <img
-                                // style={contentStyle}
-                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
-                                alt="Carousel Image 1"
-                            />
-                        </div>
-                    </Carousel>
+                    {/* 省略 Carousel 的代码 */}
                 </Col>
                 <Col span={12}>
-
                     <h1>登入</h1>
                     <Form
                         name="normal_login"
@@ -44,6 +29,7 @@ const Login = () => {
                         initialValues={{
                             remember: true,
                         }}
+                        onFinish={onFinish} // 添加 onFinish 事件处理程序
 
                     >
                         <Form.Item
@@ -51,45 +37,47 @@ const Login = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Username!',
+                                    message: '请输入用户名！',
                                 },
                             ]}
                         >
-                            <Input prefix={<UserOutlined className="site-form-item-icon" />} 
-                            placeholder="Username"
-                            size='large' />
+                            <Input
+                                prefix={<UserOutlined className="site-form-item-icon" />}
+                                placeholder="用户名"
+                                size='large'
+                                value={username}
+                                onChange={e => setUsername(e.target.value)} // 更新用户名的状态
+                            />
                         </Form.Item>
                         <Form.Item
                             name="password"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Password!',
+                                    message: '请输入密码！',
                                 },
                             ]}
                         >
                             <Input
                                 prefix={<LockOutlined className="site-form-item-icon" />}
                                 type="password"
-                                placeholder="Password"
+                                placeholder="密码"
                                 size='large'
+                                value={password}
+                                onChange={e => setPassword(e.target.value)} // 更新密码的状态
                             />
                         </Form.Item>
                         <Form.Item>
                             <Form.Item name="remember" valuePropName="checked" noStyle>
-                                <Checkbox>Remember me</Checkbox>
+                                <Checkbox>记住我</Checkbox>
                             </Form.Item>
-
-                            <a className="login-form-forgot" href="">
-                                Forgot password
-                            </a>
+                            <span className="login-form-forgot">忘记密码？</span>
                         </Form.Item>
-
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="login-form-button">
-                                Log in
+                                登录
                             </Button>
-                            Or <a href="">register now!</a>
+                            或 <a href="">注册</a>
                         </Form.Item>
                     </Form>
                 </Col>
@@ -97,4 +85,5 @@ const Login = () => {
         </div>
     );
 };
+
 export default Login;
