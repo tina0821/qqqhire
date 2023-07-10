@@ -20,7 +20,7 @@ import RegisterForm from './components/login/q'
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
 import Cart from "./components/cart/index";
-import Navbar from './components/Home/navbar_share/navbar_share';
+import NavbarShare from './components/Home/navbar_share/navbar_share';
 import Footer from './components/Home/footer/footer';
 
 const App = () => {

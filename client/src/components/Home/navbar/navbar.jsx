@@ -20,7 +20,8 @@ function Navbar() {
                     {/* LOGO超連結? */}
                     <a href>
                         {/* LOGO 用圖片還是文字? */}
-                        <img className="logoImg" src="http://localhost:8000/img/home/Logo%E7%99%BD.png" />                    </a>
+                        <img className="logoImg" src="http://localhost:8000/img/home/Logo%E7%99%BD.png" />                    
+                    </a>
                 </div>
                 {/* 右邊按鈕/icon */}
                 <div className="header-button-icon">
