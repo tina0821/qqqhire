@@ -19,14 +19,15 @@ import "./css/css.css";
 // import paymentMethod from '../../data/paymentMethod.json'
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
-
 Object.prototype.iscomplete = 0;
 
 class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //cookie資料
+      //暫時存放cookie資料來記錄cookie是否變化
+      allCookie: null,
+      //選擇我cookie要的超商資料
       cookieData: null,
       //縣市鄉鎮資料
       cityCountyData: cityCountyData,
@@ -43,7 +44,7 @@ class Cart extends Component {
       //步驟顯示器
       items: [{ key: "", title: "" }],
       //當前步驟頁面計數器
-      current: 1,
+      current: 0,
       //預設租物車商品資訊
       cartMap: cartTest,
       //全選觸發器
@@ -142,24 +143,11 @@ class Cart extends Component {
       title: item.title,
     }));
 
-    let cookieData = document.cookie
-      .split(";")
-      .map((cookie) => cookie.trim())
-      .find((cookie) => cookie.startsWith("data="));
-
-    if (cookieData) {
-      let encodedValue = cookieData.split("=")[1];
-      let decodedValue = decodeURIComponent(encodedValue);
-      let newData = JSON.parse(decodedValue);
-
-      newstate.cookieData = newData;
-    }
-
     newstate.items = newitems;
 
-    document.addEventListener("cookiechange", this.handleCookieChange());
     
     this.setState(newstate);
+    this.checkCookieChange()
   };
 
   moveSteps = async (e) => {
@@ -299,25 +287,36 @@ class Cart extends Component {
     return newstate;
   };
 
-  // 定义一个函数用于处理 Cookie 变化的逻辑
-  handleCookieChange = () => {
+  //沒招了，定時監聽cookie變化
+  checkCookieChange = () => {
     let newstate = { ...this.state };
-    // 读取名为 "data" 的 Cookie 值
-    let cookieData = document.cookie
+    //取得所有cookie資料
+    let allCookie = document.cookie;
+    //比對現在資料
+    if (allCookie === this.state.allCookie) {
+      //一樣就重新監聽
+      setTimeout(this.checkCookieChange, 1000);
+    } else {
+      //不一樣更新資料
+      newstate.allCookie = allCookie;
+      //取的需要的新資料
+      let cookieData = document.cookie
       .split(";")
       .map((cookie) => cookie.trim())
       .find((cookie) => cookie.startsWith("data="));
-
-    if (cookieData) {
-      let encodedValue = cookieData.split("=")[1];
-      let decodedValue = decodeURIComponent(encodedValue);
-      let newData = JSON.parse(decodedValue);
-
-      newstate.cookieData = newData;
+      //變成機器人看得懂的物件
+      if (cookieData) {
+        let encodedValue = cookieData.split("=")[1];
+        let decodedValue = decodeURIComponent(encodedValue);
+        let newData = JSON.parse(decodedValue);
+        //放進新資料
+        newstate.cookieData = newData;
+        // 更新狀態
+      }
+      //重新監聽
+      setTimeout(this.checkCookieChange, 1000);
+      this.setState(newstate);
     }
-    // 更新组件状态
-    this.setState(newstate);
-    console.log(this.state.cookieData);
   };
 
   //切換運送方式

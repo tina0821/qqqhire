@@ -19,23 +19,21 @@ app.get('/',function(req,res){
 
 app.post('/cart',async (req,res)=>{
     let a = {...req.body}
-    // let pp = `window.postMessage(${JSON.stringify(a)},'https://localhost:3000')`
-    // console.log(pp)
     res.cookie('data', JSON.stringify(a))
-    res.send(a);
-    // res.send('<script>window.close();</script >');
+    // res.send(a);
+    res.send('<script>window.close();</script >');
 });
 
 app.get('/cart',function(req,res){
     coon.query(`SELECT * FROM cartmap INNER join product ON cartmap.productId=product.productId INNER JOIN imagemap ON cartmap.productId = imagemap.productId WHERE cartmap.account='kevin'`,[],(err,data)=>{
-        let productAccount = []
-        data.map(el=>{
-            productAccount.push(el.productAccount)
-        })
-        productAccount = productAccount.filter((value,index,arr)=>{
-            return arr.indexOf(value)===index
-        })
-        console.log(productAccount)
+        // let productAccount = []
+        // data.map(el=>{
+        //     productAccount.push(el.productAccount)
+        // })
+        // productAccount = productAccount.filter((value,index,arr)=>{
+        //     return arr.indexOf(value)===index
+        // })
+        // console.log(productAccount)
     })
     res.send('cartInfo');
 });
