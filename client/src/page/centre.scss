@@ -74,6 +74,7 @@ $paddingTop: 5vh;
   }
 
   .order-table {
+    // 使表格框框固定大小
     width: 92vw;
     // 離按鈕的距離
     margin-top: 50px;
@@ -108,7 +109,7 @@ $paddingTop: 5vh;
     content: "";
     // background-color: rgba(183, 188, 197, 0.76);
     background-color: #dacfcfd4;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 1);
     position: absolute;
     top: -25px;
     bottom: -25px;

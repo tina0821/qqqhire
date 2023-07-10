@@ -59,7 +59,11 @@ function Historyorder() {
                   <td>{tradeitem.rentEnd}</td>
                   <td>{tradeitem.rent}</td>
                   <td>{tradeitem.deposit}</td>
-                  <td>完成訂單</td>
+                  <td>{tradeitem.state === 3
+                    ? '訂單已完成'
+                    : tradeitem.state === 4
+                    ? '訂單已取消'
+                    : tradeitem.state}</td>
                   {/* <td>申訴</td> */}
                 </tr>
               );

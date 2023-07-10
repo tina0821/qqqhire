@@ -3,6 +3,8 @@ import axios from 'axios';
 
 function Myorder() {
   const [tradeitems, setTradeitems] = useState([]);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [selectedTradeitemId, setSelectedTradeitemId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,11 +21,8 @@ function Myorder() {
         console.log(error);
       }
     };
-
-    fetchData(); // 增加fetchData函式的內部定義
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // 移除fetchData依賴數組
+    fetchData();
+  }, []);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -33,14 +32,33 @@ function Myorder() {
     return `${year}-${month}-${day}`;
   };
 
-  const handleCancel = async (tradeitemId) => {
+  const handleCancel = (tradeitemId) => {
+    setSelectedTradeitemId(tradeitemId);
+    setIsConfirmationOpen(true);
+  };
+
+  const handleCancelConfirmation = () => {
+    setIsConfirmationOpen(false);
+  };
+
+  const handleCancelConfirm = async () => {
+    console.log("Selected Trade Item ID:", selectedTradeitemId);
     try {
-      await axios.post('http://localhost:8000/api/cancelOrder', { tradeitemId });
-      // 在此處執行取消訂單的相關邏輯
-      // 例如更新訂單狀態或重新加載資料等
+      await axios.post('http://localhost:8000/api/cancelOrder', { tradeitemId: selectedTradeitemId })
+
+
+      setTradeitems((prevTradeitems) =>
+        prevTradeitems.map((tradeitem) => {
+          if (tradeitem.tradeitemId === selectedTradeitemId) {
+            return { ...tradeitem, state: 4 };
+          }
+          return tradeitem;
+        })
+      );
     } catch (error) {
       console.log(error);
     }
+    setIsConfirmationOpen(false);
   };
 
   return (
@@ -64,10 +82,11 @@ function Myorder() {
               let action = null;
               if (tradeitem.state === 0) {
                 action = (
-                  <button id='actbtn' onClick={() => handleCancel(tradeitem.tradeitemId)}>取消</button>
+                  <button id="actbtn" onClick={() => handleCancel(tradeitem.tradeitemId)}>
+                    取消
+                  </button>
                 );
               }
-              
               return (
                 <tr id="trtd" key={tradeitem.tradeitemId}>
                   <td>{tradeitem.tradeitemId}</td>
@@ -89,11 +108,22 @@ function Myorder() {
                 </tr>
               );
             }
-            return null; // 不符合條件的資料返回null
+            return null;
           })}
         </tbody>
-
       </table>
+
+      {isConfirmationOpen && (
+        <div className="confirmation-modal">
+          <div className="confirmation-content">
+            <p>是否確定取消該筆訂單？</p>
+            <div className="confirmation-buttons">
+              <button onClick={handleCancelConfirmation}>取消</button>
+              <button onClick={handleCancelConfirm}>確定</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
