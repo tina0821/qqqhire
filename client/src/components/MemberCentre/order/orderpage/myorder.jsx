@@ -5,18 +5,32 @@ function Myorder() {
   const [tradeitems, setTradeitems] = useState([]);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/myorder');
+        const tradeitems = response.data.map((tradeitem) => ({
+          ...tradeitem,
+          rentStart: formatDate(tradeitem.rentStart),
+          rentEnd: formatDate(tradeitem.rentEnd),
+        }));
+        console.log(tradeitems);
+        setTradeitems(tradeitems);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/myorder');
-      const tradeitems = response.data;
-      console.log(tradeitems);
-      setTradeitems(tradeitems);
-    } catch (error) {
-      console.log(error);
-    }
+    fetchData(); // 增加fetchData函式的內部定義
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // 移除fetchData依賴數組
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
   };
 
   return (
@@ -35,34 +49,36 @@ function Myorder() {
           </tr>
         </thead>
         <tbody>
-          {tradeitems.map((tradeitem) => (
-            <tr id='trtd' key={tradeitem.tradeitemId}>
-              <td>{tradeitem.tradeitemId}</td>
-              <td>{tradeitem.productName}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                {tradeitem.state === 0
-                  ? '等待回應中'
-                  : tradeitem.state === 1
-                    ? '等待租借中'
-                    : tradeitem.state === 2
-                      ? '租借中'
-                      : tradeitem.state
-                }
-              </td>
-              <td>
-                取消
-              </td>
-            </tr>
-          ))}
+          {tradeitems.map((tradeitem) => {
+            if (tradeitem.state < 3) {
+              return (
+                <tr id="trtd" key={tradeitem.tradeitemId}>
+                  <td>{tradeitem.tradeitemId}</td>
+                  <td>{tradeitem.productName}</td>
+                  <td>{tradeitem.rentStart}</td>
+                  <td>{tradeitem.rentEnd}</td>
+                  <td>{tradeitem.rent}</td>
+                  <td>{tradeitem.deposit}</td>
+                  <td>
+                    {tradeitem.state === 0
+                      ? '等待回應中'
+                      : tradeitem.state === 1
+                        ? '等待租借中'
+                        : tradeitem.state === 2
+                          ? '租借中'
+                          : tradeitem.state}
+                  </td>
+                  <td>取消</td>
+                </tr>
+              );
+            }
+            return null; // 不符合條件的資料返回null
+          })}
         </tbody>
+
       </table>
     </div>
   );
-
 }
 
 export default Myorder;
