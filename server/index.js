@@ -17,10 +17,17 @@ app.get("/", function (req, res) {
 });
 
 app.post("/cart", async (req, res) => {
-  let a = { ...req.body };
-  res.cookie("data", JSON.stringify(a));
-  // res.send(a);
-  res.send("<script>window.close();</script >");
+  // let a = { ...req.body };
+  // res.cookie("data", JSON.stringify(a));
+  // // res.send(a);
+  // res.send("<script>window.close();</script >");
+  let a = JSON.stringify(req.body);
+  // window.close();
+  res.send(`<script>
+  let a = JSON.stringify(${a})
+  localStorage.setItem("address", a);
+  console.log(localStorage.getItem("address"))
+  </script >`);
 });
 
 

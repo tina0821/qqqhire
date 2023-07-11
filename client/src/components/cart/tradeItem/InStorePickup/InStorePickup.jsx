@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Test from "../test/test";
 
 class InStorePickup extends Component {
   render() {
@@ -7,7 +6,6 @@ class InStorePickup extends Component {
       <React.Fragment>
         <div className="col-12 p-4 d-flex align-items-center">
           寄送地址:
-          <Test data={this.props.data} />
           <input
             type="text"
             placeholder="超商地址"

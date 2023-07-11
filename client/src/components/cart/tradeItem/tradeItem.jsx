@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import Listname from "../listname/listname";
 import TradeItemInfo from "./tradeItemInfo/tradeItemInfo";
 import ShippingMethod from "./ShippingMethod/ShippingMethod";
-import PostAddress from "./postAddress/postAddress";
-import HomeDelivery from "./homeDelivery/homeDelivery";
-import InStorePickup from "./InStorePickup/InStorePickup";
-import { Col, Row } from "antd";
+import { Col, Row, Divider } from "antd";
 // import Test from "./test/test";
 
 class TradeItem extends Component {
@@ -18,36 +15,32 @@ class TradeItem extends Component {
             return (
               <React.Fragment key={item.productAccount}>
                 <Row className={"d-flex fw-bolder"}>
-                  <Col xs={24} className="cartFontSize line mt-3">
+                  <Col xs={24} className="cartFontSize mt-4">
                     {item.productAccount}的商品
                   </Col>
+                  <Divider className="borderclass" />
                 </Row>
                 {this.props.data.state.tradeItem[index].product.length !==
                   0 && (
-                  <div key={item.productAccount} className="line">
+                  <React.Fragment key={item.productAccount}>
                     {/* 商品list說明 */}
                     <Listname type={1} />
                     {/* 列出訂單裡的商品 */}
                     {item.product.map((item) => {
                       return <TradeItemInfo item={item} key={item.cartMapId} />;
                     })}
-                  </div>
+                    <Divider className="borderclass" />
+                  </React.Fragment>
                 )}
-                <div className="d-flex flex-wrap justify-content-between mt-5 pb-5 align-items-center">
-                  <div className="col-12 p-4 fw-bolder">寄送資訊</div>
-                  {/* 寄送方式選擇 */}
-                  <ShippingMethod data={this.props.data} />
-                  {/* 依寄送選擇顯示表單 */}
-                  {this.props.data.state.shippingMethod === "post" && (
-                    <PostAddress data={this.props.data} />
-                  )}
-                  {this.props.data.state.shippingMethod === "homeDelivery" && (
-                    <HomeDelivery data={this.props.data} />
-                  )}
-                  {this.props.data.state.shippingMethod === "InStorePickup" && (
-                    <InStorePickup data={this.props.data} />
-                  )}
-                </div>
+                <Row>
+                  <Col xs={24} className="cartFontSize fw-bolder">
+                    寄送資訊
+                  </Col>
+                  {/* 寄送方式元件 */}
+                  <Col xs={24} className="cartFontSize">
+                    <ShippingMethod data={this.props.data} />
+                  </Col>
+                </Row>
               </React.Fragment>
             );
           })}

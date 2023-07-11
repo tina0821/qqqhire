@@ -1,22 +1,22 @@
 [
     {
-        "method":"郵局寄送"
-        ,"value":"post"
-    },
-    {
-        "method":"宅配"
-        ,"value":"homeDelivery"
-    },
-    {
         "method":"7-11取貨"
-        ,"value":"7-11InStorePickup"
+        ,"value":"SevenEleven"
     },
     {
-        "method":"OK超商取貨"
-        ,"value":"OKMartInStorePickup"
+        "method":"全家"
+        ,"value":"FamilyMart"
     },
     {
-        "method":"全家商店取貨"
-        ,"value":"FamilyInStorePickup"
+        "method":"OK"
+        ,"value":"OKMart"
+    },
+    {
+        "method":"萊爾富"
+        ,"value":"Hilife"
+    },
+    {
+        "method":"黑貓宅急便"
+        ,"value":"BlackCat"
     }
 ]
