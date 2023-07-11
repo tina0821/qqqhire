@@ -1,14 +1,14 @@
 /* --- header --- */
 .header {
     /* background-color:white; */
-    margin: 0px;
+    /* border: 2px solid red; */
+    margin-bottom: 5px;
     width: 100%;
     height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid red;
-    
+    z-index: 100;
 }
 
 .header ul {
@@ -19,7 +19,7 @@
 .header-button-icon ul li a {
     text-decoration: none;
     color: rgb(0, 0, 0);
-    /* color: #000; */
+    /* color: white; */
     /* padding: 10px; */
     font-size: 2rem;
     margin-left: 10px;
@@ -27,23 +27,6 @@
     /* border: 2px solid red; */
     display: block;
 }
-
-
-/* header JS效果 */
-/* .header a {
-    transition: 0.5s;
-} */
-
-/* 第一組CSS特效 */
-/* .changeColor {
-    color: #000 !important;
-} */
-
-/* 第二組CSS hover特效 */
-/* .changeColor-hover:hover {
-    color: #14B09B !important;
-} */
-
 
 /* ------------------------ */
 
@@ -100,7 +83,7 @@ height: 70px;
     position: relative;
     line-height: 40px;
 
-    /* &::before {
+    &::before {
         content: "";
         display: block;
         border-bottom: 3px solid;
@@ -120,41 +103,45 @@ height: 70px;
             left: 0;
             transition: width position 0.5s;
         }
-    } */
+    }
 }
 
 /* -------------------------- */
 /* icon 底下選項 */
 .header-icon{
-    height: 115%;
-    margin-right: 15px;
-    display: flex;
-    align-items: center
+    /* border: 2px solid red; */
+    height: 100%;
+    margin-right: 10px;
 }
 
 .header-icon .iconMove{
-    padding-top: 50%;
+    /* border: 2px solid blue; */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .header-icon ul {
+    /* border: 2px solid red; */
     flex-direction: column;
     align-items: flex-end;
-    border: 2px solid rgba(255, 255, 255, 0);
    
 }
 
 .header-icon li{
     height: 100%;
+    /* width: 100%; */
 }
 
 /* 選單 style 設定 */
 ul.drop-menu{
-    border: 2px solid red;
+    /* border: 2px solid red; */
     position: absolute;
-    top: 25%;
-    left: 0;
-    width: 100%;
+    top: 16%;
+    right: 0%;
     padding: 0;
+    z-index: 100;
 }
 
 ul.drop-menu li a{
@@ -227,22 +214,4 @@ li:hover > ul.drop-menu.limenu-2 li:nth-child(5){
 
 
 /* ================================================= */
-/* body{
-    background: #000;
-} */
-
-.AAA{
-    width: 100%;
-    height: 800px;
-    background:rgb(220, 67, 67);
-}
-.BBB{
-    width: 100%;
-    height: 800px;
-    background: yellow;
-}
-.CCC{
-    width: 100%;
-    height: 800px;
-    background:blue;
-}
+/* ===== header JS效果 =====*/

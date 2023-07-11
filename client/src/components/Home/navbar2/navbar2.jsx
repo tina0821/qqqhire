@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useRef } from 'react';
 import style from "./navbar2.module.css"
 
 // 引入 Font Awesome的icon ?
@@ -9,6 +9,7 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 
 function Navbar2() {
+
     return (
         <>
             <header className={style.header}>
@@ -30,8 +31,8 @@ function Navbar2() {
                     </ul>
                     {/* icon */}
                     <ul className={style["header-icon"]}>
-                        <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faHeart} className="icon"/></a></li>
-                        <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faCartShopping} className="icon"/></a></li>
+                        <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faHeart} className="icon" /></a></li>
+                        <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faCartShopping} className="icon" /></a></li>
                         <li>
                             <a href className={style.iconMove}><FontAwesomeIcon icon={faCircleUser} className="icon" /></a>
                             <ul className={`${style["drop-menu"]} ${style["limenu-2"]}`}>
@@ -42,7 +43,7 @@ function Navbar2() {
                     </ul>
                 </div>
             </header>
-            
+
         </>
     );
 }
