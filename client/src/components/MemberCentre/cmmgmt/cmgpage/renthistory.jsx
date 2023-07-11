@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Popbox from '../../order/popbox';
 
 function Renthistory() {
   const [tradeitems, setTradeitems] = useState([]);
- 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,43 +30,23 @@ function Renthistory() {
     return `${year}-${month}-${day}`;
   };
 
-  const handleCancel = (tradeitemId) => {
-    setTradeitems((prevTradeitems) =>
-      prevTradeitems.map((tradeitem) => {
-        if (tradeitem.tradeitemId === tradeitemId) {
-          return { ...tradeitem, state: 4 };
-        }
-        return tradeitem;
-      })
-    );
-  };
-
   return (
     <div className="order-component">
       <table className="order-table">
         <thead>
           <tr>
-            <th>訂單編號</th>
+            <th>商品圖片</th>
             <th>商品</th>
             <th>預約日期</th>
             <th>歸還日期</th>
             <th>租金</th>
             <th>押金</th>
-            <th>操作</th>
+            <th>訂單狀態</th>
           </tr>
         </thead>
         <tbody>
           {tradeitems.map((tradeitem) => {
-            if (tradeitem.state < 3) {
-              let action = null;
-              if (tradeitem.state === 0) {
-                action = (
-                  <Popbox
-                    tradeitemId={tradeitem.tradeitemId}
-                    onCancel={handleCancel}
-                  />
-                );
-              }
+            if (tradeitem.state === 3) {
               return (
                 <tr id="trtd" key={tradeitem.tradeitemId}>
                   <td>{tradeitem.tradeitemId}</td>
@@ -76,9 +55,14 @@ function Renthistory() {
                   <td>{tradeitem.rentEnd}</td>
                   <td>{tradeitem.rent}</td>
                   <td>{tradeitem.deposit}</td>
+                  <td>
+                    {tradeitem.state === 3
+                      ? '訂單已完成'
+                      : tradeitem.state}
+                  </td>
 
-                  <td>{action}</td>
                 </tr>
+                
               );
             }
             return null;
@@ -88,4 +72,5 @@ function Renthistory() {
     </div>
   );
 }
+
 export default Renthistory;

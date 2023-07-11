@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './qucss/bootstrap.css';
 import './qucss/returnqu.css';
 
 function Qu() {
