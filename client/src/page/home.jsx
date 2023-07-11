@@ -12,7 +12,7 @@ import Footer from '../components/Home/footer/footer';
 const Home = () => {
     return (
         <>
-        {/* <Navbar2/> */}
+        <Navbar2/>
         {/* <Navbar/> */}
         <Outdoor/>
         <Outdoor2/>

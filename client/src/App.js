@@ -35,7 +35,7 @@ const App = () => {
           <Link className='m-3' to="/cart">Cart</Link><br />
           <Link className='m-3' to="/tqq">tqq</Link>
         </div>
-        <Navbar2/>
+        {/* <Navbar2/> */}
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/about" element={<About />} /> */}

@@ -1,6 +1,10 @@
 import React, { Component, useEffect, useRef } from 'react';
 import style from "./navbar2.module.css"
 
+import NavbarOut from '../navbarOut_IN/navbarOut';
+import NavbarIN from '../navbarOut_IN/navbarIN';
+
+
 // 引入 Font Awesome的icon ?
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -30,8 +34,9 @@ function Navbar2() {
                         <li><a button className={style["btn-98"]} href>關於我們</a></li>
                     </ul>
                     {/* icon */}
-                    <ul className={style["header-icon"]}>
-                        <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faHeart} className="icon" /></a></li>
+                    <NavbarOut/>
+                    {/* <ul className={style["header-icon"]}> */}
+                        {/* <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faHeart} className="icon" /></a></li>
                         <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faCartShopping} className="icon" /></a></li>
                         <li>
                             <a href className={style.iconMove}><FontAwesomeIcon icon={faCircleUser} className="icon" /></a>
@@ -39,8 +44,8 @@ function Navbar2() {
                                 <li><a href="">會員登入</a></li>
                                 <li><a href="">會員註冊</a></li>
                             </ul>
-                        </li>
-                    </ul>
+                        </li> */}
+                    {/* </ul> */}
                 </div>
             </header>
 
