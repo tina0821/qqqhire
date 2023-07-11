@@ -24,12 +24,14 @@
 .outdoor-word :first-child {
     font-size: 4vw;
     color: rgba(252, 252, 252, 0.779);
+    margin-bottom: -0.5rem;
 
 }
 
 .outdoor-word :last-child {
     font-size: 2vw;
     color: aliceblue;
+    margin-top: -0.5rem;
 }
 
 /* 主頁第一頁中間按鈕 */
@@ -62,6 +64,7 @@
 
 /* 箭頭 */
 .btn-pClass {
+    /* border: 2px solid blue; */
     font-size: 1.5rem;
     position: absolute;
     color: #000;
@@ -109,6 +112,8 @@
         transform: rotate(360deg);
     }
 }
+
+
 
 /* hover動畫設定(CSS) */
 /* .text:has(.div2class:hover).hireClass{

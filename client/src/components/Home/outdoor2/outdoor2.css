@@ -41,11 +41,12 @@
 }
 
 .split>h1 {
+  border: 2px solid red;
   font-size: 4rem;
   color: rgba(0, 0, 0, 0.479);
   position: absolute;
   left: 50%;
-  top: 20%;
+  top: 5%;
   transform: translateX(-50%);
   white-space: nowrap;
 }
