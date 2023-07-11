@@ -33,4 +33,13 @@ $main-color: #0b7597;
         font-size: $font-small;
     }
 
+    label {
+        font-weight: bolder;
+        color:#16778a
+    }
+
+    .ant-input-affix-wrapper{
+
+        border:2px solid #16778a;
+    }
 }

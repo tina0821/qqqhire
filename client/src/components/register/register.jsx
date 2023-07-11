@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { UserOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Steps, Carousel, Col, Row } from 'antd';
+import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select } from 'antd';
 import "./register.scss"
 const { Step } = Steps;
+
 
 const Registration = () => {
   const [form] = Form.useForm();
@@ -17,10 +18,11 @@ const Registration = () => {
     if (currentStep === 2) {
       const allData = { ...page1Data, ...page2Data };
       setaldata(allData)
+      alert(allData)
     }
   }, [currentStep, page1Data, page2Data]);
 
-  
+
   useEffect(() => {
     const postApi = async () => {
       await axios.post('http://localhost:8000/api/register', { aldata: aldata })
@@ -29,7 +31,7 @@ const Registration = () => {
       postApi();
     }
   }, [aldata]);
-  
+
   const handleNext = async (values) => {
     try {
       await form.validateFields(); // 驗證表單數據
@@ -47,15 +49,14 @@ const Registration = () => {
   const handleFinish = (values) => {
     setLoading(true);
     // 在這裡處理最終提交的邏輯，例如發送API請求等
-    console.log('Received values:', values);
+    // console.log('Received values:', values);
     setLoading(false);
     setPage2Data(values);
     setCurrentStep(2);
+
   };
 
   const registerchange = () => { };
-
-
 
   return (
     <div id='registerout'>
@@ -65,21 +66,21 @@ const Registration = () => {
             <div>
               <img
                 // style={contentStyle}
-                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
+                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201428.jpg"
                 alt="Carousel Image 1"
               />
             </div>
             <div>
               <img
                 // style={contentStyle}
-                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
+                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201430.jpg"
                 alt="Carousel Image 2"
               />
             </div>
             <div>
               <img
                 // style={contentStyle}
-                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
+                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
                 alt="Carousel Image 3"
               />
             </div>
@@ -93,7 +94,7 @@ const Registration = () => {
             <Step title="完成註冊" />
           </Steps>
           {currentStep === 0 && (
-            <Form form={form} layout="vertical" onFinish={handleNext}  >
+            <Form form={form} layout="vertical" onFinish={handleNext} style={{ width: '70%', marginTop: '120px' }} >
               <Form.Item
 
                 label="帳號"
@@ -153,16 +154,56 @@ const Registration = () => {
               form={form}
               layout="vertical"
               onFinish={handleFinish}
+              size="large"
+
+              style={{ width: '70%', marginTop: '20px' }}
 
             >
-              <Form.Item
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="姓名"
+                    name="name"
+                    rules={[{ required: true, message: '請輸入姓名' }]}
+                  >
+                    <Input size="large" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="暱稱"
+                    name="nickname"
+                    rules={[{ required: true, message: '請輸入暱稱' }]}
+                  >
+                    <Input size="large" />
+                  </Form.Item>
+                </Col>
+              </Row>
 
-                label="姓名/暱稱"
-                name="name"
-                rules={[{ required: true, message: '請輸入姓名/暱稱' }]}
-              >
-                <Input size='large' />
-              </Form.Item>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="生日"
+                    name="birthday"
+                    rules={[{ required: true, message: '請輸入生日' }]}
+
+                  >
+                    <DatePicker style={{ width: '100%' }} />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="性別"
+                    name="gender"
+                    rules={[{ required: true, message: '請選擇性別' }]}
+                  >
+                    <Select size="large">
+                      <Select.Option value="1">生理男</Select.Option>
+                      <Select.Option value="2">生理女</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row >
 
               <Form.Item
                 label="身分證"
@@ -174,14 +215,7 @@ const Registration = () => {
                     message: '身分證格式不正確',
                   },
                 ]}
-              >
-                <Input size='large' />
-              </Form.Item>
 
-              <Form.Item
-                label="生日"
-                name="birthday"
-                rules={[{ required: true, message: '請輸入生日' }]}
               >
                 <Input size='large' />
               </Form.Item>

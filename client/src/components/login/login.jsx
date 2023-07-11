@@ -1,25 +1,70 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, Form, Input, Col, Row } from 'antd';
+import { Button, Checkbox, Form, Input, Col, Row, Carousel } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import axios from 'axios';
+
 import "./login.scss"
 
 const Login = () => {
-    const [username, setUsername] = useState('');
+    const [account, setaccount] = useState('');
     const [password, setPassword] = useState('');
 
-    const onFinish = () => {
-        // 在这里处理登录逻辑
-        console.log('用户名:', username);
-        console.log('密码:', password);
-        // 发起登录请求或执行其他操作
+    const onFinish = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/login', {
+                account: account,
+                password: password
+            });
+
+            if (response.status === 200) {
+                console.log('ok');
+                const userInfo = `${account}`;
+                sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+
+            } else if (response.status === 401) {
+                console.log('帳號或密碼錯');
+            }
+
+        } catch (error) {
+            console.error('请求失败:', error);
+        }
     };
+
+
+
+
+
+
 
     return (
 
         <div id='loginout' >
             <Row id='login'>
                 <Col span={12}>
-                    {/* 省略 Carousel 的代码 */}
+                    <Carousel autoplay className='Carousel' style={{ height: "100%" }}>
+                        <div>
+                            <img
+                                // style={contentStyle}
+                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
+                                alt="Carousel Image 1"
+                            />
+                        </div>
+                        <div>
+                            <img
+                                // style={contentStyle}
+                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
+                                alt="Carousel Image 2"
+                            />
+                        </div>
+                        <div>
+                            <img
+                                // style={contentStyle}
+                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
+                                alt="Carousel Image 3"
+                            />
+                        </div>
+                    </Carousel>
                 </Col>
                 <Col span={12}>
                     <h1>登入</h1>
@@ -29,24 +74,24 @@ const Login = () => {
                         initialValues={{
                             remember: true,
                         }}
-                        onFinish={onFinish} // 添加 onFinish 事件处理程序
+                        onFinish={onFinish}
 
                     >
                         <Form.Item
-                            name="username"
+                            name="account"
                             rules={[
                                 {
                                     required: true,
-                                    message: '请输入用户名！',
+                                    message: '請輸入帳號！',
                                 },
                             ]}
                         >
                             <Input
                                 prefix={<UserOutlined className="site-form-item-icon" />}
-                                placeholder="用户名"
+                                placeholder="帳號"
                                 size='large'
-                                value={username}
-                                onChange={e => setUsername(e.target.value)} // 更新用户名的状态
+                                value={account}
+                                onChange={e => setaccount(e.target.value)} // 更新用户名的状态
                             />
                         </Form.Item>
                         <Form.Item
@@ -54,7 +99,7 @@ const Login = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: '请输入密码！',
+                                    message: '請輸入密碼！',
                                 },
                             ]}
                         >
@@ -69,15 +114,20 @@ const Login = () => {
                         </Form.Item>
                         <Form.Item>
                             <Form.Item name="remember" valuePropName="checked" noStyle>
-                                <Checkbox>记住我</Checkbox>
+                                <Checkbox>記住我</Checkbox>
                             </Form.Item>
-                            <span className="login-form-forgot">忘记密码？</span>
+                            <span className="login-form-forgot">忘記密碼</span>
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
-                                登录
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                className="login-form-button"
+                        
+                            >
+                                登入
                             </Button>
-                            或 <a href="">注册</a>
+                            或 <a href="http://localhost:3000/RegistrationForm">註冊</a>
                         </Form.Item>
                     </Form>
                 </Col>
