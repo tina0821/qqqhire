@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ConfigProvider } from "antd";
-import { Button, message, Steps } from "antd";
+import { Button, message, Steps, Col, Row } from "antd";
 // import io from 'socket.io-client';
 import axios from "axios";
 // import { onLogin, checkLogin, logOut } from "../cookie/cookie";
@@ -42,7 +42,11 @@ class Cart extends Component {
         { title: "訂單送出" },
       ],
       //步驟顯示器
-      items: [{ key: "", title: "" }],
+      items: [
+        { key: "租物清單", title: "租物清單" },
+        { key: "訂單確認", title: "訂單確認" },
+        { key: "訂單送出", title: "訂單送出" },
+      ],
       //當前步驟頁面計數器
       current: 0,
       //預設租物車商品資訊
@@ -81,49 +85,57 @@ class Cart extends Component {
         />
         {/* antd步驟元件內建中文 */}
         <ConfigProvider locale={zhCN}>
-          <div className="container-xl">
+          <div className="">
             {/* 步驟條 */}
-            <Steps
-              className="steps"
-              current={this.state.current}
-              items={this.state.items}
-            />
+            <Row align={"middle"} justify={"center"}>
+              <Col xs={22}>
+                <Steps
+                  className="steps"
+                  current={this.state.current}
+                  items={this.state.items}
+                />
+              </Col>
+            </Row>
             {/* 步驟內容物 */}
-            <div className="contentStyle">
-              {this.state.current === 0 && <ShopingCart data={this} />}
-              {this.state.current === 1 && <TradeItem data={this} />}
-              {this.state.current === 2 && <ShopingCart data={this} />}
-            </div>
+            <Row align={"middle"} justify={"center"}>
+              <Col xs={22} className="contentStyle cartFontSize">
+                {this.state.current === 0 && <ShopingCart data={this} />}
+                {this.state.current === 1 && <TradeItem data={this} />}
+                {this.state.current === 2 && <ShopingCart data={this} />}
+              </Col>
+            </Row>
             {/* 切換步驟選單 */}
-            <div className="d-flex justify-content-end mt-5">
-              {this.state.current > 0 && (
-                <Button
-                  style={{ margin: "0 8px" }}
-                  onClick={() => this.moveSteps(-1)}
-                  size="large"
-                >
-                  返回
-                </Button>
-              )}
-              {this.state.current < this.state.steps.length - 1 && (
-                <Button
-                  type="primary"
-                  onClick={() => this.moveSteps(1)}
-                  size="large"
-                >
-                  下一步
-                </Button>
-              )}
-              {this.state.current === this.state.steps.length - 1 && (
-                <Button
-                  type="primary"
-                  onClick={() => message.success("Processing complete!")}
-                  size="large"
-                >
-                  結帳
-                </Button>
-              )}
-            </div>
+            <Row align={"middle"} justify={"center"}>
+              <Col xs={22} className="d-flex justify-content-end mt-5">
+                {this.state.current > 0 && (
+                  <Button
+                    style={{ margin: "0 8px" }}
+                    onClick={() => this.moveSteps(-1)}
+                    size="large"
+                  >
+                    返回
+                  </Button>
+                )}
+                {this.state.current < this.state.steps.length - 1 && (
+                  <Button
+                    type="primary"
+                    onClick={() => this.moveSteps(1)}
+                    size="large"
+                  >
+                    下一步
+                  </Button>
+                )}
+                {this.state.current === this.state.steps.length - 1 && (
+                  <Button
+                    type="primary"
+                    onClick={() => message.success("Processing complete!")}
+                    size="large"
+                  >
+                    結帳
+                  </Button>
+                )}
+              </Col>
+            </Row>
           </div>
         </ConfigProvider>
       </React.Fragment>
@@ -132,22 +144,16 @@ class Cart extends Component {
 
   //第一次更新資訊
   componentDidMount = async () => {
+    //取得資料庫商品分類完成的資料
+    let newCartMap;
     await axios.get("http://localhost:8000/cart", {}).then((res) => {
-      // console.log(res.data);
+      newCartMap = res.data;
     });
-
+    //更新資料
     let newstate = { ...this.state };
-
-    let newitems = this.state.steps.map((item) => ({
-      key: item.title,
-      title: item.title,
-    }));
-
-    newstate.items = newitems;
-
-    
+    newstate.cartMap = newCartMap;
+    this.checkCookieChange();
     this.setState(newstate);
-    this.checkCookieChange()
   };
 
   moveSteps = async (e) => {
@@ -260,7 +266,7 @@ class Cart extends Component {
     let newstate = { ...this.state };
     newstate.cartMap.map((item, index) => {
       newstate.cartMap[index].product = item.product.filter((value) => {
-        return value.cMID !== e.cMID;
+        return value.cartMapId !== e.cartMapId;
       });
       newstate.show = 0;
       return true;
@@ -301,9 +307,9 @@ class Cart extends Component {
       newstate.allCookie = allCookie;
       //取的需要的新資料
       let cookieData = document.cookie
-      .split(";")
-      .map((cookie) => cookie.trim())
-      .find((cookie) => cookie.startsWith("data="));
+        .split(";")
+        .map((cookie) => cookie.trim())
+        .find((cookie) => cookie.startsWith("data="));
       //變成機器人看得懂的物件
       if (cookieData) {
         let encodedValue = cookieData.split("=")[1];

@@ -8,7 +8,15 @@
         ,"value":"homeDelivery"
     },
     {
-        "method":"超商取貨"
-        ,"value":"InStorePickup"
+        "method":"7-11取貨"
+        ,"value":"7-11InStorePickup"
+    },
+    {
+        "method":"OK超商取貨"
+        ,"value":"OKMartInStorePickup"
+    },
+    {
+        "method":"全家商店取貨"
+        ,"value":"FamilyInStorePickup"
     }
 ]

@@ -1,18 +1,19 @@
 import React, { Component } from "react";
+import { Col, Row } from "antd";
 class TradeItemInfo extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="gridActive3 ps-5 pt-3 pb-3 cartFontSize  align-items-center">
-          <div className=" d-flex">{this.props.item.productName}</div>
-          <div className="dateFontSize">
+        <Row className="cartFontSize align-items-center">
+          <Col xs={8} className="cartFontSize d-flex">{this.props.item.productName}</Col>
+          <Col xs={4} className="dateFontSize">
             {this.props.item.rentStart}~{this.props.item.rentEnd}
-          </div>
-          <div className="">{this.props.item.day}</div>
-          <div className=" d-flex">{this.props.item.rent}</div>
-          <div className=" d-flex">{this.props.item.deposit}</div>
-          <div className=" d-flex">{this.props.item.total}</div>
-        </div>
+          </Col>
+          <Col xs={3} className="cartFontSize">{this.props.item.day}</Col>
+          <Col xs={3} className="cartFontSize d-flex">{this.props.item.rent}</Col>
+          <Col xs={3} className="cartFontSize d-flex">{this.props.item.deposit}</Col>
+          <Col xs={3} className="cartFontSize d-flex">{this.props.item.total}</Col>
+        </Row>
       </React.Fragment>
     );
   }

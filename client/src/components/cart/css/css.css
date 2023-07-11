@@ -123,6 +123,13 @@ a {
   width: 100%;
 }
 
+.line::after{
+  content: "";
+  border-top: 2px dashed black;
+  display: flex;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 .contentStyle{
   text-align: center;
   border-radius: 10px;
@@ -163,7 +170,7 @@ a {
 @media screen and (max-width: 400px) {
   .gridActive {
     display: grid;
-    grid-template-columns: 7% 0% 35% 15% 10% 10% 10% 10% 3%;
+    grid-template-columns: 25% 25% 25% 25%;
   }
   .displayNone{
     display: none;

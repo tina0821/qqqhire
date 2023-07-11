@@ -3,10 +3,10 @@
         "productAccount": "kevin",
         "product": [
             {
-                "cMID": "aaaaa",
+                "cartMapId": "aaaaa",
                 "productID": "商品一",
                 "productName": "咖啡機",
-                "images": "/images/product/coffee006冰滴咖啡去背.png",
+                "imageSrc": "/images/product/coffee006冰滴咖啡去背.png",
                 "rent": 450,
                 "deposit": 888,
                 "rentStart": "112-04-11",
@@ -16,10 +16,10 @@
                 "productCity": "臺北市"
             },
             {
-                "cMID": "bbbb",
+                "cartMapId": "bbbb",
                 "productID": "商品2",
                 "productName": "娃娃",
-                "images": "/images/product/coffee006冰滴咖啡去背.png",
+                "imageSrc": "/images/product/coffee006冰滴咖啡去背.png",
                 "rent": 450,
                 "deposit": 888,
                 "rentStart": "112-04-11",
@@ -34,10 +34,10 @@
         "productAccount": "simon",
         "product": [
             {
-                "cMID": "cccc",
+                "cartMapId": "cccc",
                 "productID": "商品一",
                 "productName": "咖啡機",
-                "images": "/images/product/coffee006冰滴咖啡去背.png",
+                "imageSrc": "/images/product/coffee006冰滴咖啡去背.png",
                 "rent": 450,
                 "deposit": 888,
                 "rentStart": "112-04-11",
@@ -47,10 +47,10 @@
                 "productCity": "臺北市"
             },
             {
-                "cMID": "dddd",
+                "cartMapId": "dddd",
                 "productID": "商品2",
                 "productName": "娃娃",
-                "images": "/images/product/coffee006冰滴咖啡去背.png",
+                "imageSrc": "/images/product/coffee006冰滴咖啡去背.png",
                 "rent": 450,
                 "deposit": 888,
                 "rentStart": "112-04-11",
