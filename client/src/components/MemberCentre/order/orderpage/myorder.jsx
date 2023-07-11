@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Popbox from '../popbox';
 
 function Myorder() {
   const [tradeitems, setTradeitems] = useState([]);
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const [selectedTradeitemId, setSelectedTradeitemId] = useState(null);
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,32 +32,14 @@ function Myorder() {
   };
 
   const handleCancel = (tradeitemId) => {
-    setSelectedTradeitemId(tradeitemId);
-    setIsConfirmationOpen(true);
-  };
-
-  const handleCancelConfirmation = () => {
-    setIsConfirmationOpen(false);
-  };
-
-  const handleCancelConfirm = async () => {
-    console.log("Selected Trade Item ID:", selectedTradeitemId);
-    try {
-      await axios.post('http://localhost:8000/api/cancelOrder', { tradeitemId: selectedTradeitemId })
-
-
-      setTradeitems((prevTradeitems) =>
-        prevTradeitems.map((tradeitem) => {
-          if (tradeitem.tradeitemId === selectedTradeitemId) {
-            return { ...tradeitem, state: 4 };
-          }
-          return tradeitem;
-        })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    setIsConfirmationOpen(false);
+    setTradeitems((prevTradeitems) =>
+      prevTradeitems.map((tradeitem) => {
+        if (tradeitem.tradeitemId === tradeitemId) {
+          return { ...tradeitem, state: 4 };
+        }
+        return tradeitem;
+      })
+    );
   };
 
   return (
@@ -82,9 +63,10 @@ function Myorder() {
               let action = null;
               if (tradeitem.state === 0) {
                 action = (
-                  <button id="actbtn" onClick={() => handleCancel(tradeitem.tradeitemId)}>
-                    取消
-                  </button>
+                  <Popbox
+                    tradeitemId={tradeitem.tradeitemId}
+                    onCancel={handleCancel}
+                  />
                 );
               }
               return (
@@ -112,18 +94,6 @@ function Myorder() {
           })}
         </tbody>
       </table>
-
-      {isConfirmationOpen && (
-        <div className="confirmation-modal">
-          <div className="confirmation-content">
-            <p>是否確定取消該筆訂單？</p>
-            <div className="confirmation-buttons">
-              <button onClick={handleCancelConfirmation}>取消</button>
-              <button onClick={handleCancelConfirm}>確定</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

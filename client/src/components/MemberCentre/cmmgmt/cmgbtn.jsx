@@ -2,8 +2,8 @@
 import React from 'react';
 import Mycm from './cmgpage/mycm';
 import Rentalreq from './cmgpage/rentalreq';
-import Renthistory from './cmgpage/renthistory';
 import Rentout from './cmgpage/rentout';
+import Renthistory from './cmgpage/renthistory';
 
 const Cmgbtn = ({ displayedComponent, handleButtonClick }) => {
   return (
@@ -15,17 +15,17 @@ const Cmgbtn = ({ displayedComponent, handleButtonClick }) => {
         <button id='mainbtn' onClick={() => handleButtonClick('Rentalreq')} className={displayedComponent === 'Rentalreq' ? 'active' : ''}>
           租借請求
         </button>
-        <button id='mainbtn' onClick={() => handleButtonClick('Renthistory')} className={displayedComponent === 'Renthistory' ? 'active' : ''}>
+        <button id='mainbtn' onClick={() => handleButtonClick('Rentout')} className={displayedComponent === 'Rentout' ? 'active' : ''}>
           出租中
         </button>
-        <button id='mainbtn' onClick={() => handleButtonClick('Rentout')} className={displayedComponent === 'Rentout' ? 'active' : ''}>
+        <button id='mainbtn' onClick={() => handleButtonClick('Renthistory')} className={displayedComponent === 'Renthistory' ? 'active' : ''}>
           歷史紀錄
         </button>
       </div>
       {displayedComponent === 'Mycm' && <Mycm />}
       {displayedComponent === 'Rentalreq' && <Rentalreq />}
-      {displayedComponent === 'Renthistory' && <Renthistory />}
       {displayedComponent === 'Rentout' && <Rentout />}
+      {displayedComponent === 'Renthistory' && <Renthistory />}
     </div>
   );
 };
