@@ -57,7 +57,7 @@ class Cart extends Component {
       //進入第二頁結帳商品的資訊
       tradeItem: null,
       //手動輸入的地址
-      address: null,
+      address: {},
       //最後運送的地址
       finaladdress: null,
       //超商地址
@@ -150,8 +150,12 @@ class Cart extends Component {
     this.setState(newstate);
   };
 
+componentDidUpdate(){
+  console.log(this.state.address)
+}
+
   moveSteps = async (e) => {
-    let newstate = this.sendDataToStep2();
+    let newstate = {...this.state};
     newstate.current += e;
     //切換頁面做依判斷做事
     switch (newstate.current) {
@@ -160,12 +164,7 @@ class Cart extends Component {
         break;
       //訂單頁面沒訂單要擋住，顯示提示框type2告訴使用者沒有勾選商品
       case 1:
-        if (newstate.tradeItem.length === 0) {
-          newstate.current = 0;
-          newstate.deletePromptType = 2;
-          newstate.show = 1;
-        }
-
+        newstate=this.sendDataToStep2(newstate)
         break;
       case 2:
         !newstate.address
@@ -269,31 +268,45 @@ class Cart extends Component {
   };
 
   //向第二頁傳送以勾選商品資訊
-  sendDataToStep2 = () => {
-    let newstate = { ...this.state };
+  sendDataToStep2 = (data) => {
+    let newstate = { ...data };
     let faketradeItem = [];
+    //塞入購物車裡每個賣家的資料
     newstate.cartMap.map((item, index) => {
       faketradeItem[index] = { productAccount: item.productAccount };
+      //為每一個賣家的商品開一個陣列
       faketradeItem[index].product = [];
+      //假如有勾選就塞進去
       item.product.map((v, i) => {
         v.iscomplete === 1 && faketradeItem[index].product.push(v);
         return true;
       });
       return true;
     });
+    //打包帶給結帳頁面用，果濾掉沒有勾選商品的賣家
     newstate.tradeItem = faketradeItem.filter((item) => {
       return item.product.length !== 0;
     });
+    //假如沒商品勾選頁數停留在0顯示錯誤2沒有勾選商品
+    if (newstate.tradeItem.length === 0) {
+      newstate.current = 0;
+      newstate.deletePromptType = 2;
+      newstate.show = 1;
+    }
+    //傳出去
     return newstate;
   };
 
 
-  //記錄寄送地址(取得手動輸入值和完整地址)
-  addAddress = (addressValue, finaladdress) => {
-    console.log(addressValue)
+  //記錄每一位賣家訂單的寄送地址
+  addAddress = (addressValue, productAccount,target=0) => {
     let newstate = { ...this.state };
-    // //資料修改新增
-    newstate.address = addressValue;
+    !Array.isArray(newstate.address[productAccount])&&
+    (newstate.address[productAccount]=[])
+    //資料修改新增
+    target&&
+    (newstate.address[productAccount][0]=target)
+    newstate.address[productAccount][1] = addressValue;
     this.setState(newstate);
   };
 

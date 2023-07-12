@@ -121,7 +121,7 @@ a {
 }
 
 .ant-select,.ant-select-selector,.ant-select-selector .ant-select-selection-item{
-  height: 70px !important;
+  height: 50px !important;
   display: flex;
   align-items: center;
   justify-content: center;

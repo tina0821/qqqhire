@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Listname from "../listname/listname";
 import TradeItemInfo from "./tradeItemInfo/tradeItemInfo";
 import ShippingMethod from "./ShippingMethod/ShippingMethod";
+import PayType from './payType/payType'
 import { Col, Row, Divider } from "antd";
 // import Test from "./test/test";
 
@@ -38,8 +39,8 @@ class TradeItem extends Component {
                   </Col>
                 </Row>
                 {/* 寄送方式元件 */}
-                <ShippingMethod data={this.props.data} />
-                <div>付款方式前置作業</div>
+                <ShippingMethod data={this.props.data} productAccount={item.productAccount} />
+                <PayType>付款方式前置作業</PayType>
               </React.Fragment>
             );
           })}

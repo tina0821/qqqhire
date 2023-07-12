@@ -16,7 +16,8 @@ class ShippingMethod extends Component {
       //存地址資料之後回傳主頁面
       address: "",
       //地址資料
-      CityCountyData: CityCountyData,
+      CityCountyData: "",
+      err: 0,
     };
   }
   render() {
@@ -39,12 +40,14 @@ class ShippingMethod extends Component {
           {state.chooseShippingMethod === "BlackCat" && (
             <Cascader
               style={{ width: "20%", fontStyle: "900" }}
+              allowClear={0}
+              defaultValue={"請選擇縣市"}
               fieldNames={{
                 label: "Name",
                 value: "Name",
                 children: "AreaList",
               }}
-              options={this.state.CityCountyData}
+              options={CityCountyData}
               onChange={(e) => {
                 this.changeCityCounty(e);
               }}
@@ -52,20 +55,36 @@ class ShippingMethod extends Component {
           )}
           <Input
             className="cartFontSize fw-bolder"
-            style={{ height: 70 }}
-            placeholder={"地址欄位"}
+            status={this.state.err && "error"}
+            style={{ height: 50 }}
+            placeholder={
+              this.state.chooseShippingMethod === "BlackCat"
+                ? this.state.CityCountyData
+                  ? "地址欄位"
+                  : "請先選擇縣市"
+                : "地址欄位"
+            }
             readOnly={state.chooseShippingMethod !== "BlackCat"}
+            disabled={
+              !this.state.CityCountyData &&
+              state.chooseShippingMethod === "BlackCat"
+            }
             value={state.address}
             onChange={(e) => {
               this.writeAddress(e);
-              this.props.data.addAddress(e.target.value);
+              this.props.data.addAddress(
+                this.state.chooseShippingMethod === "BlackCat"
+                  ? this.state.CityCountyData + e.target.value
+                  : e.target.value,
+                this.props.productAccount
+              );
             }}
           />
           {state.chooseShippingMethod &&
             state.chooseShippingMethod !== "BlackCat" && (
               <Button
                 className="cartFontSize fw-bolder"
-                style={{ height: 70, fontSize: 1.7 }}
+                style={{ height: 50, lineHeight: 0 }}
                 size="large"
                 onClick={() => {
                   handleGetStore(this.state.chooseShippingMethod);
@@ -102,10 +121,11 @@ class ShippingMethod extends Component {
       address = JSON.parse(address);
       //將資訊放上來
       newstate.address = address.CVSAddress + address.CVSStoreName;
+      newstate.address ? (newstate.err = 0) : (newstate.err = 1);
       //移除cookie
       cookie.remove("address");
       //更新資料
-      this.props.data.addAddress(newstate.address);
+      this.props.data.addAddress(newstate.address, this.props.productAccount);
       this.setState(newstate);
     } else {
       //持續監聽設十分鐘後取消監聽
@@ -117,20 +137,20 @@ class ShippingMethod extends Component {
     }
   };
 
-  //手動輸入地址要更新資訊
+  //手動輸入地址要更新資訊+資訊欄為空值時增加err count
   writeAddress = (e) => {
     let newstate = { ...this.state };
     newstate.address = e.target.value;
+    newstate.address ? (newstate.err = 0) : (newstate.err = 1);
     this.setState(newstate);
   };
 
   //選擇縣市地址
   changeCityCounty = (target) => {
     let newstate = { ...this.state };
-    newstate.address = "";
-    this.props.data.addAddress(newstate.address);
+    newstate.CityCountyData = "";
     target.map((value) => {
-      return (newstate.address += value);
+      return (newstate.CityCountyData += value);
     });
     this.setState(newstate);
   };
@@ -140,7 +160,12 @@ class ShippingMethod extends Component {
     let newstate = { ...this.state };
     newstate.chooseShippingMethod = target;
     newstate.address = "";
-    this.props.data.addAddress(newstate.address);
+    newstate.address ? (newstate.err = 0) : (newstate.err = 1);
+    this.props.data.addAddress(
+      newstate.address,
+      this.props.productAccount,
+      target
+    );
     this.setState(newstate);
   };
 }
