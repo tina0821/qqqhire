@@ -180,39 +180,6 @@
     left: 5%;
 }
 
-
-/* 輪播測試 */
-/* Slideshow container */
-.slideshow-container {
-    /* border: 2px solid red; */
-    width: 100%;
-}
-
-/* .slideshow-container .mySlides { */
-.slideshow-container img {
-    width: 80%;
-    height: 25vh;
-    padding-left: 10%;
-    /* height: 50vh; */
-
-}
-
-/* Fading animation */
-.fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
-}
-
-@keyframes fade {
-    from {
-        opacity: 0.2
-    }
-
-    to {
-        opacity: 1
-    }
-}
-
 /* outdoor3熱門當季活動 圖片特效 */
 /* ================================== */
 
@@ -261,7 +228,7 @@
     height: 100%;
     
     display: flex;
-    align-items:end;
+    align-items:flex-end;
     justify-content:center;
 
     /* text-align: center; */

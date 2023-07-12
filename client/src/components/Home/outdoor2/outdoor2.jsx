@@ -1,5 +1,6 @@
-import React, { Component, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import "./outdoor2.css"
+import { Link } from 'react-router-dom';
 
 function Outdoor2() {
     const od2AmiRL = useRef(null);
@@ -40,13 +41,13 @@ function Outdoor2() {
 
                 <div className="split left" ref={od2AmiRight}>
                     <h1>出租商品</h1>
-                    <a href className="btn-100">explore</a>
+                    <Link to="/" className="btn-100">explore</Link>
                     {/* <p>與他人分享你的愛好,同時賺取額外收入</p> */}
                 </div>
 
                 <div className="split right" ref={od2AmiLeft}>
                     <h1>租借商品</h1>
-                    <a href className="btn-100">explore</a>
+                    <Link to="/" className="btn-100">explore</Link>
                     {/* <p>與他人分享你的愛好,同時賺取額外收入</p> */}
                 </div>
             </div>

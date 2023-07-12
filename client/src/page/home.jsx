@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Navbar from '../components/Home/navbar/navbar';
+// import Navbar from '../components/Home/navbar/navbar';
 import Navbar2 from '../components/Home/navbar2/navbar2';
 import Outdoor from '../components/Home/outdoor/outdoor';
 import Outdoor2 from '../components/Home/outdoor2/outdoor2';

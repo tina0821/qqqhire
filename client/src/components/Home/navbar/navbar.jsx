@@ -1,6 +1,6 @@
-import React, { Component, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import "./navbar.css";
-
+import { Link } from 'react-router-dom';
 // 引入 Font Awesome icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // 引入個別 icon
@@ -32,30 +32,30 @@ function Navbar() {
                 {/* LOGO */}
                 <div className="header-logo">
                     {/* LOGO超連結 */}
-                    <a className="headerLogoImg" href = "">
+                    <Link className="headerLogoImg" to="/">
                         {/* 白 */}
                         <img src="http://localhost:8000/img/home/Logo%E7%99%BD.png" />    
                         {/* 黑 */}
                         <img src="http://localhost:8000/img/home/Logo%E9%BB%91.png" />    
-                    </a>
+                    </Link>
                 </div>
                 {/* 右邊按鈕/icon */}
                 <div className="header-button-icon">
                     {/* 按鈕 */}
                     <ul className="header-button">
-                        <li><a button className="btn-98"  href>租借列表</a></li>
-                        <li><a button className="btn-98"  href>快速上架</a></li>
-                        <li><a button className="btn-98"  href>關於我們</a></li>
+                        <li><Link button className="btn-98"  to="/">租借列表</Link></li>
+                        <li><Link button className="btn-98"  to="/">快速上架</Link></li>
+                        <li><Link button className="btn-98"  to="/">關於我們</Link></li>
                     </ul>
                     {/* icon */}
                     <ul className="header-icon">
-                        <li><a href className="iconMove" ><FontAwesomeIcon icon={faHeart} className="icon"/></a></li>
-                        <li><a href className="iconMove" ><FontAwesomeIcon icon={faCartShopping} className="icon"/></a></li>
+                        <li><Link to="/" className="iconMove" ><FontAwesomeIcon icon={faHeart} className="icon"/></Link></li>
+                        <li><Link to="/" className="iconMove" ><FontAwesomeIcon icon={faCartShopping} className="icon"/></Link></li>
                         <li>
-                            <a href className="iconMove" ><FontAwesomeIcon icon={faCircleUser} className="icon"/></a>
+                            <Link to="/" className="iconMove" ><FontAwesomeIcon icon={faCircleUser} className="icon"/></Link>
                             <ul className="drop-menu limenu-2">
-                                <li><a href className="iconList">會員登入</a></li>
-                                <li><a href className="iconList">會員註冊</a></li>
+                                <li><Link to="/" className="iconList">會員登入</Link></li>
+                                <li><Link to="/" className="iconList">會員註冊</Link></li>
                             </ul>
                         </li>
                     </ul>

@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import "./outdoor4.css";
+import { Link } from 'react-router-dom';
 
 function Outdoor4() {
     return (
         <>
             {/* 主頁畫面4:關於我們 */}
             <div className="outdoor4">
-                <img src="http://localhost:8000/img/home/%E9%97%9C%E6%96%BC%E6%88%91%E5%80%91-%E6%B5%B7.png" />
+                <img src="http://localhost:8000/img/home/%E9%97%9C%E6%96%BC%E6%88%91%E5%80%91-%E6%B5%B7.png" alt='關於我們'/>
                 {/* 左邊框 */}
                 <div className="outdoor4-left" />
                 {/* 中間文字框 */}
@@ -17,9 +18,9 @@ function Outdoor4() {
                 {/* 右邊框 */}
                 <div className="outdoor4-right" />
                 {/* 按鈕 */}
-                <a href className="btn-about">
+                <Link to="" className="btn-about">
                     <p className="btn-about-p">關於我們</p>
-                </a>
+                </Link>
             </div>
         </>
     );
