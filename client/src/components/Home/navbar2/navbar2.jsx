@@ -11,6 +11,7 @@ function Navbar2() {
     return (
         <>
             <header className={style.header}>
+                
                 {/* LOGO */}
                 <div className={style["header-logo"]}>
                     {/* LOGO超連結? */}
@@ -29,10 +30,8 @@ function Navbar2() {
                     </ul>
                     {/* icon */}
                     {isLoggedIn ? <NavbarIN/> : <NavbarOut/>}
-                    {/* <NavbarOut/> */}
-                    {/* <NavbarIN/> */}
-
                 </div>
+
             </header>
 
         </>

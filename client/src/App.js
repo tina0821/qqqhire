@@ -16,9 +16,10 @@ import Product from './page/product';
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
 // import Cart from "./components/cart/index";
+
 import Navbar2 from './components/Home/navbar2/navbar2';
 // import Navbar from './components/Home/navbar/navbar';
-// import Footer from './components/Home/footer/footer';
+import Footer from './components/Home/footer/footer';
 import AAA from './components/Home/demo/test';
 
 
@@ -26,31 +27,33 @@ const App = () => {
   return (
     <>
       <Router>
+        
         <div className='d-flex'>
           <Link className='m-3' to="/">Home</Link> <br />
           <Link className='m-3' to="/product">product</Link><br />
           <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br />
-          {/* <Link className='m-3' to="/cart">Cart</Link><br /> */}
+          <Link className='m-3' to="/cart">Cart</Link><br />
           <Link className='m-3' to="/tqq">tqq</Link>
         </div>
         
-        <Navbar2/>
+        <Navbar2 />
         {/* <Navbar/> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/aaa" element={<AAA />} />
 
           {/* <Route path="/about" element={<About />} /> */}
-          
+
           <Route path="/product" element={<Product />} />
-          
+
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
-          
+
           <Route path="/RegistrationForm" element={<RegistrationForm />} />
           {/* <Route path="/cart" element={<Cart />} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>    
+        <Footer />
+      </Router>
     </>
   );
 };
