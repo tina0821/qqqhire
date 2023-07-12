@@ -11,7 +11,6 @@ import ShopingCart from "./shopingCart/index";
 import DeletePrompt from "./shopingCart/productInfo/deletePrompt/deletePrompt";
 import TradeItem from "./tradeItem/tradeItem";
 import zhCN from "antd/locale/zh_TW";
-import cityCountyData from "../../data/CityCountyData.json";
 import cartTest from "../../data/cartTest.json";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
@@ -29,10 +28,6 @@ class Cart extends Component {
       allCookie: null,
       //選擇我cookie要的超商資料
       cookieData: null,
-      //縣市鄉鎮資料
-      cityCountyData: cityCountyData,
-      //選擇當前的縣市對應出現相對鄉鎮
-      chooseCityCountyData: cityCountyData[0],
       //日期
       date: undefined,
       //步驟名稱
@@ -146,13 +141,12 @@ class Cart extends Component {
   componentDidMount = async () => {
     //取得資料庫商品分類完成的資料
     let newCartMap;
-    await axios.get("http://localhost:8000/cart", {}).then((res) => {
+    await axios.get("http://localhost:8000/cart/cart", {}).then((res) => {
       newCartMap = res.data;
     });
     //更新資料
     let newstate = { ...this.state };
     newstate.cartMap = newCartMap;
-    this.checkCookieChange();
     this.setState(newstate);
   };
 
@@ -293,57 +287,13 @@ class Cart extends Component {
     return newstate;
   };
 
-  //沒招了，定時監聽cookie變化
-  checkCookieChange = () => {
-    let newstate = { ...this.state };
-    //取得所有cookie資料
-    let allCookie = document.cookie;
-    //比對現在資料
-    if (allCookie === this.state.allCookie) {
-      //一樣就重新監聽
-      setTimeout(this.checkCookieChange, 1000);
-    } else {
-      //不一樣更新資料
-      newstate.allCookie = allCookie;
-      //取的需要的新資料
-      let cookieData = document.cookie
-        .split(";")
-        .map((cookie) => cookie.trim())
-        .find((cookie) => cookie.startsWith("data="));
-      //變成機器人看得懂的物件
-      if (cookieData) {
-        let encodedValue = cookieData.split("=")[1];
-        let decodedValue = decodeURIComponent(encodedValue);
-        let newData = JSON.parse(decodedValue);
-        //放進新資料
-        newstate.cookieData = newData;
-        // 更新狀態
-      }
-      //重新監聽
-      setTimeout(this.checkCookieChange, 1000);
-      this.setState(newstate);
-    }
-  };
-
-  //切換運送方式
-  changeShippingMethod = (e) => {
-    let newstate = { ...this.state };
-    newstate.shippingMethod = e;
-    this.setState(newstate);
-  };
-  //更變運送地址的縣市調出該縣市的鄉鎮
-  changeCityCounty = (e) => {
-    let newstate = { ...this.state };
-    newstate.chooseCityCountyData = newstate.cityCountyData[e];
-    this.setState(newstate);
-  };
 
   //記錄寄送地址(取得手動輸入值和完整地址)
   addAddress = (addressValue, finaladdress) => {
+    console.log(addressValue)
     let newstate = { ...this.state };
-    //資料修改新增
+    // //資料修改新增
     newstate.address = addressValue;
-    newstate.finaladdress = finaladdress;
     this.setState(newstate);
   };
 

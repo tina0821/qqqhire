@@ -36,11 +36,10 @@ class TradeItem extends Component {
                   <Col xs={24} className="cartFontSize fw-bolder">
                     寄送資訊
                   </Col>
-                  {/* 寄送方式元件 */}
-                  <Col xs={24} className="cartFontSize">
-                    <ShippingMethod data={this.props.data} />
-                  </Col>
                 </Row>
+                {/* 寄送方式元件 */}
+                <ShippingMethod data={this.props.data} />
+                <div>付款方式前置作業</div>
               </React.Fragment>
             );
           })}

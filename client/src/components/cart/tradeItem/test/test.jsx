@@ -33,7 +33,7 @@ export const handleGetStore = (type) => {
   createHiddenInput(form, "LogisticsType", "CVS");
   createHiddenInput(form, "LogisticsSubType", method);
   createHiddenInput(form, "IsCollection", "N");
-  createHiddenInput(form, "ServerReplyURL", "http://localhost:8000/cart");
+  createHiddenInput(form, "ServerReplyURL", "http://localhost:8000/cart/cart");
   document.body.appendChild(form);
   form.submit()
   form.remove()
