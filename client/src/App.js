@@ -23,6 +23,8 @@ import Cart from "./components/cart/index";
 import Navbar2 from './components/Home/navbar2/navbar2';
 import Footer from './components/Home/footer/footer';
 import Navbar from './components/Home/navbar/navbar';
+import AAA from './components/Home/demo/test';
+
 
 const App = () => {
   return (
@@ -35,9 +37,12 @@ const App = () => {
           <Link className='m-3' to="/cart">Cart</Link><br />
           <Link className='m-3' to="/tqq">tqq</Link>
         </div>
+        
         {/* <Navbar2/> */}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/aaa" element={<AAA />} />
+
           {/* <Route path="/about" element={<About />} /> */}
           
           <Route path="/product" element={<Product />} />

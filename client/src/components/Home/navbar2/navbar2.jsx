@@ -13,6 +13,7 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 
 function Navbar2() {
+    const isLoggedIn = true;
 
     return (
         <>
@@ -34,19 +35,10 @@ function Navbar2() {
                         <li><a button className={style["btn-98"]} href>關於我們</a></li>
                     </ul>
                     {/* icon */}
+                    {isLoggedIn ? <NavbarIN/> : <NavbarOut/>}
                     {/* <NavbarOut/> */}
-                    <NavbarIN/>
-                    {/* <ul className={style["header-icon"]}> */}
-                        {/* <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faHeart} className="icon" /></a></li>
-                        <li><a href="" className={style.iconMove}><FontAwesomeIcon icon={faCartShopping} className="icon" /></a></li>
-                        <li>
-                            <a href className={style.iconMove}><FontAwesomeIcon icon={faCircleUser} className="icon" /></a>
-                            <ul className={`${style["drop-menu"]} ${style["limenu-2"]}`}>
-                                <li><a href="">會員登入</a></li>
-                                <li><a href="">會員註冊</a></li>
-                            </ul>
-                        </li> */}
-                    {/* </ul> */}
+                    {/* <NavbarIN/> */}
+
                 </div>
             </header>
 
