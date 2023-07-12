@@ -1,46 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Popbox from '../popbox';
+// import Popbox from '../popbox';
 
-function Myorder() {
+const Myorder = () => {
   const [tradeitems, setTradeitems] = useState([]);
- 
+
+  // const handleCancel = (tradeitemId) => {
+  //   setTradeitems((prevTradeitems) =>
+  //     prevTradeitems.map((tradeitem) => {
+  //       if (tradeitem.tradeitemId === tradeitemId) {
+  //         return { ...tradeitem, state: 4 };
+  //       }
+  //       return tradeitem;
+  //     })
+  //   );
+  // };
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchTradeitems = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/myorder');
-        const tradeitems = response.data.map((tradeitem) => ({
-          ...tradeitem,
-          rentStart: formatDate(tradeitem.rentStart),
-          rentEnd: formatDate(tradeitem.rentEnd),
-        }));
-        console.log(tradeitems);
-        setTradeitems(tradeitems);
+        const response = await axios.get('http://localhost:8000/api/myorder/3x7Y90');
+        setTradeitems(response.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
-    fetchData();
+
+    fetchTradeitems();
   }, []);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${year}-${month}-${day}`;
-  };
-
-  const handleCancel = (tradeitemId) => {
-    setTradeitems((prevTradeitems) =>
-      prevTradeitems.map((tradeitem) => {
-        if (tradeitem.tradeitemId === tradeitemId) {
-          return { ...tradeitem, state: 4 };
-        }
-        return tradeitem;
-      })
-    );
-  };
+  console.log(tradeitems);
 
   return (
     <div className="order-component">
@@ -60,21 +48,23 @@ function Myorder() {
         <tbody>
           {tradeitems.map((tradeitem) => {
             if (tradeitem.state < 3) {
-              let action = null;
-              if (tradeitem.state === 0) {
-                action = (
-                  <Popbox
-                    tradeitemId={tradeitem.tradeitemId}
-                    onCancel={handleCancel}
-                  />
-                );
-              }
+              // let action = null;
+              // if (tradeitem.state === 0) {
+              //   action = (
+              //     <Popbox
+              //       tradeitemId={tradeitem.tradeitemId}
+              //       onCancel={handleCancel}
+              //     />
+              //   );
+              // }
               return (
-                <tr id="trtd" key={tradeitem.tradeitemId}>
+                <tr title={tradeitem.productName} id="trtd" key={tradeitem.tradeitemId}>
                   <td>{tradeitem.tradeitemId}</td>
-                  <td>{tradeitem.productName}</td>
-                  <td>{tradeitem.rentStart}</td>
-                  <td>{tradeitem.rentEnd}</td>
+                  <td>{tradeitem.productName.length > 10
+                    ? tradeitem.productName.slice(0, 10) + '...'
+                    : tradeitem.productName}</td>
+                  <td>{new Date(tradeitem.rentStart).toLocaleDateString()}</td>
+                  <td>{new Date(tradeitem.rentEnd).toLocaleDateString()}</td>
                   <td>{tradeitem.rent}</td>
                   <td>{tradeitem.deposit}</td>
                   <td>
@@ -86,7 +76,7 @@ function Myorder() {
                           ? '租借中'
                           : tradeitem.state}
                   </td>
-                  <td>{action}</td>
+                  {/* <td>{action}</td> */}
                 </tr>
               );
             }
@@ -96,6 +86,6 @@ function Myorder() {
       </table>
     </div>
   );
-}
+};
 
 export default Myorder;

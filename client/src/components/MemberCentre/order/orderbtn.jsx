@@ -14,8 +14,10 @@ const Orderbtn = ({ displayedComponent, handleButtonClick }) => {
           歷史訂單
         </button>
       </div>
+      <div className="bdset">
       {displayedComponent === 'Myorder' && <Myorder />}
       {displayedComponent === 'Historyorder' && <Historyorder />}
+      </div>
     </div>
   );
 };

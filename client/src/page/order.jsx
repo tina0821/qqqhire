@@ -11,13 +11,11 @@ function Order() {
 
   return (
     <div className="bgset">
-      <div>
         <div className="text">
           <div className="title">| 會員中心 |</div>
           <div>訂單追蹤</div>
         </div>
         <Orderbtn displayedComponent={displayedComponent} handleButtonClick={handleButtonClick} />
-      </div>
     </div>
   );
 }

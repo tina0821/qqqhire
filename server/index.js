@@ -22,42 +22,63 @@ app.get('/cart', function(req, res) {
   res.send('cartInfo');
 });
 
-app.get('/api/myorder', function(req, res) {
-  const query = 'SELECT tradeitemId, productId, rentStart, rentEnd, state FROM tradeitem';
-  coon.query(query, function(error, results) {
+// app.get('/api/myorder/:account', function(req, res) {
+//   const account = req.params.account;
+//   const query = 'SELECT tradeitemId FROM tradeitem WHERE account = ?';
+//   coon.query(query,[account], function(error, results) {
+//       res.json(results);
+//   });
+// });
+
+// app.get('/api/myorder/:account', function(req, res) {
+//   const account = req.params.account;
+//   const query = 'SELECT tradeitemId, account, state FROM tradeitem WHERE account = "3x7Y90"';
+//   coon.query(query,[account], function(error, results) {
+//       res.json(results);
+//   });
+// });
+
+// app.get('/api/myorder/:account', function(req, res) {
+//   const account = req.params.account;
+//   const query = `
+//     SELECT t.tradeitemId, t.account, t.state, m.rentStart, m.rentEnd
+//     FROM tradeitem AS t
+//     INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
+//     WHERE t.account = ?
+//     ORDER BY t.tradeitemId
+//   `;
+//   coon.query(query, [account], function(error, results) {
+//     if (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     } else {
+//       res.json(results);
+//     }
+//   });
+// });
+app.get('/api/myorder/:account', function(req, res) {
+  const account = req.params.account;
+  const query = `
+    SELECT t.tradeitemId, t.account, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit
+    FROM tradeitem AS t
+    INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
+    INNER JOIN product AS p ON m.productId = p.productId
+    WHERE t.account = ?
+    ORDER BY t.tradeitemId
+  `;
+  coon.query(query, [account], function(error, results) {
     if (error) {
-      console.log(error);
+      console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     } else {
-      if (results.length > 0) {
-        const productIds = results.map((result) => result.productId);
-        const query = 'SELECT productId, productName, rent, deposit FROM product WHERE productId IN (?)';
-        coon.query(query, [productIds], function(error, productResults) {
-          if (error) {
-            console.log(error);
-            res.status(500).json({ error: 'Internal Server Error' });
-          } else {
-            const tradeitems = results.map((result) => {
-              const product = productResults.find((product) => product.productId === result.productId);
-              return {
-                tradeitemId: result.tradeitemId,
-                productName: product ? product.productName : 'Product not found',
-                rent: product ? product.rent : 'Product not found',
-                deposit: product ? product.deposit : 'Product not found',
-                state: result.state,
-                rentStart: result.rentStart,
-                rentEnd: result.rentEnd
-              };
-            });
-            res.json(tradeitems);
-          }
-        });
-      } else {
-        res.json([]);
-      }
+      res.json(results);
     }
   });
 });
+
+
+
+
 app.post('/api/cancelOrder', function(req, res) {
   const { tradeitemId } = req.body;
   // 檢查 tradeitemId 的值
@@ -77,10 +98,6 @@ app.post('/api/cancelOrder', function(req, res) {
     }
   });
 });
-
-
-
-
 
 app.listen(8000, function() {
   console.log(new Date().toLocaleDateString());
