@@ -16,31 +16,31 @@ function Outdoor3() {
                     </div>
                     <div className="outdoor3box2">
                         
-                        <div href className="hotActivity A1">
+                        <div className="hotActivity A1">
                             <img src="http://localhost:8000/img/home/hotActivity/climbing%E7%9B%B4%E7%9A%84.jpg" alt="圖1" />
                             <div className="hotActivityWord">
                                 <Link to="/" className="B1">MORE</Link>
                             </div>
                         </div>
-                        <div href className="hotActivity A2">
+                        <div className="hotActivity A2">
                             <img src="http://localhost:8000/img/home/hotActivity/bicycle.jpg" alt="圖2" />
                             <div className="hotActivityWord">
                                 <Link to="/" className="B1">MORE</Link>
                             </div>
                         </div>
-                        <div href className="hotActivity A3">
+                        <div className="hotActivity A3">
                             <img src="http://localhost:8000/img/home/hotActivity/surf2.jpg" alt="圖3" />
                             <div className="hotActivityWord">
                                 <Link to="/" className="B1">MORE</Link>
                             </div>
                         </div>
-                        <div href className="hotActivity A4">
+                        <div className="hotActivity A4">
                             <img src="http://localhost:8000/img/home/hotActivity/fishing3.jpg" alt='圖4' />
                             <div className="hotActivityWord">
                                 <Link to="/" className="B1">MORE</Link>
                             </div>
                         </div>
-                        <div href className="hotActivity A5">
+                        <div className="hotActivity A5">
                             <img src="http://localhost:8000/img/home/hotActivity/photography%E7%9B%B4%E5%BE%97.jpg" alt="圖5" />
                             <div className="hotActivityWord">
                                 <Link to="/" className="B1">MORE</Link>

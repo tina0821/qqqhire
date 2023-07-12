@@ -16,9 +16,9 @@ import Product from './page/product';
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
 // import Cart from "./components/cart/index";
-// import Navbar2 from './components/Home/navbar2/navbar2';
-// import Footer from './components/Home/footer/footer';
+import Navbar2 from './components/Home/navbar2/navbar2';
 // import Navbar from './components/Home/navbar/navbar';
+// import Footer from './components/Home/footer/footer';
 import AAA from './components/Home/demo/test';
 
 
@@ -34,7 +34,8 @@ const App = () => {
           <Link className='m-3' to="/tqq">tqq</Link>
         </div>
         
-        {/* <Navbar2/> */}
+        <Navbar2/>
+        {/* <Navbar/> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/aaa" element={<AAA />} />

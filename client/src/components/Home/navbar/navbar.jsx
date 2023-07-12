@@ -34,9 +34,9 @@ function Navbar() {
                     {/* LOGO超連結 */}
                     <Link className="headerLogoImg" to="/">
                         {/* 白 */}
-                        <img src="http://localhost:8000/img/home/Logo%E7%99%BD.png" />    
+                        <img src="http://localhost:8000/img/home/Logo%E7%99%BD.png" alt='黑' />    
                         {/* 黑 */}
-                        <img src="http://localhost:8000/img/home/Logo%E9%BB%91.png" />    
+                        <img src="http://localhost:8000/img/home/Logo%E9%BB%91.png" alt='白' />    
                     </Link>
                 </div>
                 {/* 右邊按鈕/icon */}

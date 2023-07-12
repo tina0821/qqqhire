@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import Navbar from '../components/Home/navbar/navbar';
-import Navbar2 from '../components/Home/navbar2/navbar2';
+// import Navbar2 from '../components/Home/navbar2/navbar2';
 import Outdoor from '../components/Home/outdoor/outdoor';
 import Outdoor2 from '../components/Home/outdoor2/outdoor2';
 import Outdoor3 from '../components/Home/outdoor3/outdoor3';
@@ -12,7 +12,7 @@ import Footer from '../components/Home/footer/footer';
 const Home = () => {
     return (
         <>
-        <Navbar2/>
+        {/* <Navbar2/> */}
         {/* <Navbar/> */}
         <Outdoor/>
         <Outdoor2/>
