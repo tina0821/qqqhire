@@ -13,7 +13,7 @@ const Home = () => {
     return (
         <>
         {/* <Navbar2/> */}
-        {/* <Navbar/> */}
+        {/* <Navbar/> */} 
         <Outdoor/>
         <Outdoor2/>
         <Outdoor3/>
