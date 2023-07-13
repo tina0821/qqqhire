@@ -46,54 +46,67 @@ const Myorder = () => {
 
   return (
     <div className="order-component">
- {selectedTradeitemId ? (
+      {selectedTradeitemId ? (
         <Orderdetail tradeitemId={selectedTradeitemId} tradeitems={tradeitems} />
       ) : (
-      <table className="order-table">
-        <thead>
-          <tr>
-            <th>訂單編號</th>
-            <th>商品</th>
-            <th>預約日期</th>
-            <th>歸還日期</th>
-            <th>租金</th>
-            <th>押金</th>
-            <th>訂單狀態</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          {uniqueTradeitems.map((tradeitem) => {
-            if (tradeitem.state < 3) {
-              const productName = tradeitem.productName.length > 10
-                ? tradeitem.productName.slice(0, 10) + '...'
-                : tradeitem.productName;
+        <table className="order-table">
+          <thead>
+            <tr>
+              <th>訂單編號</th>
+              <th>商品</th>
+              <th>預約日期</th>
+              <th>歸還日期</th>
+              <th>租金</th>
+              <th>押金</th>
+              <th>訂單狀態</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {uniqueTradeitems.map((tradeitem) => {
+              if (tradeitem.state < 3) {
+                const orderStatus = getOrderStatus(tradeitem.state);
 
-              const orderStatus = getOrderStatus(tradeitem.state);
+                return (
+                  <tr id="trtd" key={tradeitem.tradeitemId}>
+                    <td>{tradeitem.tradeitemId}</td>
+                    <td>{limitProductName(tradeitem.productName)}</td>
+                    <td>{new Date(tradeitem.rentStart).toLocaleDateString()}</td>
+                    <td>{new Date(tradeitem.rentEnd).toLocaleDateString()}</td>
+                    <td>{tradeitem.rent}</td>
+                    <td>{tradeitem.deposit}</td>
+                    <td>{orderStatus}</td>
+                    <td>
+                      <button id='actbtn' onClick={() => handleDetail(tradeitem.tradeitemId)}>詳細</button>
+                    </td>
 
-              return (
-                <tr title={tradeitem.productName} id="trtd" key={tradeitem.tradeitemId}>
-                  <td>{tradeitem.tradeitemId}</td>
-                  <td>{productName}</td>
-                  <td>{new Date(tradeitem.rentStart).toLocaleDateString()}</td>
-                  <td>{new Date(tradeitem.rentEnd).toLocaleDateString()}</td>
-                  <td>{tradeitem.rent}</td>
-                  <td>{tradeitem.deposit}</td>
-                  <td>{orderStatus}</td>
-                  <td>
-                    <button id='actbtn' onClick={() => handleDetail(tradeitem.tradeitemId)}>詳細</button>
-                  </td>
-
-                </tr>
-              );
-            }
-            return null;
-          })}
-        </tbody>
-      </table>
+                  </tr>
+                );
+              }
+              return null;
+            })}
+          </tbody>
+        </table>
       )}
     </div>
   );
 };
+
+// 輔助函數：限製商品名稱的字數並插入換行符
+function limitProductName(productName) {
+  const maxChars = 6; // 最大字數限制
+  if (productName.length <= maxChars) {
+    return productName;
+  }
+  const truncated = productName.substr(0, maxChars);
+  const remainder = productName.substr(maxChars);
+  return (
+    <>
+      {truncated}
+      <br />
+      {remainder}
+    </>
+  );
+}
 
 export default Myorder;
