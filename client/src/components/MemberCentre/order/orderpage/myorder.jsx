@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import Popbox from '../popbox';
+import Orderdetail from './Orderdetail';
 
 const Myorder = () => {
   const [tradeitems, setTradeitems] = useState([]);
+  // =========== 詳細按鈕 =========== 
+  const [selectedTradeitemId, setSelectedTradeitemId] = useState(null);
 
-  // const handleCancel = (tradeitemId) => {
-  //   setTradeitems((prevTradeitems) =>
-  //     prevTradeitems.map((tradeitem) => {
-  //       if (tradeitem.tradeitemId === tradeitemId) {
-  //         return { ...tradeitem, state: 4 };
-  //       }
-  //       return tradeitem;
-  //     })
-  //   );
-  // };
+  const handleDetail = (tradeitemId) => {
+    setSelectedTradeitemId(tradeitemId);
+  };
+
+  // ====================== 
 
   useEffect(() => {
     const fetchTradeitems = async () => {
@@ -25,13 +22,33 @@ const Myorder = () => {
         console.error(error);
       }
     };
-
     fetchTradeitems();
   }, []);
+
   console.log(tradeitems);
+
+  const getOrderStatus = (state) => {
+    if (state === 0) {
+      return '等待回應中';
+    } else if (state === 1) {
+      return '等待租借中';
+    } else if (state === 2) {
+      return '租借中';
+    } else {
+      return state;
+    }
+  };
+  // 一筆訂單只顯示一樣商品資訊
+  const uniqueTradeitems = tradeitems.filter(
+    (tradeitem, index, self) =>
+      self.findIndex((t) => t.tradeitemId === tradeitem.tradeitemId) === index
+  );
 
   return (
     <div className="order-component">
+ {selectedTradeitemId ? (
+        <Orderdetail tradeitemId={selectedTradeitemId} tradeitems={tradeitems} />
+      ) : (
       <table className="order-table">
         <thead>
           <tr>
@@ -46,37 +63,27 @@ const Myorder = () => {
           </tr>
         </thead>
         <tbody>
-          {tradeitems.map((tradeitem) => {
+          {uniqueTradeitems.map((tradeitem) => {
             if (tradeitem.state < 3) {
-              // let action = null;
-              // if (tradeitem.state === 0) {
-              //   action = (
-              //     <Popbox
-              //       tradeitemId={tradeitem.tradeitemId}
-              //       onCancel={handleCancel}
-              //     />
-              //   );
-              // }
+              const productName = tradeitem.productName.length > 10
+                ? tradeitem.productName.slice(0, 10) + '...'
+                : tradeitem.productName;
+
+              const orderStatus = getOrderStatus(tradeitem.state);
+
               return (
                 <tr title={tradeitem.productName} id="trtd" key={tradeitem.tradeitemId}>
                   <td>{tradeitem.tradeitemId}</td>
-                  <td>{tradeitem.productName.length > 10
-                    ? tradeitem.productName.slice(0, 10) + '...'
-                    : tradeitem.productName}</td>
+                  <td>{productName}</td>
                   <td>{new Date(tradeitem.rentStart).toLocaleDateString()}</td>
                   <td>{new Date(tradeitem.rentEnd).toLocaleDateString()}</td>
                   <td>{tradeitem.rent}</td>
                   <td>{tradeitem.deposit}</td>
+                  <td>{orderStatus}</td>
                   <td>
-                    {tradeitem.state === 0
-                      ? '等待回應中'
-                      : tradeitem.state === 1
-                        ? '等待租借中'
-                        : tradeitem.state === 2
-                          ? '租借中'
-                          : tradeitem.state}
+                    <button id='actbtn' onClick={() => handleDetail(tradeitem.tradeitemId)}>詳細</button>
                   </td>
-                  {/* <td>{action}</td> */}
+
                 </tr>
               );
             }
@@ -84,6 +91,7 @@ const Myorder = () => {
           })}
         </tbody>
       </table>
+      )}
     </div>
   );
 };

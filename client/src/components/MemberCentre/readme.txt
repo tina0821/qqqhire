@@ -307,3 +307,211 @@ app.post('/api/cancelOrder', function(req, res) {
   });
 });
 
+
+
+
+
+================================ 更新資料庫!!!!! ================================
+
+
+================================ 一般版本 ================================
+
+沒什麼特別的，但可以正常顯示資料庫內容
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Myorder = () => {
+  const [tradeitems, setTradeitems] = useState([]);
+
+  useEffect(() => {
+    const fetchTradeitems = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/myorder/3x7Y90');
+        setTradeitems(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTradeitems();
+  }, []);
+
+  console.log(tradeitems);
+
+  const getOrderStatus = (state) => {
+    if (state === 0) {
+      return '等待回應中';
+    } else if (state === 1) {
+      return '等待租借中';
+    } else if (state === 2) {
+      return '租借中';
+    } else {
+      return state;
+    }
+  };
+
+  return (
+    <div className="order-component">
+      <table className="order-table">
+        <thead>
+          <tr>
+            <th>訂單編號</th>
+            <th>商品</th>
+            <th>預約日期</th>
+            <th>歸還日期</th>
+            <th>租金</th>
+            <th>押金</th>
+            <th>訂單狀態</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tradeitems.map((tradeitem) => {
+            if (tradeitem.state < 3) {
+              const productName = tradeitem.productName.length > 10
+                ? tradeitem.productName.slice(0, 10) + '...'
+                : tradeitem.productName;
+
+              const orderStatus = getOrderStatus(tradeitem.state);
+
+              return (
+                <tr title={tradeitem.productName} id="trtd" key={tradeitem.tradeitemId}>
+                  <td>{tradeitem.tradeitemId}</td>
+                  <td>{productName}</td>
+                  <td>{new Date(tradeitem.rentStart).toLocaleDateString()}</td>
+                  <td>{new Date(tradeitem.rentEnd).toLocaleDateString()}</td>
+                  <td>{tradeitem.rent}</td>
+                  <td>{tradeitem.deposit}</td>
+                  <td>{orderStatus}</td>
+                  <td></td>
+                </tr>
+              );
+            }
+            return null;
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Myorder;
+
+
+
+
+
+================================ 訂單編號不重複的版本 ================================
+
+只在第一次出現某個特定訂單編號時顯示訂單編號，而在後續訂單編號的記錄中不再顯示訂單編號
+
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Myorder = () => {
+  const [tradeitems, setTradeitems] = useState([]);
+
+  useEffect(() => {
+    const fetchTradeitems = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/myorder/3x7Y90');
+        setTradeitems(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTradeitems();
+  }, []);
+
+  console.log(tradeitems);
+
+  const processedTradeitems = [];
+  const displayedTradeitemIds = [];
+
+  const getOrderStatus = (state) => {
+    if (state === 0) {
+      return '等待回應中';
+    } else if (state === 1) {
+      return '等待租借中';
+    } else if (state === 2) {
+      return '租借中';
+    } else {
+      return state;
+    }
+  };
+
+  tradeitems.forEach((tradeitem) => {
+    if (tradeitem.state < 3) {
+      const productName = tradeitem.productName.length > 10
+        ? tradeitem.productName.slice(0, 10) + '...'
+        : tradeitem.productName;
+
+      const orderStatus = getOrderStatus(tradeitem.state);
+
+      if (!displayedTradeitemIds.includes(tradeitem.tradeitemId)) {
+        processedTradeitems.push({
+          ...tradeitem,
+          productName,
+          orderStatus
+        });
+
+        displayedTradeitemIds.push(tradeitem.tradeitemId);
+      } else {
+        processedTradeitems.push({
+          ...tradeitem,
+          productName,
+          orderStatus,
+          tradeitemId: null
+        });
+      }
+    }
+  });
+
+  return (
+    <div className="order-component">
+      <table className="order-table">
+        <thead>
+          <tr>
+            <th>訂單編號</th>
+            <th>商品</th>
+            <th>預約日期</th>
+            <th>歸還日期</th>
+            <th>租金</th>
+            <th>押金</th>
+            <th>訂單狀態</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {processedTradeitems.map((tradeitem) => {
+            if (tradeitem.state < 3) {
+              return (
+                <tr title={tradeitem.productName} id="trtd" key={tradeitem.tradeitemId}>
+                  <td>{tradeitem.tradeitemId}</td>
+                  <td>{tradeitem.productName}</td>
+                  <td>{new Date(tradeitem.rentStart).toLocaleDateString()}</td>
+                  <td>{new Date(tradeitem.rentEnd).toLocaleDateString()}</td>
+                  <td>{tradeitem.rent}</td>
+                  <td>{tradeitem.deposit}</td>
+                  <td>{tradeitem.orderStatus}</td>
+                </tr>
+              );
+            }
+            return null;
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Myorder;
+
+說明
+使用了兩個輔助變量：processedTradeitems和displayedTradeitemIds。 
+processedTradeitems是一個數組，用於存儲處理後的訂單數據，而displayedTradeitemIds是一個數組，用於跟踪已經顯示過的訂單編號。
+
+在循環處理tradeitems時，檢查當前訂單編號是否已經在displayedTradeitemIds中存在。
+如果是第一次出現該訂單編號，則將其添加到processedTradeitems數組中，並將訂單編號添加到displayedTradeitemIds中。
+對於後續相同訂單編號的記錄，將其訂單編號設置為null，以避免重複顯示

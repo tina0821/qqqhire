@@ -13,49 +13,15 @@ app.use(express.json());
 app.use(urlencoded);
 app.use('/img', express.static('public/img'));
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   let a = sha1('1234', 'kjdsfkjds');
   res.send(a);
 });
 
-app.get('/cart', function(req, res) {
+app.get('/cart', function (req, res) {
   res.send('cartInfo');
 });
 
-// app.get('/api/myorder/:account', function(req, res) {
-//   const account = req.params.account;
-//   const query = 'SELECT tradeitemId FROM tradeitem WHERE account = ?';
-//   coon.query(query,[account], function(error, results) {
-//       res.json(results);
-//   });
-// });
-
-// app.get('/api/myorder/:account', function(req, res) {
-//   const account = req.params.account;
-//   const query = 'SELECT tradeitemId, account, state FROM tradeitem WHERE account = "3x7Y90"';
-//   coon.query(query,[account], function(error, results) {
-//       res.json(results);
-//   });
-// });
-
-// app.get('/api/myorder/:account', function(req, res) {
-//   const account = req.params.account;
-//   const query = `
-//     SELECT t.tradeitemId, t.account, t.state, m.rentStart, m.rentEnd
-//     FROM tradeitem AS t
-//     INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
-//     WHERE t.account = ?
-//     ORDER BY t.tradeitemId
-//   `;
-//   coon.query(query, [account], function(error, results) {
-//     if (error) {
-//       console.error(error);
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     } else {
-//       res.json(results);
-//     }
-//   });
-// });
 app.get('/api/myorder/:account', function(req, res) {
   const account = req.params.account;
   const query = `
@@ -76,16 +42,13 @@ app.get('/api/myorder/:account', function(req, res) {
   });
 });
 
-
-
-
-app.post('/api/cancelOrder', function(req, res) {
+app.post('/api/cancelOrder', function (req, res) {
   const { tradeitemId } = req.body;
   // 檢查 tradeitemId 的值
   console.log("Received tradeitemId:", tradeitemId);
 
   const updateQuery = 'UPDATE tradeitem SET state = 4 WHERE tradeitemId = ?';
-  coon.query(updateQuery, [tradeitemId], function(error, results) {
+  coon.query(updateQuery, [tradeitemId], function (error, results) {
     if (error) {
       console.log(error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -99,6 +62,6 @@ app.post('/api/cancelOrder', function(req, res) {
   });
 });
 
-app.listen(8000, function() {
+app.listen(8000, function () {
   console.log(new Date().toLocaleDateString());
 });
