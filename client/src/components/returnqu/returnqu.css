@@ -1,22 +1,8 @@
-/* ===================== returnqu2 ===================== */
+/* ===================== returnqu ===================== */
 h1 {
     text-align: center;
 }
 
-.nextbtn {
-    /* border: 2px solid red; */
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 10px;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-h3 {
-    line-height: 10vh;
-}
-
-/* ===================== returnqu2 ===================== */
 .btil {
     display: flex;
     align-items: center;
@@ -40,6 +26,7 @@ h1 {
 
 h3 {
     font-size: 2.5rem;
+    line-height: 5vh;
 }
 
 p {
@@ -50,8 +37,25 @@ li {
     font-size: 1.5rem;
 }
 
-label{
+label {
     font-size: 1.5rem;
 }
 
 /* ===================== 下一步 ===================== */
+.btnDiv{
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+.btnWord{
+    font-size: 1.5rem;
+    padding: 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.RadioWord {
+    font-size: 1.5rem;
+}
