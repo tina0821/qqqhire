@@ -29,7 +29,7 @@ class ShippingMethod extends Component {
           className="cartFontSize p-3 align-items-center d-flex "
         >
           <Select
-            style={{ width: "20%", fontStyle: "900" }}
+            style={{ width: 250, fontStyle: "900" }}
             defaultValue={"請選擇寄送方式"}
             fieldNames={{ label: "method" }}
             options={this.state.shippingMethod}
@@ -39,7 +39,7 @@ class ShippingMethod extends Component {
           />
           {state.chooseShippingMethod === "BlackCat" && (
             <Cascader
-              style={{ width: "20%", fontStyle: "900" }}
+              style={{ width: 250, fontStyle: "900" }}
               allowClear={0}
               defaultValue={"請選擇縣市"}
               fieldNames={{
@@ -54,9 +54,9 @@ class ShippingMethod extends Component {
             />
           )}
           <Input
-            className="cartFontSize fw-bolder"
+            className="cartFontSize"
             status={this.state.err && "error"}
-            style={{ height: 50 }}
+            style={{ height: 50, width: "65%" }}
             placeholder={
               this.state.chooseShippingMethod === "BlackCat"
                 ? this.state.CityCountyData
@@ -83,7 +83,7 @@ class ShippingMethod extends Component {
           {state.chooseShippingMethod &&
             state.chooseShippingMethod !== "BlackCat" && (
               <Button
-                className="cartFontSize fw-bolder"
+                className="cartFontSize"
                 style={{ height: 50, lineHeight: 0 }}
                 size="large"
                 onClick={() => {
@@ -98,7 +98,7 @@ class ShippingMethod extends Component {
       </React.Fragment>
     );
   }
-
+  
   //沒招了，定時監聽cookie變化
   checkCookieChange = () => {
     //重製cookie確保沒有錯誤
@@ -159,8 +159,9 @@ class ShippingMethod extends Component {
   changeShippingMethod = (target) => {
     let newstate = { ...this.state };
     newstate.chooseShippingMethod = target;
+    newstate.CityCountyData = "";
     newstate.address = "";
-    newstate.address ? (newstate.err = 0) : (newstate.err = 1);
+    newstate.err = 0;
     this.props.data.addAddress(
       newstate.address,
       this.props.productAccount,

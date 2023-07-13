@@ -1,10 +1,10 @@
 [
     {
         "paymentMethod" : "Visa卡"
-        ,"payTypeEngName":"creditCards"
+        ,"payTypeEngName":"Visa卡"
     },
     {
         "paymentMethod" : "貨到付款"
-        ,"payTypeEngName":"cashOnDelivery"
+        ,"payTypeEngName":"貨到付款"
     }
 ]

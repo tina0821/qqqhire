@@ -58,14 +58,8 @@ class Cart extends Component {
       tradeItem: null,
       //手動輸入的地址
       address: {},
-      //最後運送的地址
-      finaladdress: null,
-      //超商地址
-      CVSAddress: null,
       //錯誤訊息
       err: [{ message: "address", count: 0 }],
-      //寄送方式
-      shippingMethod: "post",
     };
   }
 
@@ -151,7 +145,7 @@ class Cart extends Component {
   };
 
 componentDidUpdate(){
-  console.log(this.state.address)
+  console.log(this.state.tradeItem)
 }
 
   moveSteps = async (e) => {
@@ -299,21 +293,52 @@ componentDidUpdate(){
 
 
   //記錄每一位賣家訂單的寄送地址
-  addAddress = (addressValue, productAccount,target=0) => {
+  addAddress = (addressValue, productAccount,shippingMethod=0) => {
     let newstate = { ...this.state };
-    !Array.isArray(newstate.address[productAccount])&&
-    (newstate.address[productAccount]=[])
+    const productAccountList =[]
+    newstate.tradeItem.map((value)=>{
+      productAccountList.push(value.productAccount) 
+      return true
+    })
+    const productAccountNumber = productAccountList.indexOf(productAccount)
     //資料修改新增
-    target&&
-    (newstate.address[productAccount][0]=target)
-    newstate.address[productAccount][1] = addressValue;
+    newstate.tradeItem[productAccountNumber].address=addressValue
+    shippingMethod&&
+    (newstate.tradeItem[productAccountNumber].shippingMethod=shippingMethod)
     this.setState(newstate);
   };
-
-  //
-  send = async () => {
-    let getmap = document.getElementById("getmap");
-    getmap.submit();
+  
+  //記錄每一位賣家付款方式
+  payMethod = (payMethod, productAccount,addressValue=0) => {
+    let newstate = { ...this.state };
+    const productAccountList =[]
+    newstate.tradeItem.map((value)=>{
+      productAccountList.push(value.productAccount) 
+      return true
+    })
+    const productAccountNumber = productAccountList.indexOf(productAccount)
+    //資料修改新增
+    newstate.tradeItem[productAccountNumber].payMethod=payMethod
+    addressValue&&
+    (newstate.tradeItem[productAccountNumber].addressValue=addressValue)
+    this.setState(newstate);
+  };
+  
+  //記錄每一位賣家信用卡資訊
+  payMethod = (productAccount,creditCardNumber, creadCartmonth,creditCardYear,cvc) => {
+    let newstate = { ...this.state };
+    const productAccountList =[]
+    newstate.tradeItem.map((value)=>{
+      productAccountList.push(value.productAccount) 
+      return true
+    })
+    const productAccountNumber = productAccountList.indexOf(productAccount)
+    //資料修改新增
+    newstate.tradeItem[productAccountNumber].creditCardNumber=creditCardNumber
+    newstate.tradeItem[productAccountNumber].creadCartmonth=creadCartmonth
+    newstate.tradeItem[productAccountNumber].creditCardYear=creditCardYear
+    newstate.tradeItem[productAccountNumber].cvc=cvc
+    this.setState(newstate);
   };
 }
 

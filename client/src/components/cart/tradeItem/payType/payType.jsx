@@ -1,24 +1,45 @@
 import React, { Component } from "react";
 import paymentMethod from "../../../../data/paymentMethod.json";
-import { Select, Input, Space } from "antd";
+import CreditCardsInput from "./creditCardsInput/creditCardsInput";
+import { Select, Space } from "antd";
 class PayType extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      choosePayType: "",
+    };
+  }
   render() {
     return (
       <React.Fragment>
-        <Space.Compact className="cartFontSize p-3 align-items-center d-flex ">
+        <Space size={10} align="start" className="ps-3 d-flex">
           <Select
-            style={{ width: "20%", fontStyle: "900" }}
+            style={{ width: 250, fontStyle: "900" }}
             defaultValue={"請選擇付款方式"}
             fieldNames={{ label: "paymentMethod", value: "payTypeEngName" }}
             options={paymentMethod}
             onChange={(e) => {
+              this.changePayType(e);
+              this.props.data.payMethod(e, this.props.productAccount);
             }}
           />
-          <Input />
-        </Space.Compact>
+          {this.state.choosePayType === "creditCards" && (
+            <CreditCardsInput
+              data={this.props.data}
+              productAccount={this.props.productAccount}
+            />
+          )}
+        </Space>
       </React.Fragment>
     );
   }
+
+  //改變付款方式
+  changePayType = (e) => {
+    let newstate = { ...this.state };
+    newstate.choosePayType = e;
+    this.setState(newstate);
+  };
 }
 
 export default PayType;

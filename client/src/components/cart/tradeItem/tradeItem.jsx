@@ -40,7 +40,7 @@ class TradeItem extends Component {
                 </Row>
                 {/* 寄送方式元件 */}
                 <ShippingMethod data={this.props.data} productAccount={item.productAccount} />
-                <PayType>付款方式前置作業</PayType>
+                <PayType data={this.props.data} productAccount={item.productAccount}/>
               </React.Fragment>
             );
           })}
