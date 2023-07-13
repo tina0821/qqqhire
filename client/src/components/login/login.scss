@@ -8,21 +8,29 @@ $main-color: #0b7597;
 #loginout {
     background-color: #0b7597;
     padding: 30px;
-}
+    .slick-track{
+        height:650px;
+        .slick-slide{
+            width: 80%;
+        }
+    }
+} 
 
 #login {
     margin-top: 30px;
     background-color: #fff;
     padding: 20px;
     border-radius: 15px;
-    height: 80vh;
+    height: 750px;
 
     .slick-list {
         margin: 30px;
     }
 
     img {
-        height: 650px;
+        // height: 550px;
+        width:90%;
+        object-fit: cover;
     }
 
     #login-right {

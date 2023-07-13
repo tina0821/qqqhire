@@ -1,45 +1,65 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+// import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'jquery/dist/jquery'
+// import 'jquery/dist/jquery'
 import 'jquery-ui/dist/jquery-ui'
 import 'jquery-ui-css/jquery-ui'
 
 // 其他引入的組件
-// import Home from './page/Home';
+import Home from './page/home';
 // import About from './page/About';
 // import Contact from './page/Contact';
 import NotFound from './page/NotFound';
 import Product from './page/product';
-import RegistrationForm from './page/register';
+// import RegistrationForm from './components/login/q1';
+import ProductItem from './page/product-item';
+import ProductSeller from './page/productSeller';
 // import Cart from "./components/cart/index";
-import Login from "./components/login/login";
-import Member from "./components/PersonalData/Personaldata"
+import Navbar2 from './components/Home/navbar2/navbar2';
+import Footer from './components/Home/footer/footer';
+import Login from './components/login/login';
+import Registration from './components/register/register';
+import Up from './components/up/up';
 
 const App = () => {
+
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+
+ 
+
   return (
     <>
       <Router>
-        <div className='d-flex'>
-        <Link className='m-3' to="/">Home</Link> <br />
-        <Link className='m-3' to="/product">product</Link><br/>
-        <Link className='m-3' to="/login">登入</Link><br/>
-        <Link className='m-3' to="/RegistrationForm">註冊</Link><br/>
-        {/* <Link className='m-3' to="/cart">Cart</Link><br/> */}
-        <Link className='m-3' to="/Member">會員中心</Link><br/>
-       
-        </div>
+        
+        {show && <Navbar2 />}
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
+
+          <Route path="/RegistrationForm" element={<Registration />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
           {/* <Route path="/about" element={<About />} /> */}
           <Route path="/product" element={<Product />} />
-          <Route path="/RegistrationForm" element={<RegistrationForm />} />
+          {/* <Route path="/RegistrationForm" element={<RegistrationForm />} /> */}
           {/* <Route path="/cart" element={<Cart />} /> */}
-          <Route path="/login" element={<Login />}  />
-          <Route path="/Member" element={<Member />} />
+          <Route path='/productItem/:id' element={<ProductItem />} />
+          <Route path='/productSeller/:account' element={<ProductSeller />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/up" element={<Up />} />
         </Routes>
+        {show && <Footer />}
       </Router>
     </>
   );

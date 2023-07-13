@@ -21,9 +21,10 @@ const Login = () => {
             if (response.status === 200) {
                 console.log('ok');
                 const userInfo = `${account}`;
-                sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+                localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 alert("登入成功")
                 history("/")
+                window.location.reload();
 
 
             } else if (response.status === 401) {
@@ -37,7 +38,7 @@ const Login = () => {
 
 
     const logout =()=>{
-        sessionStorage.clear();
+        localStorage.removeItem('userInfo');
     }
 
 
@@ -135,7 +136,7 @@ const Login = () => {
                             >
                                 登入
                             </Button>
-                            或 <a href="http://localhost:3000/RegistrationForm">註冊</a>
+                            或 <a href="/RegistrationForm">註冊</a>
                         <Button  onClick={logout}>
                             登出
 

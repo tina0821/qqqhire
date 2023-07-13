@@ -67,21 +67,21 @@ const Registration = () => {
             <div>
               <img
                 // style={contentStyle}
-                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201428.jpg"
+                src="http://localhost:8000/img/login/1.png"
                 alt="Carousel 1"
               />
             </div>
             <div>
               <img
                 // style={contentStyle}
-                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201430.jpg"
+                src="http://localhost:8000/img/login/2.png"
                 alt="Carousel 2"
               />
             </div>
             <div>
               <img
                 // style={contentStyle}
-                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
+                src="http://localhost:8000/img/login/3.png"
                 alt="Carousel 3"
               />
             </div>
@@ -89,13 +89,19 @@ const Registration = () => {
         </Col>
 
         <Col span={9}>
-          <Steps current={currentStep} className='col-8 '>
+          <div className='reginertitle'>會員註冊</div>
+          <Steps current={currentStep} className='col-10'
+            style={{ paddingLeft: '30px' }}>
             <Step title="帳號密碼" />
             <Step title="個人資訊" />
             <Step title="完成註冊" />
           </Steps>
           {currentStep === 0 && (
-            <Form form={form} layout="vertical" onFinish={handleNext} style={{ width: '70%', marginTop: '120px' }} >
+
+
+            <Form form={form} layout="vertical"
+              onFinish={handleNext}
+              style={{ }} >
               <Form.Item
 
                 label="帳號"
@@ -157,8 +163,9 @@ const Registration = () => {
               layout="vertical"
               onFinish={handleFinish}
               size="large"
-              style={{ width: '80%', marginTop: '20px' }}
+              style={{ marginTop: '20px' }}
               id='loginform2'
+
             >
               <Row gutter={16}>
                 <Col span={12}>

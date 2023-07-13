@@ -6,16 +6,32 @@ $font-xs: 1.5rem;
 $main-color: #0b7597;
 
 #registerout {
-    background-color: #0b7597;
-    padding: 50px;
+    background-color: #abc7d0;
+    padding: 30px;
+    
+    .slick-track{
+        height:600px;
+        margin: 30px;
+        .slick-slide{
+            width: 80%;
+        }
+    }
+    .reginertitle{
+        font-size: $font-big;
+        margin-bottom: 20px;
+        color: #0b7597;
+        font-weight: bold;
+    }
 }
 
 #register {
-    margin-top: 30px;
+    border: #0b7597 3px solid;
     background-color: #fff;
     padding: 20px;
     border-radius: 15px;
-    height: 80vh;
+    height: 80%;
+
+
 
     .ant-form {
         // margin-top: 50px;
@@ -26,8 +42,8 @@ $main-color: #0b7597;
     }
 
     img {
-        height: 650px;
-        width: 80%;
+        height: 600px;
+        object-fit: cover;
     }
 
     .ant-form-item-required {
