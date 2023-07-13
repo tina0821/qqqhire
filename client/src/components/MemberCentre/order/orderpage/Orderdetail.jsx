@@ -20,10 +20,11 @@ const Orderdetail = ({ tradeitemId, tradeitems }) => {
           </tr>
         </thead>
         <tbody>
-          {/* 根据 details 渲染详细信息 */}
           {details.map((detail) => (
             <tr key={detail.tradeitemId}>
-              <td></td>
+              <td>
+                <img src={`http://localhost:8000/img/${detail.imageSrc}`} alt="" />
+              </td>
               <td>{detail.productName}</td>
               <td>{new Date(detail.rentStart).toLocaleDateString()}</td>
               <td>{new Date(detail.rentEnd).toLocaleDateString()}</td>
@@ -38,5 +39,4 @@ const Orderdetail = ({ tradeitemId, tradeitems }) => {
     </div>
   );
 };
-
 export default Orderdetail;

@@ -25,11 +25,13 @@ app.get('/cart', function (req, res) {
 app.get('/api/myorder/:account', function(req, res) {
   const account = req.params.account;
   const query = `
-    SELECT t.tradeitemId, t.account, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit
+    SELECT t.tradeitemId, t.account, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc
     FROM tradeitem AS t
     INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
     INNER JOIN product AS p ON m.productId = p.productId
+    INNER JOIN imagemap AS i ON p.productId = i.productId
     WHERE t.account = ?
+    GROUP BY p.productId
     ORDER BY t.tradeitemId
   `;
   coon.query(query, [account], function(error, results) {
@@ -41,6 +43,7 @@ app.get('/api/myorder/:account', function(req, res) {
     }
   });
 });
+
 
 app.post('/api/cancelOrder', function (req, res) {
   const { tradeitemId } = req.body;
