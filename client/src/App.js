@@ -16,10 +16,10 @@ import Product from './page/product';
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
 // import Cart from "./components/cart/index";
-
 import Navbar2 from './components/Home/navbar2/navbar2';
 // import Navbar from './components/Home/navbar/navbar';
 import Footer from './components/Home/footer/footer';
+import Returnqu from './components/returnqu/returnqu';
 
 
 
@@ -33,7 +33,8 @@ const App = () => {
           <Link className='m-3' to="/product">product</Link><br />
           <Link className='m-3' to="/RegistrationForm">RegistrationForm</Link><br />
           <Link className='m-3' to="/cart">Cart</Link><br />
-          <Link className='m-3' to="/tqq">tqq</Link>
+          <Link className='m-3' to="/tqq">tqq</Link><br />
+          <Link className='m-3' to="/Returnqu">Returnqu</Link>
         </div>
         
         <Navbar2 />
@@ -48,8 +49,15 @@ const App = () => {
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
 
           <Route path="/RegistrationForm" element={<RegistrationForm />} />
-          {/* <Route path="/cart" element={<Cart />} /> */}
+          {
+          /* <Route path="/cart" element={<Cart />} /> */}
+          
+          <Route path="/Returnqu" element={<Returnqu />} />
+          
           <Route path="*" element={<NotFound />} />
+          
+
+
         </Routes>
         <Footer />
       </Router>
