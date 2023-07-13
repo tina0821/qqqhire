@@ -6,12 +6,16 @@ const Myorder = () => {
   const [tradeitems, setTradeitems] = useState([]);
   // =========== 詳細按鈕 =========== 
   const [selectedTradeitemId, setSelectedTradeitemId] = useState(null);
-
+  const [showOrderDetail, setShowOrderDetail] = useState(false);
   const handleDetail = (tradeitemId) => {
     setSelectedTradeitemId(tradeitemId);
+    setShowOrderDetail(true);
   };
-
-  // ====================== 
+  const handleBack = () => {
+    setSelectedTradeitemId(null);
+    setShowOrderDetail(false);
+  };
+  // ================================= 
 
   useEffect(() => {
     const fetchTradeitems = async () => {
@@ -43,6 +47,11 @@ const Myorder = () => {
     (tradeitem, index, self) =>
       self.findIndex((t) => t.tradeitemId === tradeitem.tradeitemId) === index
   );
+  if (showOrderDetail) {
+    return (
+      <Orderdetail tradeitemId={selectedTradeitemId} tradeitems={tradeitems} handleBack={handleBack} />
+    );
+  }
 
   return (
     <div className="order-component">
@@ -56,8 +65,8 @@ const Myorder = () => {
               <th>商品</th>
               <th>預約日期</th>
               <th>歸還日期</th>
-              <th>租金</th>
-              <th>押金</th>
+              <th>天數</th>
+              <th>總金額</th>
               <th>訂單狀態</th>
               <th>操作</th>
             </tr>
@@ -67,14 +76,23 @@ const Myorder = () => {
               if (tradeitem.state < 3) {
                 const orderStatus = getOrderStatus(tradeitem.state);
 
+                // 计算每个tradeitemId内所有商品的rent总和和deposit总和
+                const rentTotal = tradeitems
+                  .filter((item) => item.tradeitemId === tradeitem.tradeitemId)
+                  .reduce((total, item) => total + item.rent, 0);
+
+                const depositTotal = tradeitems
+                  .filter((item) => item.tradeitemId === tradeitem.tradeitemId)
+                  .reduce((total, item) => total + item.deposit, 0);
+
                 return (
                   <tr id="trtd" key={tradeitem.tradeitemId}>
                     <td>{tradeitem.tradeitemId}</td>
                     <td>{limitProductName(tradeitem.productName)}</td>
                     <td>{new Date(tradeitem.rentStart).toLocaleDateString()}</td>
                     <td>{new Date(tradeitem.rentEnd).toLocaleDateString()}</td>
-                    <td>{tradeitem.rent}</td>
-                    <td>{tradeitem.deposit}</td>
+                    <td>{calculateDays(tradeitem.rentStart, tradeitem.rentEnd)}</td>
+                    <td>{rentTotal + depositTotal}</td>
                     <td>{orderStatus}</td>
                     <td>
                       <button id='actbtn' onClick={() => handleDetail(tradeitem.tradeitemId)}>詳細</button>
@@ -107,6 +125,15 @@ function limitProductName(productName) {
       {remainder}
     </>
   );
+}
+
+// 輔助函數：計算日期之間的天數差
+function calculateDays(rentStart, rentEnd) {
+  const start = new Date(rentStart);
+  const end = new Date(rentEnd);
+  const timeDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24)); // 计算天数
+
+  return timeDiff;
 }
 
 export default Myorder;

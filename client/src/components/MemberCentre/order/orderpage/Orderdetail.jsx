@@ -1,45 +1,70 @@
 import React from 'react';
 
-const Orderdetail = ({ tradeitemId, tradeitems }) => {
+const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
   // 根据 tradeitemId 过滤出包含相同 tradeitemId 的详细信息
   const details = tradeitems.filter((tradeitem) => tradeitem.tradeitemId === tradeitemId);
+  const uniqueProductAccounts = Array.from(
+    new Set(details.map((detail) => detail.productAccount))
+  );
 
   return (
-    <div>
-      <table className="order-table">
-        <thead>
-          <tr>
-            <th>商品圖片</th>
-            <th>商品</th>
-            <th>預約日期</th>
-            <th>歸還日期</th>
-            <th>天數</th>
-            <th>租金</th>
-            <th>押金</th>
-            <th>總金額</th>
-          </tr>
-        </thead>
-        <tbody>
-          {details.map((detail) => (
-            <tr key={detail.tradeitemId}>
-              <td>
-                <img id='proimg' src={`http://localhost:8000/img/${detail.imageSrc}`} alt="" />
-              </td>
-              <td>{limitProductName(detail.productName)}</td>
-              <td>{new Date(detail.rentStart).toLocaleDateString()}</td>
-              <td>{new Date(detail.rentEnd).toLocaleDateString()}</td>
-              <td>{calculateDays(detail.rentStart, detail.rentEnd)}</td>
-              <td>{detail.rent}</td>
-              <td>{detail.deposit}</td>
-              <td>{calculateTotalAmount(detail.rent, detail.deposit)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="tbscss">
+      {uniqueProductAccounts.map((productAccount) => {
+        const products = details.filter(
+          (detail) => detail.productAccount === productAccount
+        );
+        return (
+          <div key={productAccount}>
+            <div id='trititle'>
+              <div id='tridet'>
+                <p>賣家{productAccount}</p>
+                <p>訂單編號{tradeitemId}</p>
+              </div>
+              <button id='qubtn'>申訴</button>
+            </div>
+            <table className="order-table">
+              <thead>
+                <tr>
+                  <th>商品圖片</th>
+                  <th>商品</th>
+                  <th>預約日期</th>
+                  <th>歸還日期</th>
+                  <th>天數</th>
+                  <th>租金</th>
+                  <th>押金</th>
+                  <th>總金額</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((item) => (
+                  <tr key={item.productId}>
+                    <td>
+                      <img
+                        id="proimg"
+                        src={`http://localhost:8000/img/${item.imageSrc}`}
+                        alt=""
+                      />
+                    </td>
+                    <td>{limitProductName(item.productName)}</td>
+                    <td>{new Date(item.rentStart).toLocaleDateString()}</td>
+                    <td>{new Date(item.rentEnd).toLocaleDateString()}</td>
+                    <td>{calculateDays(item.rentStart, item.rentEnd)}</td>
+                    <td>{item.rent}</td>
+                    <td>{item.deposit}</td>
+                    <td>{TotalAmount(item.rent, item.deposit)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      })}
+      <button id="back" onClick={handleBack}>
+        返回
+      </button>
     </div>
   );
 };
-
 // 輔助函數：限製商品名稱的字數並插入換行符
 function limitProductName(productName) {
   const maxChars = 6; // 最大字數限制
@@ -67,7 +92,7 @@ function calculateDays(rentStart, rentEnd) {
 }
 
 // 輔助函數：計算租金和押金的總和
-function calculateTotalAmount(rent, deposit) {
+function TotalAmount(rent, deposit) {
   const totalAmount = parseFloat(rent) + parseFloat(deposit);
   return Math.floor(totalAmount); // 省略小數部分
 }
