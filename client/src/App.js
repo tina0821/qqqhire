@@ -13,7 +13,7 @@ import 'jquery-ui-css/jquery-ui'
 import NotFound from './page/NotFound';
 import Product from './page/product';
 import RegistrationForm from './page/register';
-import Cart from "./components/cart/index";
+// import Cart from "./components/cart/index";
 import Login from "./components/login/login";
 import Member from "./components/PersonalData/Personaldata"
 
@@ -26,7 +26,7 @@ const App = () => {
         <Link className='m-3' to="/product">product</Link><br/>
         <Link className='m-3' to="/login">登入</Link><br/>
         <Link className='m-3' to="/RegistrationForm">註冊</Link><br/>
-        <Link className='m-3' to="/cart">Cart</Link><br/>
+        {/* <Link className='m-3' to="/cart">Cart</Link><br/> */}
         <Link className='m-3' to="/Member">會員中心</Link><br/>
        
         </div>
@@ -35,7 +35,7 @@ const App = () => {
           {/* <Route path="/about" element={<About />} /> */}
           <Route path="/product" element={<Product />} />
           <Route path="/RegistrationForm" element={<RegistrationForm />} />
-          <Route path="/cart" element={<Cart />} />
+          {/* <Route path="/cart" element={<Cart />} /> */}
           <Route path="/login" element={<Login />}  />
           <Route path="/Member" element={<Member />} />
           <Route path="*" element={<NotFound />} />

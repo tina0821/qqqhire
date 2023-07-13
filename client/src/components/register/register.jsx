@@ -68,21 +68,21 @@ const Registration = () => {
               <img
                 // style={contentStyle}
                 src="http://localhost:8000/img/profilePictureSrc/Rectangle%201428.jpg"
-                alt="Carousel Image 1"
+                alt="Carousel 1"
               />
             </div>
             <div>
               <img
                 // style={contentStyle}
                 src="http://localhost:8000/img/profilePictureSrc/Rectangle%201430.jpg"
-                alt="Carousel Image 2"
+                alt="Carousel 2"
               />
             </div>
             <div>
               <img
                 // style={contentStyle}
                 src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
-                alt="Carousel Image 3"
+                alt="Carousel 3"
               />
             </div>
           </Carousel>

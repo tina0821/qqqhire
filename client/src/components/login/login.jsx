@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input, Col, Row, Carousel } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 import "./login.scss"
 
@@ -52,22 +52,22 @@ const Login = () => {
                         <div>
                             <img
                                 // style={contentStyle}
-                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
-                                alt="Carousel Image 1"
+                                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
+                                alt="Carousel 1"
                             />
                         </div>
                         <div>
                             <img
                                 // style={contentStyle}
-                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
-                                alt="Carousel Image 2"
+                                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
+                                alt="Carousel 2"
                             />
                         </div>
                         <div>
                             <img
                                 // style={contentStyle}
-                                src="http://localhost:8000/img/q123/2mm潛水手套-2.jpg"
-                                alt="Carousel Image 3"
+                                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
+                                alt="Carousel 3"
                             />
                         </div>
                     </Carousel>
