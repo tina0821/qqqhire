@@ -7,7 +7,7 @@ $main-color: #0b7597;
 
 #registerout {
     background-color: #0b7597;
-    padding: 30px;
+    padding: 50px;
 }
 
 #register {
@@ -22,11 +22,12 @@ $main-color: #0b7597;
     }
 
     .slick-list {
-        margin: 30px;
+        // margin: 30px;
     }
 
     img {
         height: 650px;
+        width: 80%;
     }
 
     .ant-form-item-required {
@@ -35,11 +36,25 @@ $main-color: #0b7597;
 
     label {
         font-weight: bolder;
-        color:#16778a
+        color: #16778a
     }
 
-    .ant-input-affix-wrapper{
+    .ant-input-affix-wrapper {
 
-        border:2px solid #16778a;
+        border: 2px solid #16778a;
+    }
+
+    .ant-picker {
+        border: 2px solid #16778a;
+    }
+
+    .ant-select-selector {
+        border: 2px solid #16778a;
+    }
+
+    #loginform2 {
+        .ant-input {
+            border: 2px solid #16778a;
+        }
     }
 }

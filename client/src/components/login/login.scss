@@ -16,12 +16,17 @@ $main-color: #0b7597;
     padding: 20px;
     border-radius: 15px;
     height: 80vh;
+
     .slick-list {
         margin: 30px;
     }
 
     img {
         height: 650px;
+    }
+
+    #login-right {
+        margin-top: 100px;
     }
 
 }

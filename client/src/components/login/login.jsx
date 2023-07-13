@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input, Col, Row, Carousel } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import "./login.scss"
 
 const Login = () => {
     const [account, setaccount] = useState('');
     const [password, setPassword] = useState('');
+    const history = useNavigate();
 
     const onFinish = async () => {
         try {
@@ -20,6 +22,8 @@ const Login = () => {
                 console.log('ok');
                 const userInfo = `${account}`;
                 sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+                alert("登入成功")
+                history("/")
 
 
             } else if (response.status === 401) {
@@ -32,7 +36,9 @@ const Login = () => {
     };
 
 
-
+    const logout =()=>{
+        sessionStorage.clear();
+    }
 
 
 
@@ -66,7 +72,7 @@ const Login = () => {
                         </div>
                     </Carousel>
                 </Col>
-                <Col span={12}>
+                <Col span={12} id='login-right'>
                     <h1>登入</h1>
                     <Form
                         name="normal_login"
@@ -78,6 +84,7 @@ const Login = () => {
 
                     >
                         <Form.Item
+                        label="帳號"
                             name="account"
                             rules={[
                                 {
@@ -96,6 +103,7 @@ const Login = () => {
                         </Form.Item>
                         <Form.Item
                             name="password"
+                            label="密碼"
                             rules={[
                                 {
                                     required: true,
@@ -128,6 +136,10 @@ const Login = () => {
                                 登入
                             </Button>
                             或 <a href="http://localhost:3000/RegistrationForm">註冊</a>
+                        <Button  onClick={logout}>
+                            登出
+
+                        </Button>
                         </Form.Item>
                     </Form>
                 </Col>

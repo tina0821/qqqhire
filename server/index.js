@@ -26,7 +26,7 @@ app.get('/cart', function (req, res) {
 //註冊
 app.post('/api/register', async (req, res) => {
   const { aldata } = req.body;
-  const a = 3;
+  const a = 10;
 
   try {
     const salt = await bcrypt.genSalt(a);

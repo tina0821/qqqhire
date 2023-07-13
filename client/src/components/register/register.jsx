@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select } from 'antd';
 import "./register.scss"
+import { Link } from 'react-router-dom';
+
 const { Step } = Steps;
 
 
@@ -18,7 +20,6 @@ const Registration = () => {
     if (currentStep === 2) {
       const allData = { ...page1Data, ...page2Data };
       setaldata(allData)
-      alert(allData)
     }
   }, [currentStep, page1Data, page2Data]);
 
@@ -55,13 +56,13 @@ const Registration = () => {
     setCurrentStep(2);
 
   };
-
   const registerchange = () => { };
 
   return (
     <div id='registerout'>
-      <Row id='register' >
-        <Col span={12}>
+      <Row id='register' gutter={20} >
+
+        <Col span={15}>
           <Carousel autoplay className='Carousel' style={{ height: "100%" }}>
             <div>
               <img
@@ -87,7 +88,7 @@ const Registration = () => {
           </Carousel>
         </Col>
 
-        <Col span={12}>
+        <Col span={9}>
           <Steps current={currentStep} className='col-8 '>
             <Step title="帳號密碼" />
             <Step title="個人資訊" />
@@ -116,9 +117,10 @@ const Registration = () => {
                 rules={[
                   { required: true, message: '請輸入密碼' },
                   // { min: 6, message: '密碼至少需要6個字符' },
+
                 ]}
               >
-                <Input.Password size='large' />
+                <Input.Password size='large' prefix={<LockOutlined />} />
               </Form.Item>
 
               <Form.Item
@@ -137,11 +139,11 @@ const Registration = () => {
                   }),
                 ]}
               >
-                <Input.Password size='large' />
+                <Input.Password size='large' prefix={<LockOutlined />} />
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit" onClick={registerchange}>
+                <Button htmlType="submit" onClick={registerchange}>
                   下一步
                 </Button>
               </Form.Item>
@@ -155,9 +157,8 @@ const Registration = () => {
               layout="vertical"
               onFinish={handleFinish}
               size="large"
-
-              style={{ width: '70%', marginTop: '20px' }}
-
+              style={{ width: '80%', marginTop: '20px' }}
+              id='loginform2'
             >
               <Row gutter={16}>
                 <Col span={12}>
@@ -243,7 +244,7 @@ const Registration = () => {
                 <Button type="default" onClick={handlePrev}>
                   上一步
                 </Button>
-                <Button type="primary" htmlType="submit" loading={loading}>
+                <Button style={{ background: "#16778a", color: "#fff", width: "75%", marginLeft: "20px" }} htmlType="submit" loading={loading}>
                   註冊
                 </Button>
               </Form.Item>
@@ -255,6 +256,9 @@ const Registration = () => {
               <h3>已經提交的表單資料：</h3>
 
               <p>註冊已完成！</p>
+              <Link to='/' type="primary">
+                回首頁
+              </Link>
             </div>
           )}
         </Col>
