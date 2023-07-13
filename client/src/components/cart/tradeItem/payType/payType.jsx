@@ -12,7 +12,7 @@ class PayType extends Component {
   render() {
     return (
       <React.Fragment>
-        <Space size={10} align="start" className="ps-3 d-flex">
+        <Space size={10} align="start" className="ps-3 mb-5 d-flex">
           <Select
             style={{ width: 250, fontStyle: "900" }}
             defaultValue={"請選擇付款方式"}
@@ -23,7 +23,7 @@ class PayType extends Component {
               this.props.data.payMethod(e, this.props.productAccount);
             }}
           />
-          {this.state.choosePayType === "creditCards" && (
+          {this.state.choosePayType === "Visa卡" && (
             <CreditCardsInput
               data={this.props.data}
               productAccount={this.props.productAccount}

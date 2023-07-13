@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProductInfo from "./productInfo/index";
 import Listname from "../listname/listname";
 import { Link } from "react-router-dom";
+import { Button,} from "antd";
 
 class ShopingCart extends Component {
   render() {
@@ -28,7 +29,7 @@ class ShopingCart extends Component {
                     />
                   </Link>
                   <div className="">{item.productAccount}</div>
-                  <div className="ms-3 btn btnColor d-flex cartFontSize">聊聊<i className="ps-2 bi bi-messenger"></i></div>
+                  <Button style={{height:50,display:"flex",alignItems:"center"}} size="large" className="ms-3 btnColor cartFontSize">聊聊<i className="ps-2 bi bi-messenger"></i></Button>
                 </div>
                 <div className="likeHr d-flex"></div>
                 <Listname type={0}/>

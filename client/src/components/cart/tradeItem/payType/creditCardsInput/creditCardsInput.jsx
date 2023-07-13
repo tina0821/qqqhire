@@ -100,14 +100,19 @@ class CreditCardsInput extends Component {
     );
   }
 
-  //
-  componentDidMount() {}
   //修改資料
   changeCreditCardNumber = (e, target) => {
     let newstate = { ...this.state };
     newstate[target] = e;
     newstate.creditCardNumber ? (newstate.err = 0) : (newstate.err = 1);
     this.setState(newstate);
+    this.props.data.creditCardInfo(
+      this.props.productAccount,
+      newstate.creditCardNumber,
+      newstate.creadCartmonth,
+      newstate.creditCardYear,
+      newstate.cvc
+    );
   };
 }
 

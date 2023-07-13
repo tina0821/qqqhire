@@ -325,7 +325,7 @@ componentDidUpdate(){
   };
   
   //記錄每一位賣家信用卡資訊
-  payMethod = (productAccount,creditCardNumber, creadCartmonth,creditCardYear,cvc) => {
+  creditCardInfo = (productAccount,creditCardNumber, creadCartmonth,creditCardYear,cvc) => {
     let newstate = { ...this.state };
     const productAccountList =[]
     newstate.tradeItem.map((value)=>{
