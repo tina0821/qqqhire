@@ -69,16 +69,16 @@ class Cart extends Component {
     return (
       <React.Fragment>
         {/* antd客製化樣式 */}
-        <ConfigProvider theme={
-          {
-            token:{
-              colorSplit:'#0B7597',
-              fontSize:'1.7rem',
-              colorPrimary:'#0B7597' 
-            }
-            
-          }
-        } locale={zhCN}>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorSplit: "#0B7597",
+              fontSize: "1.7rem",
+              colorPrimary: "#0B7597",
+            },
+          }}
+          locale={zhCN}
+        >
           {/* 提示框框 */}
           <DeletePrompt
             show={this.state.show}
