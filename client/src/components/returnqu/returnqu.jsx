@@ -1,36 +1,86 @@
 import React, { useState } from 'react';
-import { Button, Space, Radio, Form, Select, Typography,  Input} from 'antd';
+import { Button, Space, Radio, Form, Select, Typography, Input } from 'antd';
 import "./returnqu.css";
 
 
 const Returnqu = () => {
+
+    // === 單選按鈕 ===
+    // 抓取單選框value值
+    // 把值回傳進去input框
+
     const [value, setValue] = useState(0);
     const [value2, setValue2] = useState(0);
-
-
-    // 單選按鈕
+    
     const onChange = (e) => {
-        console.log('radio checked', e.target.value);
         setValue(e.target.value);
+        console.log('radio checked', e.target.value);
     };
     const onChange2 = (e) => {
-        console.log('radio checked', e.target.value);
         setValue2(e.target.value);
+        console.log('radio checked', e.target.value);
     };
 
-    // 監聽 input
-    const [form] = Form.useForm();
-    const nameValue = Form.useWatch('name', form);
 
-    const age = Form.useWatch('age', { form, preserve: true });
-    console.log(age);
+    
+    // === 單選框 ===
+
+
+
+    // === 監聽 input ===
+    const [form] = Form.useForm();
+    // const nameValue = Form.useWatch('name', form);
+    // const nameValue2 = Form.useWatch('name2', form);
+
+
+    // === 下一步 上一步按鈕 ===
+    const [open, setOpen] = useState(false);
+
+    const controlBtn = ()=>{
+        setOpen((prev)=>{return !prev})
+    }
+    // 方法一 {open?<div></div>:null}
+    // 方法二 {!open&&<></>} {open&&<></>}
+
+    
+    // === 確認合約 並送出 ===
+    const [checked, setChecked] = useState("");
+
+    // 測試是否收到單選框資訊 setChecked為非同步傳遞
+    const sendChick = (e) => {
+        setChecked(e.target.value);
+        if (e.target.value) {
+            console.log("OK")
+        }else{
+            console.log("NO")
+        }
+      };
+    console.log(checked)
+    // 點擊送出判斷單選框回傳值
+    const controlSendBtn = ()=>{
+        if (checked === '1') {
+            alert('成功送出');
+            window.location.reload();
+        }else{
+            alert("尚未勾選合約 請確認!")
+        }
+    }
+
+
 
 
 
     return (
         <>
-            <div className="container">
+            {/* Token全局改動範例 需要import=>ConfigProvider */}
+            {/* <ConfigProvider
+                // 用這段去自訂全部CSS 
+                theme={
+                    {token:{colorSplit:'red'}}
+                }>
+            </ConfigProvider> */}
 
+            <div className="container">
                 <h1>問題回報</h1>
                 <hr />
                 <h3>注意事項</h3>
@@ -58,76 +108,92 @@ const Returnqu = () => {
                 <p>謝謝您遵守以上的注意事項。現在您可以填寫下面的問題回報表單，我們將盡快處理您的問題。如有任何疑問，請隨時聯繫我們的客戶服務團隊。</p>
 
                 <hr />
-                <div>
+                
+                {/* 第一區 */}
+                {!open&&<div>
 
                     <h3>請問您的問題類別屬於?</h3>
                     <Radio.Group onChange={onChange} value={value} >
-                        <Radio value={1} className='RadioWord'>出租項目</Radio>
-                        <Radio value={2} className='RadioWord'>借物問題</Radio>
-                        <Radio value={3} className='RadioWord'>其他</Radio>
+                        <Radio value={'出租項目'} className='RadioWord'>出租項目</Radio>
+                        <Radio value={'借物問題'} className='RadioWord'>借物問題</Radio>
+                        <Radio value={'其他'} className='RadioWord'>其他</Radio>
                     </Radio.Group>
                     <h3>問題具體項目是什麼?</h3>
                     <Radio.Group onChange={onChange2} value={value2}>
-                        <Radio value={1} className='RadioWord'>租賃合約問題</Radio>
-                        <Radio value={2} className='RadioWord'>租賃相關回報</Radio>
-                        <Radio value={3} className='RadioWord'>系統相關問題</Radio>
-                        <Radio value={4} className='RadioWord'>回報BUG</Radio>
+                        <Radio value={'租賃合約問題'} className='RadioWord'>租賃合約問題</Radio>
+                        <Radio value={'租賃相關回報'} className='RadioWord'>租賃相關回報</Radio>
+                        <Radio value={'系統相關問題'} className='RadioWord'>系統相關問題</Radio>
+                        <Radio value={'回報BUG'} className='RadioWord'>回報BUG</Radio>
                     </Radio.Group>
                     <Space wrap size={"large"} className='btnDiv'>
-                        <Button type="primary" className='btnWord'>下一步</Button>
+                        <Button type="primary" className='btnWord' onClick={controlBtn}>下一步</Button>
                     </Space>
 
-                </div>
-                <hr />
-                <div>
+                </div>}
+                
+                {/* 第二區 */}
+                {open&&<div>
 
-                    <div>
+                    {/* <div>
                         <Button onClick={() => form.setFieldValue('age', 10)}>Update</Button>
-                    </div>
+                    </div> */}
 
                     <Form form={form}  >
-                        <Form.Item name="name" label="try">
+                        <Form.Item name="name2" label="try">
                             <Input />
                         </Form.Item>
                     </Form>
+
                     <Typography>
-                        <pre style={{ fontSize: "1.5rem" }}>分類: {nameValue}</pre>
+                        <pre style={{ fontSize: "1.5rem" }}>分類: {value}</pre>
                     </Typography>
                     <Typography>
-                        <pre style={{ fontSize: "1.5rem" }}>類別: {nameValue}</pre>
+                        <pre style={{ fontSize: "1.5rem" }}>類別: {value2}</pre>
                     </Typography>
 
                     <Form size="large">
                         <Form.Item label={<p style={{ fontSize: "1.5rem" }}>項目</p>}  >
                             <Select>
                                 <Select.Option value="" style={{ fontSize: "1.5rem" }}></Select.Option>
-                                <Select.Option value="demo1" style={{ fontSize: "1.5rem" }}>租賃建議</Select.Option>
-                                <Select.Option value="demo2" style={{ fontSize: "1.5rem" }}>一般租賃問題</Select.Option>
+                                <Select.Option value="demo1" style={{ fontSize: "1.1rem" }}>租賃建議</Select.Option>
+                                <Select.Option value="demo2" style={{ fontSize: "1.1rem" }}>一般租賃問題</Select.Option>
                             </Select>
                         </Form.Item>
                     </Form>
 
+
+                    {/* 文字輸入框和上傳圖片選項 */}
+                    <div id="inputContainer" style={{ display: 'none' }}>
+                        <div className="form-group">
+                            <label htmlFor="textInput" style={{ fontSize: "1.5rem" }}>文字輸入框:</label>
+                            <textarea className="form-control" id="textInput" maxLength={100} defaultValue={""}/>
+                        </div>
+                        {/* 用于顯示已输入字數和總字數限制 */}
+                        <div id="charCount" />
+                        <div className="form-group">
+                            <label htmlFor="imageUpload" style={{ fontSize: "1.5rem" }}>圖片補充:</label>
+                            <input type="file" className="form-control-file" id="imageUpload" style={{ fontSize: "1.1rem" }} />
+                        </div>
+                    </div>
+
                     <hr />
 
 
-                    <Radio className='RadioWord'>我已詳細閱讀合約&規範與線上回報相關注意事項內容，並同意遵守所有規定</Radio>
+                    <Radio className='RadioWord' checked={checked} onChange={sendChick} value="1">我已詳細閱讀合約&規範與線上回報相關注意事項內容，並同意遵守所有規定</Radio>
                     <Space wrap size={"large"} className='btnDiv'>
-                        <Button type="primary" className='btnWord'>上一步</Button>
-                        <Button type="primary" className='btnWord'>送出</Button>
+                        <Button type="primary" className='btnWord' onClick={controlBtn}>上一步</Button>
+                        <Button type="primary" className='btnWord' onClick={controlSendBtn}>送出</Button>
                     </Space>
 
 
-                </div>
-
-
-
-
+                </div>}
 
             </div>
+
         </>
 
     );
 
-}
+} 
 
-export default Returnqu;
+export default Returnqu
