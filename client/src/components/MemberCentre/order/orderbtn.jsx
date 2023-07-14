@@ -5,7 +5,7 @@ import Historyorder from './orderpage/historyorder';
 
 const Orderbtn = ({ displayedComponent, handleButtonClick }) => {
   return (
-    <div>
+    <div >
       <div className="btnset">
         <button id='mainbtn' onClick={() => handleButtonClick('Myorder')} className={displayedComponent === 'Myorder' ? 'active' : ''}>
           我的訂單

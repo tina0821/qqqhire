@@ -26,8 +26,6 @@ function Cancelbtn({ tradeitemId, onCancel }) {
     setIsConfirmationOpen(false);
   };
 
-  
-
   return (
     <>
       {isConfirmationOpen && (
