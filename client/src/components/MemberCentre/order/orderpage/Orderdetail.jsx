@@ -21,7 +21,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
         // 判斷資料的state，決定要顯示什麼button
         let buttonComponent = null;
       if (state === 0) {
-        buttonComponent = <Cancelbtn />;
+        buttonComponent = <Cancelbtn tradeitemId={tradeitemId} />;
       } else if (state > 2) {
         buttonComponent = <Appealbtn />;
       }

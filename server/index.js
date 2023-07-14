@@ -45,25 +45,25 @@ app.get('/api/myorder/:account', function(req, res) {
 });
 
 
-// app.post('/api/cancelOrder', function (req, res) {
-//   const { tradeitemId } = req.body;
-//   // 檢查 tradeitemId 的值
-//   console.log("Received tradeitemId:", tradeitemId);
+app.post('/api/cancelOrder', function (req, res) {
+  const { tradeitemId } = req.body;
+  // 檢查 tradeitemId 的值
+  console.log("Received tradeitemId:", tradeitemId);
 
-//   const updateQuery = 'UPDATE tradeitem SET state = 4 WHERE tradeitemId = ?';
-//   coon.query(updateQuery, [tradeitemId], function (error, results) {
-//     if (error) {
-//       console.log(error);
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     } else {
-//       if (results.affectedRows > 0) {
-//         res.status(200).json({ message: 'Order canceled successfully' });
-//       } else {
-//         res.status(404).json({ error: 'Order not found' });
-//       }
-//     }
-//   });
-// });
+  const updateQuery = 'UPDATE tradeitem SET state = 4 WHERE tradeitemId = ?';
+  coon.query(updateQuery, [tradeitemId], function (error, results) {
+    if (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      if (results.affectedRows > 0) {
+        res.status(200).json({ message: 'Order canceled successfully' });
+      } else {
+        res.status(404).json({ error: 'Order not found' });
+      }
+    }
+  });
+});
 
 app.listen(8000, function () {
   console.log(new Date().toLocaleDateString());

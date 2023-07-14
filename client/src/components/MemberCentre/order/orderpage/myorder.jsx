@@ -114,7 +114,7 @@ const MyOrder = () => {
                     <td>{rentTotal + depositTotal}</td>
                     <td>{orderStatus}</td>
                     <td>
-                      <button id='actbtn' onClick={() => handleDetail(tradeItem.tradeitemId)}>詳細</button>
+                      <button id='morebtn' onClick={() => handleDetail(tradeItem.tradeitemId)}>詳細</button>
                     </td>
                   </tr>
                 );

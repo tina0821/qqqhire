@@ -6,7 +6,7 @@ const Appealbtn = () => {
   };
 
   return (
-    <button id="qubtn" onClick={handleAppeal}>
+    <button id="actbtn" onClick={handleAppeal}>
       申訴
     </button>
   );
