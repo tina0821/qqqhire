@@ -1,35 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Orderdetail from './Orderdetail';
+import OrderDetail from './Orderdetail';
 
-const Myorder = () => {
-  const [tradeitems, setTradeitems] = useState([]);
-  // =========== 詳細按鈕 =========== 
-  const [selectedTradeitemId, setSelectedTradeitemId] = useState(null);
+const MyOrder = () => {
+  const [tradeItems, setTradeItems] = useState([]);
+  const [selectedTradeItemId, setSelectedTradeItemId] = useState(null);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
-  const handleDetail = (tradeitemId) => {
-    setSelectedTradeitemId(tradeitemId);
-    setShowOrderDetail(true);
-  };
-  const handleBack = () => {
-    setSelectedTradeitemId(null);
-    setShowOrderDetail(false);
-  };
-  // ================================= 
 
   useEffect(() => {
-    const fetchTradeitems = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/myorder/3x7Y90');
-        setTradeitems(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTradeitems();
+    fetchTradeItems();
   }, []);
 
-  console.log(tradeitems);
+  const fetchTradeItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/myorder/3x7Y90');
+      setTradeItems(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getOrderStatus = (state) => {
     if (state === 0) {
@@ -42,21 +31,54 @@ const Myorder = () => {
       return state;
     }
   };
-  // 一筆訂單只顯示一樣商品資訊
-  const uniqueTradeitems = tradeitems.filter(
-    (tradeitem, index, self) =>
-      self.findIndex((t) => t.tradeitemId === tradeitem.tradeitemId) === index
+
+  const handleDetail = (tradeItemId) => {
+    setSelectedTradeItemId(tradeItemId);
+    setShowOrderDetail(true);
+  };
+
+  const handleBack = () => {
+    setSelectedTradeItemId(null);
+    setShowOrderDetail(false);
+  };
+
+  const limitProductName = (productName) => {
+    const maxChars = 6;
+    if (productName.length <= maxChars) {
+      return productName;
+    }
+    const truncated = productName.substr(0, maxChars);
+    const remainder = productName.substr(maxChars);
+    return (
+      <>
+        {truncated}
+        <br />
+        {remainder}
+      </>
+    );
+  };
+
+  const calculateDays = (rentStart, rentEnd) => {
+    const start = new Date(rentStart);
+    const end = new Date(rentEnd);
+    const timeDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    return timeDiff;
+  };
+
+  const uniqueTradeItems = tradeItems.filter(
+    (tradeItem, index, self) => self.findIndex((t) => t.tradeitemId === tradeItem.tradeitemId) === index
   );
+
   if (showOrderDetail) {
     return (
-      <Orderdetail tradeitemId={selectedTradeitemId} tradeitems={tradeitems} handleBack={handleBack} />
+      <OrderDetail tradeitemId={selectedTradeItemId} tradeitems={tradeItems} handleBack={handleBack} />
     );
   }
 
   return (
     <div className="order-component">
-      {selectedTradeitemId ? (
-        <Orderdetail tradeitemId={selectedTradeitemId} tradeitems={tradeitems} />
+      {selectedTradeItemId ? (
+        <OrderDetail tradeitemId={selectedTradeItemId} tradeitems={tradeItems} />
       ) : (
         <table className="order-table">
           <thead>
@@ -72,32 +94,28 @@ const Myorder = () => {
             </tr>
           </thead>
           <tbody>
-            {uniqueTradeitems.map((tradeitem) => {
-              if (tradeitem.state < 3) {
-                const orderStatus = getOrderStatus(tradeitem.state);
-
-                // 计算每个tradeitemId内所有商品的rent总和和deposit总和
-                const rentTotal = tradeitems
-                  .filter((item) => item.tradeitemId === tradeitem.tradeitemId)
+            {uniqueTradeItems.map((tradeItem) => {
+              if (tradeItem.state < 3) {
+                // 訂單狀態
+                const orderStatus = getOrderStatus(tradeItem.state);
+                const rentTotal = tradeItems
+                  .filter((item) => item.tradeitemId === tradeItem.tradeitemId)
                   .reduce((total, item) => total + item.rent, 0);
-
-                const depositTotal = tradeitems
-                  .filter((item) => item.tradeitemId === tradeitem.tradeitemId)
+                const depositTotal = tradeItems
+                  .filter((item) => item.tradeitemId === tradeItem.tradeitemId)
                   .reduce((total, item) => total + item.deposit, 0);
-
                 return (
-                  <tr id="trtd" key={tradeitem.tradeitemId}>
-                    <td>{tradeitem.tradeitemId}</td>
-                    <td>{limitProductName(tradeitem.productName)}</td>
-                    <td>{new Date(tradeitem.rentStart).toLocaleDateString()}</td>
-                    <td>{new Date(tradeitem.rentEnd).toLocaleDateString()}</td>
-                    <td>{calculateDays(tradeitem.rentStart, tradeitem.rentEnd)}</td>
+                  <tr id="trtd" key={tradeItem.tradeitemId}>
+                    <td>{tradeItem.tradeitemId}</td>
+                    <td>{limitProductName(tradeItem.productName)}</td>
+                    <td>{new Date(tradeItem.rentStart).toLocaleDateString()}</td>
+                    <td>{new Date(tradeItem.rentEnd).toLocaleDateString()}</td>
+                    <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)}</td>
                     <td>{rentTotal + depositTotal}</td>
                     <td>{orderStatus}</td>
                     <td>
-                      <button id='actbtn' onClick={() => handleDetail(tradeitem.tradeitemId)}>詳細</button>
+                      <button id='actbtn' onClick={() => handleDetail(tradeItem.tradeitemId)}>詳細</button>
                     </td>
-
                   </tr>
                 );
               }
@@ -110,30 +128,4 @@ const Myorder = () => {
   );
 };
 
-// 輔助函數：限製商品名稱的字數並插入換行符
-function limitProductName(productName) {
-  const maxChars = 6; // 最大字數限制
-  if (productName.length <= maxChars) {
-    return productName;
-  }
-  const truncated = productName.substr(0, maxChars);
-  const remainder = productName.substr(maxChars);
-  return (
-    <>
-      {truncated}
-      <br />
-      {remainder}
-    </>
-  );
-}
-
-// 輔助函數：計算日期之間的天數差
-function calculateDays(rentStart, rentEnd) {
-  const start = new Date(rentStart);
-  const end = new Date(rentEnd);
-  const timeDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24)); // 计算天数
-
-  return timeDiff;
-}
-
-export default Myorder;
+export default MyOrder;

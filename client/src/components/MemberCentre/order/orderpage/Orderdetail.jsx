@@ -1,4 +1,6 @@
 import React from 'react';
+import Cancelbtn from './btnact/cancelbtn';
+import Appealbtn from './btnact/appealbtn';
 
 const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
   // 根据 tradeitemId 过滤出包含相同 tradeitemId 的详细信息
@@ -7,20 +9,31 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
     new Set(details.map((detail) => detail.productAccount))
   );
 
+
   return (
     <div className="tbscss">
       {uniqueProductAccounts.map((productAccount) => {
         const products = details.filter(
           (detail) => detail.productAccount === productAccount
         );
+        const { state } = products[0]; // 获取第一个产品的状态
+
+        // 判斷資料的state，決定要顯示什麼button
+        let buttonComponent = null;
+      if (state === 0) {
+        buttonComponent = <Cancelbtn />;
+      } else if (state > 2) {
+        buttonComponent = <Appealbtn />;
+      }
+
         return (
           <div key={productAccount}>
             <div id='trititle'>
               <div id='tridet'>
-                <p>賣家{productAccount}</p>
-                <p>訂單編號{tradeitemId}</p>
+                <p>賣家  {productAccount}</p>
+                <p>訂單編號  {tradeitemId}</p>
               </div>
-              <button id='qubtn'>申訴</button>
+              {buttonComponent}
             </div>
             <table className="order-table">
               <thead>
