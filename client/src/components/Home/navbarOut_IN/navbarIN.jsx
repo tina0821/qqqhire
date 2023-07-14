@@ -24,7 +24,7 @@ function NavbarIN() {
                     <ul className={`${style["drop-menu"]} ${style["limenu-2"]}`}>
                         <li><Link to="/">訂單追蹤</Link></li>
                         <li><Link to="/">商品管理</Link></li>
-                        <li><Link to="/Member">個人資料</Link></li>
+                        <li><Link to="/member">個人資料</Link></li>
                         <li><Link onClick={loginout} to="/">登出</Link></li>
                     </ul>
                 </li>

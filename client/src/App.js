@@ -22,6 +22,7 @@ import Footer from './components/Home/footer/footer';
 import Login from './components/login/login';
 import Registration from './components/register/register';
 import Up from './components/up/up';
+import MemberCenter from './components/PersonalData/Personaldata'
 
 const App = () => {
 
@@ -58,6 +59,7 @@ const App = () => {
           <Route path='/productSeller/:account' element={<ProductSeller />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/up" element={<Up />} />
+          <Route path="/member" element={< MemberCenter/>} />
         </Routes>
         {show && <Footer />}
       </Router>

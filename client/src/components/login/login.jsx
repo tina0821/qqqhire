@@ -37,11 +37,7 @@ const Login = () => {
     };
 
 
-    const logout =()=>{
-        localStorage.removeItem('userInfo');
-    }
-
-
+ 
 
 
     return (
@@ -53,21 +49,21 @@ const Login = () => {
                         <div>
                             <img
                                 // style={contentStyle}
-                                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
+                                src="http://localhost:8000/img/login/1.png"
                                 alt="Carousel 1"
                             />
                         </div>
                         <div>
                             <img
                                 // style={contentStyle}
-                                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
+                                src="http://localhost:8000/img/login/2.png"
                                 alt="Carousel 2"
                             />
                         </div>
                         <div>
                             <img
                                 // style={contentStyle}
-                                src="http://localhost:8000/img/profilePictureSrc/Rectangle%201429.jpg"
+                                src="http://localhost:8000/img/login/3.png"
                                 alt="Carousel 3"
                             />
                         </div>
@@ -137,10 +133,6 @@ const Login = () => {
                                 登入
                             </Button>
                             或 <a href="/RegistrationForm">註冊</a>
-                        <Button  onClick={logout}>
-                            登出
-
-                        </Button>
                         </Form.Item>
                     </Form>
                 </Col>
