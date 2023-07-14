@@ -26,10 +26,11 @@ class ShippingMethod extends Component {
       <React.Fragment>
         <Space.Compact
           size="large"
-          className="cartFontSize p-3 align-items-center d-flex "
+          className="p-3 align-items-center d-flex "
         >
           <Select
-            style={{ width: 250, fontStyle: "900" }}
+            style={{ width: 250 }}
+            showArrow={0}
             defaultValue={"請選擇寄送方式"}
             fieldNames={{ label: "method" }}
             options={this.state.shippingMethod}
@@ -40,6 +41,7 @@ class ShippingMethod extends Component {
           {state.chooseShippingMethod === "BlackCat" && (
             <Cascader
               style={{ width: 250, fontStyle: "900" }}
+              showArrow={0}
               allowClear={0}
               defaultValue={"請選擇縣市"}
               fieldNames={{
@@ -83,7 +85,6 @@ class ShippingMethod extends Component {
           {state.chooseShippingMethod &&
             state.chooseShippingMethod !== "BlackCat" && (
               <Button
-                className="cartFontSize"
                 style={{ height: 50, lineHeight: 0 }}
                 size="large"
                 onClick={() => {

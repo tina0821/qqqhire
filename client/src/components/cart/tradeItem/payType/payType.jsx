@@ -14,6 +14,7 @@ class PayType extends Component {
       <React.Fragment>
         <Space size={10} align="start" className="ps-3 mb-5 d-flex">
           <Select
+            showArrow={0}
             style={{ width: 250, fontStyle: "900" }}
             defaultValue={"請選擇付款方式"}
             fieldNames={{ label: "paymentMethod", value: "payTypeEngName" }}

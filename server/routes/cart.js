@@ -27,7 +27,7 @@ page.get("/", async (req, res) => {
 //取得使用者購物車資料
 page.get("/cart", function (req, res) {
   coon.query(
-    `SELECT * FROM cartmap INNER join product ON cartmap.productId=product.productId INNER join imagemap ON product.productId=imagemap.productId WHERE cartmap.account='kevin'`,
+    `SELECT * FROM cartmap INNER join product ON cartmap.productId=product.productId INNER join imagemap ON product.productId=imagemap.productId WHERE cartmap.account='kevin890762'`,
     [],
     (err, result) => {
       //最後要輸出的資料放這邊
@@ -57,7 +57,7 @@ page.get("/cart", function (req, res) {
         newdata[index].rentStart = new Date(el.rentStart).toLocaleDateString();
         newdata[index].rentEnd = new Date(el.rentEnd).toLocaleDateString();
         newdata[index].day =
-          new Date(el.rentEnd).getDate() - new Date(el.rentStart).getDate();
+          Math.abs(new Date(el.rentEnd).getDate() - new Date(el.rentStart).getDate());
         newdata[index].total =
           newdata[index].rent * newdata[index].day + newdata[index].deposit;
         productAccountList.push(el.productAccount);

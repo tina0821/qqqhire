@@ -69,7 +69,7 @@ a {
   font-size: 2.5rem !important;
 }
 .cartFontSize,.ant-row {
-  font-size: 1.75rem !important;
+  font-size: 1.75rem ;
 }
 .changeActive {
   background-color: rgba(255, 255, 255, 0) !important;
@@ -120,6 +120,10 @@ a {
   align-items: center;
 }
 
+.fontWeight{
+  font-weight:900
+}
+
 .ant-select,.ant-select-selector,.ant-select-selector .ant-select-selection-item{
   height: 50px !important;
   display: flex;
@@ -145,10 +149,15 @@ a {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+.text-danger{
+color: red;
+}
+
 .contentStyle{
   text-align: center;
   border-radius: 10px;
-  border:2px solid black;
+  border:6px solid #0B7597;
   margin-top: 30px;
 }
 

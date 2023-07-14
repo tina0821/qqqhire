@@ -56,6 +56,8 @@ class Cart extends Component {
       deletePrompt: null,
       //進入第二頁結帳商品的資訊
       tradeItem: null,
+      //結帳商品總金額
+      totalMoney: "",
       //手動輸入的地址
       address: {},
       //錯誤訊息
@@ -66,14 +68,23 @@ class Cart extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* 提示框框 */}
-        <DeletePrompt
-          show={this.state.show}
-          data={this}
-          productInfo={this.state.deletePrompt}
-        />
-        {/* antd步驟元件內建中文 */}
-        <ConfigProvider locale={zhCN}>
+        {/* antd客製化樣式 */}
+        <ConfigProvider theme={
+          {
+            token:{
+              colorSplit:'#0B7597',
+              fontSize:'1.7rem',
+              colorPrimary:'#0B7597' 
+            }
+            
+          }
+        } locale={zhCN}>
+          {/* 提示框框 */}
+          <DeletePrompt
+            show={this.state.show}
+            data={this}
+            productInfo={this.state.deletePrompt}
+          />
           <div className="">
             {/* 步驟條 */}
             <Row align={"middle"} justify={"center"}>
@@ -144,12 +155,12 @@ class Cart extends Component {
     this.setState(newstate);
   };
 
-componentDidUpdate(){
-  console.log(this.state.tradeItem)
-}
+  componentDidUpdate() {
+    // console.log(this.state.tradeItem)
+  }
 
   moveSteps = async (e) => {
-    let newstate = {...this.state};
+    let newstate = { ...this.state };
     newstate.current += e;
     //切換頁面做依判斷做事
     switch (newstate.current) {
@@ -158,7 +169,7 @@ componentDidUpdate(){
         break;
       //訂單頁面沒訂單要擋住，顯示提示框type2告訴使用者沒有勾選商品
       case 1:
-        newstate=this.sendDataToStep2(newstate)
+        newstate = this.sendDataToStep2(newstate);
         break;
       case 2:
         !newstate.address
@@ -264,6 +275,7 @@ componentDidUpdate(){
   //向第二頁傳送以勾選商品資訊
   sendDataToStep2 = (data) => {
     let newstate = { ...data };
+    let totalMoney = 0;
     let faketradeItem = [];
     //塞入購物車裡每個賣家的資料
     newstate.cartMap.map((item, index) => {
@@ -279,8 +291,14 @@ componentDidUpdate(){
     });
     //打包帶給結帳頁面用，果濾掉沒有勾選商品的賣家
     newstate.tradeItem = faketradeItem.filter((item) => {
+      item.product.length !== 0 &&
+        //結帳商品總金額
+        item.product.map((value) => {
+          return (totalMoney += value.total);
+        });
       return item.product.length !== 0;
     });
+    newstate.totalMoney = totalMoney;
     //假如沒商品勾選頁數停留在0顯示錯誤2沒有勾選商品
     if (newstate.tradeItem.length === 0) {
       newstate.current = 0;
@@ -291,53 +309,60 @@ componentDidUpdate(){
     return newstate;
   };
 
-
   //記錄每一位賣家訂單的寄送地址
-  addAddress = (addressValue, productAccount,shippingMethod=0) => {
+  addAddress = (addressValue, productAccount, shippingMethod = 0) => {
     let newstate = { ...this.state };
-    const productAccountList =[]
-    newstate.tradeItem.map((value)=>{
-      productAccountList.push(value.productAccount) 
-      return true
-    })
-    const productAccountNumber = productAccountList.indexOf(productAccount)
+    const productAccountList = [];
+    newstate.tradeItem.map((value) => {
+      productAccountList.push(value.productAccount);
+      return true;
+    });
+    const productAccountNumber = productAccountList.indexOf(productAccount);
     //資料修改新增
-    newstate.tradeItem[productAccountNumber].address=addressValue
-    shippingMethod&&
-    (newstate.tradeItem[productAccountNumber].shippingMethod=shippingMethod)
+    newstate.tradeItem[productAccountNumber].address = addressValue;
+    shippingMethod &&
+      (newstate.tradeItem[productAccountNumber].shippingMethod =
+        shippingMethod);
     this.setState(newstate);
   };
-  
+
   //記錄每一位賣家付款方式
-  payMethod = (payMethod, productAccount,addressValue=0) => {
+  payMethod = (payMethod, productAccount, addressValue = 0) => {
     let newstate = { ...this.state };
-    const productAccountList =[]
-    newstate.tradeItem.map((value)=>{
-      productAccountList.push(value.productAccount) 
-      return true
-    })
-    const productAccountNumber = productAccountList.indexOf(productAccount)
+    const productAccountList = [];
+    newstate.tradeItem.map((value) => {
+      productAccountList.push(value.productAccount);
+      return true;
+    });
+    const productAccountNumber = productAccountList.indexOf(productAccount);
     //資料修改新增
-    newstate.tradeItem[productAccountNumber].payMethod=payMethod
-    addressValue&&
-    (newstate.tradeItem[productAccountNumber].addressValue=addressValue)
+    newstate.tradeItem[productAccountNumber].payMethod = payMethod;
+    addressValue &&
+      (newstate.tradeItem[productAccountNumber].addressValue = addressValue);
     this.setState(newstate);
   };
-  
+
   //記錄每一位賣家信用卡資訊
-  creditCardInfo = (productAccount,creditCardNumber, creadCartmonth,creditCardYear,cvc) => {
+  creditCardInfo = (
+    productAccount,
+    creditCardNumber,
+    creadCartmonth,
+    creditCardYear,
+    cvc
+  ) => {
     let newstate = { ...this.state };
-    const productAccountList =[]
-    newstate.tradeItem.map((value)=>{
-      productAccountList.push(value.productAccount) 
-      return true
-    })
-    const productAccountNumber = productAccountList.indexOf(productAccount)
+    const productAccountList = [];
+    newstate.tradeItem.map((value) => {
+      productAccountList.push(value.productAccount);
+      return true;
+    });
+    const productAccountNumber = productAccountList.indexOf(productAccount);
     //資料修改新增
-    newstate.tradeItem[productAccountNumber].creditCardNumber=creditCardNumber
-    newstate.tradeItem[productAccountNumber].creadCartmonth=creadCartmonth
-    newstate.tradeItem[productAccountNumber].creditCardYear=creditCardYear
-    newstate.tradeItem[productAccountNumber].cvc=cvc
+    newstate.tradeItem[productAccountNumber].creditCardNumber =
+      creditCardNumber;
+    newstate.tradeItem[productAccountNumber].creadCartmonth = creadCartmonth;
+    newstate.tradeItem[productAccountNumber].creditCardYear = creditCardYear;
+    newstate.tradeItem[productAccountNumber].cvc = cvc;
     this.setState(newstate);
   };
 }

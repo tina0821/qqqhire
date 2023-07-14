@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import Listname from "../listname/listname";
 import TradeItemInfo from "./tradeItemInfo/tradeItemInfo";
 import ShippingMethod from "./ShippingMethod/ShippingMethod";
-import PayType from './payType/payType'
-import { Col, Row, Divider } from "antd";
+import Contract from "./contract/contract"
+import PayType from "./payType/payType";
+import { Col, Row, Divider, Collapse, ConfigProvider } from "antd";
 // import Test from "./test/test";
 
 class TradeItem extends Component {
   render() {
-    // console.log(this.props.data.state.chooseAreaList);
+    // console.log(this.props.data.state.totalMoney);
     return (
       <React.Fragment>
         {this.props.data.state.tradeItem &&
@@ -27,23 +28,33 @@ class TradeItem extends Component {
                     {/* 商品list說明 */}
                     <Listname type={1} />
                     {/* 列出訂單裡的商品 */}
-                    {item.product.map((item) => {
-                      return <TradeItemInfo item={item} key={item.cartMapId} />;
+                    {item.product.map((value) => {
+                      return <TradeItemInfo item={value} key={value.cartMapId} />;
                     })}
                     <Divider className="borderclass" />
                   </React.Fragment>
                 )}
                 <Row>
-                  <Col xs={24} className="cartFontSize fw-bolder">
+                  <Col xs={24} className="cartFontSize">
                     寄送資訊
                   </Col>
                 </Row>
                 {/* 寄送方式元件 */}
-                <ShippingMethod data={this.props.data} productAccount={item.productAccount} />
-                <PayType data={this.props.data} productAccount={item.productAccount}/>
+                <ConfigProvider theme={{ token: {} }}>
+                  <ShippingMethod
+                    data={this.props.data}
+                    productAccount={item.productAccount}
+                  />
+                  <PayType
+                    data={this.props.data}
+                    productAccount={item.productAccount}
+                  />
+                  <Contract productAccount={item.productAccount}data={this.props.data} item={item.product}/>
+                </ConfigProvider>
               </React.Fragment>
             );
           })}
+        <div>{this.props.data.state.totalMoney}</div>
       </React.Fragment>
     );
   }

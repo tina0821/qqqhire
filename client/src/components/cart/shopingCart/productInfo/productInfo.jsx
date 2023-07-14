@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { Col, Row } from "antd";
+import { Col, Row, ConfigProvider } from "antd";
 
 class ProductInfo extends Component {
   render() {
@@ -10,7 +10,7 @@ class ProductInfo extends Component {
         {this.props.data.map((item, index) => {
           return (
             <React.Fragment key={item.cartMapId}>
-              <Row gutter={[16,16]} align={"middle"} className="cartFontSize">
+              <Row gutter={[16, 16]} align={"middle"} className="cartFontSize">
                 <Col xs={1} sm={1} md={1} lg={1} xl={1}>
                   <input
                     type="checkbox"
@@ -42,11 +42,11 @@ class ProductInfo extends Component {
                   />
                 </Col>
                 <Col
-                  xs={6}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  xl={6}
+                  xs={5}
+                  sm={5}
+                  md={5}
+                  lg={5}
+                  xl={5}
                   className="cartFontSize"
                 >
                   {item.productName}
@@ -72,11 +72,11 @@ class ProductInfo extends Component {
                   {item.day}
                 </Col>
                 <Col
-                  xs={2}
-                  sm={2}
-                  md={2}
-                  lg={2}
-                  xl={2}
+                  xs={3}
+                  sm={3}
+                  md={3}
+                  lg={3}
+                  xl={3}
                   className="cartFontSize"
                 >
                   {item.rent}
@@ -102,18 +102,25 @@ class ProductInfo extends Component {
                   {item.total}
                 </Col>
                 <Col xs={1} sm={1} md={1} lg={1} xl={1}>
-                  <Button
-                    type="primary"
-                    icon={<CloseOutlined />}
-                    shape="circle"
-                    value={item.cartMapId}
-                    size="small"
-                    danger={true}
-                    onClick={() => {
-                      this.props.showDeleteWindow(item, 1);
-                    }}
-                    className="borderBtn"
-                  ></Button>
+                  <ConfigProvider theme={
+                    {
+                      token:{
+                        borderRadius:50,
+                        padding:0,
+                        fontSize:12
+                      }
+                    }
+                  }>
+                    <Button
+                      type="primary"
+                      icon={<CloseOutlined />}
+                      value={item.cartMapId}
+                      danger={true}
+                      onClick={() => {
+                        this.props.showDeleteWindow(item, 1);
+                      }}
+                    ></Button>
+                  </ConfigProvider>
                 </Col>
               </Row>
             </React.Fragment>

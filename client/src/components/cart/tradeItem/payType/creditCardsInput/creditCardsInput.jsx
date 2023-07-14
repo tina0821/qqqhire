@@ -42,12 +42,12 @@ class CreditCardsInput extends Component {
                     e.target.value,
                     "creditCardNumber"
                   );
-                  
                 }}
               />
             </Form.Item>
             <Form.Item>
               <Select
+                showArrow={0}
                 style={{ width: 100, height: 50 }}
                 options={creadCartmonth}
                 defaultValue={"月份"}
@@ -59,6 +59,7 @@ class CreditCardsInput extends Component {
             </Form.Item>
             <Form.Item>
               <Select
+                showArrow={0}
                 style={{ width: 100, height: 50 }}
                 options={this.state.creditCardYearList}
                 defaultValue={"年份"}
@@ -87,10 +88,7 @@ class CreditCardsInput extends Component {
                 className="cartFontSize"
                 maxLength={3}
                 onChange={(e) => {
-                  this.changeCreditCardNumber(
-                    e.target.value,
-                    "cvc"
-                  );
+                  this.changeCreditCardNumber(e.target.value, "cvc");
                 }}
               />
             </Form.Item>

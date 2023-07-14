@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProductInfo from "./productInfo/index";
 import Listname from "../listname/listname";
 import { Link } from "react-router-dom";
-import { Button,} from "antd";
+import { Button,Divider,ConfigProvider } from "antd";
 
 class ShopingCart extends Component {
   render() {
@@ -31,7 +31,9 @@ class ShopingCart extends Component {
                   <div className="">{item.productAccount}</div>
                   <Button style={{height:50,display:"flex",alignItems:"center"}} size="large" className="ms-3 btnColor cartFontSize">聊聊<i className="ps-2 bi bi-messenger"></i></Button>
                 </div>
-                <div className="likeHr d-flex"></div>
+                <ConfigProvider theme={{token:{lineWidth:4,margin:0}}}>
+                <Divider dashed />
+                </ConfigProvider>
                 <Listname type={0}/>
                 <ProductInfo
                   data={item.product}
@@ -39,7 +41,9 @@ class ShopingCart extends Component {
                   changeOne={this.props.data.changeOne}
                   showDeleteWindow={this.props.data.showDeleteWindow}
                 />
-                <div className="likeHr d-flex"></div>
+                <ConfigProvider theme={{token:{lineWidth:3,margin:0}}}>
+                <Divider  />
+                </ConfigProvider>
               </div>
             )
           );
