@@ -17,6 +17,15 @@ import Product from './page/product';
 // // import RegistrationForm from './components/login/q1';
 import ProductItem from './page/product-item';
 import ProductSeller from './page/productSeller';
+import Aboutus from './page/aboutus';
+import Order from './page/order';
+import Cmmgmt from './page/cmmgmt';
+import Profastup from './page/profastup';
+import Proedit from './page/proedit';
+// import Qu from './page/qu';
+// import RegisterForm from './components/login/q'
+// import Tqqq from './components/login/q';
+// import RegistrationForm from './components/login/q1';
 import Cart from "./components/cart/index";
 import Navbar2 from './components/Home/navbar2/navbar2';
 import Footer from './components/Home/footer/footer';
@@ -24,6 +33,7 @@ import Login from './components/login/login';
 import Registration from './components/register/register';
 import Up from './components/up/up';
 import MemberCenter from './components/PersonalData/Personaldata'
+
 
 const App = () => {
 
@@ -57,10 +67,18 @@ const App = () => {
           {/* <Route path="/RegistrationForm" element={<RegistrationForm />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path='/productItem/:id' element={<ProductItem />} />
-          <Route path='/productSeller/:account' element={<ProductSeller />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path='/productSeller/:account' element={<ProductSeller />} />     
+          <Route path="/aboutus" element={<Aboutus />} />      
+          {/* <Route path="/" element={<RegisterForm />} /> */}
+          {/* <Route path="/tqq" element={<Tqqq />} /> */}
+          <Route path="/order" element={<Order />} />
+          <Route path="/cmmgmt" element={<Cmmgmt />} />
+          <Route path="/profastup" element={<Profastup />} />
+          <Route path="/proedit" element={<Proedit />} />
+          {/* <Route path="/qu" element={<Qu />} /> */}
           <Route path="/up" element={<Up />} />
           <Route path="/member" element={< MemberCenter/>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         {show && <Footer />}
       </Router>
