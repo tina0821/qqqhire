@@ -7,16 +7,46 @@ import axios from 'axios';
 import ProductCarousel from '../components/product-item/ProductCarousel';
 import ProductSellerCard from '../components/product-seller/productSellerCard';
 import ButtonCard from '../components/product-item/buttonCard';
+import AlertBox from '../components/product-item/AlertBox';
 
 function ProductItem() {
   const [productitem, setProductItem] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [productSeller, setproductSeller] = useState('')
+  const [productSeller, setproductSeller] = useState('');
   const { id } = useParams();
+  const [showAlert, setShowAlert] = useState(0);
 
-    
+  //提示框狀態 加入租物車,收藏
+  const handleAction = async (state) => {
+    const modifiedAccount = localStorage.getItem('userInfo');
+    const account = modifiedAccount.slice(1, -1);
+    const productId = id;
+
+    if (account) {
+      if (state === 1) {
+        totalAmount ? setShowAlert(state) : setShowAlert(3);
+      }
+      if (state === 2) {
+        try {
+          const response = await axios.post(
+            'http://localhost:8000/api/collect',
+            { account, productId }
+          );
+          response ? setShowAlert(2) : console.log('GG');
+        } catch (error) {
+          error.response ? setShowAlert(5) : console.error('發生錯誤');
+        }
+      }
+    } else {
+      setShowAlert(6);
+    }
+    setTimeout(() => {
+      setShowAlert(0);
+    }, 1500);
+  };
 
   useEffect(() => {
+    //產品資訊
     const fetchData = async () => {
       const response = await axios.get(
         `http://localhost:8000/api/productItem/${id}`
@@ -26,14 +56,15 @@ function ProductItem() {
     };
     fetchData();
 
+    //相關推薦
     const fetchseller = async () => {
       const res = await axios.get(
         `http://localhost:8000/api/productseller/${id}`
       );
       const data2 = await res.data;
-      setproductSeller(data2)
-    }
-    fetchseller()
+      setproductSeller(data2);
+    };
+    fetchseller();
 
     setTimeout(() => {
       setIsLoaded(true);
@@ -167,17 +198,34 @@ function ProductItem() {
                 </div>
 
                 <div className="item-text">
-                  <Link to="/">
+                  <Link onClick={() => handleAction(1)}>
                     <i className="bi bi-cart3"></i> 加入租物車
                   </Link>
                 </div>
                 <div className="item-text">
-                  <Link to="/">
+                  <Link onClick={() => handleAction(2)}>
                     <i className="bi bi-heart"></i> 加入收藏
                   </Link>
                 </div>
               </div>
             </div>
+
+            {showAlert === 1 && (
+              <AlertBox message="已加入租物車..." type="success" />
+            )}
+            {showAlert === 2 && (
+              <AlertBox message="已加入收藏..." type="success" />
+            )}
+            {showAlert === 3 && (
+              <AlertBox message="請先選擇日期!!!" type="error" />
+            )}
+            {showAlert === 4 && (
+              <AlertBox message="此物品已加入購物車" type="warning" />
+            )}
+            {showAlert === 5 && (
+              <AlertBox message="此物品已加入收藏" type="warning" />
+            )}
+            {showAlert === 6 && <AlertBox message="請先登入" type="warning" />}
 
             <ProductSellerCard
               key={productSeller[0].account}

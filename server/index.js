@@ -83,6 +83,6 @@ app.post("/api/login", (req, res) => {
 });
 
 app.listen(8000, function () {
-  console.clear()
+  // console.clear()
   console.log(new Date().toLocaleDateString());
 });
