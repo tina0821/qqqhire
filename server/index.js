@@ -44,20 +44,6 @@ app.get('/api/myorder/:account', function (req, res) {
   });
 });
 
-app.get('/api/mypro/:account', function (req, res) {
-  const account = req.params.account;
-  const query = `
-    SELECT p.rent, p.deposit, i.imageSrc
-    FROM product AS p
-    INNER JOIN imagemap AS i ON p.productId = i.productId
-    WHERE p.productAccount = ? 
-  `;
-  coon.query(query, [account], function (error, results) {
-    res.json(results);
-  });
-});
-
-
 app.get('/api/mypro/:productAccount', function (req, res) {
   const productAccount = req.params.productAccount;
   const query = `
