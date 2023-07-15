@@ -1,74 +1,125 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import OrderDetail from './Orderdetail';
 
-function Rentout() {
-  const [tradeitems, setTradeitems] = useState([]);
- 
+const Rentalreq = () => {
+  const [tradeItems, setTradeItems] = useState([]);
+  const [selectedTradeItemId, setSelectedTradeItemId] = useState(null);
+  const [showOrderDetail, setShowOrderDetail] = useState(false);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/myorder');
-        const tradeitems = response.data.map((tradeitem) => ({
-          ...tradeitem,
-          rentStart: formatDate(tradeitem.rentStart),
-          rentEnd: formatDate(tradeitem.rentEnd),
-        }));
-        console.log(tradeitems);
-        setTradeitems(tradeitems);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
+    fetchTradeItems();
   }, []);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${year}-${month}-${day}`;
+  const fetchTradeItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/mypro/3x7Y90');
+      setTradeItems(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const getOrderStatus = (state) => {
+    if (state === 2) {
+      return '出租中';
+    } 
+  };
+
+  const handleDetail = (tradeItemId) => {
+    setSelectedTradeItemId(tradeItemId);
+    setShowOrderDetail(true);
+  };
+
+  const handleBack = () => {
+    setSelectedTradeItemId(null);
+    setShowOrderDetail(false);
+  };
+
+  const limitProductName = (productName) => {
+    const maxChars = 6;
+    if (productName.length <= maxChars) {
+      return productName;
+    }
+    const truncated = productName.substr(0, maxChars);
+    const remainder = productName.substr(maxChars);
+    return (
+      <>
+        {truncated}
+        <br />
+        {remainder}
+      </>
+    );
+  };
+
+  const calculateDays = (rentStart, rentEnd) => {
+    const start = new Date(rentStart);
+    const end = new Date(rentEnd);
+    const timeDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    return timeDiff;
+  };
+
+  const uniqueTradeItems = tradeItems.filter(
+    (tradeItem, index, self) => self.findIndex((t) => t.tradeitemId === tradeItem.tradeitemId) === index
+  );
+
+  if (showOrderDetail) {
+    return (
+      <OrderDetail tradeitemId={selectedTradeItemId} tradeitems={tradeItems} handleBack={handleBack} />
+    );
+  }
 
   return (
     <div className="order-component">
-      <table className="order-table">
-        <thead>
-          <tr>
-            <th>商品圖片</th>
-            <th>商品</th>
-            <th>預約日期</th>
-            <th>歸還日期</th>
-            <th>租金</th>
-            <th>押金</th>
-            <th>訂單狀態</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tradeitems.map((tradeitem) => {
-            if (tradeitem.state === 2) {
-              return (
-                <tr id="trtd" key={tradeitem.tradeitemId}>
-                  <td>{tradeitem.tradeitemId}</td>
-                  <td>{tradeitem.productName}</td>
-                  <td>{tradeitem.rentStart}</td>
-                  <td>{tradeitem.rentEnd}</td>
-                  <td>{tradeitem.rent}</td>
-                  <td>{tradeitem.deposit}</td>
-                  <td>
-                    {tradeitem.state === 2
-                          ? '出租中'
-                          : tradeitem.state}
-                  </td>
-                </tr>
-              );
-            }
-            return null;
-          })}
-        </tbody>
-      </table>
+      {selectedTradeItemId ? (
+        <OrderDetail tradeitemId={selectedTradeItemId} tradeitems={tradeItems} />
+      ) : (
+        <table className="order-table">
+          <thead>
+            <tr>
+              <th>訂單編號</th>
+              <th>商品</th>
+              <th>預約日期</th>
+              <th>歸還日期</th>
+              <th>天數</th>
+              <th>總金額</th>
+              <th>訂單狀態</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {uniqueTradeItems.map((tradeItem) => {
+              if (tradeItem.state === 2) {
+                // 訂單狀態
+                const orderStatus = getOrderStatus(tradeItem.state);
+                const rentTotal = tradeItems
+                  .filter((item) => item.tradeitemId === tradeItem.tradeitemId)
+                  .reduce((total, item) => total + item.rent, 0);
+                const depositTotal = tradeItems
+                  .filter((item) => item.tradeitemId === tradeItem.tradeitemId)
+                  .reduce((total, item) => total + item.deposit, 0);
+                return (
+                  <tr id="trtd" key={tradeItem.tradeitemId}>
+                    <td>{tradeItem.tradeitemId}</td>
+                    <td>{limitProductName(tradeItem.productName)}</td>
+                    <td>{new Date(tradeItem.rentStart).toLocaleDateString()}</td>
+                    <td>{new Date(tradeItem.rentEnd).toLocaleDateString()}</td>
+                    <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)}</td>
+                    <td>{rentTotal + depositTotal}</td>
+                    <td>{orderStatus}</td>
+                    <td>
+                      <button id='morebtn' onClick={() => handleDetail(tradeItem.tradeitemId)}>詳細</button>
+                    </td>
+                  </tr>
+                );
+              }
+              return null;
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
-}
+};
 
-export default Rentout;
+export default Rentalreq;

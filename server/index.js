@@ -22,7 +22,7 @@ app.get('/cart', function (req, res) {
   res.send('cartInfo');
 });
 
-app.get('/api/myorder/:account', function(req, res) {
+app.get('/api/myorder/:account', function (req, res) {
   const account = req.params.account;
   const query = `
     SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc
@@ -34,7 +34,43 @@ app.get('/api/myorder/:account', function(req, res) {
     GROUP BY p.productId
     ORDER BY t.tradeitemId
   `;
-  coon.query(query, [account], function(error, results) {
+  coon.query(query, [account], function (error, results) {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+app.get('/api/mypro/:account', function (req, res) {
+  const account = req.params.account;
+  const query = `
+    SELECT p.rent, p.deposit, i.imageSrc
+    FROM product AS p
+    INNER JOIN imagemap AS i ON p.productId = i.productId
+    WHERE p.productAccount = ? 
+  `;
+  coon.query(query, [account], function (error, results) {
+    res.json(results);
+  });
+});
+
+
+app.get('/api/mypro/:productAccount', function (req, res) {
+  const productAccount = req.params.productAccount;
+  const query = `
+  SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc
+  FROM tradeitem AS t
+  INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
+  INNER JOIN product AS p ON m.productId = p.productId
+  INNER JOIN imagemap AS i ON p.productId = i.productId
+  WHERE t.productAccount = ?
+  GROUP BY t.tradeitemId
+  ORDER BY t.tradeitemId
+`;
+  coon.query(query, [productAccount], function (error, results) {
     if (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -61,6 +97,17 @@ app.post('/api/cancelOrder', function (req, res) {
       } else {
         res.status(404).json({ error: 'Order not found' });
       }
+    }
+  });
+});
+
+app.post('/api/agreeOrder', function (req, res) {
+  const { tradeitemId } = req.body;
+  // 檢查 tradeitemId 的值
+  const updateQuery = 'UPDATE tradeitem SET state = 1 WHERE tradeitemId = ?';
+  coon.query(updateQuery, [tradeitemId], function (error, results) {
+    if (results.affectedRows > 0) {
+      res.status(200).json({ message: 'Order canceled successfully' });
     }
   });
 });

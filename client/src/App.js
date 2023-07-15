@@ -15,9 +15,6 @@ import Product from './page/product';
 import Aboutus from './page/aboutus';
 import Order from './page/order';
 import Cmmgmt from './page/cmmgmt';
-import Profastup from './page/profastup';
-import Proedit from './page/proedit';
-// import Qu from './page/qu';
 import RegisterForm from './components/login/q'
 // import Tqqq from './components/login/q';
 import RegistrationForm from './components/login/q1';
@@ -37,9 +34,6 @@ const App = () => {
         <Link className='m-3' to="/cart">Cart</Link><br/>
         <Link className='m-3' to="/order">order</Link><br/>
         <Link className='m-3' to="/cmmgmt">cmmgmt</Link><br/>
-        <Link className='m-3' to="/profastup">Profastup</Link><br/>
-        <Link className='m-3' to="/proedit">Proedit</Link><br/>
-        {/* <Link className='m-3' to="/qu">qu</Link><br/> */}
         <Link className='m-3' to="/tqq">tqq</Link>
 
         </div>
@@ -54,9 +48,6 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<Order />} />
           <Route path="/cmmgmt" element={<Cmmgmt />} />
-          <Route path="/profastup" element={<Profastup />} />
-          <Route path="/proedit" element={<Proedit />} />
-          {/* <Route path="/qu" element={<Qu />} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
