@@ -22,6 +22,20 @@ app.get('/cart', function (req, res) {
   res.send('cartInfo');
 });
 
+app.get('/api/mypro/:account', function (req, res) {
+  const account = req.params.account;
+  const query = `
+    SELECT p.productId, p.rent, p.deposit, p.productName, i.imageSrc
+    FROM product AS p
+    INNER JOIN imagemap AS i ON p.productId = i.productId
+    WHERE p.productAccount = ? 
+  `;
+  coon.query(query, [account], function (error, results) {
+    res.json(results);
+  });
+});
+
+
 app.get('/api/myorder/:account', function (req, res) {
   const account = req.params.account;
   const query = `
@@ -44,7 +58,7 @@ app.get('/api/myorder/:account', function (req, res) {
   });
 });
 
-app.get('/api/mypro/:productAccount', function (req, res) {
+app.get('/api/myrent/:productAccount', function (req, res) {
   const productAccount = req.params.productAccount;
   const query = `
   SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc

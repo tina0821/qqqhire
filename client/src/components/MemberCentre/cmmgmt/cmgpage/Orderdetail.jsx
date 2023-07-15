@@ -61,7 +61,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
                     <td>{calculateDays(item.rentStart, item.rentEnd)}</td>
                     <td>{item.rent}</td>
                     <td>{item.deposit}</td>
-                    <td>{TotalAmount(item.rent, item.deposit)}</td>
+                    <td>{item.rent + item.deposit}</td>
                   </tr>
                 ))}
               </tbody>
@@ -100,11 +100,4 @@ function calculateDays(rentStart, rentEnd) {
 
   return timeDiff;
 }
-
-// 輔助函數：計算租金和押金的總和
-function TotalAmount(rent, deposit) {
-  const totalAmount = parseFloat(rent) + parseFloat(deposit);
-  return Math.floor(totalAmount); // 省略小數部分
-}
-
 export default Orderdetail;

@@ -1,4 +1,3 @@
-// Mypro.js
 import React, { useState } from 'react';
 import Cmgbtn from '../components/MemberCentre/cmmgmt/cmgbtn';
 import './centre.scss';

@@ -13,7 +13,7 @@ const Rentalreq = () => {
 
   const fetchTradeItems = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/mypro/3x7Y90');
+      const response = await axios.get('http://localhost:8000/api/myrent/3x7Y90');
       setTradeItems(response.data);
     } catch (error) {
       console.error(error);
