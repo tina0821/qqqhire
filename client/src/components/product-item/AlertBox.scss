@@ -20,6 +20,13 @@
     opacity: 0.9;
   }
 
+  &.not {
+    background-color: rgb(255, 174, 0);
+    border-color: rgb(255, 174, 0);
+    color: white;
+    opacity: 0.9;
+  }
+
   &.error {
     background-color: rgb(50, 173, 91);
     border-color: rgb(50, 173, 91);
