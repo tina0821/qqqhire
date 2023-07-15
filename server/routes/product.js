@@ -104,7 +104,6 @@ router.get('/api/Pseller/:account', (req, res) => {
 
 //加入收藏
 router.post('/api/collect', (req, res) => {
-    console.log(req.body)
     const { account, productId } = req.body
     const sql = 'SELECT * FROM favorites WHERE account = ? AND productId = ?';
     const insertsql = `INSERT INTO favorites(account, productId) VALUES (?,?)`
@@ -121,6 +120,22 @@ router.post('/api/collect', (req, res) => {
 })
 
 //加入租物車
+router.post('/api/insertCart', (req, res) => {
+    console.log(req.body);
+    const { account, productId, rentStart, rentEnd } = req.body
+    const sql = 'SELECT * FROM cartmap WHERE account = ? AND productId = ?';
+    const insertsql = `INSERT INTO cartmap(account, productId, rentStart, rentEnd) VALUES (?,?,?,?)`
+    conn.query(sql, [account, productId], (err, result) => {
+        if (err) { console.log('查詢失敗') }
+        if (result.length > 0) {
+            return res.status(400).json({ error: '該項目已在租物車中' });
+        } else {
+            conn.query(insertsql, [account, productId, rentStart, rentEnd], (err, data) => {
+                err ? console.log('插入失敗') : res.status(200).json(data)
+            })
+        }
+    })
+})
 
 
 module.exports = router

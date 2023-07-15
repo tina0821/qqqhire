@@ -15,6 +15,8 @@ function ProductItem() {
   const [productSeller, setproductSeller] = useState('');
   const { id } = useParams();
   const [showAlert, setShowAlert] = useState(0);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   //提示框狀態 加入租物車,收藏
   const handleAction = async (state) => {
@@ -22,10 +24,21 @@ function ProductItem() {
     if (localStorage.getItem('userInfo')) {
       const accountName = localStorage.getItem('userInfo');
       const account = accountName.slice(1, -1);
+      const rentStart = startDate;
+      const rentEnd = endDate
       const productId = id;
-      if (state === 1) {
-        totalAmount ? setShowAlert(state) : setShowAlert(3);
+
+      if (state === 1 && totalAmount) {
+        try {
+          const response = await axios.post('http://localhost:8000/api/insertCart', { account, productId, rentStart, rentEnd });
+          response ? setShowAlert(1) : console.log('GG');
+        } catch (error) {
+          error.response ? setShowAlert(4) : console.error('發生錯誤');
+        }
+      } else {
+        setShowAlert(3)
       }
+
       if (state === 2) {
         try {
           const response = await axios.post('http://localhost:8000/api/collect', { account, productId });
@@ -34,9 +47,11 @@ function ProductItem() {
           error.response ? setShowAlert(5) : console.error('發生錯誤');
         }
       }
+
     } else {
       setShowAlert(6);
     }
+
     setTimeout(() => { setShowAlert(0) }, 1500);
   };
 
@@ -98,7 +113,9 @@ function ProductItem() {
   const handleRangeChange = (dates) => {
     if (dates && dates.length === 2) {
       const startDate = dates[0];
+      setStartDate(startDate)
       const endDate = dates[1];
+      setEndDate(endDate)
       const days = endDate.diff(startDate, 'days'); // 使用 moment.js 的 diff 函式計算天數差距
       const rent = productitem[0].rent;
       const deposit = productitem[0].deposit;
