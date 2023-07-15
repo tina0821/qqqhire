@@ -1,25 +1,44 @@
-import React, { useState, useEffect } from 'react';
-function ProductCard() {
+import React from 'react';
+import './productCard.scss';
+// import { useNavigate } from 'react-router-dom';
+
+function ProductCard(props) {
+  const { product } = props;
+  // const history = useNavigate();
+
+  // const handleCardClick = () => {
+  //   history(`/productItem/${product.productId}`); // 導航到帶有 productId 參數的 product-item 路由
+  // };
+
+  
   return (
     <>
-      <div className="col-md-4 rental-goods-group list-item">
+      <div
+        className=" rental-goods-group list-item"
+        // onClick={handleCardClick}
+        title={product.productName}
+      >
         <div className="card">
           <div className="card-img">
             <img
-              src="https://gcs.rimg.com.tw/g4/8f4/345/foxuyirte/1/52/b3/22323890303667_734_m.jpg"
+              src={`http://localhost:8000/img/${product.imageSrc}`}
               className="card-img-top"
-              alt="Product 1"
+              alt={product.productName}
             />
           </div>
           <div className="card-body">
-            <h4 className="card-title">SUP槳板</h4>
+            <h4 className="card-title">{product.productName}</h4>{' '}
             <div className="card-text2">
-              <span>台中市</span>
-              <span>南屯區</span>
-              <span />
-              <span>可出租</span>
+              <span>{product.cityCounty}</span>
+              <span>{product.area}</span>
+              {product.rentalStatus === '出租中' ? (
+                <span className="rentalstate2" />
+              ) : (
+                <span className="rentalstate1" />
+              )}
+              <span>{product.rentalStatus}</span>
             </div>
-            <p className="card-text">$400/日</p>
+            <p className="card-text">${product.rent}/日</p>{' '}
           </div>
         </div>
       </div>

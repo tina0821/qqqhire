@@ -1,22 +1,16 @@
-import React, { useState, useEffect } from 'react';
-
-function ProductSort() {
+import React from 'react';
+import './productSort.scss';
+function ProductSort({ onSort }) {
   return (
     <>
       <div className="rental-title">
         <span>排序</span>
         <ul className="sort-group">
           <li className="sort-item">
-            <a href="#">熱門度</a>
+            <button onClick={() => onSort('rent')}>租金</button>
           </li>
           <li className="sort-item">
-            <a href="#">租金</a>
-          </li>
-          <li className="sort-item">
-            <a href="#">最新上架</a>
-          </li>
-          <li className="sort-item">
-            <a href="#">賣場評價</a>
+            <button onClick={() => onSort('latest')}>最新上架</button>
           </li>
         </ul>
       </div>
