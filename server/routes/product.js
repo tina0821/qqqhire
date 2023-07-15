@@ -121,7 +121,6 @@ router.post('/api/collect', (req, res) => {
 
 //加入租物車
 router.post('/api/insertCart', (req, res) => {
-    console.log(req.body);
     const { account, productId, rentStart, rentEnd } = req.body
     const sql = 'SELECT * FROM cartmap WHERE account = ? AND productId = ?';
     const insertsql = `INSERT INTO cartmap(account, productId, rentStart, rentEnd) VALUES (?,?,?,?)`

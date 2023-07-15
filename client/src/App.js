@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -15,7 +15,7 @@ import Home from './page/home';
 import NotFound from './page/NotFound';
 import Product from './page/product';
 // // import RegistrationForm from './components/login/q1';
-import ProductItem from './page/product-item';
+import ProductItem from './page/productItem';
 import ProductSeller from './page/productSeller';
 import Aboutus from './page/aboutus';
 import Order from './page/order';
