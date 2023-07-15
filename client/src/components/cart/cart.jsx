@@ -28,8 +28,8 @@ class Cart extends Component {
       allCookie: null,
       //選擇我cookie要的超商資料
       cookieData: null,
-      //日期
-      date: undefined,
+      //帳號資料
+      accountInfo: undefined,
       //步驟名稱
       steps: [
         { title: "租物清單" },
@@ -144,14 +144,20 @@ class Cart extends Component {
 
   //第一次更新資訊
   componentDidMount = async () => {
-    //取得資料庫商品分類完成的資料
-    let newCartMap;
-    await axios.get("http://localhost:8000/cart/cart", {}).then((res) => {
-      newCartMap = res.data;
-    });
-    //更新資料
     let newstate = { ...this.state };
-    newstate.cartMap = newCartMap;
+    //取得資料庫商品分類完成的資料
+    await axios.post("http://localhost:8000/cart/getCartItem", {
+      account:'kevin890762'
+    }).then((res) => {
+     newstate.cartMap = res.data;
+    });
+    await axios.post("http://localhost:8000/cart/getAccountInfo", {
+      account:'kevin890762'
+    }).then((res) => {
+      newstate.accountInfo = res.data;
+      console.log(res.data)
+     });
+    //更新資料
     this.setState(newstate);
   };
 

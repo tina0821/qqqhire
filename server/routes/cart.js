@@ -9,26 +9,11 @@ page.get("/", async (req, res) => {
   res.send("success");
 });
 
-// page.get("/getAddress", async (req, res) => {
-  
-//   res.send(`<script>localStorage.removeItem("address");
-//     let getAddress = async () => {
-//         let add;
-//         if (localStorage.getItem("address")) {
-//         add = localStorage.getItem("address");
-//         message.innerHTML = add;
-//         } else {
-//         setTimeout(getAddress, 1000);
-//         }
-//     };
-//   </script >`);
-// });
-
 //取得使用者購物車資料
-page.get("/cart", function (req, res) {
+page.post("/getCartItem", function (req, res) {
   coon.query(
-    `SELECT * FROM cartmap INNER join product ON cartmap.productId=product.productId INNER join imagemap ON product.productId=imagemap.productId WHERE cartmap.account='kevin890762'`,
-    [],
+    `SELECT * FROM cartmap INNER join product ON cartmap.productId=product.productId INNER join imagemap ON product.productId=imagemap.productId WHERE cartmap.account=?`,
+    ["kevin890762"],
     (err, result) => {
       //最後要輸出的資料放這邊
       let cartMap = [];
@@ -56,8 +41,9 @@ page.get("/cart", function (req, res) {
       newdata.map((el, index) => {
         newdata[index].rentStart = new Date(el.rentStart).toLocaleDateString();
         newdata[index].rentEnd = new Date(el.rentEnd).toLocaleDateString();
-        newdata[index].day =
-          Math.abs(new Date(el.rentEnd).getDate() - new Date(el.rentStart).getDate());
+        newdata[index].day = Math.abs(
+          new Date(el.rentEnd).getDate() - new Date(el.rentStart).getDate()
+        );
         newdata[index].total =
           newdata[index].rent * newdata[index].day + newdata[index].deposit;
         productAccountList.push(el.productAccount);
@@ -81,8 +67,28 @@ page.get("/cart", function (req, res) {
   );
 });
 
+page.post("/getAccountInfo", (req, res) => {
+  coon.query(
+    `SELECT * FROM userinfo WHERE account=?`,
+    [req.body.account],
+    (err, result) => {
+      const sendToFrontInfo = {};
+      sendToFrontInfo.name = result[0].name;
+      sendToFrontInfo.identityCard =
+        result[0].identityCard.substring(0, 1) +
+        result[0].identityCard
+          .substring(result[0].identityCard.length - 3)
+          .padStart(9, "x");
+      sendToFrontInfo.address = result[0].address;
+      sendToFrontInfo.phoneNumber = result[0].phoneNumber;
+      sendToFrontInfo.email  = result[0].email ;
+      res.send(sendToFrontInfo);
+    }
+  );
+});
+
 page.post("/cart", async (req, res) => {
-  let a =JSON.stringify(req.body);
+  let a = JSON.stringify(req.body);
   res.cookie("address", `${JSON.stringify(a)}`);
   res.send("<script>window.close();</script >");
 });

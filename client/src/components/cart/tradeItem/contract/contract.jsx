@@ -24,7 +24,7 @@ class Contract extends Component {
       );
     });
     children.map((value, index) => {
-      items.push({
+      return items.push({
         key: index + 1,
         label: "海爾出租 租賃契約" + (index + 1),
         children: value,

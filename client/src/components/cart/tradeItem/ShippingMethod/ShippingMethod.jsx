@@ -4,7 +4,7 @@ import shippingMethod from "../../../../data/shippingMethod.json";
 import { Select, Button, Space, Input, Cascader } from "antd";
 import { handleGetStore } from "../test/test";
 import cookie from "react-cookies";
-import CityCountyData from "../../../../data/CityCountyData.json";
+import CityCountyData from "../../../../data/CityCountyDataAAA.json";
 class ShippingMethod extends Component {
   constructor(props) {
     super(props);

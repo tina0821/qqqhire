@@ -4,7 +4,7 @@ import TradeItemInfo from "./tradeItemInfo/tradeItemInfo";
 import ShippingMethod from "./ShippingMethod/ShippingMethod";
 import Contract from "./contract/contract"
 import PayType from "./payType/payType";
-import { Col, Row, Divider, Collapse, ConfigProvider } from "antd";
+import { Col, Row, Divider, ConfigProvider } from "antd";
 // import Test from "./test/test";
 
 class TradeItem extends Component {
