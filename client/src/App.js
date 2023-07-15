@@ -37,26 +37,27 @@ import MemberCenter from './components/PersonalData/Personaldata'
 
 const App = () => {
 
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(true);
-    }, 500);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShow(true);
+  //   }, 500);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, []);
 
 
- 
+
 
   return (
     <>
       <Router>
-        
-        {show && <Navbar2 />}
+
+        {/* {show && <Navbar2 />} */}
+        <Navbar2 />
         <Routes>
 
           <Route path="/RegistrationForm" element={<Registration />} />
@@ -67,8 +68,8 @@ const App = () => {
           {/* <Route path="/RegistrationForm" element={<RegistrationForm />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path='/productItem/:id' element={<ProductItem />} />
-          <Route path='/productSeller/:account' element={<ProductSeller />} />     
-          <Route path="/aboutus" element={<Aboutus />} />      
+          <Route path='/productSeller/:account' element={<ProductSeller />} />
+          <Route path="/aboutus" element={<Aboutus />} />
           {/* <Route path="/" element={<RegisterForm />} /> */}
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
           <Route path="/order" element={<Order />} />
@@ -77,10 +78,11 @@ const App = () => {
           <Route path="/proedit" element={<Proedit />} />
           {/* <Route path="/qu" element={<Qu />} /> */}
           <Route path="/up" element={<Up />} />
-          <Route path="/member" element={< MemberCenter/>} />
+          <Route path="/member" element={< MemberCenter />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {show && <Footer />}
+        {/* {show && <Footer />} */}
+        <Footer />
       </Router>
     </>
   );
