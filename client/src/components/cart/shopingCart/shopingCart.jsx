@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProductInfo from "./productInfo/index";
 import Listname from "../listname/listname";
 import { Link } from "react-router-dom";
-import { Button,Divider,ConfigProvider } from "antd";
+import { Button, Divider, ConfigProvider } from "antd";
 
 class ShopingCart extends Component {
   render() {
@@ -21,28 +21,44 @@ class ShopingCart extends Component {
                       this.props.data.changePart(e, item.iscomplete, index);
                     }}
                   />
-                  <Link to="/">
+                  <Link
+                    to={`http://localhost:3000/productSeller/${item.productAccount}`}
+                  >
                     <img
                       className="imgActive"
                       src="/images/icon/user-interface 4.png"
                       alt="ops"
                     />
                   </Link>
-                  <div className="">{item.productAccount}</div>
-                  <Button style={{height:50,display:"flex",alignItems:"center"}} size="large" className="ms-3 btnColor cartFontSize">聊聊<i className="ps-2 bi bi-messenger"></i></Button>
+                  <Link
+                    to={`http://localhost:3000/productSeller/${item.productAccount}`}
+                  >
+                    <div className="">{item.productAccount}</div>
+                  </Link>
+                  <Button
+                    style={{
+                      height: 50,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                    size="large"
+                    className="ms-3 btnColor cartFontSize"
+                  >
+                    聊聊<i className="ps-2 bi bi-messenger"></i>
+                  </Button>
                 </div>
-                <ConfigProvider theme={{token:{lineWidth:4,margin:0}}}>
-                <Divider dashed />
+                <ConfigProvider theme={{ token: { lineWidth: 4, margin: 0 } }}>
+                  <Divider dashed />
                 </ConfigProvider>
-                <Listname type={0}/>
+                <Listname type={0} />
                 <ProductInfo
                   data={item.product}
                   cartMapIndex={index}
                   changeOne={this.props.data.changeOne}
                   showDeleteWindow={this.props.data.showDeleteWindow}
                 />
-                <ConfigProvider theme={{token:{lineWidth:3,margin:0}}}>
-                <Divider  />
+                <ConfigProvider theme={{ token: { lineWidth: 3, margin: 0 } }}>
+                  <Divider />
                 </ConfigProvider>
               </div>
             )
@@ -53,10 +69,14 @@ class ShopingCart extends Component {
             id="all"
             className="imgActive ps-4"
             type="checkbox"
-            checked={this.props.data.state.iscomplete && this.props.data.state.iscomplete}
+            checked={
+              this.props.data.state.iscomplete &&
+              this.props.data.state.iscomplete
+            }
             onChange={() => {
               this.props.data.changeAll(
-                this.props.data.state.iscomplete && this.props.data.state.iscomplete
+                this.props.data.state.iscomplete &&
+                  this.props.data.state.iscomplete
               );
             }}
           />

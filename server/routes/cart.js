@@ -42,8 +42,8 @@ page.post("/getCartItem", function (req, res) {
         newdata[index].rentStart = new Date(el.rentStart).toLocaleDateString();
         newdata[index].rentEnd = new Date(el.rentEnd).toLocaleDateString();
         newdata[index].day = Math.abs(
-          new Date(el.rentEnd).getDate() - new Date(el.rentStart).getDate()
-        );
+          new Date(el.rentStart) - new Date(el.rentEnd)
+        )/(1*60*60*24*1000);
         newdata[index].total =
           newdata[index].rent * newdata[index].day + newdata[index].deposit;
         productAccountList.push(el.productAccount);
