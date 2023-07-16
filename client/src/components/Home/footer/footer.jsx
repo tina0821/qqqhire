@@ -24,15 +24,15 @@ function Footer() {
                     <p>2023 Copyright © Hire Outdoor</p>
                 </div>
                 <div className="footer-4">
-                    <p className="C1">登入Hire</p>
+                    <p className="C1">Login</p>
                     <Link to="/" className="C2"><FaHome/></Link>
                     <Link to="/" className="C3"><FaCampground/></Link>
                     <Link to="/" className="C4"><FaTools/></Link>
-                    <p className="C5">關於Hire</p>
+                    <p className="C5">About</p>
                     <Link to="/" className="C6"><FaInstagram/></Link>
                     <Link to="/" className="C7"><FaFacebookSquare/></Link>
                     <Link to="/" className="C8"><FaYoutube/></Link>
-                    <p className="C9">聯絡Hire</p>
+                    <p className="C9">Contact</p>
                     <Link to="/" className="C10"><FaEnvelope/></Link>
                     <Link to="/" className="C11"><FaPhone/></Link>
                 </div>

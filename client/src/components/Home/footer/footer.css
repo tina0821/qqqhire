@@ -76,7 +76,7 @@
 .footer-4 a {
     color: rgba(0, 0, 0, 0.774);
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin: 10px;
 }
 
@@ -89,6 +89,7 @@
 .footer-4 p {
     color: rgba(0, 0, 0, 0.797);
     font-size: 2rem;
+    font-weight: bold;
     margin-bottom: 30px;
     margin-left: 20px;
     margin-right: 20px;

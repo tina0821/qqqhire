@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import Navbar from '../components/Home/navbar/navbar';
+import Navbar from '../components/Home/navbar/navbar';
 // import Navbar2 from '../components/Home/navbar2/navbar2';
 // import Footer from '../components/Home/footer/footer';
 import Outdoor from '../components/Home/outdoor/outdoor';
@@ -13,7 +13,7 @@ const Home = () => {
     return (
         <>
         {/* <Navbar2/> */}
-        {/* <Navbar/>  */}
+        <Navbar/> 
         <Outdoor/>
         <Outdoor2/>
         <Outdoor3/>
