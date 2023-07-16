@@ -15,7 +15,7 @@ import Home from './page/home';
 import NotFound from './page/NotFound';
 import Product from './page/product';
 // // import RegistrationForm from './components/login/q1';
-import ProductItem from './page/product-item';
+import ProductItem from './page/productItem';
 import ProductSeller from './page/productSeller';
 import Aboutus from './page/aboutus';
 import Order from './page/order';
@@ -50,13 +50,14 @@ const App = () => {
   }, []);
 
 
- 
+
 
   return (
     <>
       <Router>
-        
+
         {show && <Navbar2 />}
+        {/* <Navbar2 /> */}
         <Routes>
 
           <Route path="/RegistrationForm" element={<Registration />} />
@@ -67,8 +68,8 @@ const App = () => {
           {/* <Route path="/RegistrationForm" element={<RegistrationForm />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path='/productItem/:id' element={<ProductItem />} />
-          <Route path='/productSeller/:account' element={<ProductSeller />} />     
-          <Route path="/aboutus" element={<Aboutus />} />      
+          <Route path='/productSeller/:account' element={<ProductSeller />} />
+          <Route path="/aboutus" element={<Aboutus />} />
           {/* <Route path="/" element={<RegisterForm />} /> */}
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
           <Route path="/order" element={<Order />} />
@@ -77,10 +78,11 @@ const App = () => {
           <Route path="/proedit" element={<Proedit />} />
           {/* <Route path="/qu" element={<Qu />} /> */}
           <Route path="/up" element={<Up />} />
-          <Route path="/member" element={< MemberCenter/>} />
+          <Route path="/member" element={< MemberCenter />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         {show && <Footer />}
+        {/* <Footer /> */}
       </Router>
     </>
   );

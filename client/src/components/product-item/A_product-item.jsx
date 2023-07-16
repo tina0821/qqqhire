@@ -1,45 +1,90 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { DatePicker, Space } from 'antd';
-import productcategorymap from '../data/item2.json';
+import productcategorymap from '../../data/item2.json';
+import './A_product-item.scss'
 import axios from 'axios';
 
-import ProductCarousel from '../components/product-item/ProductCarousel';
-import ProductSellerCard from '../components/product-seller/productSellerCard';
-import ButtonCard from '../components/product-item/buttonCard';
+import ProductCarousel from './ProductCarousel';
+import ProductSellerCard from '../product-seller/productSellerCard';
+import ButtonCard from './buttonCard';
+import AlertBox from './AlertBox';
 
-function ProductItem() {
+
+function A_ProductItem() {
   const [productitem, setProductItem] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [productSeller, setproductSeller] = useState('')
+  const [productSeller, setproductSeller] = useState('');
   const { id } = useParams();
+  const [showAlert, setShowAlert] = useState(0);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
-    
+  //提示框狀態 加入租物車,收藏
+  const handleAction = async (state) => {
+
+    if (localStorage.getItem('userInfo')) {
+      const accountName = localStorage.getItem('userInfo');
+      const account = accountName.slice(1, -1);
+      const rentStart = startDate;
+      const rentEnd = endDate
+      const productId = id;
+
+      //租物車
+      if (state === 1 && totalAmount && productitem[0].rentalStatus === '未出租') {
+        try {
+          const response = await axios.post('http://localhost:8000/api/insertCart', { account, productId, rentStart, rentEnd });
+          response ? setShowAlert(1) : console.log('GG');
+        } catch (error) {
+          error.response ? setShowAlert(4) : console.error('發生錯誤');
+        }
+      } else {
+        productitem[0].rentalStatus === '出租中' ? setShowAlert(7) : setShowAlert(3)
+      }
+
+
+      //收藏
+      if (state === 2) {
+        try {
+          const response = await axios.post('http://localhost:8000/api/collect', { account, productId });
+          response ? setShowAlert(2) : console.log('GG');
+        } catch (error) {
+          error.response ? setShowAlert(5) : console.error('發生錯誤');
+        }
+      }
+
+    } else {
+      setShowAlert(6);
+    }
+
+    setTimeout(() => { setShowAlert(0) }, 1500);
+  };
+
+
 
   useEffect(() => {
+    //產品資訊
     const fetchData = async () => {
-      const response = await axios.get(
-        `http://localhost:8000/api/productItem/${id}`
-      );
+      const response = await axios.get(`http://localhost:8000/api/productItem/${id}`);
       const data = await response.data;
       setProductItem(data);
     };
     fetchData();
 
+    //相關推薦
     const fetchseller = async () => {
-      const res = await axios.get(
-        `http://localhost:8000/api/productseller/${id}`
-      );
+      const res = await axios.get(`http://localhost:8000/api/productseller/${id}`);
       const data2 = await res.data;
-      setproductSeller(data2)
-    }
-    fetchseller()
+      setproductSeller(data2);
+    };
+    fetchseller();
 
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, 600);
+    setTimeout(() => { setIsLoaded(true); }, 600);
   }, [id]);
 
+
+
+  // 從json檔去配對大分類
   function getMain(subCategory) {
     let mainCategory = '';
 
@@ -70,7 +115,9 @@ function ProductItem() {
     return label;
   }
 
-  //日期
+
+
+  //日期處裡
   const [totalAmount, setTotalAmount] = useState(0);
 
   const { RangePicker } = DatePicker;
@@ -78,7 +125,9 @@ function ProductItem() {
   const handleRangeChange = (dates) => {
     if (dates && dates.length === 2) {
       const startDate = dates[0];
+      setStartDate(startDate)
       const endDate = dates[1];
+      setEndDate(endDate)
       const days = endDate.diff(startDate, 'days'); // 使用 moment.js 的 diff 函式計算天數差距
       const rent = productitem[0].rent;
       const deposit = productitem[0].deposit;
@@ -87,6 +136,8 @@ function ProductItem() {
     }
   };
 
+
+  //延遲處裡
   const [renderContent, setRenderContent] = useState(false);
 
   useEffect(() => {
@@ -96,6 +147,8 @@ function ProductItem() {
 
     return () => clearTimeout(timer); // 清除計時器
   }, []);
+
+
   return renderContent ? (
     <>
       <>
@@ -132,13 +185,7 @@ function ProductItem() {
                   <p>{productitem[0].productName}</p>
                 </div>
                 <div className="item-text">
-                  <div
-                    className={
-                      productitem[0].rentalStatus === '未出租'
-                        ? 'rentalstate1'
-                        : 'rentalstate2'
-                    }
-                  >
+                  <div className={productitem[0].rentalStatus === '未出租' ? 'rentalstate1' : 'rentalstate2'}>
                     {productitem[0].rentalStatus}
                   </div>
                 </div>
@@ -167,17 +214,25 @@ function ProductItem() {
                 </div>
 
                 <div className="item-text">
-                  <Link to="/">
+                  <Link onClick={() => handleAction(1)}>
                     <i className="bi bi-cart3"></i> 加入租物車
                   </Link>
                 </div>
                 <div className="item-text">
-                  <Link to="/">
+                  <Link onClick={() => handleAction(2)}>
                     <i className="bi bi-heart"></i> 加入收藏
                   </Link>
                 </div>
               </div>
             </div>
+
+            {showAlert === 1 && <AlertBox message="&#x1F6D2;加入租物車成功" type="success" />}
+            {showAlert === 2 && <AlertBox message="&#x2665;收藏成功" type="success" />}
+            {showAlert === 3 && <AlertBox message="請先選擇日期!!!" type="error" />}
+            {showAlert === 4 && <AlertBox message="此物品已在租物車中!!!" type="not" />}
+            {showAlert === 5 && <AlertBox message="此物品已在收藏中!!!" type="not" />}
+            {showAlert === 6 && <AlertBox message="請先登入!" type="warning" />}
+            {showAlert === 7 && <AlertBox message="此商品正在被租借中..." type="warning" />}
 
             <ProductSellerCard
               key={productSeller[0].account}
@@ -201,7 +256,7 @@ function ProductItem() {
                       <td>{`${productitem[0].cityCounty} ${productitem[0].area}`}</td>
                     </tr>
                     <tr>
-                      <td>配件(非必填)</td>
+                      <td>配件</td>
                       <td>
                         {productitem[0].accessory
                           ? productitem[0].accessory
@@ -229,4 +284,4 @@ function ProductItem() {
   ) : null;
 }
 
-export default ProductItem;
+export default A_ProductItem;
