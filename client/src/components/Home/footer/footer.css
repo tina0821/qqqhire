@@ -83,6 +83,7 @@
 .footer-4 a:hover {
     color: #ffffffb4;
     transition: 1s;
+    /* border: 2px solid red; */
 }
 
 .footer-4 p {
