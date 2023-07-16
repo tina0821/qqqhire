@@ -58,8 +58,6 @@ class Cart extends Component {
       tradeItem: null,
       //結帳商品總金額
       totalMoney: "",
-      //手動輸入的地址
-      address: {},
       //錯誤訊息
       err: [{ message: "address", count: 0 }],
     };
@@ -144,25 +142,29 @@ class Cart extends Component {
 
   //第一次更新資訊
   componentDidMount = async () => {
+    console.log(localStorage.getItem("userInfo").slice(1,-1));
     let newstate = { ...this.state };
     //取得資料庫商品分類完成的資料
-    await axios.post("http://localhost:8000/cart/getCartItem", {
-      account:'kevin890762'
-    }).then((res) => {
-     newstate.cartMap = res.data;
-    });
-    await axios.post("http://localhost:8000/cart/getAccountInfo", {
-      account:'kevin890762'
-    }).then((res) => {
-      newstate.accountInfo = res.data;
-      console.log(res.data)
-     });
+    await axios
+      .post("http://localhost:8000/cart/getCartItem", {
+        account: localStorage.getItem("userInfo").slice(1,-1),
+      })
+      .then((res) => {
+        newstate.cartMap = res.data;
+      });
+    await axios
+      .post("http://localhost:8000/cart/getAccountInfo", {
+        account: localStorage.getItem("userInfo").slice(1,-1),
+      })
+      .then((res) => {
+        newstate.accountInfo = res.data;
+      });
     //更新資料
     this.setState(newstate);
   };
 
   componentDidUpdate() {
-    // console.log(this.state.tradeItem)
+    console.log(this.state.tradeItem);
   }
 
   moveSteps = async (e) => {

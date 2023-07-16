@@ -12,8 +12,8 @@ page.get("/", async (req, res) => {
 //取得使用者購物車資料
 page.post("/getCartItem", function (req, res) {
   coon.query(
-    `SELECT * FROM cartmap INNER join product ON cartmap.productId=product.productId INNER join imagemap ON product.productId=imagemap.productId WHERE cartmap.account=?`,
-    ["kevin890762"],
+    `SELECT * FROM cartmap INNER join product ON cartmap.productId=product.productId INNER join imagemap ON product.productId=imagemap.productId INNER join userinfo ON product.productAccount=userinfo.account WHERE cartmap.account=?`,
+    [req.body.account],
     (err, result) => {
       //最後要輸出的資料放這邊
       let cartMap = [];
@@ -32,7 +32,7 @@ page.post("/getCartItem", function (req, res) {
       num.map((value, index) => {
         num.indexOf(value) === index && count.push(index);
       });
-      count.map((value, index) => {
+      count.map((value) => {
         data.map((item, number) => {
           value === number && newdata.push(item);
         });
@@ -59,7 +59,28 @@ page.post("/getCartItem", function (req, res) {
         });
         newdata.map((el) => {
           productAccountName === el.productAccount &&
-            cartMap[index].product.push(el);
+            cartMap[index].product.push({
+              cartMapId: el.cartMapId,
+              productID: el.productID,
+              productName: el.productName,
+              imageSrc: el.imageSrc,
+              rent: el.rent,
+              deposit: el.deposit,
+              rentStart: el.rentStart,
+              rentEnd: el.rentEnd,
+              day: el.day,
+              total: el.total,
+              productCity: el.productCity,
+              name: el.name,
+              identityCard:
+                el.identityCard.substring(0, 1).toUpperCase() +
+                el.identityCard
+                  .substring(el.identityCard.length - 3)
+                  .padStart(9, "x"),
+              address: el.address,
+              phoneNumber: el.phoneNumber,
+              email: el.email,
+            });
         });
       });
       res.send(cartMap);
@@ -75,13 +96,13 @@ page.post("/getAccountInfo", (req, res) => {
       const sendToFrontInfo = {};
       sendToFrontInfo.name = result[0].name;
       sendToFrontInfo.identityCard =
-        result[0].identityCard.substring(0, 1) +
+        result[0].identityCard.substring(0, 1).toUpperCase() +
         result[0].identityCard
           .substring(result[0].identityCard.length - 3)
           .padStart(9, "x");
       sendToFrontInfo.address = result[0].address;
       sendToFrontInfo.phoneNumber = result[0].phoneNumber;
-      sendToFrontInfo.email  = result[0].email ;
+      sendToFrontInfo.email = result[0].email;
       res.send(sendToFrontInfo);
     }
   );

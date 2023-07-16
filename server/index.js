@@ -18,8 +18,8 @@ app.use("/cart", cart);
 const product = require("./routes/product");
 app.use("/", product);
 
-// const login = require('./routes/login')
-// app.use('/', login)
+const login = require('./routes/login')
+app.use('/', login)
 
 app.get("/api/myorder/:account", function (req, res) {
   const account = req.params.account;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ConfigProvider, Row, Col } from "antd";
+import { ConfigProvider, Row, Col, Input } from "antd";
 class ContractCompoment extends Component {
   state = {};
   render() {
@@ -22,14 +22,17 @@ class ContractCompoment extends Component {
           <ul>
             <Col span={24} style={{ display: "flex", textAlign: "start" }}>
               <li>
-                承租人：<span className="text-danger">session.name</span>
+                承租人：
+                <span className="text-danger">
+                  {this.props.data.state.accountInfo.name}
+                </span>
                 <span className="text-dark">(以下簡稱甲方)</span>
               </li>
             </Col>
             <Col span={24} style={{ display: "flex", textAlign: "start" }}>
               <li>
                 出租人：
-                <span className="text-danger">{this.props.productAccount}</span>
+                <span className="text-danger">{this.props.item.name}</span>
                 <span className="text-dark">(以下簡稱乙方)</span>
               </li>
             </Col>
@@ -43,7 +46,9 @@ class ContractCompoment extends Component {
             <Col span={24} style={{ display: "flex", textAlign: "start" }}>
               <li>
                 出租品項：
-                <span className="text-danger">{this.props.item.productName}</span>
+                <span className="text-danger">
+                  {this.props.item.productName}
+                </span>
               </li>
             </Col>
             <Col span={24} style={{ display: "flex", textAlign: "start" }}>
@@ -68,7 +73,9 @@ class ContractCompoment extends Component {
                   </span>
                 </span>
                 <span className="text-dark">， 共</span>
-                <span className="text-danger countDate">{this.props.item.day}</span>
+                <span className="text-danger countDate">
+                  {this.props.item.day}
+                </span>
                 <span className="text-dark">天</span>
               </li>
             </Col>
@@ -166,29 +173,19 @@ class ContractCompoment extends Component {
             <h2>第三條 產品點交表：(請務必確認產品功能正常)</h2>
           </Col>
           <ul>
-            <Col span={24} style={{ display: "flex", textAlign: "start" }}>
-              <li>
-                <div >
-                  <div>
-                    <input
-                      className="img40"
-                      type="checkbox"
-                      name=""
-                      checked=""
-                      disabled=""
-                    />
-                    <label htmlFor="current-available">
-                      <span className="text-danger">
-                        {this.props.item.productName}
-                      </span>
-                      <span className="text-dark">(本體+配件 共</span>
-                      <span className="text-danger">1</span>
-                      <span className="blaxck">項)</span>
-                    </label>
-                  </div>
-                </div>
-              </li>
-            </Col>
+            <li>
+              <Col span={24} style={{ display: "flex", textAlign: "start", alignItems:"center"}}>
+                <Input checked readOnly className="imgActive" type="checkbox" />
+                <label htmlFor="current-available">
+                  <span className="text-danger">
+                    {this.props.item.productName}
+                  </span>
+                  <span className="text-dark">(本體+配件 共</span>
+                  <span className="text-danger">1</span>
+                  <span className="blaxck">項)</span>
+                </label>
+              </Col>
+            </li>
             <li>※若產品含有電子晶片，切勿碰水，如造成損壞依賠償之規定進行。</li>
           </ul>
         </Row>
@@ -211,7 +208,9 @@ class ContractCompoment extends Component {
           <ul className="">
             <Col span={24} style={{ display: "flex", textAlign: "start" }}>
               <span className="text-dark">甲方</span>
-              <span className="text-danger">session.name</span>
+              <span className="text-danger">
+                {this.props.data.state.accountInfo.name}
+              </span>
               <span className="text-dark">於民國 </span>
               <span className="text-danger rentEnd">
                 {new Date(this.props.item.rentEnd).getFullYear() - 1911}年
@@ -247,7 +246,7 @@ class ContractCompoment extends Component {
                   <li>
                     姓名：
                     <span className="text-danger" id="name">
-                      session Name
+                      {this.props.data.state.accountInfo.name}
                     </span>
                   </li>
                 </Col>
@@ -255,7 +254,7 @@ class ContractCompoment extends Component {
                   <li>
                     身份證字號：
                     <span className="text-danger" id="id_number">
-                      xxxxxxx
+                      {this.props.data.state.accountInfo.identityCard}
                     </span>
                   </li>
                 </Col>
@@ -263,7 +262,7 @@ class ContractCompoment extends Component {
                   <li>
                     地址：
                     <span className="text-danger">
-                      {this.props.item.productName}
+                      {this.props.data.state.accountInfo.address}
                     </span>
                   </li>
                 </Col>
@@ -271,7 +270,7 @@ class ContractCompoment extends Component {
                   <li>
                     行動電話：
                     <span className="text-danger" id="phone_number">
-                      {this.props.item.productName}
+                      {this.props.data.state.accountInfo.phoneNumber}
                     </span>
                   </li>
                 </Col>
@@ -279,7 +278,7 @@ class ContractCompoment extends Component {
                   <li>
                     E-MAIL：
                     <span className="text-danger">
-                      {this.props.item.productName}
+                      {this.props.data.state.accountInfo.email}
                     </span>
                   </li>
                 </Col>
@@ -289,32 +288,32 @@ class ContractCompoment extends Component {
           <Col span={12} style={{ display: "flex", textAlign: "start" }}>
             <Row>
               <Col span={24} style={{ display: "flex", textAlign: "start" }}>
-                <h2>乙方</h2>
+                <h2>{this.props.item.name}</h2>
               </Col>
               <ul className="list">
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>
                   <li>
-                    姓名：<span className="text-danger">session Name</span>
+                    姓名：<span className="text-danger">{this.props.item.name}</span>
                   </li>
                 </Col>
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>
                   <li>
-                    身份證字號：<span className="text-danger">ssssss</span>
+                    身份證字號：<span className="text-danger">{this.props.item.identityCard}</span>
                   </li>
                 </Col>
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>
                   <li>
-                    地址：<span className="text-danger">sssssss</span>
+                    地址：<span className="text-danger">{this.props.item.address}</span>
                   </li>
                 </Col>
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>
                   <li>
-                    行動電話：<span className="text-danger">sssssss</span>
+                    行動電話：<span className="text-danger">{this.props.item.phoneNumber}</span>
                   </li>
                 </Col>
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>
                   <li>
-                    E-MAIL：<span className="text-danger">ssssss</span>
+                    E-MAIL：<span className="text-danger">{this.props.item.email}</span>
                   </li>
                 </Col>
               </ul>

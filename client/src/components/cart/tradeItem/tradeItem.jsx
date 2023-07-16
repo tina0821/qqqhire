@@ -2,18 +2,31 @@ import React, { Component } from "react";
 import Listname from "../listname/listname";
 import TradeItemInfo from "./tradeItemInfo/tradeItemInfo";
 import ShippingMethod from "./ShippingMethod/ShippingMethod";
-import Contract from "./contract/contract"
+import Contract from "./contract/contract";
 import PayType from "./payType/payType";
-import { Col, Row, Divider, ConfigProvider } from "antd";
+import { Col, Row, Divider, ConfigProvider, Collapse } from "antd";
 // import Test from "./test/test";
 
 class TradeItem extends Component {
   render() {
-    // console.log(this.props.data.state.totalMoney);
+    // console.log(items);
     return (
       <React.Fragment>
         {this.props.data.state.tradeItem &&
           this.props.data.state.tradeItem.map((item, index) => {
+            let items = [];
+            items.push({
+              key: index + 1,
+              label: "契約書",
+              children: (
+                <Contract
+                  productAccount={item.productAccount}
+                  data={this.props.data}
+                  item={item.product}
+                />
+              ),
+              showArrow: false
+            });
             return (
               <React.Fragment key={item.productAccount}>
                 <Row className={"d-flex fw-bolder"}>
@@ -29,7 +42,9 @@ class TradeItem extends Component {
                     <Listname type={1} />
                     {/* 列出訂單裡的商品 */}
                     {item.product.map((value) => {
-                      return <TradeItemInfo item={value} key={value.cartMapId} />;
+                      return (
+                        <TradeItemInfo item={value} key={value.cartMapId} />
+                      );
                     })}
                     <Divider className="borderclass" />
                   </React.Fragment>
@@ -49,7 +64,7 @@ class TradeItem extends Component {
                     data={this.props.data}
                     productAccount={item.productAccount}
                   />
-                  <Contract productAccount={item.productAccount}data={this.props.data} item={item.product}/>
+                  <Collapse items={items} />
                 </ConfigProvider>
               </React.Fragment>
             );
