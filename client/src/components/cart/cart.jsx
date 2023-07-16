@@ -142,7 +142,6 @@ class Cart extends Component {
 
   //第一次更新資訊
   componentDidMount = async () => {
-    console.log(localStorage.getItem("userInfo").slice(1,-1));
     let newstate = { ...this.state };
     //取得資料庫商品分類完成的資料
     await axios
@@ -164,7 +163,7 @@ class Cart extends Component {
   };
 
   componentDidUpdate() {
-    console.log(this.state.tradeItem);
+    // console.log(this.state.tradeItem);
   }
 
   moveSteps = async (e) => {
@@ -173,18 +172,14 @@ class Cart extends Component {
     //切換頁面做依判斷做事
     switch (newstate.current) {
       case 0:
-        this.setState(newstate);
         break;
       //訂單頁面沒訂單要擋住，顯示提示框type2告訴使用者沒有勾選商品
       case 1:
         newstate = this.sendDataToStep2(newstate);
         break;
       case 2:
-        !newstate.address
-          ? (newstate.err[0] = { message: "address", count: 1 })
-          : (newstate.err[0] = { message: "address", count: 0 });
-        let checkerr = newstate.err.filter((value) => value.count === 1);
-        checkerr.length !== 0 && (newstate.current = 1);
+        newstate.current=1
+        console.log(newstate.tradeItem)
         break;
 
       default:
