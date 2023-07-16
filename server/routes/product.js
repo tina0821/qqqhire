@@ -81,6 +81,36 @@ router.get('/api/productseller/:id', (req, res) => {
     })
 })
 
+//收藏
+router.get('/api/collect/:account', (req, res) => {
+    const account = req.params.account
+    const sql = `
+    SELECT  p.*,
+        (SELECT im.imageSrc
+        FROM imagemap im
+        WHERE im.productId = f.productId
+        LIMIT 1) AS imageSrc
+        FROM favorites f
+        INNER JOIN product p ON p.productId = f.productId
+        WHERE f.account = ?
+    `
+
+    conn.query(sql, [account], (err, data) => {
+        err ? console.log('查詢失敗') : res.json(data)
+    })
+})
+
+
+//收藏刪除
+router.post('/api/productDelete', (req, res) => {
+    const [productId, account] = req.body
+    const deleteSql = 'DELETE FROM favorites WHERE productId = ? AND account = ?';
+
+    conn.query(deleteSql, [productId, account], (err, data) => {
+        err ? console.log('查詢失敗') : res.json(data)
+    })
+})
+
 
 //賣家商品
 router.get('/api/Pseller/:account', (req, res) => {

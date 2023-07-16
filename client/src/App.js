@@ -13,10 +13,13 @@ import Home from './page/home';
 // import About from './page/About';
 // import Contact from './page/Contact';
 import NotFound from './page/NotFound';
-import Product from './page/product';
 // // import RegistrationForm from './components/login/q1';
-import ProductItem from './page/productItem';
-import ProductSeller from './page/productSeller';
+
+import Product from './page/product'; //商品一覽
+import ProductItem from './page/productItem'; //商品頁面
+import ProductSeller from './page/productSeller'; //賣家頁面
+import ProductCollect from './page/productCollect'; //收藏
+
 import Aboutus from './page/aboutus';
 import Order from './page/order';
 import Cmmgmt from './page/cmmgmt';
@@ -64,11 +67,15 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           {/* <Route path="/about" element={<About />} /> */}
-          <Route path="/product" element={<Product />} />
           {/* <Route path="/RegistrationForm" element={<RegistrationForm />} /> */}
           <Route path="/cart" element={<Cart />} />
+
+          <Route path="/product" element={<Product />} />
           <Route path='/productItem/:id' element={<ProductItem />} />
           <Route path='/productSeller/:account' element={<ProductSeller />} />
+          <Route path='/productCollect/:account' element={<ProductCollect />} />
+
+
           <Route path="/aboutus" element={<Aboutus />} />
           {/* <Route path="/" element={<RegisterForm />} /> */}
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
