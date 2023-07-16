@@ -258,32 +258,6 @@
         ]
     },
     {
-        "CityName": "連江縣",
-        "CityEngName": "Lienchiang County",
-        "AreaList": [
-            {
-                "ZipCode": "209",
-                "AreaName": "南竿鄉",
-                "AreaEngName": "Nangan Township"
-            },
-            {
-                "ZipCode": "210",
-                "AreaName": "北竿鄉",
-                "AreaEngName": "Beigan Township"
-            },
-            {
-                "ZipCode": "211",
-                "AreaName": "莒光鄉",
-                "AreaEngName": "Juguang Township"
-            },
-            {
-                "ZipCode": "212",
-                "AreaName": "東引鄉",
-                "AreaEngName": "Dongyin Township"
-            }
-        ]
-    },
-    {
         "CityName": "宜蘭縣",
         "CityEngName": "Yilan County",
         "AreaList": [
@@ -347,17 +321,6 @@
                 "AreaName": "南澳鄉",
                 "AreaEngName": "Nan’ao Township"
             },
-            {
-                "ZipCode": "290",
-                "AreaName": "釣魚臺",
-                "AreaEngName": "Diaoyutai"
-            }
-        ]
-    },
-    {
-        "CityName": "釣魚臺",
-        "CityEngName": "Diauyutai",
-        "AreaList": [
             {
                 "ZipCode": "290",
                 "AreaName": "釣魚臺",
@@ -1594,94 +1557,6 @@
                 "ZipCode": "852",
                 "AreaName": "茄萣區",
                 "AreaEngName": "Qieding Dist."
-            }
-        ]
-    },
-    {
-        "CityName": "南海島",
-        "CityEngName": "Nanhai",
-        "AreaList": [
-            {
-                "ZipCode": "817",
-                "AreaName": "東沙群島",
-                "AreaEngName": "Dongsha Islands"
-            },
-            {
-                "ZipCode": "819",
-                "AreaName": "南沙群島",
-                "AreaEngName": "Nansha Islands"
-            }
-        ]
-    },
-    {
-        "CityName": "澎湖縣",
-        "CityEngName": "Penghu County",
-        "AreaList": [
-            {
-                "ZipCode": "880",
-                "AreaName": "馬公市",
-                "AreaEngName": "Magong City"
-            },
-            {
-                "ZipCode": "881",
-                "AreaName": "西嶼鄉",
-                "AreaEngName": "Xiyu Township"
-            },
-            {
-                "ZipCode": "882",
-                "AreaName": "望安鄉",
-                "AreaEngName": "Wang’an Township"
-            },
-            {
-                "ZipCode": "883",
-                "AreaName": "七美鄉",
-                "AreaEngName": "Qimei Township"
-            },
-            {
-                "ZipCode": "884",
-                "AreaName": "白沙鄉",
-                "AreaEngName": "Baisha Township"
-            },
-            {
-                "ZipCode": "885",
-                "AreaName": "湖西鄉",
-                "AreaEngName": "Huxi Township"
-            }
-        ]
-    },
-    {
-        "CityName": "金門縣",
-        "CityEngName": "Kinmen County",
-        "AreaList": [
-            {
-                "ZipCode": "890",
-                "AreaName": "金沙鎮",
-                "AreaEngName": "Jinsha Township"
-            },
-            {
-                "ZipCode": "891",
-                "AreaName": "金湖鎮",
-                "AreaEngName": "Jinhu Township"
-            },
-            {
-                "ZipCode": "892",
-                "AreaName": "金寧鄉",
-                "AreaEngName": "Jinning Township"
-            },
-            {
-                "ZipCode": "893",
-                "AreaName": "金城鎮",
-                "AreaEngName": "Jincheng Township"
-            },
-            {
-                "ZipCode": "894",
-                "AreaName": "烈嶼鄉",
-                "AreaEngName": "Lieyu Township"
-            },
-            {
-                "ZipCode": "896",
-                "AreaName": "烏坵鄉",
-                "AreaEngName": "Wuqiu Township"
             }
         ]
     },

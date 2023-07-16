@@ -60,6 +60,8 @@ function A_ProductItem() {
     setTimeout(() => { setShowAlert(0) }, 1500);
   };
 
+
+
   useEffect(() => {
     //產品資訊
     const fetchData = async () => {
@@ -254,7 +256,7 @@ function A_ProductItem() {
                       <td>{`${productitem[0].cityCounty} ${productitem[0].area}`}</td>
                     </tr>
                     <tr>
-                      <td>配件(非必填)</td>
+                      <td>配件</td>
                       <td>
                         {productitem[0].accessory
                           ? productitem[0].accessory

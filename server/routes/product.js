@@ -70,7 +70,7 @@ router.get('/api/products/:productCategoryChild', (req, res) => {
 router.get('/api/productseller/:id', (req, res) => {
     const id = req.params.id
     const sql = `
-    SELECT u.profilePictureSrc, u.account ,u.nickname
+    SELECT u.profilePictureSrc, u.account ,u.nickname, u.email
     FROM product p
     INNER JOIN userinfo u ON p.productAccount = u.account
     WHERE p.productId = ?;

@@ -34,22 +34,32 @@
 
   .pd-body-m {
     width: 65%;
-    height: 80%;
+    // height: 80%;
     div:first-child {
       display: flex;
       align-items: center;
-      p:first-child {
-        margin-right: 20px;
-        font-size: $font-normal;
-      }
+
       p {
-        margin-right: 10px;
+        margin: 0 10px 0 0;
         font-size: $font-small;
+        &:first-child {
+          font-size: $font-normal;
+          font-weight: bold;
+          color: $main-color;
+          opacity: 1;
+        }
+        &:last-child {
+          opacity: 0.6;
+        }
       }
     }
 
     p {
-      font-size: $font-normal;
+      font-size: $font-small;
+      margin: 0;
+      margin-bottom: 20px;
+      color: black;
+      opacity: 0.8;
     }
 
     button {

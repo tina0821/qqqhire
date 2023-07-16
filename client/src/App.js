@@ -1,5 +1,5 @@
 // import React from 'react';
-// import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -37,17 +37,17 @@ import MemberCenter from './components/PersonalData/Personaldata'
 
 const App = () => {
 
-  // const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShow(true);
-  //   }, 500);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 500);
 
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, []);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
 
 
@@ -56,8 +56,8 @@ const App = () => {
     <>
       <Router>
 
-        {/* {show && <Navbar2 />} */}
-        <Navbar2 />
+        {show && <Navbar2 />}
+        {/* <Navbar2 /> */}
         <Routes>
 
           <Route path="/RegistrationForm" element={<Registration />} />
@@ -81,8 +81,8 @@ const App = () => {
           <Route path="/member" element={< MemberCenter />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {/* {show && <Footer />} */}
-        <Footer />
+        {show && <Footer />}
+        {/* <Footer /> */}
       </Router>
     </>
   );

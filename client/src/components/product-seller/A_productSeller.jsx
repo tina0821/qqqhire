@@ -40,7 +40,7 @@ function A_PRODUCT_SELLER() {
             </div>
           </div>
           {/* <ProductTop /> */}
-          <div className='psg-title'>【 賣家資訊 】</div>
+          <div className='psg-title'>【 出租人資訊 】</div>
           <ProductSellerCard key={ProductSeller[0].account} productSeller={ProductSeller[0]} />
           <div className='row'>
             {ProductSeller.map((product) => (
