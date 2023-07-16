@@ -56,7 +56,30 @@ function A_product_Collcet() {
             ))}
           </div>
         </>
-      ) : null}
+      ) : (
+        <>
+          <div className="breadcrumb">
+            <div>
+              <Link to="/">海爾戶外</Link> &gt;
+              <Link to="/">
+                {account}
+              </Link>{' '}
+              &gt;
+              <Link to="/">
+                收藏
+              </Link>
+            </div>
+            <div>
+              <Link to="/product">
+                <span className="back-link-icon"> &lt; </span> 返回商品一覽
+              </Link>
+            </div>
+          </div>
+          <div className='psg-title'>【 我的收藏 】</div>
+
+          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        </>
+      )}
     </div>
   </>
   );
