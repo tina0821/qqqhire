@@ -89,6 +89,7 @@ class CreditCardsInput extends Component {
                 maxLength={3}
                 onChange={(e) => {
                   this.changeCreditCardNumber(e.target.value, "cvc");
+                  console.log(e)
                 }}
               />
             </Form.Item>
