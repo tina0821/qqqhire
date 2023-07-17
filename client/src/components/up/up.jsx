@@ -9,7 +9,7 @@ const Up = () => {
 
   const onFinish = (values) => {
     console.log(values);
-    // 在这里可以将表单数据提交到服务器或执行其他操作
+
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -18,7 +18,7 @@ const Up = () => {
 
   const handleUpload = (file) => {
     console.log(file);
-    // 在这里可以处理上传的文件
+
     setFileList([file]);
     setPreviewImage(URL.createObjectURL(file));
   };

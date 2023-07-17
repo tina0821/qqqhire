@@ -17,7 +17,7 @@ function NavbarIN() {
 
         <>
             <ul className={style["header-icon"]}>
-                <li><Link to="/" className={style.iconMove}><FontAwesomeIcon icon={faHeart} className="icon"/></Link></li>
+                <li><Link to="/love" className={style.iconMove}><FontAwesomeIcon icon={faHeart} className="icon"/></Link></li>
                 <li><Link to="/" className={style.iconMove}><FontAwesomeIcon icon={faCartShopping} className="icon"/></Link></li>
                 <li>
                     <Link to="/" className={style.iconMove}><FontAwesomeIcon icon={faCircleUser} className="icon"/></Link>

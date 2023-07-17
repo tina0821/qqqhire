@@ -30,7 +30,7 @@ app.use('/', login)
 
 
 app.get('/api/members/:account', (req, res) => {
-  const memberData = req.body;
+  const account = req.params.account;
   const selectQuery = `SELECT * FROM userinfo WHERE account = ?`;
 
   coon.query("SELECT * FROM userinfo WHERE account=?", [req.params.account],
@@ -42,7 +42,35 @@ app.get('/api/members/:account', (req, res) => {
     ;
 });
 
+app.post('/api/members/member111', (req, res) => {
+  const account = req.params.account;
+  const memberData = req.body;
 
+  // 在這裡執行將資料存入資料庫的相應操作
+  const query = `UPDATE members SET password=?, address=?, name=?, nickname=?, birthday=?, phoneNumber=?, identityCard=?, email=?, avatar=? WHERE account=?`;
+  const values = [
+    memberData.password,
+    memberData.address,
+    memberData.name,
+    memberData.nickname,
+    memberData.birthday,
+    memberData.phoneNumber,
+    memberData.identityCard,
+    memberData.email,
+    memberData.avatar,
+    account
+  ];
+
+  coon.query(query, values, (error, results) => {
+    if (error) {
+      console.error('錯誤123', error);
+      res.status(500).json({ message: '發生錯誤' });
+    } else {
+      console.log('更新成功');
+      res.send({ message: '更新成功' });
+    }
+  });
+});
 
 
 

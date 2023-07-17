@@ -23,6 +23,7 @@ import Login from './components/login/login';
 import Registration from './components/register/register';
 import Up from './components/up/up';
 import MemberCenter from './components/PersonalData/Personaldata'
+import Love from './page/love'
 
 const App = () => {
 
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/up" element={<Up />} />
           <Route path="/member" element={< MemberCenter/>} />
+          <Route path="/love" element={< Love/>} />
         </Routes>
         {show && <Footer />}
       </Router>

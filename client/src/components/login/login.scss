@@ -8,33 +8,65 @@ $main-color: #0b7597;
 #loginout {
     background-color: #0b7597;
     padding: 30px;
-    .slick-track{
-        height:650px;
-        .slick-slide{
+
+    .slick-track {
+        height: 600px;
+        margin: 30px;
+
+        .slick-slide {
             width: 80%;
         }
     }
-} 
+    .logintitle{
+        font-size: $font-big;
+        margin-bottom: 20px;
+        color: #0b7597;
+        font-weight: bold;
+    }
+}
 
 #login {
-    margin-top: 30px;
+    border: #b9eeff 3px solid;
     background-color: #fff;
     padding: 20px;
     border-radius: 15px;
     height: 750px;
 
-    .slick-list {
-        margin: 30px;
-    }
 
     img {
-        // height: 550px;
-        width:90%;
+        height: 600px;
         object-fit: cover;
     }
 
     #login-right {
         margin-top: 100px;
+    }
+    .ant-form-item-required {
+        font-size: $font-small;
+    }
+
+    label {
+        font-weight: bolder;
+        color: #16778a
+    }
+
+    .ant-input-affix-wrapper {
+
+        border: 2px solid #16778a;
+    }
+
+    .ant-picker {
+        border: 2px solid #16778a;
+    }
+
+    .ant-select-selector {
+        border: 2px solid #16778a;
+    }
+    a{
+        font-size: $font-xs;
+    }
+    Button{
+        font-size: $font-xs;
     }
 
 }
