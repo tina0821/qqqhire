@@ -38,11 +38,11 @@ function A_ProductItem() {
         } catch (error) {
           error.response ? setShowAlert(4) : console.error('發生錯誤');
         }
-      } else {
+      }else if(state === 1) {
         productitem[0].rentalStatus === '出租中' ? setShowAlert(7) : setShowAlert(3)
       }
 
-
+      
       //收藏
       if (state === 2) {
         try {

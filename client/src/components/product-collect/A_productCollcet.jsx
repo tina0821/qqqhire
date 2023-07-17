@@ -76,8 +76,7 @@ function A_product_Collcet() {
             </div>
           </div>
           <div className='psg-title'>【 我的收藏 】</div>
-
-          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+          <h1>...沒有任何收藏...</h1>
         </>
       )}
     </div>
