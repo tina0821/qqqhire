@@ -3,8 +3,9 @@ import axios from 'axios';
 
 function Mycm() {
   const [products, setProducts] = useState([]);
-  // 每筆productId只顯示一次
   const [uniqueProductIds, setUniqueProductIds] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 3; // 每頁顯示的資料數量
 
   useEffect(() => {
     fetchData();
@@ -14,9 +15,7 @@ function Mycm() {
     try {
       const response = await axios.get('http://localhost:8000/api/mypro/3x7Y90');
       const products = response.data;
-      console.log(products);
       setProducts(products);
-
       // Extract unique productIds
       const uniqueIds = Array.from(new Set(products.map((product) => product.productId)));
       setUniqueProductIds(uniqueIds);
@@ -25,10 +24,36 @@ function Mycm() {
     }
   };
 
-    // 每筆productId只顯示一次
-  const getProductDetails = (productId) => {
-    const details = products.filter((product) => product.productId === productId);
-    return details[0]; // Assuming there's only one product with the same productId
+  // 輔助函數：限製商品名稱的字數並插入換行符
+  function limitProductName(productName) {
+    const maxChars = 6; // 最大字數限制
+    if (productName.length <= maxChars) {
+      return productName;
+    }
+    const truncated = productName.substr(0, maxChars);
+    const remainder = productName.substr(maxChars);
+    return (
+      <>
+        {truncated}
+        <br />
+        {remainder}
+      </>
+    );
+  }
+
+  // 計算當前頁面的資料
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = uniqueProductIds.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // 換到下一頁
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  // 換到上一頁
+  const prevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
   };
 
   return (
@@ -41,63 +66,46 @@ function Mycm() {
             <th>租金</th>
             <th>押金</th>
             <th>總金額</th>
+            <th>狀態</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
-          {/* 一次最多顯示三筆資料 */}
-        {uniqueProductIds.slice(0, 3).map((productId) => {
-        // {/* 每筆productId只顯示一次 */}
-        // {uniqueProductIds.map((productId) => {
-            const productDetails = getProductDetails(productId);
+          {currentProducts.map((productId) => {
+            const productDetails = products.find((product) => product.productId === productId);
             if (!productDetails) return null;
+            const { productName, rent, deposit, imageSrc, rentalStatus } = productDetails;
 
-            const { productName, rent, deposit, imageSrc } = productDetails;
-            
-            return(
-            <tr key={productId}>
-              <td>
-                <img
-                  id="proimg"
-                  src={`http://localhost:8000/img/${imageSrc}`}
-                  alt=""
-                />
-              </td>
-              <td>{limitProductName(productName)}</td>
-              <td>{rent}</td>
-              <td>{deposit}</td>
-              <td>{rent + deposit}</td>
-              <td>編輯</td>
-            </tr>
-          );
-            })}
-            
+            return (
+              <tr key={productId}>
+                <td>
+                  <img
+                    id="proimg"
+                    src={`http://localhost:8000/img/${imageSrc}`}
+                    alt=""
+                  />
+                </td>
+                <td>{limitProductName(productName)}</td>
+                <td>{rent}</td>
+                <td>{deposit}</td>
+                <td>{rent + deposit}</td>
+                <td>{rentalStatus}</td>
+                <td>編輯</td>
+              </tr>
+            );
+          })}
         </tbody>
-         
       </table>
-     <button id="back">更多</button>
+      <div className="btncon">
+        <button id="back" onClick={prevPage} disabled={currentPage === 1}>
+          上一頁
+        </button>
+        <button id="back" onClick={nextPage} disabled={currentProducts.length < productsPerPage}>
+          下一頁
+        </button>
+      </div>
     </div>
-    
-  );
-// 輔助函數：限製商品名稱的字數並插入換行符
-function limitProductName(productName) {
-  const maxChars = 6; // 最大字數限制
-  if (productName.length <= maxChars) {
-    return productName;
-  }
-  const truncated = productName.substr(0, maxChars);
-  const remainder = productName.substr(maxChars);
-  return (
-    <>
-      {truncated}
-      <br />
-      {remainder}
-    </>
   );
 }
-
-}
-
-
 
 export default Mycm;

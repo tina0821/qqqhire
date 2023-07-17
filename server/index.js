@@ -24,7 +24,7 @@ app.use("/", product);
 app.get('/api/mypro/:account', function (req, res) {
   const account = req.params.account;
   const query = `
-    SELECT p.productId, p.rent, p.deposit, p.productName, i.imageSrc
+    SELECT p.productId, p.rent, p.deposit, p.productName, p.rentalStatus, i.imageSrc
     FROM product AS p
     INNER JOIN imagemap AS i ON p.productId = i.productId
     WHERE p.productAccount = ? 
@@ -59,15 +59,16 @@ app.get("/api/myorder/:account", function (req, res) {
 app.get('/api/myrent/:productAccount', function (req, res) {
   const productAccount = req.params.productAccount;
   const query = `
-  SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc
-  FROM tradeitem AS t
-  INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
-  INNER JOIN product AS p ON m.productId = p.productId
-  INNER JOIN imagemap AS i ON p.productId = i.productId
-  WHERE t.productAccount = ?
-  GROUP BY t.tradeitemId
-  ORDER BY t.tradeitemId
-`;
+    SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc
+    FROM tradeitem AS t
+    INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
+    INNER JOIN product AS p ON m.productId = p.productId
+    INNER JOIN imagemap AS i ON p.productId = i.productId
+    WHERE t.productAccount = ?
+    GROUP BY p.productId
+    ORDER BY t.tradeitemId
+  `;
+
   coon.query(query, [productAccount], function (error, results) {
     if (error) {
       console.error(error);
