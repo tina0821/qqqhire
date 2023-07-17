@@ -40,7 +40,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
                   <th>預約日期</th>
                   <th>歸還日期</th>
                   <th>天數</th>
-                  <th>租金</th>
+                  <th>租金(天)</th>
                   <th>押金</th>
                   <th>總金額</th>
                 </tr>
@@ -61,7 +61,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
                     <td>{calculateDays(item.rentStart, item.rentEnd)}</td>
                     <td>{item.rent}</td>
                     <td>{item.deposit}</td>
-                    <td>{item.rent + item.deposit}</td>
+                    <td>{calculateDays(item.rentStart, item.rentEnd) * item.rent + item.deposit}</td>
                   </tr>
                 ))}
               </tbody>

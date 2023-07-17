@@ -23,7 +23,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
         let buttonComponent = null;
       if (state === 0) {
         buttonComponent = <Cancelbtn tradeitemId={tradeitemId} />;
-      } else if (state > 2) {
+      } else if (state === 3) {
         buttonComponent = <Appealbtn />;
       }
 
@@ -31,7 +31,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
           <div key={productAccount}>
             <div id='trititle'>
               <div id='tridet'>
-                <p><Link to={`http://localhost:3000/productSeller/${productAccount}`}><img className='proimg' src='/images/icon/user-interface 4.png'></img></Link>賣家  {productAccount}</p>
+                <p><Link to={`http://localhost:3000/productSeller/${productAccount}`}><img className='proimg' src='/images/icon/user-interface 4.png' alt=''></img></Link>賣家  {productAccount}</p>
                 <p>訂單編號  {tradeitemId}</p>
               </div>
               {buttonComponent}
@@ -44,7 +44,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
                   <th>預約日期</th>
                   <th>歸還日期</th>
                   <th>天數</th>
-                  <th>租金</th>
+                  <th>租金(天)</th>
                   <th>押金</th>
                   <th>總金額</th>
                 </tr>
@@ -65,7 +65,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
                     <td>{calculateDays(item.rentStart, item.rentEnd)}</td>
                     <td>{item.rent}</td>
                     <td>{item.deposit}</td>
-                    <td>{TotalAmount(item.rent, item.deposit)}</td>
+                    <td>{calculateDays(item.rentStart, item.rentEnd) * item.rent + item.deposit}</td>
                   </tr>
                 ))}
               </tbody>
@@ -103,12 +103,6 @@ function calculateDays(rentStart, rentEnd) {
   const timeDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24)); // 计算天数
 
   return timeDiff;
-}
-
-// 輔助函數：計算租金和押金的總和
-function TotalAmount(rent, deposit) {
-  const totalAmount = parseFloat(rent) + parseFloat(deposit);
-  return Math.floor(totalAmount); // 省略小數部分
 }
 
 export default Orderdetail;

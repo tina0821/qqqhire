@@ -107,7 +107,7 @@ const Renthistory = () => {
                     <td>{new Date(tradeItem.rentStart).toLocaleDateString()}</td>
                     <td>{new Date(tradeItem.rentEnd).toLocaleDateString()}</td>
                     <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)}</td>
-                    <td>{rentTotal + depositTotal}</td>
+                    <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)*rentTotal + depositTotal}</td>
                     <td>{orderStatus}</td>
                     <td>
                       <button id='morebtn' onClick={() => handleDetail(tradeItem.tradeitemId)}>詳細</button>
