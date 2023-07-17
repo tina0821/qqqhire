@@ -28,9 +28,9 @@ const Historyorder = () => {
     } else if (state === 2) {
       return '租借中';
     } else if (state === 3 ){
-      return '訂單已完成';
+      return '已完成';
     } else if (state === 4 ){
-      return '訂單已取消';
+      return '已取消';
     }
   };
 

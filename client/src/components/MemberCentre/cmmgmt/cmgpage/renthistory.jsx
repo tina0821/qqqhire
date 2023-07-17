@@ -22,9 +22,9 @@ const Renthistory = () => {
 
   const getOrderStatus = (state) => {
     if (state === 3) {
-      return '訂單已完成';
+      return '已完成';
     } else if (state === 4) {
-      return '訂單已拒絕';
+      return '已拒絕';
     } 
   };
 
