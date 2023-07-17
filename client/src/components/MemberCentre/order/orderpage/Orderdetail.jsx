@@ -31,7 +31,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
           <div key={productAccount}>
             <div id='trititle'>
               <div id='tridet'>
-                <p><Link to={`http://localhost:3000/productSeller/${productAccount}`}><img src='/images/icon/user-interface 4.png'></img></Link>賣家  {productAccount}</p>
+                <p><Link to={`http://localhost:3000/productSeller/${productAccount}`}><img className='proimg' src='/images/icon/user-interface 4.png'></img></Link>賣家  {productAccount}</p>
                 <p>訂單編號  {tradeitemId}</p>
               </div>
               {buttonComponent}

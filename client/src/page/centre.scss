@@ -288,6 +288,8 @@ $paddingTop: 5vh;
     /* 禁止滚动页面 */
   }
 
+
+  // 分頁按鈕
   .btncon {
     display: flex;
     justify-content: center;
@@ -301,7 +303,9 @@ $paddingTop: 5vh;
     }
   }
 
-
+  .proimg{
+    width: 25px;
+  }
 
 
 }
