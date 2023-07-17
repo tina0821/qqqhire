@@ -1,6 +1,7 @@
 import React from 'react';
 import Cancelbtn from './btnact/cancelbtn';
 import Appealbtn from './btnact/appealbtn';
+import { Link } from "react-router-dom";
 
 const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
   // 根据 tradeitemId 过滤出包含相同 tradeitemId 的详细信息
@@ -30,7 +31,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
           <div key={productAccount}>
             <div id='trititle'>
               <div id='tridet'>
-                <p>賣家  {productAccount}</p>
+                <p><Link to={`http://localhost:3000/productSeller/${productAccount}`}><img src='/images/icon/user-interface 4.png'></img></Link>賣家  {productAccount}</p>
                 <p>訂單編號  {tradeitemId}</p>
               </div>
               {buttonComponent}
