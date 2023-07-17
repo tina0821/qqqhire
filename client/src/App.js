@@ -20,8 +20,6 @@ import ProductSeller from './page/productSeller';
 import Aboutus from './page/aboutus';
 import Order from './page/order';
 import Cmmgmt from './page/cmmgmt';
-import Profastup from './page/profastup';
-import Proedit from './page/proedit';
 // import Qu from './page/qu';
 // import RegisterForm from './components/login/q'
 // import Tqqq from './components/login/q';
@@ -73,8 +71,6 @@ const App = () => {
           {/* <Route path="/tqq" element={<Tqqq />} /> */}
           <Route path="/order" element={<Order />} />
           <Route path="/cmmgmt" element={<Cmmgmt />} />
-          <Route path="/profastup" element={<Profastup />} />
-          <Route path="/proedit" element={<Proedit />} />
           {/* <Route path="/qu" element={<Qu />} /> */}
           <Route path="/up" element={<Up />} />
           <Route path="/member" element={< MemberCenter/>} />

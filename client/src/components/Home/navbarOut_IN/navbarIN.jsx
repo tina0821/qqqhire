@@ -22,8 +22,8 @@ function NavbarIN() {
                 <li>
                     <Link to="/" className={style.iconMove}><FontAwesomeIcon icon={faCircleUser} className="icon"/></Link>
                     <ul className={`${style["drop-menu"]} ${style["limenu-2"]}`}>
-                        <li><Link to="/">訂單追蹤</Link></li>
-                        <li><Link to="/">商品管理</Link></li>
+                        <li><Link to="/order">訂單追蹤</Link></li>
+                        <li><Link to="/cmmgmt">商品管理</Link></li>
                         <li><Link to="/member">個人資料</Link></li>
                         <li><Link onClick={loginout} to="/">登出</Link></li>
                     </ul>
