@@ -35,7 +35,7 @@ export const checkForm = (newstate) => {
         newstate.err.cartInfo = 1;
       }
     }else{
-      axios.
+      // axios.
     }
   });
   return newstate;
