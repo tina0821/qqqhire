@@ -22,7 +22,7 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
         let buttonComponent = null;
       if (state === 0) {
         buttonComponent = <Cancelbtn tradeitemId={tradeitemId} />;
-      } else if (state === 3) {
+      } else if (state > 2) {
         buttonComponent = <Appealbtn />;
       }
 
