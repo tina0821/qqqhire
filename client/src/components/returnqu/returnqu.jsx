@@ -65,17 +65,15 @@ const Returnqu = () => {
     }
 
     // ======== 點選項目 出現文字框 ========
-    const [demo1, setdemo1] = useState();
-    const [demo2, setdemo2] = useState();
+    const [demo, setDemo] = useState('');
+  
 
-    const onChangeA = (e) => {
-        setdemo1(e.target.value);
-        console.log('radio checked', e.target.value);
+    const onClickA = (e) => {
+        setDemo(e.target.value);
+        console.log('哈哈哈哈', e.target.value);
+        // console.log(setDemo(e.target.value));
     };
-    const onChangeB = (e) => {
-        setdemo2(e.target.value);
-        console.log('radio checked', e.target.value);
-    };
+   
 
 
 
@@ -158,10 +156,10 @@ const Returnqu = () => {
 
                     <Form size="large">
                         <Form.Item label={<p style={{ fontSize: "1.5rem" }}>項目</p>}  >
-                            <Select>
-                                <Select.Option value="" style={{ fontSize: "1.5rem" }}></Select.Option>
-                                <Select.Option value={"demo1"} style={{ fontSize: "1.1rem" }} onChange={onChangeA}>租賃建議</Select.Option>
-                                <Select.Option value={"demo2"} style={{ fontSize: "1.1rem" }} onChange={onChangeB}>一般租賃問題</Select.Option>
+                            <Select onClick={onClickA} value={demo}>
+                                <Select.Option value={" "} style={{ fontSize: "1.5rem" }}></Select.Option>
+                                <Select.Option value={"1"} style={{ fontSize: "1.1rem" }} >租賃建議</Select.Option>
+                                <Select.Option value={"2"} style={{ fontSize: "1.1rem" }} >一般租賃問題</Select.Option>
                             </Select>
                         </Form.Item>
                     </Form>
