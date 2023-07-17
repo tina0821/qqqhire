@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const checkForm = (newstate) => {
+export const checkForm = async (newstate) => {
   newstate.err.address = 0;
   newstate.err.payMethod = 0;
   newstate.err.cartInfo = 0;
 
-  newstate.tradeItem.map((item) => {
+  await newstate.tradeItem.map(async (item) => {
     if (!item.address) {
       newstate.err.address = 1;
       newstate.current = 1;
@@ -34,9 +34,21 @@ export const checkForm = (newstate) => {
         newstate.current = 1;
         newstate.err.cartInfo = 1;
       }
-    }else{
-      // axios.
     }
   });
+  if (
+    newstate.err.address === 0 &&
+    newstate.err.payMethod === 0 &&
+    newstate.err.cartInfo === 0
+  ) {
+    await axios
+      .put("http://localhost:8000/cart/cart", {
+        account: localStorage.getItem("userInfo").slice(1, -1),
+        data : newstate
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  }
   return newstate;
 };
