@@ -6,16 +6,15 @@ var sha1 = require('sha1');
 var querystring = require('querystring');
 var coon = require('./routes/db');
 var app=express();
+app.use(cors())
 app.use(urlencoded);
 app.use('/img',express.static('public/img'))
-app.get('/',function(req,res){
-    let a = sha1('1234','kjdsfkjds');
-    ['$','#',]
-    res.send(a);
-});
-app.get('/cart',function(req,res){
-    res.send('cartInfo');
-});
+
+
+
+const kuo = require('./routes/Kuo')
+app.use('/',kuo)
+
 app.listen(8000,function(){
     console.clear();
     console.log(new Date().toLocaleDateString());

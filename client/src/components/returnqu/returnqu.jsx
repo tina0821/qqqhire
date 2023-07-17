@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Space, Radio, Form, Select, Typography, Input } from 'antd';
+import { Button, Space, Radio, Form, Select, Typography } from 'antd';
 import "./returnqu.css";
 
 
 const Returnqu = () => {
 
-    // === 單選按鈕 ===
+    // ======== 單選按鈕 ========
     // 抓取單選框value值
     // 把值回傳進去input框
 
-    const [value, setValue] = useState(0);
-    const [value2, setValue2] = useState(0);
+    const [value, setValue] = useState();
+    const [value2, setValue2] = useState();
     
     const onChange = (e) => {
         setValue(e.target.value);
@@ -22,18 +22,16 @@ const Returnqu = () => {
     };
 
 
-    
-    // === 單選框 ===
 
 
 
     // === 監聽 input ===
-    const [form] = Form.useForm();
+    // const [form] = Form.useForm();
     // const nameValue = Form.useWatch('name', form);
     // const nameValue2 = Form.useWatch('name2', form);
 
 
-    // === 下一步 上一步按鈕 ===
+    // ======== 下一步 上一步按鈕 ========
     const [open, setOpen] = useState(false);
 
     const controlBtn = ()=>{
@@ -43,7 +41,7 @@ const Returnqu = () => {
     // 方法二 {!open&&<></>} {open&&<></>}
 
     
-    // === 確認合約 並送出 ===
+    // ======== 確認合約 並送出 ========
     const [checked, setChecked] = useState("");
 
     // 測試是否收到單選框資訊 setChecked為非同步傳遞
@@ -66,7 +64,18 @@ const Returnqu = () => {
         }
     }
 
+    // ======== 點選項目 出現文字框 ========
+    const [demo1, setdemo1] = useState();
+    const [demo2, setdemo2] = useState();
 
+    const onChangeA = (e) => {
+        setdemo1(e.target.value);
+        console.log('radio checked', e.target.value);
+    };
+    const onChangeB = (e) => {
+        setdemo2(e.target.value);
+        console.log('radio checked', e.target.value);
+    };
 
 
 
@@ -133,16 +142,12 @@ const Returnqu = () => {
                 
                 {/* 第二區 */}
                 {open&&<div>
-
-                    {/* <div>
-                        <Button onClick={() => form.setFieldValue('age', 10)}>Update</Button>
-                    </div> */}
-
-                    <Form form={form}  >
+                    {/* 測試用input 要使用上面import 記得再引入input */}
+                    {/* <Form form={form}  >
                         <Form.Item name="name2" label="try">
                             <Input />
                         </Form.Item>
-                    </Form>
+                    </Form> */}
 
                     <Typography>
                         <pre style={{ fontSize: "1.5rem" }}>分類: {value}</pre>
@@ -155,15 +160,15 @@ const Returnqu = () => {
                         <Form.Item label={<p style={{ fontSize: "1.5rem" }}>項目</p>}  >
                             <Select>
                                 <Select.Option value="" style={{ fontSize: "1.5rem" }}></Select.Option>
-                                <Select.Option value="demo1" style={{ fontSize: "1.1rem" }}>租賃建議</Select.Option>
-                                <Select.Option value="demo2" style={{ fontSize: "1.1rem" }}>一般租賃問題</Select.Option>
+                                <Select.Option value={"demo1"} style={{ fontSize: "1.1rem" }} onChange={onChangeA}>租賃建議</Select.Option>
+                                <Select.Option value={"demo2"} style={{ fontSize: "1.1rem" }} onChange={onChangeB}>一般租賃問題</Select.Option>
                             </Select>
                         </Form.Item>
                     </Form>
 
 
                     {/* 文字輸入框和上傳圖片選項 */}
-                    <div id="inputContainer" style={{ display: 'none' }}>
+                    <div id="inputContainer">
                         <div className="form-group">
                             <label htmlFor="textInput" style={{ fontSize: "1.5rem" }}>文字輸入框:</label>
                             <textarea className="form-control" id="textInput" maxLength={100} defaultValue={""}/>
