@@ -22,7 +22,7 @@ const mailOptions = {
    from: "hireoutdoor2023@gmail.com",
    to: "hireoutdoor2023@gmail.com",
    subject: "Nodemailer Test",
-   html: reactHtml
+   html: ""
 };
 
 transporter.sendMail(mailOptions, function(error, info){
