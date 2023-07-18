@@ -7,7 +7,7 @@ function Mycm() {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 3; // 每頁顯示的資料數量
 
-// 找網頁的登入帳號
+  // 找網頁的登入帳號
   const useract = localStorage.getItem('userInfo');
   // 確認 userInfo 的值不是空值（null）再進行 slice 操作
   const user = useract ? useract.slice(1, -1) : '';
@@ -79,8 +79,8 @@ function Mycm() {
           {currentProducts.map((productId) => {
             const productDetails = products.find((product) => product.productId === productId);
             if (!productDetails) return null;
-            const { productName, rent, deposit, imageSrc, rentalStatus } = productDetails;
-
+            const { productName, rent, deposit, imageSrc, state } = productDetails;
+            const statusText = state === 0 ? "未出租" : "出租中";
             return (
               <tr key={productId}>
                 <td>
@@ -94,7 +94,7 @@ function Mycm() {
                 <td>{rent}</td>
                 <td>{deposit}</td>
                 <td>{rent + deposit}</td>
-                <td>{rentalStatus}</td>
+                <td>{statusText}</td>
                 <td>編輯</td>
               </tr>
             );

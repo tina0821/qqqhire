@@ -12,10 +12,7 @@ const MyOrder = () => {
   // 確認 userInfo 的值不是空值（null）再進行 slice 操作
   const user = useract ? useract.slice(1, -1) : '';
 
-  useEffect(() => {
-    fetchTradeItems();
-  }, []);
-
+  
   const fetchTradeItems = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/myorder/${user}`);
@@ -24,6 +21,11 @@ const MyOrder = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    fetchTradeItems();
+  }, []);
+
 
   const getOrderStatus = (state) => {
     if (state === 0) {

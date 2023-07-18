@@ -26,7 +26,7 @@ app.get('/api/mypro/:account', function (req, res) {
   const account = req.params.account;
   console.log(req.params)
   const query = `
-    SELECT p.productId, p.rent, p.deposit, p.productName, p.rentalStatus, i.imageSrc
+    SELECT p.productId, p.rent, p.deposit, p.productName, p.rentalStatus, p.state, i.imageSrc
     FROM product AS p
     INNER JOIN imagemap AS i ON p.productId = i.productId
     WHERE p.productAccount = ? 
@@ -35,6 +35,7 @@ app.get('/api/mypro/:account', function (req, res) {
     res.json(results);
   });
 });
+
 
 app.get("/api/myorder/:account", function (req, res) {
   const account = req.params.account;
