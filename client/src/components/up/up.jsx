@@ -93,7 +93,7 @@ const Up = () => {
         <Cascader options={area}
           onChange={onChange}
           placeholder="Please select"
-          fieldNames={{ children: "AreaList", label: "CityName",value:"CityEngName" }}
+          fieldNames={{ children: "AreaList", label: "AreaName",value:"AreaEngName" }}
         />
 
       </Form.Item>
