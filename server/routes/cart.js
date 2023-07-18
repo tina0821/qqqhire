@@ -61,7 +61,6 @@ page.put("/cart", async (req, res) => {
           valuesList2.push(value.rentEnd);
           insertLenght2 += "(?,?,?,?),";
         });
-        console.log(cartMapId);
       });
       coon.query(
         `INSERT INTO tradeitemmap (tradeItemId, productId, rentStart, rentEnd) VALUES ${insertLenght2.slice(
@@ -80,10 +79,8 @@ page.put("/cart", async (req, res) => {
             [],
             (err, result) => {
               if (err) {
-                console.log(err);
                 res.send(err);
               } else {
-                console.log(result);
                 res.send(insertId);
               }
             }

@@ -44,10 +44,11 @@ export const checkForm = async (newstate) => {
     await axios
       .put("http://localhost:8000/cart/cart", {
         account: localStorage.getItem("userInfo").slice(1, -1),
-        data : newstate
+        data: newstate,
       })
       .then((res) => {
-        console.log(res);
+        newstate.current=2
+        newstate.tradeId = res.data;
       });
   }
   return newstate;

@@ -8,6 +8,7 @@ import axios from "axios";
 import ShopingCart from "./shopingCart/index";
 import DeletePrompt from "./shopingCart/productInfo/deletePrompt/deletePrompt";
 import TradeItem from "./tradeItem/tradeItem";
+import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import cartTest from "../../data/cartTest.json";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
@@ -83,7 +84,7 @@ class Cart extends Component {
             data={this}
             productInfo={this.state.deletePrompt}
           />
-          <div className="">
+          <div className="mb-5">
             {/* 步驟條 */}
             <Row align={"middle"} justify={"center"}>
               <Col xs={22}>
@@ -99,13 +100,13 @@ class Cart extends Component {
               <Col xs={22} className="contentStyle cartFontSize">
                 {this.state.current === 0 && <ShopingCart data={this} />}
                 {this.state.current === 1 && <TradeItem data={this} />}
-                {this.state.current === 2 && <ShopingCart data={this} />}
+                {this.state.current === 2 && <TradeSuccess data={this} />}
               </Col>
             </Row>
             {/* 切換步驟選單 */}
             <Row align={"middle"} justify={"center"}>
               <Col xs={22} className="d-flex justify-content-end mt-5">
-                {this.state.current > 0 && (
+                {this.state.current > 0 && this.state.current < 2 && (
                   <Button
                     style={{ margin: "0 8px" }}
                     onClick={() => this.moveSteps(-1)}
@@ -161,11 +162,9 @@ class Cart extends Component {
     //更新資料
     this.setState(newstate);
   };
-
-  componentDidUpdate() {
-    // console.log(this.state.tradeItem);
-  }
-
+componentDidUpdate(){
+  console.log(this.state.cartMap)
+}
   moveSteps = async (e) => {
     let newstate = { ...this.state };
     newstate.current += e;
@@ -180,7 +179,7 @@ class Cart extends Component {
         break;
 
       case 2:
-        newstate = checkForm(newstate);
+        newstate = await checkForm(newstate);
         break;
 
       default:
