@@ -10,10 +10,11 @@ app.use(cors())
 app.use(urlencoded);
 app.use('/img',express.static('public/img'))
 
-
-
 const kuo = require('./routes/Kuo')
 app.use('/',kuo)
+
+
+
 
 app.listen(8000,function(){
     console.clear();
