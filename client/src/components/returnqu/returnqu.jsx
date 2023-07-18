@@ -11,7 +11,7 @@ const Returnqu = () => {
 
     const [value, setValue] = useState();
     const [value2, setValue2] = useState();
-    
+
     const onChange = (e) => {
         setValue(e.target.value);
         console.log('radio checked', e.target.value);
@@ -34,46 +34,64 @@ const Returnqu = () => {
     // ======== 下一步 上一步按鈕 ========
     const [open, setOpen] = useState(false);
 
-    const controlBtn = ()=>{
-        setOpen((prev)=>{return !prev})
+    const controlBtn = () => {
+        setOpen((prev) => { return !prev })
     }
     // 方法一 {open?<div></div>:null}
     // 方法二 {!open&&<></>} {open&&<></>}
 
-    
+
     // ======== 確認合約 並送出 ========
     const [checked, setChecked] = useState("");
 
     // 測試是否收到單選框資訊 setChecked為非同步傳遞
     const sendChick = (e) => {
         setChecked(e.target.value);
-        if (e.target.value) {
-            console.log("OK")
-        }else{
-            console.log("NO")
-        }
-      };
+        // if (e.target.value) {
+        //     console.log("OK")
+        // }else{
+        //     console.log("NO")
+        // }
+    };
     console.log(checked)
     // 點擊送出判斷單選框回傳值
-    const controlSendBtn = ()=>{
+    const controlSendBtn = () => {
         if (checked === '1') {
             alert('成功送出');
             window.location.reload();
-        }else{
+        } else {
             alert("尚未勾選合約 請確認!")
         }
     }
 
-    // ======== 點選項目 出現文字框 ========
-    const [demo, setDemo] = useState('');
+    // ======== 下拉選單 點選項目 出現文字框 ========
+    const [textBox, setTextbox] = useState(false);
+    const [photo, setPhoto] = useState(false);
   
-
-    const onClickA = (e) => {
-        setDemo(e.target.value);
-        console.log('哈哈哈哈', e.target.value);
-        // console.log(setDemo(e.target.value));
+    
+    const options = [
+        { value: ' ', label: '' },
+        { value: '1', label: '租賃建議' },
+        { value: '2', label: '一般租賃問題' }
+    ]
+    const onChangeA = (selectValue) => {
+        console.log(selectValue);
+        if(selectValue === " "){
+            setTextbox(false)
+            setPhoto(false)
+        }
+        if(selectValue === "1"){
+            setTextbox(true)
+            setPhoto(false)
+        }
+        if(selectValue === "2"){
+            setTextbox(true)
+            setPhoto(true)
+        }
     };
-   
+
+
+
 
 
 
@@ -115,9 +133,9 @@ const Returnqu = () => {
                 <p>謝謝您遵守以上的注意事項。現在您可以填寫下面的問題回報表單，我們將盡快處理您的問題。如有任何疑問，請隨時聯繫我們的客戶服務團隊。</p>
 
                 <hr />
-                
+
                 {/* 第一區 */}
-                {!open&&<div>
+                {!open && <div>
 
                     <h3>請問您的問題類別屬於?</h3>
                     <Radio.Group onChange={onChange} value={value} >
@@ -137,9 +155,9 @@ const Returnqu = () => {
                     </Space>
 
                 </div>}
-                
+
                 {/* 第二區 */}
-                {open&&<div>
+                {open && <div>
                     {/* 測試用input 要使用上面import 記得再引入input */}
                     {/* <Form form={form}  >
                         <Form.Item name="name2" label="try">
@@ -156,27 +174,23 @@ const Returnqu = () => {
 
                     <Form size="large">
                         <Form.Item label={<p style={{ fontSize: "1.5rem" }}>項目</p>}  >
-                            <Select onClick={onClickA} value={demo}>
-                                <Select.Option value={" "} style={{ fontSize: "1.5rem" }}></Select.Option>
-                                <Select.Option value={"1"} style={{ fontSize: "1.1rem" }} >租賃建議</Select.Option>
-                                <Select.Option value={"2"} style={{ fontSize: "1.1rem" }} >一般租賃問題</Select.Option>
-                            </Select>
+                            <Select options={options} style={{ fontSize: "1.5rem" }} onChange={onChangeA}></Select>
                         </Form.Item>
                     </Form>
 
 
                     {/* 文字輸入框和上傳圖片選項 */}
                     <div id="inputContainer">
-                        <div className="form-group">
+                        {textBox && <div className="form-group">
                             <label htmlFor="textInput" style={{ fontSize: "1.5rem" }}>文字輸入框:</label>
-                            <textarea className="form-control" id="textInput" maxLength={100} defaultValue={""}/>
-                        </div>
+                            <textarea className="form-control" id="textInput" maxLength={1000} defaultValue={""} />
+                        </div>}
                         {/* 用于顯示已输入字數和總字數限制 */}
-                        <div id="charCount" />
-                        <div className="form-group">
+                        {/* {!open2&&<div id="charCount" />} */}
+                        {photo && <div className="form-group">
                             <label htmlFor="imageUpload" style={{ fontSize: "1.5rem" }}>圖片補充:</label>
                             <input type="file" className="form-control-file" id="imageUpload" style={{ fontSize: "1.1rem" }} />
-                        </div>
+                        </div>}
                     </div>
 
                     <hr />
@@ -197,6 +211,6 @@ const Returnqu = () => {
 
     );
 
-} 
+}
 
 export default Returnqu
