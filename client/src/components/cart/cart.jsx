@@ -10,7 +10,6 @@ import DeletePrompt from "./shopingCart/productInfo/deletePrompt/deletePrompt";
 import TradeItem from "./tradeItem/tradeItem";
 import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
-import cartTest from "../../data/cartTest.json";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
@@ -45,7 +44,7 @@ class Cart extends Component {
       //當前步驟頁面計數器
       current: 0,
       //預設租物車商品資訊
-      cartMap: cartTest,
+      cartMap: [],
       //全選觸發器
       selectAll: 0,
       //顯示提示視窗
@@ -143,24 +142,28 @@ class Cart extends Component {
 
   //第一次更新資訊
   componentDidMount = async () => {
-    let newstate = { ...this.state };
-    //取得資料庫商品分類完成的資料
-    await axios
-      .post("http://localhost:8000/cart/getCartItem", {
-        account: localStorage.getItem("userInfo").slice(1, -1),
-      })
-      .then((res) => {
-        newstate.cartMap = res.data;
-      });
-    await axios
-      .post("http://localhost:8000/cart/getAccountInfo", {
-        account: localStorage.getItem("userInfo").slice(1, -1),
-      })
-      .then((res) => {
-        newstate.accountInfo = res.data;
-      });
-    //更新資料
-    this.setState(newstate);
+    if (localStorage.getItem("userInfo")) {
+      let newstate = { ...this.state };
+      //取得資料庫商品分類完成的資料
+      await axios
+        .post("http://localhost:8000/cart/getCartItem", {
+          account: localStorage.getItem("userInfo").slice(1, -1),
+        })
+        .then((res) => {
+          newstate.cartMap = res.data;
+        });
+      await axios
+        .post("http://localhost:8000/cart/getAccountInfo", {
+          account: localStorage.getItem("userInfo").slice(1, -1),
+        })
+        .then((res) => {
+          newstate.accountInfo = res.data;
+        });
+      //更新資料
+      this.setState(newstate);
+    }else{
+      document.location.href='http://localhost:3000/login'
+    }
   };
 
   moveSteps = async (e) => {
