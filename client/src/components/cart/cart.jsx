@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { ConfigProvider } from "antd";
-import { Button, message, Steps, Col, Row } from "antd";
+import { Button, Steps, Col, Row } from "antd";
 import axios from "axios";
 // import { onLogin, checkLogin, logOut } from "../cookie/cookie";
 
@@ -124,13 +125,11 @@ class Cart extends Component {
                   </Button>
                 )}
                 {this.state.current === this.state.steps.length - 1 && (
-                  <Button
-                    type="primary"
-                    onClick={() => message.success("Processing complete!")}
-                    size="large"
-                  >
-                    結帳
-                  </Button>
+                  <Link to={"/"}>
+                    <Button type="primary" size="large">
+                      完成
+                    </Button>
+                  </Link>
                 )}
               </Col>
             </Row>
@@ -139,7 +138,7 @@ class Cart extends Component {
       </React.Fragment>
     );
   }
-
+  componentDidUpdate() {}
   //第一次更新資訊
   componentDidMount = async () => {
     if (localStorage.getItem("userInfo")) {
@@ -161,8 +160,8 @@ class Cart extends Component {
         });
       //更新資料
       this.setState(newstate);
-    }else{
-      document.location.href='http://localhost:3000/login'
+    } else {
+      document.location.href = "http://localhost:3000/login";
     }
   };
 
@@ -321,7 +320,7 @@ class Cart extends Component {
   };
 
   //記錄每一位賣家訂單的寄送地址
-  addAddress = (addressValue, productAccount, shippingMethod = 0) => {
+  addAddress = (addressValue, productAccount, shippingMethod = 0, data = 0) => {
     let newstate = { ...this.state };
     const productAccountList = [];
     newstate.tradeItem.map((value) => {
@@ -334,6 +333,9 @@ class Cart extends Component {
     shippingMethod &&
       (newstate.tradeItem[productAccountNumber].shippingMethod =
         shippingMethod);
+    data &&
+      (newstate.tradeItem[productAccountNumber].tradeTypePriceId =
+        data.tradeTypePriceId);
     this.setState(newstate);
   };
 

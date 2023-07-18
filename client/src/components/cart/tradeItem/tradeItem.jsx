@@ -6,7 +6,7 @@ import Contract from "./contract/contract";
 import PayType from "./payType/payType";
 import PromptBox from "./promptBox/promptBox";
 import TotalInfo from "./totalInfo/totalInfo";
-import { Col, Row, Divider, ConfigProvider, Collapse, Button } from "antd";
+import { Col, Row, Divider, ConfigProvider, Collapse } from "antd";
 
 class TradeItem extends Component {
   render() {
@@ -59,6 +59,7 @@ class TradeItem extends Component {
                   <ShippingMethod
                     data={this.props.data}
                     productAccount={item.productAccount}
+                    item={item}
                   />
                   <PayType
                     data={this.props.data}
