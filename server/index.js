@@ -42,22 +42,28 @@ app.get('/api/members/:account', (req, res) => {
     ;
 });
 
-app.post('/api/members/member111', (req, res) => {
+app.post('/api/members', (req, res) => {
   const account = req.params.account;
-  const memberData = req.body;
+  const memberData = req.body.name;
+  console.log(account)
 
-  // 在這裡執行將資料存入資料庫的相應操作
-  const query = `UPDATE members SET password=?, address=?, name=?, nickname=?, birthday=?, phoneNumber=?, identityCard=?, email=?, avatar=? WHERE account=?`;
+  // const query = `UPDATE userinfo SET password=?, address=?, name="哈哈", nickname=?, birthday=?, phoneNumber=?, identityCard=?, email=?, avatar=? WHERE account="3x7Y90"`;
+  // const values = [
+  //   memberData.password,
+  //   memberData.address,
+  //   memberData.name,
+  //   memberData.nickname,
+  //   memberData.birthday,
+  //   memberData.phoneNumber,
+  //   memberData.identityCard,
+  //   memberData.email,
+  //   memberData.avatar,
+  //   account
+  // ];
+
+  const query = `UPDATE userinfo SET  name=? WHERE account=?`;
   const values = [
-    memberData.password,
-    memberData.address,
     memberData.name,
-    memberData.nickname,
-    memberData.birthday,
-    memberData.phoneNumber,
-    memberData.identityCard,
-    memberData.email,
-    memberData.avatar,
     account
   ];
 

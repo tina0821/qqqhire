@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Input, Select, Checkbox, Button, Upload, Image } from 'antd';
-
+import dataitem from "../../data/item2.json"
+import ProductTop from '../product/productTop';
+import "./up.scss"
 const { Option } = Select;
 
 const Up = () => {
@@ -22,14 +24,17 @@ const Up = () => {
     setFileList([file]);
     setPreviewImage(URL.createObjectURL(file));
   };
+ 
 
   return (
+
     <Form
       name="productForm"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
+      id='fastout'
       
     >
       <Form.Item
@@ -78,13 +83,7 @@ const Up = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item
-        label="配件"
-        name="accessories"
-        rules={[{ required: true, message: '請輸入配件' }]}
-      >
-        <Input />
-      </Form.Item>
+      <ProductTop/>
 
       <Form.Item
         label="地區"
