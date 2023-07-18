@@ -2,21 +2,28 @@ import React, { useEffect, useRef } from 'react';
 import anime from 'animejs';
 
 function Notlogin() {
-    const textWrapperRef = useRef(null);
-  
-    useEffect(() => {
-      // Wrap every letter in a span
-      const textWrapper = textWrapperRef.current;
-      textWrapper.innerHTML = textWrapper.textContent.replace(/([A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])/g, "<span class='letter'>$1</span>");
-  
-      anime.timeline({ loop: true })
-        .add({
-          targets: '.ml11 .line',
-          scaleY: [0, 1],
-          opacity: [0.5, 1],
-          easing: "easeOutExpo",
-          duration: 700
-        })
+  const textWrapperRef = useRef(null);
+
+  useEffect(() => {
+    const textWrapper = textWrapperRef.current;
+    const text = textWrapper.textContent;
+    textWrapper.innerHTML = ''; // 清空原本的文字
+
+    for (let i = 0; i < text.length; i++) {
+      const letterSpan = document.createElement('span');
+      letterSpan.textContent = text[i];
+      letterSpan.classList.add('letter');
+      textWrapper.appendChild(letterSpan);
+    }
+
+    anime.timeline({ loop: true })
+      .add({
+        targets: '.ml11 .line',
+        scaleY: [0, 1],
+        opacity: [0.5, 1],
+        easing: "easeOutExpo",
+        duration: 700
+      })
       .add({
         targets: '.ml11 .line',
         translateX: [0, textWrapper.getBoundingClientRect().width + 10],
@@ -39,7 +46,7 @@ function Notlogin() {
       });
   }, []);
 
-  return (   
+  return (
     <h1 className="ml11">
       <span ref={textWrapperRef} className="text-wrapper">
         <span className="line line1"></span>
