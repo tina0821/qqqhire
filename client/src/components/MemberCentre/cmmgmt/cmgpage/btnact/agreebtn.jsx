@@ -17,7 +17,7 @@ function Cancelbtn({ tradeitemId, onCancel }) {
     console.log("Selected Trade Item ID:", tradeitemId);
     try {
       await axios.post('http://localhost:8000/api/agreeOrder', { tradeitemId });
-      // 提示 訂單已取消
+      // 提示 訂單已同意
       setIsOrderCancelled(true);
     } catch (error) {
       console.log(error);

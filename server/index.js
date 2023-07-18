@@ -71,14 +71,8 @@ app.get('/api/myrent/:productAccount', function (req, res) {
     GROUP BY p.productId
     ORDER BY t.tradeitemId
   `;
-
   coon.query(query, [productAccount], function (error, results) {
-    if (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    } else {
-      res.json(results);
-    }
+      res.json(results);   
   });
 });
 
@@ -115,16 +109,43 @@ app.post("/api/cancelOrder", function (req, res) {
   });
 });
 
+// app.post('/api/agreeOrder', function (req, res) {
+//   const { tradeitemId } = req.body;
+//   // 檢查 tradeitemId 的值
+//   const updateQuery = 'UPDATE tradeitem SET state = 1 WHERE tradeitemId = ?';
+//   coon.query(updateQuery, [tradeitemId], function (error, results) {
+//     if (results.affectedRows > 0) {
+//       res.status(200).json({ message: 'Order canceled successfully' });
+//     }
+//   });
+// });
+// 修改 API 路由，用來處理按下 "確定" 按鈕後的動作
 app.post('/api/agreeOrder', function (req, res) {
   const { tradeitemId } = req.body;
-  // 檢查 tradeitemId 的值
-  const updateQuery = 'UPDATE tradeitem SET state = 1 WHERE tradeitemId = ?';
+
+  // 使用 JOIN 來執行兩個更新動作
+  const updateQuery = `
+    UPDATE tradeitem AS t
+    JOIN tradeitemmap AS tm ON t.tradeitemId = tm.tradeitemId
+    JOIN product AS p ON tm.productId = p.productId
+    SET t.state = 1,
+        p.state = 1
+    WHERE t.tradeitemId = ?
+  `;
+
   coon.query(updateQuery, [tradeitemId], function (error, results) {
-    if (results.affectedRows > 0) {
-      res.status(200).json({ message: 'Order canceled successfully' });
+    if (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error occurred while updating tradeitem and product' });
+      return;
     }
+
+    // 完成所有更新，回傳成功訊息
+    res.status(200).json({ message: 'Order canceled successfully' });
   });
 });
+
+
 
 app.post("/api/login", (req, res) => {
   console.log(req.body.aldata);
