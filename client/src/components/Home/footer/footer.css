@@ -116,14 +116,3 @@
     /* font-size: 1.5rem; */
     color: rgb(0, 0, 0);
 }
-
-.footer-3 p:nth-child(1){
-    font-size: 2rem;
-}
-.footer-3 p:nth-child(2){
-    font-size: 1rem;
-    line-height:20px;
-}
-.footer-3 p:nth-child(3){
-    font-size: 1.2rem;
-}

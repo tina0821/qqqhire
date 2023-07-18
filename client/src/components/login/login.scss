@@ -1,0 +1,40 @@
+$font-big: 2.25rem;
+$font-normal: 2rem;
+$font-small: 1.75rem;
+$font-xs: 1.5rem;
+
+$main-color: #0b7597;
+
+#loginout {
+    background-color: #0b7597;
+    padding: 30px;
+    .slick-track{
+        height:650px;
+        .slick-slide{
+            width: 80%;
+        }
+    }
+} 
+
+#login {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    height: 750px;
+
+    .slick-list {
+        margin: 30px;
+    }
+
+    img {
+        // height: 550px;
+        width:90%;
+        object-fit: cover;
+    }
+
+    #login-right {
+        margin-top: 100px;
+    }
+
+}
