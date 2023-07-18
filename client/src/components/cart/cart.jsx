@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { ConfigProvider } from "antd";
 import { Button, message, Steps, Col, Row } from "antd";
-// import io from 'socket.io-client';
 import axios from "axios";
 // import { onLogin, checkLogin, logOut } from "../cookie/cookie";
-// import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 //引用自做檔案
 import ShopingCart from "./shopingCart/index";
 import DeletePrompt from "./shopingCart/productInfo/deletePrompt/deletePrompt";
 import TradeItem from "./tradeItem/tradeItem";
+import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import cartTest from "../../data/cartTest.json";
+import { checkForm } from "./tradeItem/checkForm/checkForm";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
 // import { ajax } from "jquery";
@@ -59,7 +59,8 @@ class Cart extends Component {
       //結帳商品總金額
       totalMoney: "",
       //錯誤訊息
-      err: [{ message: "address", count: 0 }],
+      err: { address: 0, payMethod: 0 },
+      cartInfo: 0,
     };
   }
 
@@ -83,7 +84,7 @@ class Cart extends Component {
             data={this}
             productInfo={this.state.deletePrompt}
           />
-          <div className="">
+          <div className="mb-5">
             {/* 步驟條 */}
             <Row align={"middle"} justify={"center"}>
               <Col xs={22}>
@@ -99,13 +100,13 @@ class Cart extends Component {
               <Col xs={22} className="contentStyle cartFontSize">
                 {this.state.current === 0 && <ShopingCart data={this} />}
                 {this.state.current === 1 && <TradeItem data={this} />}
-                {this.state.current === 2 && <ShopingCart data={this} />}
+                {this.state.current === 2 && <TradeSuccess data={this} />}
               </Col>
             </Row>
             {/* 切換步驟選單 */}
             <Row align={"middle"} justify={"center"}>
               <Col xs={22} className="d-flex justify-content-end mt-5">
-                {this.state.current > 0 && (
+                {this.state.current > 0 && this.state.current < 2 && (
                   <Button
                     style={{ margin: "0 8px" }}
                     onClick={() => this.moveSteps(-1)}
@@ -142,19 +143,18 @@ class Cart extends Component {
 
   //第一次更新資訊
   componentDidMount = async () => {
-    console.log(localStorage.getItem("userInfo").slice(1,-1));
     let newstate = { ...this.state };
     //取得資料庫商品分類完成的資料
     await axios
       .post("http://localhost:8000/cart/getCartItem", {
-        account: localStorage.getItem("userInfo").slice(1,-1),
+        account: localStorage.getItem("userInfo").slice(1, -1),
       })
       .then((res) => {
         newstate.cartMap = res.data;
       });
     await axios
       .post("http://localhost:8000/cart/getAccountInfo", {
-        account: localStorage.getItem("userInfo").slice(1,-1),
+        account: localStorage.getItem("userInfo").slice(1, -1),
       })
       .then((res) => {
         newstate.accountInfo = res.data;
@@ -162,29 +162,24 @@ class Cart extends Component {
     //更新資料
     this.setState(newstate);
   };
-
-  componentDidUpdate() {
-    console.log(this.state.tradeItem);
-  }
-
+componentDidUpdate(){
+  console.log(this.state.cartMap)
+}
   moveSteps = async (e) => {
     let newstate = { ...this.state };
     newstate.current += e;
     //切換頁面做依判斷做事
     switch (newstate.current) {
       case 0:
-        this.setState(newstate);
         break;
+
       //訂單頁面沒訂單要擋住，顯示提示框type2告訴使用者沒有勾選商品
       case 1:
         newstate = this.sendDataToStep2(newstate);
         break;
+
       case 2:
-        !newstate.address
-          ? (newstate.err[0] = { message: "address", count: 1 })
-          : (newstate.err[0] = { message: "address", count: 0 });
-        let checkerr = newstate.err.filter((value) => value.count === 1);
-        checkerr.length !== 0 && (newstate.current = 1);
+        newstate = await checkForm(newstate);
         break;
 
       default:
@@ -285,6 +280,7 @@ class Cart extends Component {
     let newstate = { ...data };
     let totalMoney = 0;
     let faketradeItem = [];
+    newstate.productLength = 0;
     //塞入購物車裡每個賣家的資料
     newstate.cartMap.map((item, index) => {
       faketradeItem[index] = { productAccount: item.productAccount };
@@ -304,6 +300,7 @@ class Cart extends Component {
         item.product.map((value) => {
           return (totalMoney += value.total);
         });
+      newstate.productLength += item.product.length;
       return item.product.length !== 0;
     });
     newstate.totalMoney = totalMoney;
@@ -371,6 +368,15 @@ class Cart extends Component {
     newstate.tradeItem[productAccountNumber].creadCartmonth = creadCartmonth;
     newstate.tradeItem[productAccountNumber].creditCardYear = creditCardYear;
     newstate.tradeItem[productAccountNumber].cvc = cvc;
+    this.setState(newstate);
+  };
+
+  //關閉地址未填寫提示視窗
+  closeAddress = () => {
+    let newstate = { ...this.state };
+    newstate.err.address = 0;
+    newstate.err.payMethod = 0;
+    newstate.err.cartInfo = 0;
     this.setState(newstate);
   };
 }
