@@ -162,9 +162,7 @@ class Cart extends Component {
     //更新資料
     this.setState(newstate);
   };
-componentDidUpdate(){
-  console.log(this.state.cartMap)
-}
+
   moveSteps = async (e) => {
     let newstate = { ...this.state };
     newstate.current += e;
@@ -263,8 +261,13 @@ componentDidUpdate(){
   };
 
   //確定刪除購物車內容
-  deleteItem = (e) => {
+  deleteItem = async (e) => {
     let newstate = { ...this.state };
+    await axios
+      .delete(`http://localhost:8000/cart/delete/${e.cartMapId}`)
+      .then((res) => {
+        console.log(res);
+      });
     newstate.cartMap.map((item, index) => {
       newstate.cartMap[index].product = item.product.filter((value) => {
         return value.cartMapId !== e.cartMapId;

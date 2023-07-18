@@ -3,11 +3,15 @@ class TradeSuccess extends Component {
     render() { 
         let text = ""
         this.props.data.state.tradeId&&this.props.data.state.tradeId.map(item=>{
-                return    text += item.padStart(6,"0")+"、"
+            item=item.toString()
+            item=item.padStart(6,"0")
+            console.log(item)
+            text+=item+"、"
+            return  1
         })
         return (
             <React.Fragment>
-                <div>訂單{text.slice(0,-1)}已建立成功，等待租借者回應。</div>
+                <div className='m-5'>訂單{text.slice(0,-1)}已建立成功，等待租借者回應。</div>
             </React.Fragment>
         );
     }
