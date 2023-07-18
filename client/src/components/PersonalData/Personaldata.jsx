@@ -12,16 +12,35 @@ const MemberCenter = () => {
   const [editMode2, setEditMode2] = useState(false);
 
   const [account, setAccount] = useState('');
-  const [userdata,setuserdata] = useState([])
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [loggedIn, setLoggedIn] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [identityCard, setIdentityCard] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState('');
+  const [avatar, setAvatar] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState('');
   const isLoggedIn = localStorage.getItem('userInfo').slice(1,-1);
 
   useEffect(() => {
     const fetchData = async () => {
       
         const response = await axios.get(`http://localhost:8000/api/members/${name,isLoggedIn}`);
-        setuserdata(response.data)
-        
-        console.log(userdata);
+        console.log(response.data);
+        console.log(response.data[0].email);
+        setAccount(response.data[0].account)    
+        setPassword(response.data[0].password)
+        setName(response.data[0].name)
+        setEmail(response.data[0].email)
+        setIdentityCard(response.data[0].identityCard)
+        setGender((response.data[0].gender === '1' ? '男' : '女'))
+        setNickname(response.data[0].nickname)
+        setPhoneNumber(response.data[0].phoneNumber)
+        setBirthday(response.data[0].birthday.substring(0, 10))
+  
       
     };
     if (isLoggedIn) {
@@ -229,7 +248,7 @@ const MemberCenter = () => {
                     <fieldset>
                       <legend>基本資料</legend>
                       {/* Form 2 data */}
-                      <div>姓名： {userdata[0].name}</div>
+                      <div>姓名： {name}</div>
                       <div>暱稱： {nickname}</div>
                       <div>生日： {birthday}</div>
                       <div>性別： {gender}</div>

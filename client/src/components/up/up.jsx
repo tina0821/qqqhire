@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Input, Select, Checkbox, Button, Upload, Image } from 'antd';
+import { Form, Input, Checkbox, Button, Upload, Image, Cascader } from 'antd';
 import dataitem from "../../data/item2.json"
-import ProductTop from '../product/productTop';
+import area from "../../data/CityCountyData.json"
+
 import "./up.scss"
-const { Option } = Select;
+
 
 const Up = () => {
   const [previewImage, setPreviewImage] = useState(null);
@@ -20,11 +21,13 @@ const Up = () => {
 
   const handleUpload = (file) => {
     console.log(file);
-
     setFileList([file]);
     setPreviewImage(URL.createObjectURL(file));
   };
- 
+
+  const onChange = (value) => {
+    console.log(value);
+  };
 
   return (
 
@@ -35,7 +38,7 @@ const Up = () => {
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
       id='fastout'
-      
+
     >
       <Form.Item
         label="商品名稱"
@@ -74,27 +77,25 @@ const Up = () => {
       <Form.Item
         label="商品分類"
         name="category"
-        rules={[{ required: true, message: '請选择商品分類' }]}
+        rules={[{ required: true, message: '請選擇商品分類' }]}
       >
-        <Select>
-          <Option value="category1">分类1</Option>
-          <Option value="category2">分类2</Option>
-          <Option value="category3">分类3</Option>
-        </Select>
+        <Cascader options={dataitem}
+          onChange={onChange}
+          placeholder="Please select"
+          fieldNames={{ children: "subOptions", value: "value", label: "label" }}
+        />
       </Form.Item>
-
-      <ProductTop/>
-
       <Form.Item
         label="地區"
         name="region"
-        rules={[{ required: true, message: '請选择地區' }]}
+        rules={[{ required: true, message: '請選擇地區' }]}
       >
-        <Select>
-          <Option value="region1">地區1</Option>
-          <Option value="region2">地區2</Option>
-          <Option value="region3">地區3</Option>
-        </Select>
+        <Cascader options={area}
+          onChange={onChange}
+          placeholder="Please select"
+          fieldNames={{ children: "AreaList", label: "CityName",value:"CityEngName" }}
+        />
+
       </Form.Item>
 
       <Form.Item
