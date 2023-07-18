@@ -30,7 +30,7 @@ import Footer from './components/Home/footer/footer';
 import Login from './components/login/login';
 import Registration from './components/register/register';
 import Up from './components/up/up';
-import MemberCenter from './components/PersonalData/Personaldata'
+// import MemberCenter from './components/PersonalData/Personaldata'
 
 
 const App = () => {
@@ -73,7 +73,7 @@ const App = () => {
           <Route path="/cmmgmt" element={<Cmmgmt />} />
           {/* <Route path="/qu" element={<Qu />} /> */}
           <Route path="/up" element={<Up />} />
-          <Route path="/member" element={< MemberCenter/>} />
+          {/* <Route path="/member" element={< MemberCenter/>} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
         {show && <Footer />}

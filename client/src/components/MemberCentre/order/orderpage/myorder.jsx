@@ -6,14 +6,19 @@ const MyOrder = () => {
   const [tradeItems, setTradeItems] = useState([]);
   const [selectedTradeItemId, setSelectedTradeItemId] = useState(null);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
-  const a = localStorage.getItem('userInfo').slice(1,-1)
+  // const a = localStorage.getItem('userInfo').slice(1,-1)
+
+  const useract = localStorage.getItem('userInfo');
+  // 確認 userInfo 的值不是空值（null）再進行 slice 操作
+  const user = useract ? useract.slice(1, -1) : '';
+
   useEffect(() => {
     fetchTradeItems();
   }, []);
 
   const fetchTradeItems = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/myorder/${a}`);
+      const response = await axios.get(`http://localhost:8000/api/myorder/${user}`);
       setTradeItems(response.data);
     } catch (error) {
       console.error(error);
@@ -111,7 +116,7 @@ const MyOrder = () => {
                     <td>{new Date(tradeItem.rentStart).toLocaleDateString()}</td>
                     <td>{new Date(tradeItem.rentEnd).toLocaleDateString()}</td>
                     <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)}</td>
-                    <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)*rentTotal + depositTotal}</td>
+                    <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd) * rentTotal + depositTotal}</td>
                     <td>{orderStatus}</td>
                     <td>
                       <button id='morebtn' onClick={() => handleDetail(tradeItem.tradeitemId)}>詳細</button>
