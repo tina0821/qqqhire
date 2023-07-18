@@ -6,14 +6,14 @@ const MyOrder = () => {
   const [tradeItems, setTradeItems] = useState([]);
   const [selectedTradeItemId, setSelectedTradeItemId] = useState(null);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
-
+  const a = localStorage.getItem('userInfo').slice(1,-1)
   useEffect(() => {
     fetchTradeItems();
   }, []);
 
   const fetchTradeItems = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/myorder/3x7Y90');
+      const response = await axios.get(`http://localhost:8000/api/myorder/${a}`);
       setTradeItems(response.data);
     } catch (error) {
       console.error(error);

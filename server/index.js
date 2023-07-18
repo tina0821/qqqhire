@@ -21,8 +21,10 @@ app.use("/", product);
 // const login = require('./routes/login')
 // app.use('/', login)
 
+
 app.get('/api/mypro/:account', function (req, res) {
   const account = req.params.account;
+  console.log(req.params)
   const query = `
     SELECT p.productId, p.rent, p.deposit, p.productName, p.rentalStatus, i.imageSrc
     FROM product AS p
@@ -130,6 +132,6 @@ app.post("/api/login", (req, res) => {
 });
 
 app.listen(8000, function () {
-  console.clear()
+  // console.clear()
   console.log(new Date().toLocaleDateString());
 });

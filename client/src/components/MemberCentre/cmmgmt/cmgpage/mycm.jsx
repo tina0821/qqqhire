@@ -6,14 +6,14 @@ function Mycm() {
   const [uniqueProductIds, setUniqueProductIds] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 3; // 每頁顯示的資料數量
-
+  const a = localStorage.getItem('userInfo').slice(1,-1)
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/mypro/3x7Y90');
+      const response = await axios.get(`http://localhost:8000/api/mypro/${a}`);
       const products = response.data;
       setProducts(products);
       // Extract unique productIds

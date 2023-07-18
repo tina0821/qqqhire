@@ -6,6 +6,7 @@ const Renthistory = () => {
   const [tradeItems, setTradeItems] = useState([]);
   const [selectedTradeItemId, setSelectedTradeItemId] = useState(null);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
+  const a = localStorage.getItem('userInfo').slice(1,-1)
 
   useEffect(() => {
     fetchTradeItems();
@@ -13,7 +14,7 @@ const Renthistory = () => {
 
   const fetchTradeItems = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/myrent/3x7Y90');
+      const response = await axios.get(`http://localhost:8000/api/myrent/${a}`);
       setTradeItems(response.data);
     } catch (error) {
       console.error(error);
