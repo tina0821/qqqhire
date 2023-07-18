@@ -7,7 +7,7 @@ function Notlogin() {
     useEffect(() => {
       // Wrap every letter in a span
       const textWrapper = textWrapperRef.current;
-      textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>");
+      textWrapper.innerHTML = textWrapper.textContent.replace(/([A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])/g, "<span class='letter'>$1</span>");
   
       anime.timeline({ loop: true })
         .add({

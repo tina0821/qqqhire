@@ -8,7 +8,10 @@ const Rentalreq = () => {
   const [tradeItems, setTradeItems] = useState([]);
   const [selectedTradeItemId, setSelectedTradeItemId] = useState(null);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
-  const a = localStorage.getItem('userInfo').slice(1,-1)
+  // 
+  const useract = localStorage.getItem('userInfo');
+  // 確認 userInfo 的值不是空值（null）再進行 slice 操作
+  const user = useract ? useract.slice(1, -1) : '';
 
   useEffect(() => {
     fetchTradeItems();
@@ -16,7 +19,7 @@ const Rentalreq = () => {
 
   const fetchTradeItems = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/myrent/${a}`);
+      const response = await axios.get(`http://localhost:8000/api/myrent/${user}`);
       setTradeItems(response.data);
     } catch (error) {
       console.error(error);

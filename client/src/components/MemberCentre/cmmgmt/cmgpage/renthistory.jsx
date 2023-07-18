@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import OrderDetail from './Orderdetail';
 
@@ -6,20 +6,24 @@ const Renthistory = () => {
   const [tradeItems, setTradeItems] = useState([]);
   const [selectedTradeItemId, setSelectedTradeItemId] = useState(null);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
-  const a = localStorage.getItem('userInfo').slice(1,-1)
 
-  useEffect(() => {
-    fetchTradeItems();
-  }, []);
+  const useract = localStorage.getItem('userInfo');
+  // 確認 userInfo 的值不是空值（null）再進行 slice 操作
+  const user = useract ? useract.slice(1, -1) : '';
 
-  const fetchTradeItems = async () => {
+  // 使用 useCallback 包裹 fetchTradeItems 函數
+  const fetchTradeItems = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/myrent/${a}`);
+      const response = await axios.get(`http://localhost:8000/api/myrent/${user}`);
       setTradeItems(response.data);
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    fetchTradeItems(); // 在 useEffect 內部呼叫 fetchTradeItems
+  }, [fetchTradeItems]);
 
   const getOrderStatus = (state) => {
     if (state === 3) {

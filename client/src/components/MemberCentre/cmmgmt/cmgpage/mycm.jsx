@@ -6,14 +6,19 @@ function Mycm() {
   const [uniqueProductIds, setUniqueProductIds] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 3; // 每頁顯示的資料數量
-  const a = localStorage.getItem('userInfo').slice(1,-1)
+
+// 找網頁的登入帳號
+  const useract = localStorage.getItem('userInfo');
+  // 確認 userInfo 的值不是空值（null）再進行 slice 操作
+  const user = useract ? useract.slice(1, -1) : '';
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/mypro/${a}`);
+      const response = await axios.get(`http://localhost:8000/api/mypro/${user}`);
       const products = response.data;
       setProducts(products);
       // Extract unique productIds
