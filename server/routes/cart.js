@@ -190,6 +190,17 @@ page.post("/getAccountInfo", (req, res) => {
   );
 });
 
+page.delete("/delete/:cartMapId",(req,res)=>{
+  console.log(req.params.cartMapId)
+  coon.query(`DELETE FROM cartmap WHERE cartmap.cartMapId = ?`,[req.params.cartMapId],(err,result)=>{
+    if(err){
+      res.send(err)
+    }else{
+      res.send(result)
+    }
+  })
+})
+
 page.post("/cart", async (req, res) => {
   let a = JSON.stringify(req.body);
   res.cookie("address", `${JSON.stringify(a)}`);
