@@ -11,7 +11,7 @@ import ButtonCard from './buttonCard';
 import AlertBox from './AlertBox';
 
 
-function A_ProductItem() {
+function A_Product_Item() {
   const [productitem, setProductItem] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
   const [productSeller, setproductSeller] = useState('');
@@ -284,4 +284,4 @@ function A_ProductItem() {
   ) : null;
 }
 
-export default A_ProductItem;
+export default A_Product_Item;

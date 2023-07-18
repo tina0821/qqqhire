@@ -6,7 +6,7 @@ import Contract from "./contract/contract";
 import PayType from "./payType/payType";
 import PromptBox from "./promptBox/promptBox";
 import TotalInfo from "./totalInfo/totalInfo";
-import { Col, Row, Divider, ConfigProvider, Collapse, Button } from "antd";
+import { Col, Row, Divider, ConfigProvider, Collapse } from "antd";
 
 class TradeItem extends Component {
   render() {
