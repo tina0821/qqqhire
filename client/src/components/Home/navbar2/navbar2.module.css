@@ -1,39 +1,14 @@
 /* --- header --- */
 .header {
-<<<<<<< HEAD
     /* background: linear-gradient(180deg, rgb(38, 121, 196), rgb(255, 255, 255)); */
     /* border: 2px solid red; */
     /* margin-bottom: 5px; */
-=======
-    /* background-color:rgb(245, 245, 245); */
-    /* border: 2px solid red; */
-    margin-bottom: 5px;
->>>>>>> 酋長
     width: 100%;
     height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 100;
-<<<<<<< HEAD
-=======
-    background: rgba(255, 255, 255, 1);
-    /* Old Browsers */
-    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 250, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    /* FF3.6+ */
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(0%, rgba(250, 250, 250, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
-    /* Chrome, Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 250, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 250, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 250, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    /* IE 10+ */
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 250, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
-    /* IE6-9 */
->>>>>>> 酋長
 }
 
 .header ul {
@@ -44,21 +19,11 @@
 .header-button-icon ul li a {
     text-decoration: none;
     color: rgb(0, 0, 0);
-<<<<<<< HEAD
     font-size: 2rem;
     display: block;
     margin-left: 10px;
     margin-right: 10px;
     /* border: 2px solid red; */
-=======
-    /* color: white; */
-    /* padding: 10px; */
-    font-size: 2rem;
-    margin-left: 10px;
-    margin-right: 15px;
-    /* border: 2px solid red; */
-    display: block;
->>>>>>> 酋長
 }
 
 /* ------------------------ */
@@ -96,17 +61,10 @@
     margin-left: 10px;
 }
 
-<<<<<<< HEAD
 .header-logo img { 
 /* border: 2px solid yellow; */
 width: 200px;
 height: 70px;
-=======
-.header-logo img {
-    /* border: 2px solid yellow; */
-    width: 200px;
-    height: 70px;
->>>>>>> 酋長
 }
 
 .header-logo a {
@@ -127,21 +85,13 @@ height: 70px;
         content: "";
         display: block;
         border-bottom: 3px solid;
-<<<<<<< HEAD
         /* background-color: rgb(255, 255, 255); */
-=======
-        background-color: white;
->>>>>>> 酋長
         position: absolute;
         height: 3px;
         bottom: 0;
         right: 0;
         width: 0;
-<<<<<<< HEAD
         z-index: 1;
-=======
-        z-index: -1;
->>>>>>> 酋長
         transition: width 0.5s;
     }
 
@@ -156,21 +106,13 @@ height: 70px;
 
 /* -------------------------- */
 /* icon 底下選項 */
-<<<<<<< HEAD
 .header-icon{
-=======
-.header-icon {
->>>>>>> 酋長
     /* border: 2px solid red; */
     height: 100%;
     margin-right: 10px;
 }
 
-<<<<<<< HEAD
 .header-icon .iconMove{
-=======
-.header-icon .iconMove {
->>>>>>> 酋長
     /* border: 2px solid blue; */
     height: 100%;
     display: flex;
@@ -182,26 +124,15 @@ height: 70px;
     /* border: 2px solid red; */
     flex-direction: column;
     align-items: flex-end;
-<<<<<<< HEAD
     
 }
 .header-icon li{
-=======
-
-}
-
-.header-icon li {
->>>>>>> 酋長
     height: 100%;
     /* width: 100%; */
 }
 
 /* 選單 style 設定 */
-<<<<<<< HEAD
 ul.drop-menu{
-=======
-ul.drop-menu {
->>>>>>> 酋長
     /* border: 2px solid red; */
     position: absolute;
     /* top: 16%; */
@@ -210,52 +141,30 @@ ul.drop-menu {
     z-index: 100;
 }
 
-<<<<<<< HEAD
 ul.drop-menu li a{
     color:rgb(0, 0, 0);
-=======
-ul.drop-menu li a {
-    color: rgb(0, 0, 0);
->>>>>>> 酋長
     font-size: 1.3rem;
     margin-right: 15px;
     line-height: 2;
 }
 
 /* 選單出現跟消失 */
-<<<<<<< HEAD
 ul.drop-menu li{
-=======
-ul.drop-menu li {
->>>>>>> 酋長
     /* border: 1px solid blue; */
     display: none;
     /* 消失 */
 }
-<<<<<<< HEAD
 li:hover > ul.drop-menu li{
-=======
-
-li:hover>ul.drop-menu li {
->>>>>>> 酋長
     display: block;
     /* 出現 */
 }
 
 /* ======================================= */
 /* MENU2 第二種特效 */
-<<<<<<< HEAD
 li:hover > ul.drop-menu.limenu-2{
     perspective: 1000px;
 }
 li:hover > ul.drop-menu.limenu-2 li{
-=======
-li:hover>ul.drop-menu.limenu-2 {
-    perspective: 1000px;
-}
-
-li:hover>ul.drop-menu.limenu-2 li {
->>>>>>> 酋長
     opacity: 0;
     transform-origin: top center;
     animation-name: limenu2;
@@ -264,7 +173,6 @@ li:hover>ul.drop-menu.limenu-2 li {
     animation-fill-mode: forwards;
 }
 
-<<<<<<< HEAD
 li:hover > ul.drop-menu.limenu-2 li:nth-child(1){
     /* animation-duration: 300ms; */
     animation-delay: 0;
@@ -296,45 +204,6 @@ li:hover > ul.drop-menu.limenu-2 li:nth-child(5){
         transform: rotateX(60deg)
     }
     100%{
-=======
-li:hover>ul.drop-menu.limenu-2 li:nth-child(1) {
-    /* animation-duration: 300ms; */
-    animation-delay: 0;
-}
-
-li:hover>ul.drop-menu.limenu-2 li:nth-child(2) {
-    /* animation-duration: 600ms; */
-    animation-delay: 150ms;
-}
-
-li:hover>ul.drop-menu.limenu-2 li:nth-child(3) {
-    /* animation-duration: 900ms; */
-    animation-delay: 300ms;
-}
-
-li:hover>ul.drop-menu.limenu-2 li:nth-child(4) {
-    /* animation-duration: 1200ms; */
-    animation-delay: 450ms;
-}
-
-li:hover>ul.drop-menu.limenu-2 li:nth-child(5) {
-    /* animation-duration: 1500ms; */
-    animation-delay: 600ms;
-
-}
-
-@keyframes limenu2 {
-    0% {
-        opacity: 0;
-        transform: rotateX(-90deg)
-    }
-
-    30% {
-        transform: rotateX(60deg)
-    }
-
-    100% {
->>>>>>> 酋長
         opacity: 1;
         transform: rotateX(0deg)
     }
@@ -342,8 +211,4 @@ li:hover>ul.drop-menu.limenu-2 li:nth-child(5) {
 
 
 /* ================================================= */
-<<<<<<< HEAD
 /* ===== header JS效果 =====*/
-=======
-/* ===== header JS效果 =====*/
->>>>>>> 酋長
