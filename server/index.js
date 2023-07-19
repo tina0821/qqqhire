@@ -16,6 +16,9 @@ app.use("/img", express.static("public/img"));
 const kuo = require('./routes/Kuo')
 app.use('/',kuo)
 
+const send = require('./routes/send')
+app.use("/",send)
+
 const cart = require("./routes/cart");
 app.use("/cart", cart);
 

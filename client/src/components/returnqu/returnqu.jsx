@@ -67,7 +67,7 @@ const Returnqu = () => {
 
     //  ======== 輸入框取值 傳回後端 ========
     const [AAA, setAAA] = useState("");
-    // AAA = {text:""}
+    // const BBB = {text:"1450"}
 
     // 取得文字框的值
     const Message = (e) => {
@@ -75,14 +75,15 @@ const Returnqu = () => {
     };
     // 點擊送出把文字內容送出
     const SendMessage = async () => {
-        // if (checked === '1') {
-        //     console.log(AAA)
-        // } else {
-        //     console.log("沒送出喔")
-        // }
+        if (checked === '1') {
+            console.log(AAA)
 
-        const { data /* , error */ } = await axios.post("htp://localhost:8000/send", AAA);
-        console.log(data);
+            const { data /* , error */ } = await axios.post("http://localhost:8000/send", {text:AAA});
+            console.log(data);
+
+        } else {
+            console.log("沒送出喔")
+        }
 
     };
 
@@ -199,7 +200,7 @@ const Returnqu = () => {
                         {textBox && <div className="form-group">
                             <label htmlFor="textInput" style={{ fontSize: "1.5rem" }}>文字輸入框:</label>
                             <textarea className="form-control" id="textInput" maxLength={1000} defaultValue={""} onChange={Message} />
-                            <div>目前輸入文字:{AAA}</div>
+                            <div style={{ display: 'none' }}>目前輸入文字:{AAA}</div>
                         </div>}
                         {/* 用于顯示已输入字數和總字數限制 */}
                         {/* {!open2&&<div id="charCount" />} */}
