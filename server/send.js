@@ -1,3 +1,6 @@
+var express = require('express');
+var router = express.Router();
+
 const nodemailer = require("nodemailer");
 
 
@@ -9,14 +12,12 @@ const transporter = nodemailer.createTransport({
    }
 });
 
-
-
-
-const mailOptions = {
-   from: "hireoutdoor2023@gmail.com",
-   to: "hireoutdoor2023@gmail.com",
-   subject: "Nodemailer Test",
-   html: `
+router.post('/send', (req, res) => {
+   const mailOptions = {
+      from: "hireoutdoor2023@gmail.com",
+      to: "hireoutdoor2023@gmail.com",
+      subject: "Nodemailer Test",
+      html: `
 
    <html lang="en">
    <head>
@@ -86,18 +87,22 @@ const mailOptions = {
     <form id="form" class="topBefore">
         <input id="name" type="text" placeholder="NAME" value="John DoeXXX" readonly>
         <input id="email" type="text" placeholder="E-MAIL" value="johndoeXXX@example.com" readonly>
-        <textarea id="message" type="text" placeholder="MESSAGE" readonly>測試用 客訴XXXXXXX</textarea>
+        <textarea id="message" type="text" placeholder="MESSAGE" readonly>${req.body.text}</textarea>
     </form>
    </body>
    </html>
 
    `
-};
+   };
 
-transporter.sendMail(mailOptions, function (error, info) {
-   if (error) {
-      console.log(error);
-   } else {
-      console.log("Email sent: " + info.response + '成功發送');
-   }
-});
+   transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+         console.log(error);
+      } else {
+         console.log("Email sent: " + info.response + '成功發送');
+      }
+   });
+})
+
+
+module.exports = router;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Space, Radio, Form, Select, Typography } from 'antd';
+import axios from 'axios';
 import "./returnqu.css";
 
 
@@ -41,8 +42,8 @@ const Returnqu = () => {
     // ======== 下拉選單 點選項目 出現文字框 ========
     const [textBox, setTextbox] = useState(false);
     const [photo, setPhoto] = useState(false);
-  
-    
+
+
     const options = [
         { value: ' ', label: '' },
         { value: '1', label: '租賃建議' },
@@ -50,54 +51,59 @@ const Returnqu = () => {
     ]
     const onChangeA = (selectValue) => {
         console.log(selectValue);
-        if(selectValue === " "){
+        if (selectValue === " ") {
             setTextbox(false)
             setPhoto(false)
         }
-        if(selectValue === "1"){
+        if (selectValue === "1") {
             setTextbox(true)
             setPhoto(false)
         }
-        if(selectValue === "2"){
+        if (selectValue === "2") {
             setTextbox(true)
             setPhoto(true)
         }
     };
 
     //  ======== 輸入框取值 傳回後端 ========
-    const [AAA,setAAA]=useState("");
-    
+    const [AAA, setAAA] = useState("");
+    // AAA = {text:""}
+
     // 取得文字框的值
     const Message = (e) => {
         setAAA(e.target.value);
-      };
+    };
     // 點擊送出把文字內容送出
-    const SendMessage = () => {
-        if (checked === '1') {
-            console.log(AAA)
-        } else {
-            console.log("沒送出喔")
-        }
+    const SendMessage = async () => {
+        // if (checked === '1') {
+        //     console.log(AAA)
+        // } else {
+        //     console.log("沒送出喔")
+        // }
+
+        const { data /* , error */ } = await axios.post("htp://localhost:8000/send", AAA);
+        console.log(data);
+
     };
 
 
-     // ======== 確認合約 並送出 ========
-     const [checked, setChecked] = useState("");
+    // ======== 確認合約 並送出 ========
+    const [checked, setChecked] = useState("");
 
-     // setChecked為非同步傳遞
-     const sendChick = (e) => {
-         setChecked(e.target.value);
-     };
-     console.log(checked)
-     // 點擊送出判斷單選框回傳值
-     const controlSendBtn = () => {
-         if (checked === '1') {
-             alert('成功送出');
-             // window.location.reload();
-         } else {
-             alert("尚未勾選合約 請確認!")
-         }
-     };
+    // setChecked為非同步傳遞
+    const sendChick = (e) => {
+        setChecked(e.target.value);
+    };
+    console.log(checked)
+    // 點擊送出判斷單選框回傳值
+    const controlSendBtn = () => {
+        if (checked === '1') {
+            alert('成功送出');
+            // window.location.reload();
+        } else {
+            alert("尚未勾選合約 請確認!")
+        }
+    };
 
 
 
@@ -210,7 +216,7 @@ const Returnqu = () => {
                     <Space wrap size={"large"} className='btnDiv'>
                         <Button type="primary" className='btnWord' onClick={controlBtn}>上一步</Button>
                         {/* SendMessage() */}
-                        <Button type="primary" className='btnWord' onClick={()=>{controlSendBtn();SendMessage()}}>送出</Button>
+                        <Button type="primary" className='btnWord' onClick={() => { controlSendBtn(); SendMessage() }}>送出</Button>
                     </Space>
 
 
