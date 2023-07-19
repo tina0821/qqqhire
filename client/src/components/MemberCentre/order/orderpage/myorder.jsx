@@ -34,8 +34,10 @@ const MyOrder = () => {
       return '等待租借中';
     } else if (state === 2) {
       return '租借中';
-    } else {
-      return state;
+    }else if (state === 3) {
+      return '已完成';
+    } else if (state === 4) {
+      return '已取消';
     }
   };
 

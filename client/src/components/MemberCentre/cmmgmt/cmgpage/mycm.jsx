@@ -79,8 +79,9 @@ function Mycm() {
           {currentProducts.map((productId) => {
             const productDetails = products.find((product) => product.productId === productId);
             if (!productDetails) return null;
-            const { productName, rent, deposit, imageSrc, state } = productDetails;
-            const statusText = state === 0 ? "未出租" : "出租中";
+            const { productName, rent, deposit, imageSrc, rentalStatus } = productDetails;
+            // state === 0 就是未出租，反之為出租中
+            // const statusText = state === 0 ? "未出租" : "出租中";
             return (
               <tr key={productId}>
                 <td>
@@ -94,7 +95,8 @@ function Mycm() {
                 <td>{rent}</td>
                 <td>{deposit}</td>
                 <td>{rent + deposit}</td>
-                <td>{statusText}</td>
+                {/* <td>{statusText}</td> */}
+                <td>{rentalStatus}</td>
                 <td>編輯</td>
               </tr>
             );
