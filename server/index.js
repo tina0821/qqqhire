@@ -11,6 +11,31 @@ app.use(urlencoded);
 app.use(express.json());
 app.use(express.static("public"));
 
+
+const { Server } = require("socket.io");
+const server = require('http').Server(app);
+const iO = new Server(server, {
+  cors: {
+      origin: "http://localhost:3000"
+  }
+});
+
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'Hello world var1',
+  });
+});
+
+iO.on('connection', (socket) => {
+  console.log(`${socket.id} 用户已连接!`);
+  socket.on('disconnect', () => {
+      console.log(`${socket.id}用户已断开连接`);
+  });
+});
+
+
+
+
 app.use("/img", express.static("public/img"));
 const cart = require("./routes/cart");
 app.use("/cart", cart);
@@ -84,5 +109,9 @@ app.post("/api/login", (req, res) => {
 
 app.listen(8000, function () {
   console.clear()
-  console.log(new Date().toLocaleDateString());
+  console.log(new Date().toLocaleString());
+});
+server.listen(9000, function () {
+  console.clear()
+  console.log(new Date().toLocaleString());
 });

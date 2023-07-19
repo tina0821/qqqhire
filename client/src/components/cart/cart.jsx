@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { ConfigProvider } from "antd";
 import { Button, Steps, Col, Row } from "antd";
 import axios from "axios";
-// import { onLogin, checkLogin, logOut } from "../cookie/cookie";
 
 //引用自做檔案
 import ShopingCart from "./shopingCart/index";
@@ -12,10 +11,9 @@ import TradeItem from "./tradeItem/tradeItem";
 import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
+import {Main} from './socket/socket'
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
-// import { ajax } from "jquery";
-// import paymentMethod from '../../data/paymentMethod.json'
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
 Object.prototype.iscomplete = 0;
@@ -67,6 +65,7 @@ class Cart extends Component {
   render() {
     return (
       <React.Fragment>
+        <Main/>
         {/* antd客製化樣式 */}
         <ConfigProvider
           theme={{

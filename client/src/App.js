@@ -59,7 +59,6 @@ const App = () => {
         {show && <Navbar2 />}
         {/* <Navbar2 /> */}
         <Routes>
-
           <Route path="/RegistrationForm" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
