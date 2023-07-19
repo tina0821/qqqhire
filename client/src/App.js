@@ -33,6 +33,7 @@ import Login from './components/login/login';
 import Registration from './components/register/register';
 import Up from './components/up/up';
 import MemberCenter from './components/PersonalData/Personaldata'
+import Returnqu from './components/returnqu/returnqu';
 
 
 const App = () => {
@@ -81,6 +82,9 @@ const App = () => {
           <Route path="/up" element={<Up />} />
           <Route path="/member" element={< MemberCenter />} />
           <Route path="*" element={<NotFound />} />
+
+
+          <Route path="/Returnqu" element={<Returnqu />} />
           
 
 

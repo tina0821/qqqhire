@@ -223,3 +223,11 @@
         transform: scale(1);
     }
 }
+
+.rqu{
+    color: aliceblue;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 1rem;
+}

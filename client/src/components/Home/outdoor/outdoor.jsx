@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import "./outdoor.css"
 import { Link } from 'react-router-dom';
 
+
+
 function Outdoor() {
     const odAmiCycle = useRef(null);
     const odAmiArrow = useRef(null);
@@ -28,6 +30,8 @@ function Outdoor() {
 
     return (
         <>
+
+
             {/* 主頁畫面 */}
             <div className="outdoor">
                 <img src="http://localhost:8000/img/home/homepage/surf1.jpg" alt='海爾戶外' />
@@ -35,12 +39,13 @@ function Outdoor() {
                     <p>Hire outdoor</p>
                     <p>海爾戶外</p>
                 </div>
-                <Link to="/"className="outdoor-btn">
+                <Link to="/" className="outdoor-btn">
                     <img src="http://localhost:8000/img/home/hirecircle.png" className="hireClass" id="hireId" alt='戶外2' />
                     <div className="btn-div2class" id="btn-div2" ref={odAmiCycle}></div>
                     <p className="btn-pClass" id="btn-p" ref={odAmiArrow}>↓</p>
                 </Link>
             </div>
+            <div className='rqu'><Link to="/Returnqu">問題回報</Link></div>
         </>
     );
 }

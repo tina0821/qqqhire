@@ -9,6 +9,7 @@ import Outdoor3 from '../components/Home/outdoor3/outdoor3';
 import Outdoor4 from '../components/Home/outdoor4/outdoor4';
 
 
+
 const Home = () => {
     return (
         <>
