@@ -76,7 +76,7 @@ const Returnqu = () => {
     // 點擊送出把文字內容送出
     const SendMessage = async () => {
         if (checked === '1') {
-            console.log(AAA)
+            // console.log(AAA)
 
             const { data /* , error */ } = await axios.post("http://localhost:8000/send", {text:AAA});
             console.log(data);
