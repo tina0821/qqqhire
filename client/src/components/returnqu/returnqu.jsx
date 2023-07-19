@@ -22,9 +22,6 @@ const Returnqu = () => {
     };
 
 
-
-
-
     // === 監聽 input ===
     // const [form] = Form.useForm();
     // const nameValue = Form.useWatch('name', form);
@@ -40,29 +37,6 @@ const Returnqu = () => {
     // 方法一 {open?<div></div>:null}
     // 方法二 {!open&&<></>} {open&&<></>}
 
-
-    // ======== 確認合約 並送出 ========
-    const [checked, setChecked] = useState("");
-
-    // 測試是否收到單選框資訊 setChecked為非同步傳遞
-    const sendChick = (e) => {
-        setChecked(e.target.value);
-        // if (e.target.value) {
-        //     console.log("OK")
-        // }else{
-        //     console.log("NO")
-        // }
-    };
-    console.log(checked)
-    // 點擊送出判斷單選框回傳值
-    const controlSendBtn = () => {
-        if (checked === '1') {
-            alert('成功送出');
-            window.location.reload();
-        } else {
-            alert("尚未勾選合約 請確認!")
-        }
-    }
 
     // ======== 下拉選單 點選項目 出現文字框 ========
     const [textBox, setTextbox] = useState(false);
@@ -89,6 +63,41 @@ const Returnqu = () => {
             setPhoto(true)
         }
     };
+
+    //  ======== 輸入框取值 傳回後端 ========
+    const [AAA,setAAA]=useState("");
+    
+    // 取得文字框的值
+    const Message = (e) => {
+        setAAA(e.target.value);
+      };
+    // 點擊送出把文字內容送出
+    const SendMessage = () => {
+        if (checked === '1') {
+            console.log(AAA)
+        } else {
+            console.log("沒送出喔")
+        }
+    };
+
+
+     // ======== 確認合約 並送出 ========
+     const [checked, setChecked] = useState("");
+
+     // setChecked為非同步傳遞
+     const sendChick = (e) => {
+         setChecked(e.target.value);
+     };
+     console.log(checked)
+     // 點擊送出判斷單選框回傳值
+     const controlSendBtn = () => {
+         if (checked === '1') {
+             alert('成功送出');
+             // window.location.reload();
+         } else {
+             alert("尚未勾選合約 請確認!")
+         }
+     };
 
 
 
@@ -183,7 +192,8 @@ const Returnqu = () => {
                     <div id="inputContainer">
                         {textBox && <div className="form-group">
                             <label htmlFor="textInput" style={{ fontSize: "1.5rem" }}>文字輸入框:</label>
-                            <textarea className="form-control" id="textInput" maxLength={1000} defaultValue={""} />
+                            <textarea className="form-control" id="textInput" maxLength={1000} defaultValue={""} onChange={Message} />
+                            <div>目前輸入文字:{AAA}</div>
                         </div>}
                         {/* 用于顯示已输入字數和總字數限制 */}
                         {/* {!open2&&<div id="charCount" />} */}
@@ -199,7 +209,8 @@ const Returnqu = () => {
                     <Radio className='RadioWord' checked={checked} onChange={sendChick} value="1">我已詳細閱讀合約&規範與線上回報相關注意事項內容，並同意遵守所有規定</Radio>
                     <Space wrap size={"large"} className='btnDiv'>
                         <Button type="primary" className='btnWord' onClick={controlBtn}>上一步</Button>
-                        <Button type="primary" className='btnWord' onClick={controlSendBtn}>送出</Button>
+                        {/* SendMessage() */}
+                        <Button type="primary" className='btnWord' onClick={()=>{controlSendBtn();SendMessage()}}>送出</Button>
                     </Space>
 
 
