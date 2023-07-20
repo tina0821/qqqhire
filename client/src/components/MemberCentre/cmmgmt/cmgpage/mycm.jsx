@@ -12,23 +12,24 @@ function Mycm() {
   // 確認 userInfo 的值不是空值（null）再進行 slice 操作
   const user = useract ? useract.slice(1, -1) : '';
 
+ 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/mypro/${user}`);
+        const products = response.data;
+        setProducts(products);
+        // Extract unique productIds
+        const uniqueIds = Array.from(new Set(products.map((product) => product.productId)));
+        setUniqueProductIds(uniqueIds);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
     fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8000/api/mypro/${user}`);
-      const products = response.data;
-      setProducts(products);
-      // Extract unique productIds
-      const uniqueIds = Array.from(new Set(products.map((product) => product.productId)));
-      setUniqueProductIds(uniqueIds);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  }, [user]);
+  
   // 輔助函數：限製商品名稱的字數並插入換行符
   function limitProductName(productName) {
     const maxChars = 6; // 最大字數限制

@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { Form, Input, Checkbox, message, Button, Upload, Image, Cascader } from 'antd';
+import { Form, Input, Checkbox, Button, Cascader } from 'antd';
 import dataitem from "../../data/item2.json";
 import area from "../../data/CityCountyDataAAA.json";
+import Prconly2 from './upimg'
 
-// import "./up.scss";
+import "./up.scss";
 
 const Up = () => {
-  const [previewImage, setPreviewImage] = useState(null);
-  const [fileList, setFileList] = useState([]);
-  const [previewVisible, setPreviewVisible] = useState(false);
+ 
 
   const onFinish = (values) => {
     console.log(values);
@@ -16,46 +14,6 @@ const Up = () => {
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-  };
-
-  const getImgs = () => {
-    return fileList.map(file => file.name);
-  };
-
-  const handleCancel = () => {
-    setPreviewVisible(false);
-  };
-
-  const handlePreview = file => {
-    setPreviewImage(file.url || file.thumbUrl);
-    setPreviewVisible(true);
-  };
-
-  const handleUpload = async ({ file, fileList }) => {
-    if (file.status === 'done') {
-      const result = file.response;
-      if (result.status === 0) {
-        message.success('上传图片成功');
-        const { name, url } = result.data;
-        file = fileList[fileList.length - 1];
-        file.name = name;
-        file.url = url;
-      } else {
-        message.error('上传图片失败');
-      }
-    } else if (file.status === 'removed') {
-      const reqDeleteImg = async imageName => {
-        return {}; // 根据实际情况实现删除图片的请求
-      };
-
-      const result = await reqDeleteImg(file.name);
-      if (result.status === 0) {
-        message.success('删除图片成功！');
-      } else {
-        message.error('删除图片失败！');
-      }
-    }
-    setFileList(fileList);
   };
 
   const onChange = (value) => {
@@ -96,25 +54,7 @@ const Up = () => {
       </Form.Item>
 
       <Form.Item label="照片" name="fileList" valuePropName="fileList">
-        <Upload
-          beforeUpload={handleUpload}
-          listType="picture-card"
-          fileList={fileList}
-          onPreview={handlePreview}
-          onRemove={file => {
-            handleUpload({ file, fileList: [] });
-          }}
-        >
-          {previewImage ? (
-            <Image
-              src={previewImage}
-              alt="Preview"
-              style={{ width: '100px', height: '100px' }}
-            />
-          ) : (
-            '上傳照片'
-          )}
-        </Upload>
+      <Prconly2 />
       </Form.Item>
 
       <Form.Item
