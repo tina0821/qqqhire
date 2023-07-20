@@ -83,13 +83,13 @@ app.post("/api/cancelOrder", function (req, res) {
 
 
 
-app.post('/api/login', (req, res) => {
-  console.log(req.body.aldata)
-  // coon.query()
-  res.send("GG");
-});
+// app.post('/api/login', (req, res) => {
+//   console.log(req.body.aldata)
+//   // coon.query()
+//   res.send("GG");
+// });
 
 app.listen(8000, function () {
-  console.clear()
+  // console.clear()
   console.log(new Date().toLocaleDateString());
 });

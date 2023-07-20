@@ -1,28 +1,19 @@
-import React, { useState } from 'react';
-import { Form, Input, Checkbox, Button, Upload, Image, Cascader } from 'antd';
-import dataitem from "../../data/item2.json"
-import area from "../../data/CityCountyData.json"
+import { Form, Input, Checkbox, Button, Cascader } from 'antd';
+import dataitem from "../../data/item2.json";
+import area from "../../data/CityCountyDataAAA.json";
+import Prconly2 from '../upimg'
 
-import "./up.scss"
-
+import "./up.scss";
 
 const Up = () => {
-  const [previewImage, setPreviewImage] = useState(null);
-  const [fileList, setFileList] = useState([]);
+ 
 
   const onFinish = (values) => {
     console.log(values);
-
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-  };
-
-  const handleUpload = (file) => {
-    console.log(file);
-    setFileList([file]);
-    setPreviewImage(URL.createObjectURL(file));
   };
 
   const onChange = (value) => {
@@ -30,7 +21,6 @@ const Up = () => {
   };
 
   return (
-
     <Form
       name="productForm"
       onFinish={onFinish}
@@ -38,7 +28,6 @@ const Up = () => {
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
       id='fastout'
-
     >
       <Form.Item
         label="商品名稱"
@@ -65,13 +54,7 @@ const Up = () => {
       </Form.Item>
 
       <Form.Item label="照片" name="fileList" valuePropName="fileList">
-        <Upload beforeUpload={handleUpload} listType="picture-card" fileList={fileList}>
-          {previewImage ? (
-            <Image src={previewImage} alt="Preview" style={{ width: '100px', height: '100px' }} />
-          ) : (
-            '上傳照片'
-          )}
-        </Upload>
+      <Prconly2 />
       </Form.Item>
 
       <Form.Item
@@ -79,23 +62,25 @@ const Up = () => {
         name="category"
         rules={[{ required: true, message: '請選擇商品分類' }]}
       >
-        <Cascader options={dataitem}
+        <Cascader
+          options={dataitem}
           onChange={onChange}
-          placeholder="Please select"
+          placeholder="請選擇商品分類"
           fieldNames={{ children: "subOptions", value: "value", label: "label" }}
         />
       </Form.Item>
+
       <Form.Item
         label="地區"
         name="region"
         rules={[{ required: true, message: '請選擇地區' }]}
       >
-        <Cascader options={area}
+        <Cascader
+          options={area}
           onChange={onChange}
-          placeholder="Please select"
-          fieldNames={{ children: "AreaList", label: "AreaName",value:"AreaEngName" }}
+          placeholder="請選擇地區"
+          fieldNames={{ children: "AreaList", label: "Name", value: "Name" }}
         />
-
       </Form.Item>
 
       <Form.Item
@@ -103,7 +88,10 @@ const Up = () => {
         name="description"
         rules={[{ required: true, message: '請輸入商品描述' }]}
       >
-        <Input.TextArea />
+        <Input.TextArea
+          maxLength={300}
+          placeholder="請輸入商品描述，限300字內"
+        />
       </Form.Item>
 
       <Form.Item

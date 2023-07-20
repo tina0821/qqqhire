@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select } from 'antd';
+import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select} from 'antd';
 import "./register.scss"
 import { Link } from 'react-router-dom';
 
@@ -34,25 +34,52 @@ const Registration = () => {
   }, [aldata]);
 
   const handleNext = async (values) => {
-    try {
-      await form.validateFields(); // 驗證表單數據
-      setPage1Data(values);
-      setCurrentStep(currentStep + 1);
-    } catch (error) {
-      console.log('表單驗證失敗:', error);
+    // console.log(values.username);
+
+    if (values.username) {
+      try {
+        await axios.post('http://localhost:8000/api/register/account', { username: values.username });
+        await form.validateFields(); // 驗證表單數據
+        setPage1Data(values);
+        setCurrentStep(currentStep + 1);
+
+      } catch (error) {
+        console.log('請求發生錯誤:', error);
+        alert("帳號重複")
+      }
     }
   };
+
 
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleFinish = (values) => {
-    setLoading(true);
-    setPage2Data(values);
-    setCurrentStep(2);
+  const handleFinish = async (values) => {
+    const { identityCard, email, phoneNumber } = values;
 
+    if (identityCard && email && phoneNumber) {
+      try {
+        // 向後端發送一個包含所有字段的請求，同時驗證身分證、email和手機號碼是否重複
+        await axios.post('http://localhost:8000/api/register/validate', {
+          identityCard,
+          email,
+          phoneNumber,
+        });
+        await form.validateFields(); // 驗證表單數據
+        setLoading(true);
+        setPage2Data(values);
+        setCurrentStep(2);
+
+      } catch (error) {
+        const err =error.response.data.duplicateData
+        if(err){
+         alert(`${err.email?err.email+"\n":""}${err.phoneNumber?err.phoneNumber+"\n":""}
+         ${err.identityCard?err.identityCard+"\n":""}`)
+          }
+    }
   };
+  }
   const registerchange = () => { };
 
   return (
@@ -117,7 +144,9 @@ const Registration = () => {
                 ]}
               >
                 <Input size='large' prefix={<UserOutlined />}
-                  placeholder="帳號必須由4到12個字母、數字、下劃線或破折號組成" />
+                  placeholder="帳號必須由4到12個字母、數字、下劃線或破折號組成"
+                  maxLength={12}
+                  minLength={4} />
               </Form.Item>
 
               <Form.Item
@@ -150,8 +179,8 @@ const Registration = () => {
                   }),
                 ]}
               >
-                <Input.Password size='large' prefix={<LockOutlined />} 
-                 placeholder="再次輸入密碼"/>
+                <Input.Password size='large' prefix={<LockOutlined />}
+                  placeholder="再次輸入密碼" />
               </Form.Item>
 
               <Form.Item>
@@ -231,7 +260,8 @@ const Registration = () => {
                 ]}
 
               >
-                <Input size='large' />
+                <Input size='large'
+                  maxLength={10} />
               </Form.Item>
 
               <Form.Item
@@ -239,7 +269,8 @@ const Registration = () => {
                 name="phoneNumber"
                 rules={[{ required: true, message: '請輸入手機號碼' }]}
               >
-                <Input size='large' />
+                <Input size='large'
+                  maxLength={10} />
               </Form.Item>
 
               <Form.Item
@@ -258,8 +289,8 @@ const Registration = () => {
                   上一步
                 </Button>
                 <Button style={{ background: "#16778a", color: "#fff", width: "75%", marginLeft: "20px" }}
-                 htmlType="submit" 
-                 loading={loading}>
+                  htmlType="submit"
+                  loading={loading}>
                   註冊
                 </Button>
               </Form.Item>
