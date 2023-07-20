@@ -9,16 +9,48 @@ import ProductCarousel from './ProductCarousel';
 import ProductSellerCard from '../product-seller/productSellerCard';
 import ButtonCard from './buttonCard';
 import AlertBox from './AlertBox';
+import ProductRating from './productRating';
 
 
 function A_Product_Item() {
   const [productitem, setProductItem] = useState('');
+  const [productRating, setProductRating] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
   const [productSeller, setproductSeller] = useState('');
   const { id } = useParams();
   const [showAlert, setShowAlert] = useState(0);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+
+
+  useEffect(() => {
+    //產品資訊
+    const fetchData = async () => {
+      const response = await axios.get(`http://localhost:8000/api/productItem/${id}`);
+      const data = await response.data;
+      setProductItem(data);
+    };
+    fetchData();
+
+    //相關推薦
+    const fetchseller = async () => {
+      const res = await axios.get(`http://localhost:8000/api/productseller/${id}`);
+      const data = await res.data;
+      setproductSeller(data);
+    };
+    fetchseller();
+
+    //評分
+    const fetchRating = async () => {
+      const res = await axios.get(`http://localhost:8000/api/productRating/${id}`);
+      const data = await res.data;
+      setProductRating(data);
+    };
+    fetchRating();
+
+    setTimeout(() => { setIsLoaded(true); }, 600);
+  }, [id]);
+
 
   //提示框狀態 加入租物車,收藏
   const handleAction = async (state) => {
@@ -62,25 +94,6 @@ function A_Product_Item() {
 
 
 
-  useEffect(() => {
-    //產品資訊
-    const fetchData = async () => {
-      const response = await axios.get(`http://localhost:8000/api/productItem/${id}`);
-      const data = await response.data;
-      setProductItem(data);
-    };
-    fetchData();
-
-    //相關推薦
-    const fetchseller = async () => {
-      const res = await axios.get(`http://localhost:8000/api/productseller/${id}`);
-      const data2 = await res.data;
-      setproductSeller(data2);
-    };
-    fetchseller();
-
-    setTimeout(() => { setIsLoaded(true); }, 600);
-  }, [id]);
 
 
 
@@ -270,7 +283,22 @@ function A_Product_Item() {
                   </tbody>
                 </table>
               </div>
+
+
+              <p>產品評論</p>
+              {productRating.map((data) => (
+                <ProductRating
+                  key={data.Buyer}
+                  productRating={data}
+                />
+              ))}
+
+
+
             </div>
+
+
+
 
             <div></div>
           </div>

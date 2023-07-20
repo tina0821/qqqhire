@@ -61,13 +61,13 @@ const App = () => {
     <>
       <Router>
 
-        {show && <Navbar2 />}
-        {/* <Navbar2 /> */}
+        {/* {show && <Navbar2 />} */}
+        <Navbar2 />
         <Routes>
 
           <Route path="/" element={<Home />} />
 
-          <Route path="/up" element={<Up />} /> 
+          <Route path="/up" element={<Up />} />
           <Route path="/login" element={<Login />} />
           <Route path="/RegistrationForm" element={<Registration />} />
 
@@ -83,11 +83,11 @@ const App = () => {
           <Route path="/cmmgmt" element={<Cmmgmt />} />
           <Route path="/profastup" element={<Profastup />} />
           <Route path="/proedit" element={<Proedit />} />
-          
+
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {show && <Footer />}
-        {/* <Footer /> */}
+        {/* {show && <Footer />} */}
+        <Footer />
       </Router>
     </>
   );

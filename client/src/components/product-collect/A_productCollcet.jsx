@@ -76,7 +76,10 @@ function A_product_Collcet() {
             </div>
           </div>
           <div className='psg-title'>【 我的收藏 】</div>
-          <h1>....沒有任何收藏....</h1>
+          <div className='no-collcet'>
+            <h1>....沒有任何收藏....</h1>
+            <Link to="/product">去租借頁面逛逛...</Link>
+          </div>
         </>
       )}
     </div>

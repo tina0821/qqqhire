@@ -37,6 +37,37 @@ router.get('/api/productItem/:id', (req, res) => {
     });
 })
 
+//賣家頁面
+router.get('/api/productseller/:id', (req, res) => {
+    const id = req.params.id
+    const sql = `
+    SELECT u.profilePictureSrc, u.account ,u.nickname, u.email
+    FROM product p
+    INNER JOIN userinfo u ON p.productAccount = u.account
+    WHERE p.productId = ?;
+    `
+
+    conn.query(sql, [id], (err, data) => {
+        err ? console.log('查詢失敗') : res.json(data)
+    })
+})
+
+//評分內容
+router.get('/api/productRating/:id', (req, res) => {
+    const id = req.params.id
+    const sql = `
+    SELECT r.*, u.profilePictureSrc
+    FROM ratings r
+    INNER JOIN userinfo u ON r.buyer = u.account
+    WHERE r.productId = ?
+    ORDER BY r.RatingDate DESC;
+    `
+    conn.query(sql, [id], (err, data) => {
+        err ? console.log('查詢失敗') : res.json(data)
+    })
+})
+
+
 
 //分類推薦
 router.get('/api/products/:productCategoryChild', (req, res) => {
@@ -66,20 +97,6 @@ router.get('/api/products/:productCategoryChild', (req, res) => {
     })
 })
 
-//賣家頁面
-router.get('/api/productseller/:id', (req, res) => {
-    const id = req.params.id
-    const sql = `
-    SELECT u.profilePictureSrc, u.account ,u.nickname, u.email
-    FROM product p
-    INNER JOIN userinfo u ON p.productAccount = u.account
-    WHERE p.productId = ?;
-    `
-
-    conn.query(sql, [id], (err, data) => {
-        err ? console.log('查詢失敗') : res.json(data)
-    })
-})
 
 //收藏
 router.get('/api/collect/:account', (req, res) => {

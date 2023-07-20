@@ -70,8 +70,26 @@
         color: #375cff00;
       }
     }
+
     .card-text {
       color: black;
+      text-align: center; /* 將文字居中對齊 */
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-text .spanout {
+      position: absolute;
+      left: 0px;
+      background-color: #82d1ff00;
+      span {
+        background-color: #82d1ff00;
+      }
+      span:first-child {
+        color: rgb(255, 216, 43);
+      }
     }
 
     span {
