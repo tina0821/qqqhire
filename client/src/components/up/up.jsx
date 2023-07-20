@@ -1,26 +1,65 @@
 import React, { useState } from 'react';
-import { Form, Input, Select, Checkbox, Button, Upload, Image } from 'antd';
+import { Form, Input, Checkbox, message, Button, Upload, Image, Cascader } from 'antd';
+import dataitem from "../../data/item2.json";
+import area from "../../data/CityCountyDataAAA.json";
 
-const { Option } = Select;
+// import "./up.scss";
 
 const Up = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [fileList, setFileList] = useState([]);
+  const [previewVisible, setPreviewVisible] = useState(false);
 
   const onFinish = (values) => {
     console.log(values);
-    // 在這裡可以將表單數據提交到服務器或執行其他操作
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
-  const handleUpload = (file) => {
-    console.log(file);
-    // 在這裡可以處理上傳的文件
-    setFileList([file]);
-    setPreviewImage(URL.createObjectURL(file));
+  const getImgs = () => {
+    return fileList.map(file => file.name);
+  };
+
+  const handleCancel = () => {
+    setPreviewVisible(false);
+  };
+
+  const handlePreview = file => {
+    setPreviewImage(file.url || file.thumbUrl);
+    setPreviewVisible(true);
+  };
+
+  const handleUpload = async ({ file, fileList }) => {
+    if (file.status === 'done') {
+      const result = file.response;
+      if (result.status === 0) {
+        message.success('上传图片成功');
+        const { name, url } = result.data;
+        file = fileList[fileList.length - 1];
+        file.name = name;
+        file.url = url;
+      } else {
+        message.error('上传图片失败');
+      }
+    } else if (file.status === 'removed') {
+      const reqDeleteImg = async imageName => {
+        return {}; // 根据实际情况实现删除图片的请求
+      };
+
+      const result = await reqDeleteImg(file.name);
+      if (result.status === 0) {
+        message.success('删除图片成功！');
+      } else {
+        message.error('删除图片失败！');
+      }
+    }
+    setFileList(fileList);
+  };
+
+  const onChange = (value) => {
+    console.log(value);
   };
 
   return (
@@ -30,7 +69,7 @@ const Up = () => {
       onFinishFailed={onFinishFailed}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
-      
+      id='fastout'
     >
       <Form.Item
         label="商品名稱"
@@ -57,9 +96,21 @@ const Up = () => {
       </Form.Item>
 
       <Form.Item label="照片" name="fileList" valuePropName="fileList">
-        <Upload beforeUpload={handleUpload} listType="picture-card" fileList={fileList}>
+        <Upload
+          beforeUpload={handleUpload}
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={handlePreview}
+          onRemove={file => {
+            handleUpload({ file, fileList: [] });
+          }}
+        >
           {previewImage ? (
-            <Image src={previewImage} alt="Preview" style={{ width: '100px', height: '100px' }} />
+            <Image
+              src={previewImage}
+              alt="Preview"
+              style={{ width: '100px', height: '100px' }}
+            />
           ) : (
             '上傳照片'
           )}
@@ -69,33 +120,27 @@ const Up = () => {
       <Form.Item
         label="商品分類"
         name="category"
-        rules={[{ required: true, message: '請选择商品分類' }]}
+        rules={[{ required: true, message: '請選擇商品分類' }]}
       >
-        <Select>
-          <Option value="category1">分类1</Option>
-          <Option value="category2">分类2</Option>
-          <Option value="category3">分类3</Option>
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="配件"
-        name="accessories"
-        rules={[{ required: true, message: '請輸入配件' }]}
-      >
-        <Input />
+        <Cascader
+          options={dataitem}
+          onChange={onChange}
+          placeholder="請選擇商品分類"
+          fieldNames={{ children: "subOptions", value: "value", label: "label" }}
+        />
       </Form.Item>
 
       <Form.Item
         label="地區"
         name="region"
-        rules={[{ required: true, message: '請选择地區' }]}
+        rules={[{ required: true, message: '請選擇地區' }]}
       >
-        <Select>
-          <Option value="region1">地區1</Option>
-          <Option value="region2">地區2</Option>
-          <Option value="region3">地區3</Option>
-        </Select>
+        <Cascader
+          options={area}
+          onChange={onChange}
+          placeholder="請選擇地區"
+          fieldNames={{ children: "AreaList", label: "Name", value: "Name" }}
+        />
       </Form.Item>
 
       <Form.Item
@@ -103,7 +148,10 @@ const Up = () => {
         name="description"
         rules={[{ required: true, message: '請輸入商品描述' }]}
       >
-        <Input.TextArea />
+        <Input.TextArea
+          maxLength={300}
+          placeholder="請輸入商品描述，限300字內"
+        />
       </Form.Item>
 
       <Form.Item

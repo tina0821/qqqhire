@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // 導入useNavigate
 import Orderbtn from '../components/MemberCentre/order/orderbtn';
-import Notlogin from '../components/MemberCentre/notlogin';
 import './centre.scss';
 
 function Order() {
   const [displayedComponent, setDisplayedComponent] = useState('Myorder');
+  const navigate = useNavigate(); // 取得navigate函式
+
   const handleButtonClick = (component) => {
     setDisplayedComponent(component);
   };
@@ -13,24 +15,16 @@ function Order() {
   useEffect(() => {
     const userInfo = localStorage.getItem('userInfo');
     if (!userInfo) {
-      // 若未登入，可以在這裡做相應的處理，例如顯示"請先登入"的內容
-      document.getElementById('not-logged-in-message').style.display = 'block';
+      // 若未登入，直接跳轉至首頁
+      navigate('/');
     } else {
       // 若已登入，可以在這裡做相應的處理，例如顯示正常的內容
       document.getElementById('logged-in-content').style.display = 'block';
     }
-  }, []);
+  }, [navigate]); // 將navigate加入useEffect的dependencies陣列
 
   return (
     <div>
-      {/* 顯示未登入時的訊息 */}
-      <div id="not-logged-in-message" style={{ display: 'none' }}>
-      <div className="logbg">
-      <div className="glass">
-          <Notlogin />
-      </div>
-      </div>
-      </div>
       {/* 顯示已登入時的內容 */}
       <div id="logged-in-content" style={{ display: 'none' }}>
         <div className="bgset">
