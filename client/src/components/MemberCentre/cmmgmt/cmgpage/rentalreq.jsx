@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import OrderDetail from './Orderdetail';
-import Agreebtn from './btnact/agreebtn';
-import Rejectbtn from './btnact/rejectbtn';
+import Agreebtn from '../../orderlist/actbtn/agreebtn';
+import Rejectbtn from '../../orderlist/actbtn/rejectbtn';
 
 const Rentalreq = () => {
   const [tradeItems, setTradeItems] = useState([]);

@@ -37,7 +37,7 @@ const Renthistory = () => {
     setShowOrderDetail(false);
   };
 
-  const filterState = (state) => state === 3;
+  const filterState = (state) => state > 2;
 
   // const orderStatusMapping = OrderStatusMapping();
 
