@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import OrderDetail from './Orderdetail';
 import Agreebtn from './btnact/agreebtn';
@@ -13,19 +13,18 @@ const Rentalreq = () => {
   // 確認 userInfo 的值不是空值（null）再進行 slice 操作
   const user = useract ? useract.slice(1, -1) : '';
 
-  useEffect(() => {
-    fetchTradeItems();
-  }, []);
-
-  const fetchTradeItems = async () => {
+  const fetchTradeItems = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/myrent/${user}`);
       setTradeItems(response.data);
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user]);
 
+  useEffect(() => {
+    fetchTradeItems();
+  }, [fetchTradeItems]);
   const getOrderStatus = (state, tradeitemId) => {
     if (state === 0) {
       return (

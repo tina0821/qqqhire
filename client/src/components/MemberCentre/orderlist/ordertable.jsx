@@ -1,8 +1,10 @@
 // OrderTable.jsx
 import React from 'react';
-import { getOrderStatus, limitProductName, calculateDays } from './orderutils';
+// import { getOrderStatus, limitProductName, calculateDays } from './orderutils';
+import { limitProductName, calculateDays } from './orderutils';
+// import Orderstate from './orderstate';
 
-const Ordertable = ({ tradeItems, filterState, handleDetail }) => {
+const Ordertable = ({ tradeItems, filterState, handleDetail, orderStatusMapping }) => {
   const uniqueTradeItems = tradeItems.filter(
     (tradeItem, index, self) => self.findIndex((t) => t.tradeitemId === tradeItem.tradeitemId) === index
   );
@@ -24,7 +26,7 @@ const Ordertable = ({ tradeItems, filterState, handleDetail }) => {
       <tbody>
         {uniqueTradeItems.map((tradeItem) => {
           if (filterState(tradeItem.state)) {
-            const orderStatus = getOrderStatus(tradeItem.state);
+            // const orderStatus = getOrderStatus(tradeItem.state);
             const rentTotal = tradeItems
               .filter((item) => item.tradeitemId === tradeItem.tradeitemId)
               .reduce((total, item) => total + item.rent, 0);
@@ -39,7 +41,8 @@ const Ordertable = ({ tradeItems, filterState, handleDetail }) => {
                 <td>{new Date(tradeItem.rentEnd).toLocaleDateString()}</td>
                 <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)}</td>
                 <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd) * rentTotal + depositTotal}</td>
-                <td>{orderStatus}</td>
+                {/* <td><Orderstate state={tradeItem.state} /></td> */}
+                <td>{orderStatusMapping[tradeItem.state]}</td>
                 <td>
                   <button id='morebtn' onClick={() => handleDetail(tradeItem.tradeitemId)}>詳細</button>
                 </td>

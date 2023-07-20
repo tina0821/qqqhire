@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import OrderDetail from './Orderdetail';
-import Ordertable from './ordertable';
+import Ordertable from '../../orderlist/ordertable';
+// import OrderStatusMapping from '../../orderlist/orderstate';
 
 const MyOrder = () => {
   const [tradeItems, setTradeItems] = useState([]);
@@ -36,12 +37,27 @@ const MyOrder = () => {
 
   const filterState = (state) => state < 3;
 
+  // const orderStatusMapping = OrderStatusMapping();
+
+  const orderStatusMapping = {
+    0: '等待回應中',
+    1: '等待租借中',
+    2: '租借中',
+    3: '已完成',
+    4: '已取消',
+  };
+
   return (
     <div className="order-component">
       {showOrderDetail ? (
         <OrderDetail tradeitemId={selectedTradeItemId} tradeitems={tradeItems} handleBack={handleBack} />
       ) : (
-        <Ordertable tradeItems={tradeItems} filterState={filterState} handleDetail={handleDetail} />
+        <Ordertable
+          tradeItems={tradeItems}
+          filterState={filterState}
+          handleDetail={handleDetail}
+          orderStatusMapping={orderStatusMapping} // 將 orderStatusMapping 傳遞給 Ordertable 元件
+        />
       )}
     </div>
   );
