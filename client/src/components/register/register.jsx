@@ -51,7 +51,6 @@ const Registration = () => {
     setLoading(true);
     // 在這裡處理最終提交的邏輯，例如發送API請求等
     // console.log('Received values:', values);
-    setLoading(false);
     setPage2Data(values);
     setCurrentStep(2);
 
@@ -109,7 +108,7 @@ const Registration = () => {
                 rules={[
                   { required: true, message: '請輸入帳號' },
                   {
-                    // pattern: /^[a-zA-Z0-9_-]{4,12}$/,
+                    pattern: /^[a-zA-Z0-9_-]{4,12}$/,
                     message: '帳號必須由4到12個字母、數字、下劃線或破折號組成',
                   },
                 ]}
@@ -122,7 +121,7 @@ const Registration = () => {
                 name="password"
                 rules={[
                   { required: true, message: '請輸入密碼' },
-                  // { min: 6, message: '密碼至少需要6個字符' },
+                  { min: 6, message: '密碼至少需要6個字符' },
 
                 ]}
               >
@@ -219,7 +218,7 @@ const Registration = () => {
                 rules={[
                   { required: true, message: '請輸入身分證號碼' },
                   {
-                    // pattern: /^[A-Z]{1}[1-2]{1}[0-9]{8}$/,
+                    pattern: /^[A-Z]{1}[1-2]{1}[0-9]{8}$/,
                     message: '身分證格式不正確',
                   },
                 ]}
