@@ -1,6 +1,44 @@
 var express = require('express');
 var router = express.Router();
 
+// Multer 中介
+const multer = require('multer');
+
+// img storage path(儲存)
+// const imgconfig = multer.diskStorage({
+//    destination:(req,file,callback) => {
+//       callback(null,"./public/testimg")
+//    },
+//    filename:(req,file,callback) => {
+//       callback(null,`image-${Date.now()}.${file.originalname}`)
+//    }
+// })
+
+// img filter(篩選)
+const isImage = (req, file, cb) => {
+   if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      cb(new Error('Please upload an image'))
+   }
+   cb(null, true)
+}
+
+
+const upload = multer({
+   // storage:imgconfig,
+   fileFilter:isImage,
+   dest: 'uploads/',
+   limits: {
+      fileSize: 10 * 1024 * 1024, // 10 MB 的上傳限制
+   }
+});
+
+
+
+
+
+
+
+
 // 寄送信件
 const nodemailer = require("nodemailer");
 
@@ -14,9 +52,9 @@ const transporter = nodemailer.createTransport({
 });
 
 
-router.post('/send', (req, res) => {
-
-
+router.post('/send', upload.single('photo'), (req, res) => {
+   console.log(req.file)
+   
    const mailOptions = {
       from: "hireoutdoor2023@gmail.com",
       to: "hireoutdoor2023@gmail.com",
@@ -105,7 +143,7 @@ router.post('/send', (req, res) => {
       attachments: [
          {
             filename: '問題回報照片', // 附件檔案名稱
-            path: `${req.body.img}`, // 照片的檔案路徑
+            path: req.file.path,     // 照片的檔案路徑
          },
       ],
    };

@@ -11,13 +11,25 @@ app.use(urlencoded);
 app.use(express.json());
 app.use(express.static("public"));
 
+
 app.use("/img", express.static("public/img"));
 
 const kuo = require('./routes/Kuo')
 app.use('/',kuo)
 
+
+
+
+// app.use('/send', sendRouter);
+// app.use(upload.single('image'));
+
 const send = require('./routes/send')
 app.use("/",send)
+
+
+
+
+
 
 const cart = require("./routes/cart");
 app.use("/cart", cart);

@@ -101,7 +101,7 @@ const Returnqu = () => {
         if (checked === '1') {
 
             // 傳送 文字&照片 到後端
-            const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord, img: quPhoto }
+            const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord }
               );
 
             // 判斷寄信狀態
@@ -223,10 +223,13 @@ const Returnqu = () => {
                         </div>}
                         {/* 用于顯示已输入字數和總字數限制 */}
                         {/* {!open2&&<div id="charCount" />} */}
-                        {photo && <div className="form-group">
+                        {photo && <form encType="multipart/form-data">
+                            <div className="form-group" enctype ="multipart/form-data">
                             <label htmlFor="imageUpload" style={{ fontSize: "1.5rem" }}>圖片補充:</label>
                             <input type="file" className="form-control-file" id="imageUpload" style={{ fontSize: "1.1rem" }} onChange={uploadImg} />
-                        </div>}
+                        </div>
+                        </form>} 
+                        
                         {photo && <div id="charCount"><img src={quPhoto} alt='請選擇圖片'/></div>}
                     </div>
 
