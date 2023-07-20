@@ -1,4 +1,4 @@
-import React, {  useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs, Autoplay } from 'swiper/modules';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ import ProductCard from '../product/productCard';
 
 export default function ButtonCard(props) {
   const [products, setProducts] = useState([]);
-  const {productCategoryChild} = props
+  const { productCategoryChild } = props
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await axios.get(`http://localhost:8000/api/products/${productCategoryChild}`);
@@ -24,29 +24,29 @@ export default function ButtonCard(props) {
 
   return (
     <>
-    <div id='BCard'>
-      <div className='B-title'>相關推薦</div>
-      <Swiper
-        loop={true}
-        spaceBetween={10}
-        navigation={true}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        slidesPerView={1}
-        modules={[FreeMode, Navigation, Thumbs, Autoplay]}
-        className="mySwiper3"
-      >
-        <SwiperSlide>
-          {products.map((product) => (
-            <Link className='col-md-3' target="_blank" to={`/productItem/${product.productId}`} key={product.productId}>
-              <ProductCard product={product} />
-            </Link>
-          ))}
-        </SwiperSlide>
-      </Swiper>
-    </div>
+      <div id='BCard'>
+        <div className='B-title'>相關推薦</div>
+        <Swiper
+          loop={true}
+          spaceBetween={10}
+          navigation={true}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          slidesPerView={1}
+          modules={[FreeMode, Navigation, Thumbs, Autoplay]}
+          className="mySwiper3"
+        >
+          <SwiperSlide>
+            {products.map((product) => (
+              <Link className='col-md-3' target="_blank" to={`/productItem/${product.productId}`} key={product.productId}>
+                <ProductCard product={product} />
+              </Link>
+            ))}
+          </SwiperSlide>
+        </Swiper>
+      </div>
     </>
   );
 }

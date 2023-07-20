@@ -22,6 +22,8 @@ router.get('/api/products', (req, res) => {
     });
 });
 
+
+//產品頁面跳轉
 router.get('/api/productItem/:id', (req, res) => {
     const Pid = req.params.id;
     const query = `
@@ -35,6 +37,8 @@ router.get('/api/productItem/:id', (req, res) => {
     });
 })
 
+
+//分類推薦
 router.get('/api/products/:productCategoryChild', (req, res) => {
     const child = req.params.productCategoryChild;
     const query = `
@@ -62,11 +66,11 @@ router.get('/api/products/:productCategoryChild', (req, res) => {
     })
 })
 
-
+//賣家頁面
 router.get('/api/productseller/:id', (req, res) => {
     const id = req.params.id
     const sql = `
-    SELECT u.profilePictureSrc, u.account ,u.nickname
+    SELECT u.profilePictureSrc, u.account ,u.nickname, u.email
     FROM product p
     INNER JOIN userinfo u ON p.productAccount = u.account
     WHERE p.productId = ?;
@@ -77,6 +81,8 @@ router.get('/api/productseller/:id', (req, res) => {
     })
 })
 
+
+//賣家商品
 router.get('/api/Pseller/:account', (req, res) => {
     const account = req.params.account
     const sql = `
@@ -94,5 +100,41 @@ router.get('/api/Pseller/:account', (req, res) => {
         err ? console.log('查詢失敗') : res.json(data)
     })
 })
+
+
+//加入收藏
+router.post('/api/collect', (req, res) => {
+    const { account, productId } = req.body
+    const sql = 'SELECT * FROM favorites WHERE account = ? AND productId = ?';
+    const insertsql = `INSERT INTO favorites(account, productId) VALUES (?,?)`
+    conn.query(sql, [account, productId], (err, result) => {
+        if (err) { console.log('查詢失敗') }
+        if (result.length > 0) {
+            return res.status(400).json({ error: '該項目已經被收藏過了' });
+        } else {
+            conn.query(insertsql, [account, productId], (err, data) => {
+                err ? console.log('插入失敗') : res.status(200).json(data)
+            })
+        }
+    })
+})
+
+//加入租物車
+router.post('/api/insertCart', (req, res) => {
+    const { account, productId, rentStart, rentEnd } = req.body
+    const sql = 'SELECT * FROM cartmap WHERE account = ? AND productId = ?';
+    const insertsql = `INSERT INTO cartmap(account, productId, rentStart, rentEnd) VALUES (?,?,?,?)`
+    conn.query(sql, [account, productId], (err, result) => {
+        if (err) { console.log('查詢失敗') }
+        if (result.length > 0) {
+            return res.status(400).json({ error: '該項目已在租物車中' });
+        } else {
+            conn.query(insertsql, [account, productId, rentStart, rentEnd], (err, data) => {
+                err ? console.log('插入失敗') : res.status(200).json(data)
+            })
+        }
+    })
+})
+
 
 module.exports = router

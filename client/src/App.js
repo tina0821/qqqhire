@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
-// import 'jquery/dist/jquery'
+// import 'bootstrap/dist/css/bootstrap.css';
+import 'jquery/dist/jquery'
 import 'jquery-ui/dist/jquery-ui'
 import 'jquery-ui-css/jquery-ui'
 
@@ -13,10 +14,19 @@ import Home from './page/home';
 // import Contact from './page/Contact';
 import NotFound from './page/NotFound';
 import Product from './page/product';
-// import RegistrationForm from './components/login/q1';
-import ProductItem from './page/product-item';
+// // import RegistrationForm from './components/login/q1';
+import ProductItem from './page/productItem';
 import ProductSeller from './page/productSeller';
-// import Cart from "./components/cart/index";
+import Aboutus from './page/aboutus';
+import Order from './page/order';
+import Cmmgmt from './page/cmmgmt';
+import Profastup from './page/profastup';
+import Proedit from './page/proedit';
+// import Qu from './page/qu';
+// import RegisterForm from './components/login/q'
+// import Tqqq from './components/login/q';
+// import RegistrationForm from './components/login/q1';
+import Cart from "./components/cart/index";
 import Navbar2 from './components/Home/navbar2/navbar2';
 import Footer from './components/Home/footer/footer';
 import Login from './components/login/login';
@@ -40,13 +50,14 @@ const App = () => {
   }, []);
 
 
- 
+
 
   return (
     <>
       <Router>
-        
+
         {show && <Navbar2 />}
+        {/* <Navbar2 /> */}
         <Routes>
 
           <Route path="/RegistrationForm" element={<Registration />} />
@@ -55,15 +66,26 @@ const App = () => {
           {/* <Route path="/about" element={<About />} /> */}
           <Route path="/product" element={<Product />} />
           {/* <Route path="/RegistrationForm" element={<RegistrationForm />} /> */}
-          {/* <Route path="/cart" element={<Cart />} /> */}
+          <Route path="/cart" element={<Cart />} />
           <Route path='/productItem/:id' element={<ProductItem />} />
           <Route path='/productSeller/:account' element={<ProductSeller />} />
+          <Route path="/aboutus" element={<Aboutus />} />
+          {/* <Route path="/" element={<RegisterForm />} /> */}
+          {/* <Route path="/tqq" element={<Tqqq />} /> */}
+          <Route path="/order" element={<Order />} />
+          <Route path="/cmmgmt" element={<Cmmgmt />} />
+          <Route path="/profastup" element={<Profastup />} />
+          <Route path="/proedit" element={<Proedit />} />
+          {/* <Route path="/qu" element={<Qu />} /> */}
+          <Route path="/up" element={<Up />} />
+          <Route path="/member" element={< MemberCenter />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/up" element={<Up />} />
           <Route path="/member" element={< MemberCenter/>} />
           <Route path="/love" element={< Love/>} />
         </Routes>
         {show && <Footer />}
+        {/* <Footer /> */}
       </Router>
     </>
   );
