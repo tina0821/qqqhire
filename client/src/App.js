@@ -61,8 +61,8 @@ const App = () => {
     <>
       <Router>
 
-        {/* {show && <Navbar2 />} */}
-        <Navbar2 />
+        {show && <Navbar2 />}
+        {/* <Navbar2 /> */}
         <Routes>
 
           <Route path="/" element={<Home />} />
@@ -86,8 +86,8 @@ const App = () => {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {/* {show && <Footer />} */}
-        <Footer />
+        {show && <Footer />}
+        {/* <Footer /> */}
       </Router>
     </>
   );
