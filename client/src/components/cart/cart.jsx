@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ConfigProvider } from "antd";
 import { Button, Steps, Col, Row } from "antd";
 import axios from "axios";
@@ -11,9 +11,11 @@ import TradeItem from "./tradeItem/tradeItem";
 import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
-import {Main} from './socket/socket'
+import { Main,Chat } from "./socket/socket";
+import webSocket from "socket.io-client";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
+const socket = webSocket.connect("http://localhost:9000");
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
 Object.prototype.iscomplete = 0;
@@ -57,15 +59,15 @@ class Cart extends Component {
       //結帳商品總金額
       totalMoney: "",
       //錯誤訊息
-      err: { address: 0, payMethod: 0 },
-      cartInfo: 0,
+      err: { address: 0, payMethod: 0, cartInfo: 0 },
+      //聊天框
+      chat: "",
     };
   }
 
   render() {
     return (
       <React.Fragment>
-        <Main/>
         {/* antd客製化樣式 */}
         <ConfigProvider
           theme={{
@@ -132,6 +134,7 @@ class Cart extends Component {
                 )}
               </Col>
             </Row>
+        {this.state.chat ? <Main socket={socket} cart={this} />:<Chat cart={this}/>}
           </div>
         </ConfigProvider>
       </React.Fragment>
@@ -384,6 +387,12 @@ class Cart extends Component {
     newstate.err.address = 0;
     newstate.err.payMethod = 0;
     newstate.err.cartInfo = 0;
+    this.setState(newstate);
+  };
+
+  toggleChat = () => {
+    let newstate = { ...this.state };
+    newstate.chat ? (newstate.chat = "") : (newstate.chat = 1);
     this.setState(newstate);
   };
 }

@@ -1,9 +1,7 @@
-// import React from 'react';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
-// import 'bootstrap/dist/css/bootstrap.css';
 import 'jquery/dist/jquery'
 import 'jquery-ui/dist/jquery-ui'
 import 'jquery-ui-css/jquery-ui'

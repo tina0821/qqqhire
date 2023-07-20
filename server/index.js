@@ -12,30 +12,6 @@ app.use(express.json());
 app.use(express.static("public"));
 
 
-const { Server } = require("socket.io");
-const server = require('http').Server(app);
-const iO = new Server(server, {
-  cors: {
-      origin: "http://localhost:3000"
-  }
-});
-
-app.get('/api', (req, res) => {
-  res.json({
-    message: 'Hello world var1',
-  });
-});
-
-iO.on('connection', (socket) => {
-  console.log(`${socket.id} 用户已连接!`);
-  socket.on('disconnect', () => {
-      console.log(`${socket.id}用户已断开连接`);
-  });
-});
-
-
-
-
 app.use("/img", express.static("public/img"));
 const cart = require("./routes/cart");
 app.use("/cart", cart);
@@ -111,7 +87,39 @@ app.listen(8000, function () {
   console.clear()
   console.log(new Date().toLocaleString());
 });
+
+
+
+// ==即時通訊====================================================================================
+let users = [];
+const { Server } = require("socket.io");
+const server = require("http").Server(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`${socket.id} 用户已连接!`);
+  socket.on("disconnect", () => {
+    console.log(`${socket.id}用户已断开连接`);
+  });
+
+  socket.on("newUser", (data) => {
+    // 添加新用户到 users 中
+    users.push(data);
+    // console.log(users);
+    // 发送用户列表到客户端
+    io.emit("newUserResponse", users);
+  });
+
+  socket.on("message", (data) => {
+    console.log(data);
+    io.emit("messageResponse", data);
+  });
+});
 server.listen(9000, function () {
-  console.clear()
+  console.clear();
   console.log(new Date().toLocaleString());
 });
