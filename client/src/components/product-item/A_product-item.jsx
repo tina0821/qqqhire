@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { HashLink as ScrollLink } from 'react-router-hash-link';
 import { DatePicker, Space } from 'antd';
 import productcategorymap from '../../data/item2.json';
 import './A_product-item.scss'
@@ -162,6 +163,8 @@ function A_Product_Item() {
   }, []);
 
 
+
+
   return renderContent ? (
     <>
       <>
@@ -196,6 +199,12 @@ function A_Product_Item() {
               <div className="product-item-right">
                 <div className="item-text">
                   <p>{productitem[0].productName}</p>
+                  {productitem[0].AvgRating ? (
+                    <span className='spanout'>
+                      <span>★</span>
+                      <span>{productitem[0].AvgRating}</span>
+                      <ScrollLink title='商品評論則數' smooth to="#reatigtarget">({productRating.length})</ScrollLink>
+                    </span>) : <span className='spanout1'>未有評價... </span>}
                 </div>
                 <div className="item-text">
                   <div className={productitem[0].rentalStatus === '未出租' ? 'rentalstate1' : 'rentalstate2'}>
@@ -285,7 +294,7 @@ function A_Product_Item() {
               </div>
 
 
-              <p>商品評論</p>
+              <p id="reatigtarget">商品評論</p>
               {productRating.length > 0 ? (productRating.map((data) => (
                 <ProductRating
                   key={data.Buyer}
