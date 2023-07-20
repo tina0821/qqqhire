@@ -28,7 +28,7 @@ router.post('/api/register/validate', (req, res) => {
 
   coon.query(query, [identityCard, email, phoneNumber], (err, data) => {
     if (err) {
-      // console.error('資料庫查詢錯誤:', err);
+      
       res.status(500).json({ error: '伺服器內部錯誤' });
     } else {
       if (data.length > 0) {

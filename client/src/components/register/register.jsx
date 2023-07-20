@@ -74,8 +74,8 @@ const Registration = () => {
       } catch (error) {
         const err =error.response.data.duplicateData
         if(err){
-         alert(`${err.email?err.email+"\n":""}${err.phoneNumber?err.phoneNumber+"\n":""}
-         ${err.identityCard?err.identityCard+"\n":""}`)
+          alert(Object.values(err).join('\n'))
+          
           }
     }
   };
