@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+// 寄送信件
 const nodemailer = require("nodemailer");
 
-
 const transporter = nodemailer.createTransport({
+
    service: "gmail",
    auth: {
       user: "hireoutdoor2023@gmail.com",
@@ -12,7 +13,10 @@ const transporter = nodemailer.createTransport({
    }
 });
 
+
 router.post('/send', (req, res) => {
+
+
    const mailOptions = {
       from: "hireoutdoor2023@gmail.com",
       to: "hireoutdoor2023@gmail.com",
@@ -79,6 +83,11 @@ router.post('/send', (req, res) => {
          border: solid 1px #b3aca7;
       }
 
+      #img{
+         width: 470px;
+         height: 470px;
+      }
+
     </style>
    </head>
 
@@ -92,14 +101,22 @@ router.post('/send', (req, res) => {
    </body>
    </html>
 
-   `
+   `,
+      attachments: [
+         {
+            filename: '問題回報照片', // 附件檔案名稱
+            path: `${req.body.img}`, // 照片的檔案路徑
+         },
+      ],
    };
 
    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
          console.log(error);
+         res.send(error);
       } else {
          console.log("Email sent: " + info.response + '成功發送');
+         res.json(info);
       }
    });
 })

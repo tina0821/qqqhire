@@ -65,44 +65,63 @@ const Returnqu = () => {
         }
     };
 
-    //  ======== 輸入框取值 傳回後端 ========
-    const [AAA, setAAA] = useState("");
-    // const BBB = {text:"1450"}
+    //  ======== 輸入框取值 傳回後端  並判斷合約狀態========
 
-    // 取得文字框的值
-    const Message = (e) => {
-        setAAA(e.target.value);
+    const [quWord, setquWord] = useState("");     // 文字
+    const [quPhoto, setquPhoto] = useState(""); // 照片
+    const [checked, setChecked] = useState("");   // 合約
+
+    // 取得合約狀態
+    const sendChick = (e) => {
+        setChecked(e.target.value);
     };
-    // 點擊送出把文字內容送出
+
+    // 取得照片
+    const imgToBase64 = (target, func) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(target);
+        reader.onload = (e) => func(e.target.result);
+    };
+
+    const uploadImg = (e) => {
+        imgToBase64(e.target.files[0], (base64Code) => {
+            setquPhoto(base64Code);
+        });
+        console.log(e);
+    }
+
+    // 取得文字
+    const Message = (e) => {
+        setquWord(e.target.value);
+    };
+
+
+    // 點擊送出 
     const SendMessage = async () => {
         if (checked === '1') {
-            // console.log(AAA)
 
-            const { data /* , error */ } = await axios.post("http://localhost:8000/send", {text:AAA});
-            console.log(data);
+            // 傳送 文字&照片 到後端
+            const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord, img: quPhoto }
+              );
+
+            // 判斷寄信狀態
+            sendOrNot(statusText);
+
 
         } else {
-            console.log("沒送出喔")
+            alert("尚未勾選合約 請確認!")
         }
 
     };
 
 
-    // ======== 確認合約 並送出 ========
-    const [checked, setChecked] = useState("");
 
-    // setChecked為非同步傳遞
-    const sendChick = (e) => {
-        setChecked(e.target.value);
-    };
-    console.log(checked)
-    // 點擊送出判斷單選框回傳值
-    const controlSendBtn = () => {
-        if (checked === '1') {
-            alert('成功送出');
-            // window.location.reload();
+    // sendOrNot
+    const sendOrNot = (statusText) => {
+        if (statusText === "OK") {
+            alert('信件成功送出')
         } else {
-            alert("尚未勾選合約 請確認!")
+            alert('信件發生錯誤')
         }
     };
 
@@ -200,14 +219,15 @@ const Returnqu = () => {
                         {textBox && <div className="form-group">
                             <label htmlFor="textInput" style={{ fontSize: "1.5rem" }}>文字輸入框:</label>
                             <textarea className="form-control" id="textInput" maxLength={1000} defaultValue={""} onChange={Message} />
-                            <div style={{ display: 'none' }}>目前輸入文字:{AAA}</div>
+                            <div style={{ display: 'none' }}>目前輸入文字:{quWord}</div>
                         </div>}
                         {/* 用于顯示已输入字數和總字數限制 */}
                         {/* {!open2&&<div id="charCount" />} */}
                         {photo && <div className="form-group">
                             <label htmlFor="imageUpload" style={{ fontSize: "1.5rem" }}>圖片補充:</label>
-                            <input type="file" className="form-control-file" id="imageUpload" style={{ fontSize: "1.1rem" }} />
+                            <input type="file" className="form-control-file" id="imageUpload" style={{ fontSize: "1.1rem" }} onChange={uploadImg} />
                         </div>}
+                        {photo && <div id="charCount"><img src={quPhoto} alt='請選擇圖片'/></div>}
                     </div>
 
                     <hr />
@@ -216,8 +236,8 @@ const Returnqu = () => {
                     <Radio className='RadioWord' checked={checked} onChange={sendChick} value="1">我已詳細閱讀合約&規範與線上回報相關注意事項內容，並同意遵守所有規定</Radio>
                     <Space wrap size={"large"} className='btnDiv'>
                         <Button type="primary" className='btnWord' onClick={controlBtn}>上一步</Button>
-                        {/* SendMessage() */}
-                        <Button type="primary" className='btnWord' onClick={() => { controlSendBtn(); SendMessage() }}>送出</Button>
+                        {/* SendMessage() controlSendBtn() */}
+                        <Button type="primary" className='btnWord' onClick={() => { SendMessage() }}>送出</Button>
                     </Space>
 
 
