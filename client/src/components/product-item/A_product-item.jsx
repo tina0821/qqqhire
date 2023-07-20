@@ -11,7 +11,7 @@ import ButtonCard from './buttonCard';
 import AlertBox from './AlertBox';
 
 
-function A_ProductItem() {
+function A_Product_Item() {
   const [productitem, setProductItem] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
   const [productSeller, setproductSeller] = useState('');
@@ -231,7 +231,7 @@ function A_ProductItem() {
             {showAlert === 3 && <AlertBox message="請先選擇日期!!!" type="error" />}
             {showAlert === 4 && <AlertBox message="此物品已在租物車中!!!" type="not" />}
             {showAlert === 5 && <AlertBox message="此物品已在收藏中!!!" type="not" />}
-            {showAlert === 6 && <AlertBox message="請先登入!" type="warning" />}
+            {showAlert === 6 && <AlertBox message="請先登入" type="warning" />}
             {showAlert === 7 && <AlertBox message="此商品正在被租借中..." type="warning" />}
 
             <ProductSellerCard
@@ -284,4 +284,4 @@ function A_ProductItem() {
   ) : null;
 }
 
-export default A_ProductItem;
+export default A_Product_Item;

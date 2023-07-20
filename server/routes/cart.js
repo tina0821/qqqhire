@@ -5,8 +5,90 @@ var coon = require("./db");
 var page = express.Router();
 //開始架設份派到自己的業務
 
-page.get("/", async (req, res) => {
-  res.send("success");
+page.put("/cart", async (req, res) => {
+  let cartMapId = [];
+  let insertLenght = "";
+  const valuesList = [];
+  req.body.data.tradeItem.map((item) => {
+    let shippingMethod = "";
+    switch (item.shippingMethod) {
+      case "SevenEleven":
+        shippingMethod = "7-11取貨";
+        break;
+      case "FamilyMart":
+        shippingMethod = "全家取貨";
+        break;
+      case "OKMart":
+        shippingMethod = "OK取貨";
+        break;
+      case "Hilife":
+        shippingMethod = "萊爾富取貨";
+        break;
+      case "BlackCat":
+        shippingMethod = "黑貓宅急便";
+        break;
+
+      default:
+        shippingMethod = item.shippingMethod;
+        break;
+    }
+    valuesList.push(req.body.account);
+    valuesList.push(item.productAccount);
+    valuesList.push(shippingMethod);
+    valuesList.push(item.payMethod);
+    valuesList.push(item.address);
+    insertLenght += "( ?, ?, ?, 1, ?, ?),";
+  });
+  coon.query(
+    `INSERT INTO tradeitem ( account, productAccount, tradeType, tradeTypePriceId, payType, address ) VALUES ${insertLenght.slice(
+      0,
+      -1
+    )}`,
+    valuesList,
+    (err, data) => {
+      let insertId = [];
+      let valuesList2 = [];
+      let insertLenght2 = "";
+      req.body.data.tradeItem.map((item, index) => {
+        insertId.push(data.insertId + index);
+      });
+      insertId.map((item, index) => {
+        req.body.data.tradeItem[index].product.map((value) => {
+          cartMapId.push(value.cartMapId);
+          valuesList2.push(item);
+          valuesList2.push(value.productId);
+          valuesList2.push(value.rentStart);
+          valuesList2.push(value.rentEnd);
+          insertLenght2 += "(?,?,?,?),";
+        });
+      });
+      coon.query(
+        `INSERT INTO tradeitemmap (tradeItemId, productId, rentStart, rentEnd) VALUES ${insertLenght2.slice(
+          0,
+          -1
+        )}`,
+        valuesList2,
+        (err, result) => {
+          let insertLenght3 = "(";
+          cartMapId.map((item) => {
+            insertLenght3 += item + ",";
+          });
+          insertLenght3 = insertLenght3.slice(0, -1) + ")";
+          coon.query(
+            `DELETE FROM cartmap WHERE cartmap.cartMapId = ${insertLenght3}`,
+            [],
+            (err, result) => {
+              if (err) {
+                res.send(err);
+              } else {
+                res.send(insertId);
+              }
+            }
+          );
+        }
+      );
+    }
+  );
 });
 
 //取得使用者購物車資料
@@ -41,9 +123,9 @@ page.post("/getCartItem", function (req, res) {
       newdata.map((el, index) => {
         newdata[index].rentStart = new Date(el.rentStart).toLocaleDateString();
         newdata[index].rentEnd = new Date(el.rentEnd).toLocaleDateString();
-        newdata[index].day = Math.abs(
-          new Date(el.rentEnd).getDate() - new Date(el.rentStart).getDate()
-        );
+        newdata[index].day =
+          Math.abs(new Date(el.rentStart) - new Date(el.rentEnd)) /
+          (1 * 60 * 60 * 24 * 1000);
         newdata[index].total =
           newdata[index].rent * newdata[index].day + newdata[index].deposit;
         productAccountList.push(el.productAccount);
@@ -61,7 +143,7 @@ page.post("/getCartItem", function (req, res) {
           productAccountName === el.productAccount &&
             cartMap[index].product.push({
               cartMapId: el.cartMapId,
-              productID: el.productID,
+              productId: el.productId,
               productName: el.productName,
               imageSrc: el.imageSrc,
               rent: el.rent,
@@ -107,6 +189,17 @@ page.post("/getAccountInfo", (req, res) => {
     }
   );
 });
+
+page.delete("/delete/:cartMapId",(req,res)=>{
+  console.log(req.params.cartMapId)
+  coon.query(`DELETE FROM cartmap WHERE cartmap.cartMapId = ?`,[req.params.cartMapId],(err,result)=>{
+    if(err){
+      res.send(err)
+    }else{
+      res.send(result)
+    }
+  })
+})
 
 page.post("/cart", async (req, res) => {
   let a = JSON.stringify(req.body);

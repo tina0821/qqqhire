@@ -1,10 +1,10 @@
 import React from 'react';
-import A_product_Collcet from '../components/product-collect/A_productCollcet';
+import A_PRODUCT_COLLCET from '../components/product-collect/A_productCollcet';
 
 function ProductCollect() {
   return (
     <>
-      <A_product_Collcet />
+      <A_PRODUCT_COLLCET />
     </>
   )
 }

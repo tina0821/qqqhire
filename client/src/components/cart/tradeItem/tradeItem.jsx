@@ -4,12 +4,12 @@ import TradeItemInfo from "./tradeItemInfo/tradeItemInfo";
 import ShippingMethod from "./ShippingMethod/ShippingMethod";
 import Contract from "./contract/contract";
 import PayType from "./payType/payType";
+import PromptBox from "./promptBox/promptBox";
+import TotalInfo from "./totalInfo/totalInfo";
 import { Col, Row, Divider, ConfigProvider, Collapse } from "antd";
-// import Test from "./test/test";
 
 class TradeItem extends Component {
   render() {
-    // console.log(items);
     return (
       <React.Fragment>
         {this.props.data.state.tradeItem &&
@@ -25,7 +25,7 @@ class TradeItem extends Component {
                   item={item.product}
                 />
               ),
-              showArrow: false
+              showArrow: false,
             });
             return (
               <React.Fragment key={item.productAccount}>
@@ -69,7 +69,8 @@ class TradeItem extends Component {
               </React.Fragment>
             );
           })}
-        <div>{this.props.data.state.totalMoney}</div>
+        <TotalInfo data={this.props.data}/>
+        <PromptBox data={this.props.data}/>
       </React.Fragment>
     );
   }
