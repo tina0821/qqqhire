@@ -252,7 +252,7 @@ function A_Product_Item() {
               productSeller={productSeller[0]}
             />
             <div className="product-text">
-              <p>產品描述</p>
+              <p>商品詳細</p>
               <div className="p-body">
                 <table>
                   <tbody>
@@ -285,14 +285,14 @@ function A_Product_Item() {
               </div>
 
 
-              <p>產品評論</p>
-              {productRating.map((data) => (
+              <p>商品評論</p>
+              {productRating.length > 0 ? (productRating.map((data) => (
                 <ProductRating
                   key={data.Buyer}
                   productRating={data}
                 />
-              ))}
-
+              ))) : (<div className='norating'>目前沒有評論...</div>)}
+              <hr />
 
 
             </div>

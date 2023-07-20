@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './productRating.scss'
 
 const ProductRating = (props) => {
@@ -25,9 +26,9 @@ const ProductRating = (props) => {
           <div className="buyer-image">
             <img src={`http://localhost:8000/img/${productRating.profilePictureSrc}`} alt="Buyer" />
           </div>
-          <div className="buyer-id">
+          <Link target='_blank' to={`/productSeller/${productRating.Buyer}`} className="buyer-id">
             {productRating.Buyer}
-          </div>
+          </Link>
         </div>
         <div className="rating">
           {getRatingStars(productRating.Rating)}

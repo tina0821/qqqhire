@@ -187,4 +187,13 @@
       }
     }
   }
+  .product-text {
+    .p-body {
+      margin-bottom: 150px;
+    }
+    .norating {
+      text-align: center;
+      font-size: $font-big;
+    }
+  }
 }
