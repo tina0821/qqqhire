@@ -21,15 +21,13 @@ const MemberCenter = () => {
   const [identityCard, setIdentityCard] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
-  const [avatar, setAvatar] = useState(null);
-  const [avatarPreview, setAvatarPreview] = useState('');
   const isLoggedIn = localStorage.getItem('userInfo').slice(1,-1);
 
   useEffect(() => {
     const fetchData = async () => {
       
         const response = await axios.get(`http://localhost:8000/api/members/${name,isLoggedIn}`);
-        console.log(response.data);
+        console.log(name);
         console.log(response.data[0].email);
         setAccount(response.data[0].account)    
         setPassword(response.data[0].password)
@@ -50,73 +48,49 @@ const MemberCenter = () => {
   }, []);
   //先取得資料庫的值
 
+  const fetchMemberData = async (account) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/members/${account}`);
+      const userData = response.data[0];
+      setAccount(userData.account);
+      setPassword(userData.password);
+      setName(userData.name);
+      setNickname(userData.email); // 改为setEmail
+      setIdentityCard(userData.identityCard);
+      setGender(userData.gender);
+      setNickname(userData.nickname); // 改为setNickname
+      setBirthday(userData.birthday.substring(0, 10));
+    } catch (error) {
+      console.error('错误??', error);
+    }
+  };
+  
   useEffect(() => {
-
-    const fetchMemberData = (account) => {
-      axios.post('http://localhost:8000/api/members',[isLoggedIn,])
-        .then((response) => {
-          setAccount(response.data[0].account)
-          setPassword(response.data[0].password)
-          setName(response.data[0].name)
-          setNickname(response.data[0].email)
-          setNickname(response.data[0].identityCard)
-          setNickname(response.data[0].gender)
-          setNickname(response.data[0].nickname)
-          setBirthday(response.data[0].birthday.substring(0, 10))
-        })
-        .catch((error) => {
-          console.error('错误??', error);
-
-
-        });
-    };
-    fetchMemberData();
-  }, [editMode2])
-
+    if (editMode2) {
+      fetchMemberData(account);
+    }
+  }, [editMode2, account]);
+  
   const handleEditClick2 = () => {
     if (loggedIn) {
       setEditMode2(true);
     }
   };
-  // Prc
-  const handleAvatarChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setAvatar(selectedFile);
-    setAvatarPreview(URL.createObjectURL(selectedFile));
-  };
-
+ 
  
   const handleSubmit1 = (e) => {
     e.preventDefault();
     setEditMode1(false);
 
-
-
-    const memberData = {
-      account: localStorage.getItem('userInfo'), // 获取LocalStorage中的帐号
-      password,
-      name,
-      nickname,
-      birthday,
-      phoneNumber,
-      identityCard,
-      email,
-
-    };
-
-    axios.post('http://localhost:8000/api/members/member111', memberData)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error('错误qq', error);
-      });
+    
   };
 
   const handleSubmit2 = (e) => {
     e.preventDefault();
     setEditMode2(false);
   };
+
+
   return (
     <div id='memberout'>
       <div className='member'>
@@ -124,22 +98,7 @@ const MemberCenter = () => {
         <div className='member1'>
 
           <div className='memberprc'>
-            {avatarPreview && (
-              <div className="avatar-preview">
-                <img src={avatarPreview} alt="Avatar Preview" />
-              </div>
-            )}
-            {/* <label htmlFor="avatar-upload" className="avatar-upload-label"
-              style={{ backgroundColor: "white", marginLeft: "40px", borderRadius: "5px" }}>
-              更改頭像
-              <input
-                id="avatar-upload"
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarChange}
-              />
-            </label> */}
-
+         
           </div>
           <Row gutter={20}>
 
