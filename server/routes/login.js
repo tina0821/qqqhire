@@ -105,6 +105,8 @@ router.post('/api/login', async (req, res) => {
       res.status(500).send(' Server ErrorQQ');
     } else if (results.length > 0) {
       const hashedPassword = results[0].password;
+
+      // 使用 bcrypt 进行密码验证
       try {
         const match = await bcrypt.compare(password, hashedPassword);
 
@@ -112,7 +114,7 @@ router.post('/api/login', async (req, res) => {
           //成功
           res.status(200).send('okkk');
         } else {
-          //gg
+          //失败
           res.status(401).send('nooo');
         }
       } catch (error) {

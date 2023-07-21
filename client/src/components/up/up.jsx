@@ -7,9 +7,17 @@ import "./up.scss";
 
 const Up = () => {
  
+  // const onFinish = (values) => {
+  //   console.log(values);
+  // };
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post('/api/mypro', values); // Sending the form data to the backend
+      console.log(response.data); // Assuming the backend returns some data
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {

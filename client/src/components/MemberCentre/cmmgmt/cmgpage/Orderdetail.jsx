@@ -6,9 +6,9 @@ const Orderdetail = ({ tradeitemId, tradeitems, handleBack }) => {
     <OrderDetailCommon
       tradeitemId={tradeitemId}
       tradeitems={tradeitems}
-      type="productAccount"
+      type="account"
       handleBack={handleBack}
-      showCancelBtn={true} // 顯示 "取消訂單" 按鈕
+      showCancelBtn={false} // 不顯示 "取消訂單" 按鈕
     />
   );
 };
