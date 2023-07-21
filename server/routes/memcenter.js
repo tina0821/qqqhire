@@ -23,6 +23,80 @@ router.get('/api/mypro/:account', function (req, res) {
   });
 });
 
+// Route to insert data into "product" table
+router.post('/api/mypro', function (req, res) {
+  const formData = req.body; // This will contain the form data sent from the frontend
+  console.log(formData);
+
+  const {
+    productName, rent, deposit, rentalStatus, productAccount, productCategoryChild,
+    cityCounty, area, productDetail
+    // Add other form fields here if needed...
+  } = formData;
+
+  // Insert data into "product" table
+  const productInsertQuery = `
+    INSERT INTO product (productName, rent, deposit, rentalStatus, productAccount, productCategoryChild, cityCounty, area, productDetail)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  coon.query(
+    productInsertQuery,
+    [
+      productName, rent, deposit, rentalStatus, productAccount, productCategoryChild,
+    cityCounty, area, productDetail
+    ],
+    function (error, productResults) {
+      if (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        // Assuming you have the newly inserted productId in "productResults.insertId"
+        const productId = productResults.insertId;
+
+        // Insert data into "imagemap" table
+        const imageInsertQuery = `
+          INSERT INTO imagemap (imageSrc, productId)
+          VALUES (?, ?)
+        `;
+
+        coon.query(
+          imageInsertQuery,
+          ['your_image_src', productId], // Replace 'your_image_src' with the actual image source
+          function (error, imageResults) {
+            if (error) {
+              console.error(error);
+              res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+              // Assuming you have the newly inserted imageId in "imageResults.insertId"
+              const imageId = imageResults.insertId;
+
+              // Insert data into "productcategorymap" table
+              const categoryInsertQuery = `
+                INSERT INTO productcategorymap (productCategoryChild, productCategoryId)
+                VALUES (?, ?)
+              `;
+
+              coon.query(
+                categoryInsertQuery,
+                [productCategoryChild, 'your_product_category_id'], // Replace 'your_product_category_id' with the actual product category ID
+                function (error, categoryResults) {
+                  if (error) {
+                    console.error(error);
+                    res.status(500).json({ error: 'Internal Server Error' });
+                  } else {
+                    res.json({ message: 'Data received and saved to database.' });
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    }
+  );
+});;
+
 router.get("/api/myorder/:account", function (req, res) {
   const account = req.params.account;
   const query = `
