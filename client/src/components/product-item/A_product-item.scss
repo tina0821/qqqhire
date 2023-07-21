@@ -85,6 +85,30 @@
         font-weight: bold;
         margin: 0;
         line-height: 30px;
+        margin-bottom: 15px;
+      }
+      .spanout {
+        font-weight: normal;
+        font-size: $font-xs;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        span {
+          background-color: #82d1ff00;
+        }
+        span:first-child {
+          font-size: $font-normal;
+          color: orange;
+          margin-right: 10px;
+        }
+        a {
+          margin-left: 20px;
+          opacity: 0.6;
+        }
+      }
+      .spanout1 {
+        font-size: 16px;
+        opacity: 0.8;
       }
 
       &:nth-child(1) {
@@ -92,7 +116,7 @@
       }
 
       &:nth-child(2) {
-        margin-top: 10px;
+        margin-top: 20px;
         margin-bottom: 30px;
         display: flex;
         align-items: center;
@@ -185,6 +209,15 @@
           }
         }
       }
+    }
+  }
+  .product-text {
+    .p-body {
+      margin-bottom: 150px;
+    }
+    .norating {
+      text-align: center;
+      font-size: $font-big;
     }
   }
 }

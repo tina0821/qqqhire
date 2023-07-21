@@ -10,7 +10,7 @@ function ProductCard(props) {
   //   history(`/productItem/${product.productId}`); // 導航到帶有 productId 參數的 product-item 路由
   // };
 
-  
+
   return (
     <>
       <div
@@ -38,7 +38,15 @@ function ProductCard(props) {
               )}
               <span>{product.rentalStatus}</span>
             </div>
-            <p className="card-text">${product.rent}/日</p>{' '}
+            <p className="card-text">
+              {product.AvgRating && (
+                <span className='spanout'>
+                  <span>★</span>
+                  <span>{product.AvgRating}</span>
+                </span>)}
+              ${product.rent}/日
+            </p>{' '}
+            {/* {product.AvgRating && (<span><span>★</span>{product.AvgRating}</span>)} */}
           </div>
         </div>
       </div>
