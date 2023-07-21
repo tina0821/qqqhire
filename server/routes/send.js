@@ -10,14 +10,14 @@ var router = express.Router();
 const multer = require('multer');
 
 // img storage path(儲存)
-// const imgconfig = multer.diskStorage({
-//    destination:(req,file,callback) => {
-//       callback(null,"./public/testimg")
-//    },
-//    filename:(req,file,callback) => {
-//       callback(null,`image-${Date.now()}.${file.originalname}`)
-//    }
-// })
+const imgconfig = multer.diskStorage({
+   destination: (req, file, callback) => {
+      callback(null, "./public/testimg")
+   },
+   filename: (req, file, callback) => {
+      callback(null, `image-${Date.now()}.${file.originalname}`)
+   }
+})
 
 // img filter(篩選)
 const isImage = (req, file, cb) => {
@@ -30,7 +30,7 @@ const isImage = (req, file, cb) => {
 
 const upload = multer({
    // storage:imgconfig,
-   fileFilter:isImage,
+   fileFilter: isImage,
    dest: 'uploads/',
    limits: {
       fileSize: 10 * 1024 * 1024, // 10 MB 的上傳限制
@@ -39,7 +39,11 @@ const upload = multer({
 });
 
 
-
+const imgToBase64 = (target, func) => {
+   const reader = new FileReader();
+   reader.readAsDataURL(target);
+   reader.onload = (e) => func(e.target.result);
+};
 
 
 
@@ -57,8 +61,10 @@ const transporter = nodemailer.createTransport({
 
 
 router.post('/send', upload.single('photo'), (req, res) => {
-   const {file} = req.file;
-   console.log(file);
+
+   // const {file} = req.file;
+   // console.log(file);
+   
 
 
    const mailOptions = {
@@ -150,7 +156,8 @@ router.post('/send', upload.single('photo'), (req, res) => {
          {
             filename: `問題回報照片`, // 附件檔案名稱
             // path: `${req.body.img}`,     // 照片的檔案路徑
-            path: file.path,     // 照片的檔案路徑
+            // path: file.path,     // 照片的檔案路徑
+            path: 'C:/Users/USER/Desktop/hire/qqqhire/server/public/img/wave.jpg'
          },
       ],
    };

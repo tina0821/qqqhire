@@ -70,7 +70,7 @@ const Returnqu = () => {
     const [quWord, setquWord] = useState("");     // 文字
     const [quPhoto, setquPhoto] = useState("");   // 照片
     const [checked, setChecked] = useState("");   // 合約
-    const formData = new FormData();              // 照片
+    // const formData = new FormData();              // 照片
     
 
     // 取得合約狀態
@@ -78,20 +78,23 @@ const Returnqu = () => {
         setChecked(e.target.value);
     };
 
-    // 取得照片
-    const imgToBase64 = (target, func) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(target);
-        reader.onload = (e) => func(e.target.result);
-    };
+    // 取得照片 轉64
+    // const imgToBase64 = (target, func) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(target);
+    //     reader.onload = (e) => func(e.target.result);
+    // };
 
     const uploadImg = (e) => {
+        const formData = new FormData();
+        formData.append('files', e.target.files[0]);
+        
+        // setquPhoto();
 
-        formData.append('photo', e.target.files[0]);
-
-        imgToBase64(e.target.files[0], (base64Code) => {
-            setquPhoto(base64Code);
-        });
+        // 轉64
+        // imgToBase64(e.target.files[0], (base64Code) => {
+        //     setquPhoto(base64Code);
+        // });
         // console.log(e);
     }
 
@@ -107,11 +110,12 @@ const Returnqu = () => {
 
             try {
                 // 傳送 文字&照片 到後端
-                const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord, img:quPhoto}, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
+                // const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord, img:quPhoto}, formData, {
+                //     headers: {
+                //         'Content-Type': 'multipart/form-data'
+                //     }
+                // });
+                const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord });
 
                 // 判斷寄信狀態
                 sendOrNot(statusText);
@@ -236,6 +240,7 @@ const Returnqu = () => {
                         {photo && <form encType="multipart/form-data" className="form-group">
                             <label htmlFor="imageUpload" style={{ fontSize: "1.5rem" }}>圖片補充:</label>
                             <input type="file" className="form-control-file" id="imageUpload" style={{ fontSize: "1.1rem" }} onChange={uploadImg} />
+                            {/* <button type=''>上傳</button> */}
                         </form>}
 
                         {photo && <div id="charCount"><img src={quPhoto} alt='請選擇圖片' /></div>}
