@@ -5,17 +5,17 @@ import ChatBar from "./ChatBar/ChatBar";
 import { ChatBody } from "./ChatBody/ChatBody";
 import { ChatFooter } from "./ChatFooter/ChatFooter";
 
-export const Chat = ({cart}) => {
+export const Chat = ({ cart }) => {
   return (
     <Button
       style={{
         height: "50px",
-        width:"200px",
-        textAlign:"center",
+        width: "200px",
+        textAlign: "center",
         alignItems: "center",
-        position:"fixed",
-        right:'5px',
-        bottom:"5px"
+        position: "fixed",
+        right: "5px",
+        bottom: "5px",
       }}
       size="large"
       className="ms-3 btnColor cartFontSize"
@@ -28,10 +28,8 @@ export const Chat = ({cart}) => {
   );
 };
 
-export const Main = ({ socket,cart}) => {
-  const [messages, setMessages] = useState([]);
-  const [ws, setWs] = useState(null);
-
+export const Main = ({ socket, cart }) => {
+  const [roomName, setRoomName] = useState("message");
   localStorage.setItem(
     "userName",
     localStorage.getItem("userInfo").slice(1, -1)
@@ -42,12 +40,8 @@ export const Main = ({ socket,cart}) => {
     socketID: socket.id,
   });
 
-  useEffect(() => {
-    socket.on("messageResponse", (data) => {
-      setMessages([...messages, data]);
-    });
-  }, [socket, messages]);
 
+  console.log(roomName)
   return (
     <ConfigProvider
       theme={{
@@ -74,15 +68,15 @@ export const Main = ({ socket,cart}) => {
         <Col style={{ borderTop: "3px solid #0B7597 " }} span={24}>
           <Row>
             <Col span={6} style={{ borderRight: "3px solid #0B7597" }}>
-              <ChatBar />
+              <ChatBar cart={cart} setRoomName={setRoomName} />
             </Col>
             <Col span={18}>
               <Row>
                 <Col span={24}>
-                  <ChatBody messages={messages} />
+                  <ChatBody socket={socket} roomName={roomName} />
                 </Col>
                 <Col span={24}>
-                  <ChatFooter socket={socket} />
+                  <ChatFooter socket={socket} roomName={roomName} />
                 </Col>
               </Row>
             </Col>

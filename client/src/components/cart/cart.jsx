@@ -11,7 +11,7 @@ import TradeItem from "./tradeItem/tradeItem";
 import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
-import { Main,Chat } from "./socket/socket";
+import { Main, Chat } from "./socket/socket";
 import webSocket from "socket.io-client";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
@@ -62,6 +62,8 @@ class Cart extends Component {
       err: { address: 0, payMethod: 0, cartInfo: 0 },
       //聊天框
       chat: "",
+      //聊天對象
+      chatRoom:""
     };
   }
 
@@ -134,7 +136,11 @@ class Cart extends Component {
                 )}
               </Col>
             </Row>
-        {this.state.chat ? <Main socket={socket} cart={this} />:<Chat cart={this}/>}
+            {this.state.chat ? (
+              <Main socket={socket} cart={this} />
+            ) : (
+              <Chat cart={this} />
+            )}
           </div>
         </ConfigProvider>
       </React.Fragment>
@@ -396,10 +402,24 @@ class Cart extends Component {
     this.setState(newstate);
   };
 
-  changeChatInfo = (chatInfo) =>{
+  changeChatInfo = async (chatInfo) => {
     let newstate = { ...this.state };
+    await axios
+      .post("http://localhost:8000/cart/chatInfo", {
+        account: localStorage.getItem("userInfo").slice(1, -1),
+        productAccount:chatInfo
+      })
+      .then((res) => {
+        console.log(res.data);
+        newstate.chatRoom=res.data
+      });
     newstate.chat = 1;
-    newstate.chatInfo = chatInfo;
+    this.setState(newstate);
+  };
+
+  changeChatRoom =(room)=>{
+    let newstate = { ...this.state };
+    newstate.chatRoom=room
     this.setState(newstate);
   }
 }

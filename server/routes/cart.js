@@ -191,16 +191,20 @@ page.post("/getAccountInfo", (req, res) => {
   );
 });
 
-page.delete("/delete/:cartMapId",(req,res)=>{
-  console.log(req.params.cartMapId)
-  coon.query(`DELETE FROM cartmap WHERE cartmap.cartMapId = ?`,[req.params.cartMapId],(err,result)=>{
-    if(err){
-      res.send(err)
-    }else{
-      res.send(result)
+page.delete("/delete/:cartMapId", (req, res) => {
+  console.log(req.params.cartMapId);
+  coon.query(
+    `DELETE FROM cartmap WHERE cartmap.cartMapId = ?`,
+    [req.params.cartMapId],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
     }
-  })
-})
+  );
+});
 
 page.post("/cart", async (req, res) => {
   let a = JSON.stringify(req.body);
@@ -208,7 +212,56 @@ page.post("/cart", async (req, res) => {
   res.send("<script>window.close();</script >");
 });
 
+page.post("/getChatList", (req, res) => {
+  const sql = `SELECT * FROM chatroom WHERE account=?`;
+  coon.query(sql, [req.body.account], (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      const allRoom = [];
+      result.map((item) => {
+        allRoom.push({ room: item.room, productAccount: item.productAccount });
+      });
+      res.send(allRoom);
+    }
+  });
+});
 
+page.post("/chatInfo", (req, res) => {
+  const qel = `SELECT * FROM chatroom WHERE (account=? AND productAccount=?) or(account=? AND productAccount=?)`;
+  const account = req.body.account;
+  const productAccount = req.body.productAccount;
+  coon.query(
+    qel,
+    [account, productAccount, productAccount, account],
+    (err, result) => {
+      if (result.length === 0) {
+        const qel2 = `INSERT INTO chatroom ( account , productAccount , room) VALUES (?,?,?),(?,?,?)`;
+        const roomName = account + productAccount + Math.random();
+        coon.query(
+          qel2,
+          [
+            account,
+            productAccount,
+            roomName,
+            productAccount,
+            account,
+            roomName,
+          ],
+          (errr) => {
+            if (errr) {
+              res.send(errr);
+            } else {
+              res.send(roomName);
+            }
+          }
+        );
+      } else {
+        res.send(result[0].room);
+      }
+    }
+  );
+});
 
 //輸出檔案給人彙整
 module.exports = page;

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Space, Input } from "antd";
-export const ChatFooter = ({socket}) => {
+export const ChatFooter = ({socket,roomName}) => {
   const [message, setMessage] = useState("");
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (message.trim() && localStorage.getItem("userName")) {
       socket.emit("message", {
+        roomName:roomName,
         text: message,
         name: localStorage.getItem("userName"),
         id: `${socket.id}${Math.random()}`,
