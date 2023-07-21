@@ -133,14 +133,14 @@ router.post('/api/productDelete', (req, res) => {
 router.get('/api/Pseller/:account', (req, res) => {
     const account = req.params.account
     const sql = `
-        SELECT u.account, u.nickname, u.email, u.profilePictureSrc, u.phoneNumber, p.*,
-        (SELECT im.imageSrc
-        FROM imagemap im
-        WHERE im.productId = p.productId
-        LIMIT 1) AS imageSrc
-        FROM userinfo u
-        INNER JOIN product p ON p.productAccount = u.account
-        WHERE u.account = ?
+    SELECT u.account, u.nickname, u.email, u.profilePictureSrc, u.phoneNumber, p.*,
+    (SELECT im.imageSrc
+    FROM imagemap im
+    WHERE im.productId = p.productId
+    LIMIT 1) AS imageSrc
+    FROM userinfo u
+    LEFT JOIN product p ON p.productAccount = u.account
+    WHERE u.account = ?
 
     `
     conn.query(sql, [account], (err, data) => {

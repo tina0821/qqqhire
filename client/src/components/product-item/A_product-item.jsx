@@ -10,7 +10,7 @@ import ProductCarousel from './ProductCarousel';
 import ProductSellerCard from '../product-seller/productSellerCard';
 import ButtonCard from './buttonCard';
 import AlertBox from './AlertBox';
-import ProductRating from './productRating';
+import ProductRating from '../product-rating/productRating';
 
 
 function A_Product_Item() {
