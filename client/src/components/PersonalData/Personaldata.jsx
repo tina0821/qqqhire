@@ -23,26 +23,26 @@ const MemberCenter = () => {
   const [identityCard, setIdentityCard] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
-  
-  const isLoggedIn = localStorage.getItem('userInfo').slice(1,-1);
+
+  const isLoggedIn = localStorage.getItem('userInfo').slice(1, -1);
 
   useEffect(() => {
     const fetchData = async () => {
-      
-        const response = await axios.get(`http://localhost:8000/api/members/${name,isLoggedIn}`);
-        console.log(name);
-        console.log(response.data[0].email);
-        setAccount(response.data[0].account)    
-        setPassword(response.data[0].password)
-        setName(response.data[0].name)
-        setEmail(response.data[0].email)
-        setIdentityCard(response.data[0].identityCard)
-        setGender((response.data[0].gender === '1' ? '男' : '女'))
-        setNickname(response.data[0].nickname)
-        setPhoneNumber(response.data[0].phoneNumber)
-        setBirthday(response.data[0].birthday.substring(0, 10))
-  
-      
+
+      const response = await axios.get(`http://localhost:8000/api/members/${name, isLoggedIn}`);
+      console.log(name);
+      console.log(response.data[0].email);
+      setAccount(response.data[0].account)
+      setPassword(response.data[0].password)
+      setName(response.data[0].name)
+      setEmail(response.data[0].email)
+      setIdentityCard(response.data[0].identityCard)
+      setGender((response.data[0].gender === '1' ? '男' : '女'))
+      setNickname(response.data[0].nickname)
+      setPhoneNumber(response.data[0].phoneNumber)
+      setBirthday(response.data[0].birthday.substring(0, 10))
+
+
     };
     if (isLoggedIn) {
       setLoggedIn(isLoggedIn);
@@ -51,10 +51,22 @@ const MemberCenter = () => {
   }, []);
   //先取得資料庫的值
 
+  const updatedData = {
+    name,
+    nickname,
+    birthday,
+    gender,
+    identityCard,
+    phoneNumber,
+    email,
+    account
+  };
+
+
   useEffect(() => {
 
     const fetchMemberData = () => {
-      axios.put(`http://localhost:8000/api/members/${name,isLoggedIn}`)
+      axios.put(`http://localhost:8000/api/members/account`, [updatedData])
         .then((response) => {
           setAccount(response.data[0].account)
           setPassword(response.data[0].password)
@@ -63,10 +75,11 @@ const MemberCenter = () => {
           setNickname(response.data[0].identityCard)
           setNickname(response.data[0].gender)
           setNickname(response.data[0].nickname)
-          setBirthday(response.data[0].birthday.substring(0, 10))
+          // setBirthday(response.data[0].birthday.substring(0, 10))
         })
         .catch((error) => {
           console.error('错误??', error);
+          console.log(nickname)
 
 
         });
@@ -79,13 +92,13 @@ const MemberCenter = () => {
       setEditMode2(true);
     }
   };
- 
- 
+
+
   const handleSubmit1 = (e) => {
     e.preventDefault();
     setEditMode1(false);
 
-    
+
   };
 
   const handleSubmit2 = (e) => {
@@ -93,7 +106,7 @@ const MemberCenter = () => {
     setEditMode2(false);
   };
 
-  
+
   return (
     <div id='memberout'>
       <div className='member'>
@@ -101,7 +114,7 @@ const MemberCenter = () => {
         <div className='member1'>
 
           <div className='memberprc'>
-          <Prconly/>
+            <Prconly />
           </div>
           <Row gutter={20}>
 
@@ -133,7 +146,7 @@ const MemberCenter = () => {
                         </label>
 
                         <button type="submit" >儲存</button>
-              
+
                       </div>
                     </fieldset>
                   </form>

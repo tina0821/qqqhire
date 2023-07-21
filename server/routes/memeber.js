@@ -16,16 +16,30 @@ router.get('/api/members/:account', (req, res) => {
 });
 
 
-router.put('/api/members/:account', (req, res) => {
-    const accountToUpdate = req.params.account;
+router.put('/api/members/account', (req, res) => {
     const updatedData = req.body;
+    console.log(updatedData);
+
+
     const update = `UPDATE userinfo 
-    SET name = ?, nickname = ?, birthday = ?,
-    gender = ?, identityCard = ?, phone = ?, email = ?
+    SET name = ?,
+    birthday = ?,
+    nickname = ?, 
+    gender = ?,
+    identityCard = ?,
+    phoneNumber = ?,
+    email = ?
     WHERE account = ?`;
-    coon.query(update, [updatedData.name,updatedData.nickname,updatedData.birthday,
-        updatedData.gender,updatedData.identityCard,updatedData.phone,updatedData.email,
-         accountToUpdate], (err, result) => {
+    coon.query(update, [
+        req.body.name,
+        updatedData.birthday,
+        updatedData.nickname,
+        updatedData.gender,
+        updatedData.identityCard,
+        updatedData.phoneNumber,
+        updatedData.email,
+        updatedData.account
+    ], (err, result) => {
         if (err) {
             console.error('数据库错误:', err);
             res.status(500).json({ message: '数据库错误' });
