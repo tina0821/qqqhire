@@ -206,3 +206,16 @@ color: red;
     height: 20px;
   }
 }
+
+.scroll-container {
+  overflow: auto;
+  /* max-height: 300px; */
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px; /* 设置滚动条宽度 */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: transparent; /* 将滚动条颜色设置为透明，这样它就不可见 */
+}

@@ -1,10 +1,10 @@
 import React from 'react';
-import A_ProductItem from '../components/product-item/A_product-item';
+import A_PRODUCT_ITEM from '../components/product-item/A_product-item';
 
 function ProductItem() {
   return (
     <>
-      <A_ProductItem />
+      <A_PRODUCT_ITEM />
     </>
   );
 }

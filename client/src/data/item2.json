@@ -27,7 +27,7 @@
     "subOptions": [
       { "value": "paddleBoat", "label": "划艇" },
       { "value": "kayak", "label": "獨木舟" },
-      { "value": "swimmingEquipment", "label": "游泳用具" }
+      { "value": "swimmingEquipment", "label": "其他用具" }
     ]
   },
   {

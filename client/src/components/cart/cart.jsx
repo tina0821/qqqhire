@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { ConfigProvider } from "antd";
-import { Button, message, Steps, Col, Row } from "antd";
+import { Button, Steps, Col, Row } from "antd";
 import axios from "axios";
-// import { onLogin, checkLogin, logOut } from "../cookie/cookie";
 
 //引用自做檔案
 import ShopingCart from "./shopingCart/index";
@@ -10,12 +10,12 @@ import DeletePrompt from "./shopingCart/productInfo/deletePrompt/deletePrompt";
 import TradeItem from "./tradeItem/tradeItem";
 import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
-import cartTest from "../../data/cartTest.json";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
+import { Main,Chat } from "./socket/socket";
+import webSocket from "socket.io-client";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
-// import { ajax } from "jquery";
-// import paymentMethod from '../../data/paymentMethod.json'
+const socket = webSocket.connect("http://localhost:9000");
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
 Object.prototype.iscomplete = 0;
@@ -45,7 +45,7 @@ class Cart extends Component {
       //當前步驟頁面計數器
       current: 0,
       //預設租物車商品資訊
-      cartMap: cartTest,
+      cartMap: [],
       //全選觸發器
       selectAll: 0,
       //顯示提示視窗
@@ -59,8 +59,9 @@ class Cart extends Component {
       //結帳商品總金額
       totalMoney: "",
       //錯誤訊息
-      err: { address: 0, payMethod: 0 },
-      cartInfo: 0,
+      err: { address: 0, payMethod: 0, cartInfo: 0 },
+      //聊天框
+      chat: "",
     };
   }
 
@@ -125,42 +126,45 @@ class Cart extends Component {
                   </Button>
                 )}
                 {this.state.current === this.state.steps.length - 1 && (
-                  <Button
-                    type="primary"
-                    onClick={() => message.success("Processing complete!")}
-                    size="large"
-                  >
-                    結帳
-                  </Button>
+                  <Link to={"/"}>
+                    <Button type="primary" size="large">
+                      完成
+                    </Button>
+                  </Link>
                 )}
               </Col>
             </Row>
+        {this.state.chat ? <Main socket={socket} cart={this} />:<Chat cart={this}/>}
           </div>
         </ConfigProvider>
       </React.Fragment>
     );
   }
-
+  componentDidUpdate() {}
   //第一次更新資訊
   componentDidMount = async () => {
-    let newstate = { ...this.state };
-    //取得資料庫商品分類完成的資料
-    await axios
-      .post("http://localhost:8000/cart/getCartItem", {
-        account: localStorage.getItem("userInfo").slice(1, -1),
-      })
-      .then((res) => {
-        newstate.cartMap = res.data;
-      });
-    await axios
-      .post("http://localhost:8000/cart/getAccountInfo", {
-        account: localStorage.getItem("userInfo").slice(1, -1),
-      })
-      .then((res) => {
-        newstate.accountInfo = res.data;
-      });
-    //更新資料
-    this.setState(newstate);
+    if (localStorage.getItem("userInfo")) {
+      let newstate = { ...this.state };
+      //取得資料庫商品分類完成的資料
+      await axios
+        .post("http://localhost:8000/cart/getCartItem", {
+          account: localStorage.getItem("userInfo").slice(1, -1),
+        })
+        .then((res) => {
+          newstate.cartMap = res.data;
+        });
+      await axios
+        .post("http://localhost:8000/cart/getAccountInfo", {
+          account: localStorage.getItem("userInfo").slice(1, -1),
+        })
+        .then((res) => {
+          newstate.accountInfo = res.data;
+        });
+      //更新資料
+      this.setState(newstate);
+    } else {
+      document.location.href = "http://localhost:3000/login";
+    }
   };
 
   moveSteps = async (e) => {
@@ -318,7 +322,7 @@ class Cart extends Component {
   };
 
   //記錄每一位賣家訂單的寄送地址
-  addAddress = (addressValue, productAccount, shippingMethod = 0) => {
+  addAddress = (addressValue, productAccount, shippingMethod = 0, data = 0) => {
     let newstate = { ...this.state };
     const productAccountList = [];
     newstate.tradeItem.map((value) => {
@@ -331,6 +335,9 @@ class Cart extends Component {
     shippingMethod &&
       (newstate.tradeItem[productAccountNumber].shippingMethod =
         shippingMethod);
+    data &&
+      (newstate.tradeItem[productAccountNumber].tradeTypePriceId =
+        data.tradeTypePriceId);
     this.setState(newstate);
   };
 
@@ -382,6 +389,19 @@ class Cart extends Component {
     newstate.err.cartInfo = 0;
     this.setState(newstate);
   };
+
+  toggleChat = () => {
+    let newstate = { ...this.state };
+    newstate.chat ? (newstate.chat = "") : (newstate.chat = 1);
+    this.setState(newstate);
+  };
+
+  changeChatInfo = (chatInfo) =>{
+    let newstate = { ...this.state };
+    newstate.chat = 1;
+    newstate.chatInfo = chatInfo;
+    this.setState(newstate);
+  }
 }
 
 export default Cart;

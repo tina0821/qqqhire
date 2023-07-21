@@ -1,76 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import OrderDetail from './Orderdetail';
+import Ordertable from '../../orderlist/ordertable';
+// import OrderStatusMapping from '../../orderlist/orderstate';
 
-function Renthistory() {
-  const [tradeitems, setTradeitems] = useState([]);
+const Renthistory = () => {
+  const [tradeItems, setTradeItems] = useState([]);
+  const [selectedTradeItemId, setSelectedTradeItemId] = useState(null);
+  const [showOrderDetail, setShowOrderDetail] = useState(false);
+
+  const useract = localStorage.getItem('userInfo');
+  // 確認 userInfo 的值不是空值（null）再進行 slice 操作
+  const user = useract ? useract.slice(1, -1) : '';
+
+  // 使用 useCallback 包裹 fetchTradeItems 函數
+  const fetchTradeItems = useCallback(async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/myrent/${user}`);
+      setTradeItems(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [user]); // 將 'user' 列入 useCallback 的依賴陣列中
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/myorder');
-        const tradeitems = response.data.map((tradeitem) => ({
-          ...tradeitem,
-          rentStart: formatDate(tradeitem.rentStart),
-          rentEnd: formatDate(tradeitem.rentEnd),
-        }));
-        console.log(tradeitems);
-        setTradeitems(tradeitems);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
+    fetchTradeItems(); // 在 useEffect 中調用 fetchTradeItems
+  }, [fetchTradeItems]); // 將 'fetchTradeItems' 列入 useEffect 的依賴陣列中
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return `${year}-${month}-${day}`;
+  const handleDetail = (tradeItemId) => {
+    setSelectedTradeItemId(tradeItemId);
+    setShowOrderDetail(true);
+  };
+
+  const handleBack = () => {
+    setSelectedTradeItemId(null);
+    setShowOrderDetail(false);
+  };
+
+  const filterState = (state) => state > 2;
+
+  // const orderStatusMapping = OrderStatusMapping();
+
+  const orderStatusMapping = {
+    0: '等待回應中',
+    1: '等待租借中',
+    2: '出租中',
+    3: '已完成',
+    4: '已取消',
   };
 
   return (
     <div className="order-component">
-      <table className="order-table">
-        <thead>
-          <tr>
-            <th>商品圖片</th>
-            <th>商品</th>
-            <th>預約日期</th>
-            <th>歸還日期</th>
-            <th>租金</th>
-            <th>押金</th>
-            <th>訂單狀態</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tradeitems.map((tradeitem) => {
-            if (tradeitem.state === 3) {
-              return (
-                <tr id="trtd" key={tradeitem.tradeitemId}>
-                  <td>{tradeitem.tradeitemId}</td>
-                  <td>{tradeitem.productName}</td>
-                  <td>{tradeitem.rentStart}</td>
-                  <td>{tradeitem.rentEnd}</td>
-                  <td>{tradeitem.rent}</td>
-                  <td>{tradeitem.deposit}</td>
-                  <td>
-                    {tradeitem.state === 3
-                      ? '訂單已完成'
-                      : tradeitem.state}
-                  </td>
-
-                </tr>
-                
-              );
-            }
-            return null;
-          })}
-        </tbody>
-      </table>
+      {showOrderDetail ? (
+        <OrderDetail tradeitemId={selectedTradeItemId} tradeitems={tradeItems} handleBack={handleBack} />
+      ) : (
+        <Ordertable
+          tradeItems={tradeItems}
+          filterState={filterState}
+          handleDetail={handleDetail}
+          orderStatusMapping={orderStatusMapping} // 將 orderStatusMapping 傳遞給 Ordertable 元件
+        />
+      )}
     </div>
   );
-}
+};
 
 export default Renthistory;

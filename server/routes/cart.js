@@ -35,9 +35,10 @@ page.put("/cart", async (req, res) => {
     valuesList.push(req.body.account);
     valuesList.push(item.productAccount);
     valuesList.push(shippingMethod);
+    valuesList.push(item.tradeTypePriceId);
     valuesList.push(item.payMethod);
     valuesList.push(item.address);
-    insertLenght += "( ?, ?, ?, 1, ?, ?),";
+    insertLenght += "( ?, ?, ?, ?, ?, ?),";
   });
   coon.query(
     `INSERT INTO tradeitem ( account, productAccount, tradeType, tradeTypePriceId, payType, address ) VALUES ${insertLenght.slice(
@@ -206,6 +207,8 @@ page.post("/cart", async (req, res) => {
   res.cookie("address", `${JSON.stringify(a)}`);
   res.send("<script>window.close();</script >");
 });
+
+
 
 //輸出檔案給人彙整
 module.exports = page;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //寄送方式資料表
 import shippingMethod from "../../../../data/shippingMethod.json";
-import { Select, Button, Space, Input, Cascader } from "antd";
+import { Select, Button, Space, Input, Cascader, Row, Col } from "antd";
 import { handleGetStore } from "../test/test";
 import cookie from "react-cookies";
 import CityCountyData from "../../../../data/CityCountyDataAAA.json";
@@ -17,6 +17,7 @@ class ShippingMethod extends Component {
       address: "",
       //地址資料
       CityCountyData: "",
+      tradeTypePriceId: "",
       err: 0,
     };
   }
@@ -24,82 +25,98 @@ class ShippingMethod extends Component {
     let state = this.state;
     return (
       <React.Fragment>
-        <Space.Compact
-          size="large"
-          className="p-3 align-items-center d-flex "
-        >
-          <Select
-            style={{ width: 250 }}
-            showArrow={0}
-            defaultValue={"請選擇寄送方式"}
-            fieldNames={{ label: "method" }}
-            options={this.state.shippingMethod}
-            onChange={(e) => {
-              this.changeShippingMethod(e);
-            }}
-          />
-          {state.chooseShippingMethod === "BlackCat" && (
-            <Cascader
-              style={{ width: 250, fontStyle: "900" }}
-              showArrow={0}
-              allowClear={0}
-              defaultValue={"請選擇縣市"}
-              fieldNames={{
-                label: "Name",
-                value: "Name",
-                children: "AreaList",
-              }}
-              options={CityCountyData}
-              onChange={(e) => {
-                this.changeCityCounty(e);
-              }}
-            />
-          )}
-          <Input
-            className="cartFontSize"
-            status={this.state.err && "error"}
-            style={{ height: 50, width: "65%" }}
-            placeholder={
-              this.state.chooseShippingMethod === "BlackCat"
-                ? this.state.CityCountyData
-                  ? "地址欄位"
-                  : "請先選擇縣市"
-                : "地址欄位"
-            }
-            readOnly={state.chooseShippingMethod !== "BlackCat"}
-            disabled={
-              !this.state.CityCountyData &&
-              state.chooseShippingMethod === "BlackCat"
-            }
-            value={state.address}
-            onChange={(e) => {
-              this.writeAddress(e);
-              this.props.data.addAddress(
-                this.state.chooseShippingMethod === "BlackCat"
-                  ? this.state.CityCountyData + e.target.value
-                  : e.target.value,
-                this.props.productAccount
-              );
-            }}
-          />
-          {state.chooseShippingMethod &&
-            state.chooseShippingMethod !== "BlackCat" && (
-              <Button
-                style={{ height: 50, lineHeight: 0 }}
-                size="large"
-                onClick={() => {
-                  handleGetStore(this.state.chooseShippingMethod);
-                  this.checkCookieChange();
+        <Row align={"middle"}>
+          <Col span={22}>
+            <Space.Compact
+              size="large"
+              className="p-3 align-items-center d-flex "
+            >
+              <Select
+                style={{ width: 250 }}
+                showArrow={0}
+                defaultValue={"請選擇寄送方式"}
+                fieldNames={{ label: "method" }}
+                options={this.state.shippingMethod}
+                onChange={(e) => {
+                  this.changeShippingMethod(e);
                 }}
-              >
-                請選擇地址
-              </Button>
+              />
+              {state.chooseShippingMethod === "BlackCat" && (
+                <Cascader
+                  style={{ width: 250, fontStyle: "900" }}
+                  showArrow={0}
+                  allowClear={0}
+                  defaultValue={"請選擇縣市"}
+                  fieldNames={{
+                    label: "Name",
+                    value: "Name",
+                    children: "AreaList",
+                  }}
+                  options={CityCountyData}
+                  onChange={(e) => {
+                    this.changeCityCounty(e);
+                  }}
+                />
+              )}
+              <Input
+                className="cartFontSize"
+                status={this.state.err && "error"}
+                style={{ height: 50, width: "65%" }}
+                placeholder={
+                  this.state.chooseShippingMethod === "BlackCat"
+                    ? this.state.CityCountyData
+                      ? "地址欄位"
+                      : "請先選擇縣市"
+                    : "地址欄位"
+                }
+                readOnly={state.chooseShippingMethod !== "BlackCat"}
+                disabled={
+                  !this.state.CityCountyData &&
+                  state.chooseShippingMethod === "BlackCat"
+                }
+                value={state.address}
+                onChange={(e) => {
+                  this.writeAddress(e);
+                  this.props.data.addAddress(
+                    this.state.chooseShippingMethod === "BlackCat"
+                      ? this.state.CityCountyData + e.target.value
+                      : e.target.value,
+                    this.props.productAccount,
+                    0,
+                    this.state
+                  );
+                }}
+              />
+              {state.chooseShippingMethod &&
+                state.chooseShippingMethod !== "BlackCat" && (
+                  <Button
+                    style={{ height: 50, lineHeight: 0 }}
+                    size="large"
+                    onClick={() => {
+                      handleGetStore(this.state.chooseShippingMethod);
+                      this.checkCookieChange();
+                    }}
+                  >
+                    請選擇地址
+                  </Button>
+                )}
+            </Space.Compact>
+          </Col>
+          <Col style={{display:'flex'}} span={2}>
+            {this.props.item.tradeTypePriceId && (
+              <div>
+                運費
+                <span className="text-danger">
+                  {this.props.item.tradeTypePriceId}
+                </span>
+              </div>
             )}
-        </Space.Compact>
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }
-  
+
   //沒招了，定時監聽cookie變化
   checkCookieChange = () => {
     //重製cookie確保沒有錯誤
@@ -126,7 +143,12 @@ class ShippingMethod extends Component {
       //移除cookie
       cookie.remove("address");
       //更新資料
-      this.props.data.addAddress(newstate.address, this.props.productAccount);
+      this.props.data.addAddress(
+        newstate.address,
+        this.props.productAccount,
+        0,
+        this.state
+      );
       this.setState(newstate);
     } else {
       //持續監聽設十分鐘後取消監聽
@@ -159,6 +181,11 @@ class ShippingMethod extends Component {
   //讓選擇新的運送方式時清空地址並禁止手動輸入
   changeShippingMethod = (target) => {
     let newstate = { ...this.state };
+
+    newstate.tradeTypePriceId = shippingMethod.filter((item) => {
+      return item.value === target;
+    })[0].tradeTypePriceId;
+
     newstate.chooseShippingMethod = target;
     newstate.CityCountyData = "";
     newstate.address = "";
@@ -166,7 +193,8 @@ class ShippingMethod extends Component {
     this.props.data.addAddress(
       newstate.address,
       this.props.productAccount,
-      target
+      target,
+      newstate
     );
     this.setState(newstate);
   };

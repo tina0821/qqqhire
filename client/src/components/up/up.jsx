@@ -1,5 +1,6 @@
 import { Form, Input, Checkbox, Button, Cascader } from 'antd';
 import dataitem from "../../data/item2.json";
+import axios from "axios";
 import area from "../../data/CityCountyDataAAA.json";
 import Prconly2 from '../upimg'
 
@@ -7,9 +8,17 @@ import "./up.scss";
 
 const Up = () => {
  
+  // const onFinish = (values) => {
+  //   console.log(values);
+  // };
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post('/api/mypro', values); // Sending the form data to the backend
+      console.log(response.data); // Assuming the backend returns some data
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
