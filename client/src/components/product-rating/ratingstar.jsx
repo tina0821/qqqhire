@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {FaStar} from 'react-icons/fa'
 import './ratingstar.scss'
 
-function RatingStar() {
+function RatingStar({ onRatingChange }) {
   const [rating,setRating] = useState(null);
   const [hover,sethover] = useState(null)
 
@@ -12,12 +12,15 @@ function RatingStar() {
         {[...Array(5)].map((star,index) =>{
           const currentRating = index+1;
           return(
-            <label>
+            <label key={currentRating}>
               <input 
                 type="radio"
                 name='rating'
                 value={currentRating}
-                onClick={() => setRating(currentRating)} 
+                onClick={() => {
+                  setRating(currentRating)
+                  onRatingChange(currentRating)
+                }} 
               />
             <FaStar 
               className='star'

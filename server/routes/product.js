@@ -183,5 +183,14 @@ router.post('/api/insertCart', (req, res) => {
     })
 })
 
+//評分
+router.post('/api/rating',(req,res) => {
+    const ratingdata = req.body.ratingdata;
+    const ratingsql = 'insert into ratings(rating,Comment,buyer) value (?,?,?)';
+    conn.query(ratingsql,[ratingdata.rating,ratingdata.Comment,ratingdata.buyer],(err,data)=>{
+        err?console.log('插入失敗'):res.status(200).json(data)
+    })
+})
+
 
 module.exports = router
