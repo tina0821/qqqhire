@@ -395,6 +395,13 @@ class Cart extends Component {
     newstate.chat ? (newstate.chat = "") : (newstate.chat = 1);
     this.setState(newstate);
   };
+
+  changeChatInfo = (chatInfo) =>{
+    let newstate = { ...this.state };
+    newstate.chat = 1;
+    newstate.chatInfo = chatInfo;
+    this.setState(newstate);
+  }
 }
 
 export default Cart;
