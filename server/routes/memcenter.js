@@ -26,36 +26,35 @@ router.get('/api/mypro/:account', function (req, res) {
 });
 
 router.post('/api/fastup/:account', function (req, res) {
-  const formData = req.body.formData; // This will contain the form data sent from the frontend
+  const formData = req.body; // This will contain the form data sent from the frontend
   console.log(formData);
 
-  // Destructure the needed fields from formData
+  // 進行了解構賦值的操作，將 formData 物件中的特定屬性拆解成獨立的變數
+  // 將前端發送的請求中獲取的表單資料的特定屬性提取出來
   const {
-    productName, rent, deposit, productAccount, productCategoryChild,
+    productName, rent, deposit, user, productCategoryChild,
     cityCounty, area, productDetail
   } = formData;
 
   // Insert data into "product" table
-  const productInsertQuery = `
+  const proInsert = `
     INSERT INTO product (productName, rent, deposit, productAccount, productCategoryChild, cityCounty, area, productDetail)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   coon.query(
-    productInsertQuery,
+    proInsert,
     [
-      formData.productName, formData.rent, formData.deposit, formData.user, formData.productCategoryChild,
-      formData.cityCounty, formData.area, formData.productDetail
+      productName, rent, deposit, user, productCategoryChild,
+      cityCounty, area, productDetail
     ],
     function (error, productResults) {
       if (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
       } else {
-        // Assuming you have the newly inserted productId in "productResults.insertId"
+        // 假設在“productResults.insertId”中有新插入的productId
         const productId = productResults.insertId;
-
-        // Continue with the rest of the code...
       }
     }
   );

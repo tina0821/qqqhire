@@ -9,19 +9,18 @@ import "./up.scss";
 const Up = () => {
   const onFinish = async (values) => {
     try {
-      // 將所選擇的地區拆分為 area 和 cityCounty
+      // 進行解構賦值操作，將 values 物件的某些屬性拆分成單獨的變數
+      // 物件中的 region 和 category 屬性拆分出來，並將其餘的屬性放在 otherValues 物件中
       const { region, category, ...otherValues } = values;
+      // 再次使用解構賦值將 region 陣列的兩個元素分別賦值給 cityCounty 和 area 這兩個變數
       const [cityCounty, area] = region;
-
       // 將所選擇的商品分類拆分為大類和小類
       const [productCategoryId, productCategoryChild] = category;
 
       // 找網頁的登入帳號
-      const useract = localStorage.getItem('userInfo');
-      // 確認 userInfo 的值不是空值（null）再進行 slice 操作
-      const user = useract.slice(1, -1) 
+      const user = localStorage.getItem('userInfo').slice(1, -1);
 
-      // 整理資料
+      // 整理資料，將所有需要傳遞給後端的資料整合成一個物件
       const formData = {
         ...otherValues,
         user,
@@ -30,10 +29,11 @@ const Up = () => {
         productCategoryId,
         productCategoryChild,
       };
+
       // 提交整理後的資料到後端
-      const response = await axios.post(`http://localhost:8000/api/fastup/${user}`, {formData});
+      const response = await axios.post(`http://localhost:8000/api/fastup/${user}`, formData);
       console.log(response.data); // 假設後端返回一些數據
-      console.log(user); // 假設後端返回一些數據
+      console.log(user);
     } catch (error) {
       console.error(error);
     }
