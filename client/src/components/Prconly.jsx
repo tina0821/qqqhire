@@ -2,14 +2,7 @@ import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React, { useState } from 'react';
 const Prconly = () => {
-  const [fileList, setFileList] = useState([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-    
-    },
-  ]);
+  const [fileList, setFileList] = useState([ ]);
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };

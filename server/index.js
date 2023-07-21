@@ -21,6 +21,9 @@ app.use("/", product);
 const login = require('./routes/login')
 app.use('/', login)
 
+const member = require('./routes/memeber')
+app.use('/',member)
+
 app.get("/api/myorder/:account", function (req, res) {
   const account = req.params.account;
   const query = `
@@ -43,19 +46,6 @@ app.get("/api/myorder/:account", function (req, res) {
   });
 });
 
-
-app.get('/api/members/:account', (req, res) => {
-  const memberData = req.body;
-  const selectQuery = `SELECT * FROM userinfo WHERE account = ?`;
-
-  coon.query(
-    "SELECT * FROM userinfo WHERE account=?",
-    [req.params.account],
-    function (err, rows) {
-      res.send(JSON.stringify(rows));
-    }
-  );
-});
 
 app.post("/api/cancelOrder", function (req, res) {
   const { tradeitemId } = req.body;

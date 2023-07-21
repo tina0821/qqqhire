@@ -3,6 +3,8 @@ import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 import "./Personaldata.scss"
 import { Col, Row } from 'antd';
+import Prconly from '../Prconly'
+
 
 const MemberCenter = () => {
   // setTradeItems(response.data);
@@ -21,6 +23,7 @@ const MemberCenter = () => {
   const [identityCard, setIdentityCard] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
+  
   const isLoggedIn = localStorage.getItem('userInfo').slice(1,-1);
 
   useEffect(() => {
@@ -48,29 +51,29 @@ const MemberCenter = () => {
   }, []);
   //先取得資料庫的值
 
-  const fetchMemberData = async (account) => {
-    try {
-      const response = await axios.get(`http://localhost:8000/api/members/${account}`);
-      const userData = response.data[0];
-      setAccount(userData.account);
-      setPassword(userData.password);
-      setName(userData.name);
-      setNickname(userData.email); // 改为setEmail
-      setIdentityCard(userData.identityCard);
-      setGender(userData.gender);
-      setNickname(userData.nickname); // 改为setNickname
-      setBirthday(userData.birthday.substring(0, 10));
-    } catch (error) {
-      console.error('错误??', error);
-    }
-  };
-  
   useEffect(() => {
-    if (editMode2) {
-      fetchMemberData(account);
-    }
-  }, [editMode2, account]);
-  
+
+    const fetchMemberData = () => {
+      axios.put(`http://localhost:8000/api/members/${name,isLoggedIn}`)
+        .then((response) => {
+          setAccount(response.data[0].account)
+          setPassword(response.data[0].password)
+          setName(response.data[0].name)
+          setNickname(response.data[0].email)
+          setNickname(response.data[0].identityCard)
+          setNickname(response.data[0].gender)
+          setNickname(response.data[0].nickname)
+          setBirthday(response.data[0].birthday.substring(0, 10))
+        })
+        .catch((error) => {
+          console.error('错误??', error);
+
+
+        });
+    };
+    fetchMemberData();
+  }, [editMode2])
+
   const handleEditClick2 = () => {
     if (loggedIn) {
       setEditMode2(true);
@@ -90,7 +93,7 @@ const MemberCenter = () => {
     setEditMode2(false);
   };
 
-
+  
   return (
     <div id='memberout'>
       <div className='member'>
@@ -98,7 +101,7 @@ const MemberCenter = () => {
         <div className='member1'>
 
           <div className='memberprc'>
-         
+          <Prconly/>
           </div>
           <Row gutter={20}>
 
