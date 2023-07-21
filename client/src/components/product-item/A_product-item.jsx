@@ -23,6 +23,47 @@ function A_Product_Item() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+  //提示框狀態 加入租物車,收藏
+  const handleAction = async (state) => {
+
+    if (localStorage.getItem('userInfo')) {
+      const accountName = localStorage.getItem('userInfo');
+      const account = accountName.slice(1, -1);
+      const rentStart = startDate;
+      const rentEnd = endDate
+      const productId = id;
+
+      //租物車
+      if (state === 1 && totalAmount && productitem[0].rentalStatus === '未出租') {
+        try {
+          const response = await axios.post('http://localhost:8000/api/insertCart', { account, productId, rentStart, rentEnd });
+          response ? setShowAlert(1) : console.log('GG');
+        } catch (error) {
+          error.response ? setShowAlert(4) : console.error('發生錯誤');
+        }
+      } else {
+        productitem[0].rentalStatus === '出租中' ? setShowAlert(7) : setShowAlert(3)
+      }
+
+
+      //收藏
+      if (state === 2) {
+        try {
+          const response = await axios.post('http://localhost:8000/api/collect', { account, productId });
+          response ? setShowAlert(2) : console.log('GG');
+        } catch (error) {
+          error.response ? setShowAlert(5) : console.error('發生錯誤');
+        }
+      }
+
+    } else {
+      setShowAlert(6);
+    }
+
+    setTimeout(() => { setShowAlert(0) }, 1500);
+  };
+
+
 
   useEffect(() => {
     //產品資訊

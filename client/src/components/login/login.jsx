@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input, Col, Row, Carousel } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import "./login.scss"
 
@@ -29,31 +29,34 @@ const Login = () => {
 
             } else if (response.status === 401) {
                 console.log('帳號或密碼錯');
+                alert("帳號或密碼錯誤 請重新輸入！")
             }
 
         } catch (error) {
             console.error('请求失败:', error);
+            alert("帳號或密碼錯誤 請重新輸入！")
         }
     };
 
 
- 
+
 
 
     return (
 
         <div id='loginout' >
             <Row id='login'>
-                <Col span={12}>
+                <Col span={15}>
                     <Carousel autoplay className='Carousel' style={{ height: "100%" }}>
                         <div>
+                        <a href="http://localhost:3000/product"></a>
                             <img
-                                // style={contentStyle}
                                 src="http://localhost:8000/img/login/1.png"
                                 alt="Carousel 1"
                             />
                         </div>
                         <div>
+                        <a href="http://localhost:3000/product"></a>
                             <img
                                 // style={contentStyle}
                                 src="http://localhost:8000/img/login/2.png"
@@ -69,9 +72,10 @@ const Login = () => {
                         </div>
                     </Carousel>
                 </Col>
-                <Col span={12} id='login-right'>
-                    <h1>登入</h1>
+                <Col span={9} id='login-right'>
+                    <p className='logintitle'>登入</p>
                     <Form
+                        layout="vertical"
                         name="normal_login"
                         className="login-form"
                         initialValues={{
@@ -81,7 +85,7 @@ const Login = () => {
 
                     >
                         <Form.Item
-                        label="帳號"
+                            label="帳號"
                             name="account"
                             rules={[
                                 {
@@ -92,7 +96,7 @@ const Login = () => {
                         >
                             <Input
                                 prefix={<UserOutlined className="site-form-item-icon" />}
-                                placeholder="帳號"
+                                placeholder="請輸入帳號"
                                 size='large'
                                 value={account}
                                 onChange={e => setaccount(e.target.value)} // 更新用户名的状态
@@ -111,7 +115,7 @@ const Login = () => {
                             <Input
                                 prefix={<LockOutlined className="site-form-item-icon" />}
                                 type="password"
-                                placeholder="密码"
+                                placeholder="請輸入密碼"
                                 size='large'
                                 value={password}
                                 onChange={e => setPassword(e.target.value)} // 更新密码的状态
@@ -128,7 +132,7 @@ const Login = () => {
                                 type="primary"
                                 htmlType="submit"
                                 className="login-form-button"
-                        
+                                style={{ background: "#16778a", color: "#fff", width: "75%",height:"100%" }}
                             >
                                 登入
                             </Button>

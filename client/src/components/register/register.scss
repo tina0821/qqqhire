@@ -2,7 +2,7 @@ $font-big: 2.25rem;
 $font-normal: 2rem;
 $font-small: 1.75rem;
 $font-xs: 1.5rem;
-
+$font-xxs:1.25rem;
 $main-color: #0b7597;
 
 #registerout {
@@ -29,22 +29,14 @@ $main-color: #0b7597;
     background-color: #fff;
     padding: 20px;
     border-radius: 15px;
-    height: 80%;
+    height: 780px;
 
-
-
-    .ant-form {
-        // margin-top: 50px;
-    }
-
-    .slick-list {
-        // margin: 30px;
-    }
 
     img {
         height: 600px;
         object-fit: cover;
     }
+
 
     .ant-form-item-required {
         font-size: $font-small;
@@ -72,5 +64,9 @@ $main-color: #0b7597;
         .ant-input {
             border: 2px solid #16778a;
         }
+    }
+    Button{
+        font-size: $font-xxs;
+        height:"100%"
     }
 }
