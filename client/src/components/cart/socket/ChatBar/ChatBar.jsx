@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Button } from "antd";
 import axios from "axios";
 import Item from "antd/es/list/Item";
 
-const ChatBar = ({ cart ,setRoomName}) => {
+const ChatBar = ({
+  cart,
+  socket,
+  removeRoom,
+  setRoomName,
+  setProductAccount,
+  setMessages,
+}) => {
   const [allRoomData, setAllRoomData] = useState([]);
   useEffect(() => {
     axios
@@ -24,10 +32,21 @@ const ChatBar = ({ cart ,setRoomName}) => {
       {allRoomData.map((item) => {
         return (
           <div
-            className="cursorPointer"
+            style={{
+              height: "40px",
+              // borderBottom: "1px solid #0B7597",
+              textOverflow: "ellipsis",
+              whiteSpace:"nowrap",
+              overflow:"hidden",
+              width:"95%",
+            }}
+            className="cursorPointer p-1 btnColor"
             onClick={() => {
+              socket.off(removeRoom);
               cart.changeChatRoom(item.room);
-              setRoomName(item.room)
+              setRoomName(item.room);
+              setProductAccount(item.productAccount);
+              setMessages([]);
             }}
           >
             {item.productAccount}

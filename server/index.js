@@ -40,13 +40,6 @@ app.get("/api/members/:account", (req, res) => {
   );
 });
 
-
-app.post("/api/login", (req, res) => {
-  console.log(req.body.aldata);
-  // coon.query()
-  res.send("GG");
-});
-
 app.listen(8000, function () {
   console.clear()
   console.log(new Date().toLocaleString());
@@ -65,6 +58,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
+  
   console.log(`${socket.id} 用户已连接!`);
   socket.on("disconnect", () => {
     console.log(`${socket.id}用户已断开连接`);
@@ -81,8 +75,7 @@ io.on("connection", (socket) => {
   socket.on("message", (data) => {
     const newdata={...data}
     newdata.date=new Date().getHours()+':'+new Date().getMinutes()
-    // console.log(new Date().toLocaleString())
-    io.emit(`${data.roomName}`, newdata);
+    io.emit(data.roomName, newdata);
   });
 });
 server.listen(9000, function () {

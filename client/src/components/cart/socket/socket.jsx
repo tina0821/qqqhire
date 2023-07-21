@@ -29,19 +29,27 @@ export const Chat = ({ cart }) => {
 };
 
 export const Main = ({ socket, cart }) => {
-  const [roomName, setRoomName] = useState("message");
+  const [roomName, setRoomName] = useState("");
+  const [productAccount,setProductAccount]= useState("")
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [removeRoom ,setRemoveRoom] = useState("")
+
   localStorage.setItem(
     "userName",
     localStorage.getItem("userInfo").slice(1, -1)
   );
+
+
+  useEffect(() => {
+    setMessages([])
+  },[roomName])
 
   socket.emit("newUser", {
     userName: localStorage.getItem("userInfo").slice(1, -1),
     socketID: socket.id,
   });
 
-
-  console.log(roomName)
   return (
     <ConfigProvider
       theme={{
@@ -63,20 +71,20 @@ export const Main = ({ socket, cart }) => {
         }}
       >
         <Col span={24}>
-          <ChatNavBar cart={cart} />
+          <ChatNavBar cart={cart} productAccount={productAccount} />
         </Col>
         <Col style={{ borderTop: "3px solid #0B7597 " }} span={24}>
           <Row>
             <Col span={6} style={{ borderRight: "3px solid #0B7597" }}>
-              <ChatBar cart={cart} setRoomName={setRoomName} />
+              <ChatBar socket={socket} removeRoom={removeRoom} cart={cart} setMessages={setMessages} setRoomName={setRoomName} setProductAccount={setProductAccount} />
             </Col>
             <Col span={18}>
               <Row>
                 <Col span={24}>
-                  <ChatBody socket={socket} roomName={roomName} />
+                  <ChatBody setRemoveRoom={setRemoveRoom} socket={socket} setMessages={setMessages} messages={messages} roomName={roomName} />
                 </Col>
                 <Col span={24}>
-                  <ChatFooter socket={socket} roomName={roomName} />
+                  <ChatFooter socket={socket} message={message} setMessage={setMessage} roomName={roomName} />
                 </Col>
               </Row>
             </Col>
@@ -86,7 +94,3 @@ export const Main = ({ socket, cart }) => {
     </ConfigProvider>
   );
 };
-{
-  /*  />
-<input type="button" value="送出訊息" onClick={sendMessage} /> */
-}

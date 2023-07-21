@@ -1,17 +1,13 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
-export const ChatBody = ({ roomName,socket }) => {  
-  const [messages, setMessages] = useState([]);
+export const ChatBody = ({ roomName, socket,setRemoveRoom, setMessages, messages }) => {
 
-  useEffect(()=>{
-    setMessages([])
-  },[roomName])
-
-  useEffect(() => {
-    socket.on(`${roomName}`, (data) => {
-      setMessages([...messages, data]);
-    });
-  }, [socket, messages]);
+  socket.on(`${roomName}`, (data) => {
+    setRemoveRoom(roomName)
+    data.roomName === roomName && setMessages([...messages, data]);
+    socket.off(`${roomName}`);
+    console.log(messages);
+  });
 
   const scrollContainerRef = useRef(null);
 
@@ -71,7 +67,7 @@ export const ChatBody = ({ roomName,socket }) => {
                       marginLeft: "auto",
                       paddingLeft: "10px",
                       paddingRight: "10px",
-                      wordBreak: "break-all",
+                      wordBreak: "break-word",
                       height: "auto",
                     }}
                   >

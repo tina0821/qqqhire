@@ -192,7 +192,6 @@ page.post("/getAccountInfo", (req, res) => {
 });
 
 page.delete("/delete/:cartMapId", (req, res) => {
-  console.log(req.params.cartMapId);
   coon.query(
     `DELETE FROM cartmap WHERE cartmap.cartMapId = ?`,
     [req.params.cartMapId],
