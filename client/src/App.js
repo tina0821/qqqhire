@@ -34,8 +34,6 @@ import Cart from "./components/cart/index";
 import Aboutus from './page/aboutus';
 import Order from './page/order';
 import Cmmgmt from './page/cmmgmt';
-import Profastup from './page/profastup';
-import Proedit from './page/proedit';
 
 import NotFound from './page/NotFound';
 
@@ -80,8 +78,6 @@ const App = () => {
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/order" element={<Order />} />
           <Route path="/cmmgmt" element={<Cmmgmt />} />
-          <Route path="/profastup" element={<Profastup />} />
-          <Route path="/proedit" element={<Proedit />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

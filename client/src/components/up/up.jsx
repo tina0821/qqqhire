@@ -1,5 +1,6 @@
 import { Form, Input, Checkbox, Button, Cascader } from 'antd';
 import dataitem from "../../data/item2.json";
+import axios from "axios";
 import area from "../../data/CityCountyDataAAA.json";
 import Prconly2 from '../upimg'
 
