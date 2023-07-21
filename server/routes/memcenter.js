@@ -60,7 +60,6 @@ router.post('/api/fastup/:account', function (req, res) {
   );
 });
 
-
 router.get("/api/myorder/:account", function (req, res) {
   const account = req.params.account;
   const query = `
