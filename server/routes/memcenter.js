@@ -1,14 +1,16 @@
 const express = require('express');
+const cors = require('cors');
 const router = express.Router();
 const coon = require('./db');
 
+router.use(cors());
 router.use(express.json());
 
 router.get('/api/mypro/:account', function (req, res) {
   const account = req.params.account;
-  console.log(req.params)
+  // console.log(req.params)
   const query = `
-    SELECT p.productId, p.rent, p.deposit, p.productName, p.rentalStatus, p.state, i.imageSrc
+    SELECT p.productId, p.rent, p.deposit, p.productName, p.state, i.imageSrc
     FROM product AS p
     INNER JOIN imagemap AS i ON p.productId = i.productId
     WHERE p.productAccount = ? 
@@ -23,28 +25,27 @@ router.get('/api/mypro/:account', function (req, res) {
   });
 });
 
-// Route to insert data into "product" table
-router.post('/api/mypro', function (req, res) {
-  const formData = req.body; // This will contain the form data sent from the frontend
+router.post('/api/fastup/:account', function (req, res) {
+  const formData = req.body.formData; // This will contain the form data sent from the frontend
   console.log(formData);
 
+  // Destructure the needed fields from formData
   const {
-    productName, rent, deposit, rentalStatus, productAccount, productCategoryChild,
+    productName, rent, deposit, productAccount, productCategoryChild,
     cityCounty, area, productDetail
-    // Add other form fields here if needed...
   } = formData;
 
   // Insert data into "product" table
   const productInsertQuery = `
-    INSERT INTO product (productName, rent, deposit, rentalStatus, productAccount, productCategoryChild, cityCounty, area, productDetail)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO product (productName, rent, deposit, productAccount, productCategoryChild, cityCounty, area, productDetail)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   coon.query(
     productInsertQuery,
     [
-      productName, rent, deposit, rentalStatus, productAccount, productCategoryChild,
-    cityCounty, area, productDetail
+      formData.productName, formData.rent, formData.deposit, formData.user, formData.productCategoryChild,
+      formData.cityCounty, formData.area, formData.productDetail
     ],
     function (error, productResults) {
       if (error) {
@@ -54,48 +55,12 @@ router.post('/api/mypro', function (req, res) {
         // Assuming you have the newly inserted productId in "productResults.insertId"
         const productId = productResults.insertId;
 
-        // Insert data into "imagemap" table
-        const imageInsertQuery = `
-          INSERT INTO imagemap (imageSrc, productId)
-          VALUES (?, ?)
-        `;
-
-        coon.query(
-          imageInsertQuery,
-          ['your_image_src', productId], // Replace 'your_image_src' with the actual image source
-          function (error, imageResults) {
-            if (error) {
-              console.error(error);
-              res.status(500).json({ error: 'Internal Server Error' });
-            } else {
-              // Assuming you have the newly inserted imageId in "imageResults.insertId"
-              const imageId = imageResults.insertId;
-
-              // Insert data into "productcategorymap" table
-              const categoryInsertQuery = `
-                INSERT INTO productcategorymap (productCategoryChild, productCategoryId)
-                VALUES (?, ?)
-              `;
-
-              coon.query(
-                categoryInsertQuery,
-                [productCategoryChild, 'your_product_category_id'], // Replace 'your_product_category_id' with the actual product category ID
-                function (error, categoryResults) {
-                  if (error) {
-                    console.error(error);
-                    res.status(500).json({ error: 'Internal Server Error' });
-                  } else {
-                    res.json({ message: 'Data received and saved to database.' });
-                  }
-                }
-              );
-            }
-          }
-        );
+        // Continue with the rest of the code...
       }
     }
   );
-});;
+});
+
 
 router.get("/api/myorder/:account", function (req, res) {
   const account = req.params.account;
@@ -144,12 +109,12 @@ router.get('/api/myrent/:productAccount', function (req, res) {
 router.post("/api/cancelOrder", function (req, res) {
   const { tradeitemId } = req.body;
   // 檢查 tradeitemId 的值
-  console.log("Received tradeitemId:", tradeitemId);
+  // console.log("Received tradeitemId:", tradeitemId);
 
   const updateQuery = "UPDATE tradeitem SET state = 4 WHERE tradeitemId = ?";
   coon.query(updateQuery, [tradeitemId], function (error, results) {
     if (error) {
-      console.log(error);
+      // console.log(error);
       res.status(500).json({ error: "Internal Server Error" });
     } else {
       if (results.affectedRows > 0) {
@@ -176,7 +141,7 @@ router.post('/api/agreeOrder', function (req, res) {
 
   coon.query(updateQuery, [tradeitemId], function (error, results) {
     if (error) {
-      console.log(error);
+      // console.log(error);
       res.status(500).json({ message: 'Error occurred while updating tradeitem and product' });
     } else {
       res.status(200).json({ message: 'Order canceled successfully' });

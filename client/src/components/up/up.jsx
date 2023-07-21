@@ -1,4 +1,4 @@
-import { Form, Input, Checkbox, Button, Cascader } from 'antd';
+import { Form, Input, Button, Cascader } from 'antd';
 import dataitem from "../../data/item2.json";
 import axios from "axios";
 import area from "../../data/CityCountyDataAAA.json";
@@ -7,15 +7,33 @@ import Prconly2 from '../upimg'
 import "./up.scss";
 
 const Up = () => {
- 
-  // const onFinish = (values) => {
-  //   console.log(values);
-  // };
-
   const onFinish = async (values) => {
     try {
-      const response = await axios.post('/api/mypro', values); // Sending the form data to the backend
-      console.log(response.data); // Assuming the backend returns some data
+      // 將所選擇的地區拆分為 area 和 cityCounty
+      const { region, category, ...otherValues } = values;
+      const [cityCounty, area] = region;
+
+      // 將所選擇的商品分類拆分為大類和小類
+      const [productCategoryId, productCategoryChild] = category;
+
+      // 找網頁的登入帳號
+      const useract = localStorage.getItem('userInfo');
+      // 確認 userInfo 的值不是空值（null）再進行 slice 操作
+      const user = useract.slice(1, -1) 
+
+      // 整理資料
+      const formData = {
+        ...otherValues,
+        user,
+        cityCounty,
+        area,
+        productCategoryId,
+        productCategoryChild,
+      };
+      // 提交整理後的資料到後端
+      const response = await axios.post(`http://localhost:8000/api/fastup/${user}`, {formData});
+      console.log(response.data); // 假設後端返回一些數據
+      console.log(user); // 假設後端返回一些數據
     } catch (error) {
       console.error(error);
     }
@@ -48,7 +66,7 @@ const Up = () => {
 
       <Form.Item
         label="租金(/天)"
-        name="rentPerDay"
+        name="rent"
         rules={[{ required: true, message: '輸入租金' }]}
       >
         <Input type="number" />
@@ -62,8 +80,8 @@ const Up = () => {
         <Input type="number" />
       </Form.Item>
 
-      <Form.Item label="照片" name="fileList" valuePropName="fileList">
-      <Prconly2 />
+      <Form.Item label="照片" name="imageSrc" valuePropName="fileList">
+        <Prconly2 />
       </Form.Item>
 
       <Form.Item
@@ -94,23 +112,13 @@ const Up = () => {
 
       <Form.Item
         label="商品描述"
-        name="description"
+        name="productDetail"
         rules={[{ required: true, message: '請輸入商品描述' }]}
       >
         <Input.TextArea
           maxLength={300}
           placeholder="請輸入商品描述，限300字內"
         />
-      </Form.Item>
-
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        wrapperCol={{ offset: 6, span: 14 }}
-      >
-        <Checkbox>
-          我同意注意事項
-        </Checkbox>
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
