@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+
+
+
+
+
 // Multer 中介
 const multer = require('multer');
 
@@ -29,10 +34,9 @@ const upload = multer({
    dest: 'uploads/',
    limits: {
       fileSize: 10 * 1024 * 1024, // 10 MB 的上傳限制
+      // fileSize: 10000000,           // 10 MB 的上傳限制
    }
 });
-
-
 
 
 
@@ -53,8 +57,10 @@ const transporter = nodemailer.createTransport({
 
 
 router.post('/send', upload.single('photo'), (req, res) => {
-   console.log(req.file)
-   
+   const {file} = req.file;
+   console.log(file);
+
+
    const mailOptions = {
       from: "hireoutdoor2023@gmail.com",
       to: "hireoutdoor2023@gmail.com",
@@ -142,8 +148,9 @@ router.post('/send', upload.single('photo'), (req, res) => {
    `,
       attachments: [
          {
-            filename: '問題回報照片', // 附件檔案名稱
-            path: req.file.path,     // 照片的檔案路徑
+            filename: `問題回報照片`, // 附件檔案名稱
+            // path: `${req.body.img}`,     // 照片的檔案路徑
+            path: file.path,     // 照片的檔案路徑
          },
       ],
    };

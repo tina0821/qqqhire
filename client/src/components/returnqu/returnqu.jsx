@@ -68,8 +68,10 @@ const Returnqu = () => {
     //  ======== 輸入框取值 傳回後端  並判斷合約狀態========
 
     const [quWord, setquWord] = useState("");     // 文字
-    const [quPhoto, setquPhoto] = useState(""); // 照片
+    const [quPhoto, setquPhoto] = useState("");   // 照片
     const [checked, setChecked] = useState("");   // 合約
+    const formData = new FormData();              // 照片
+    
 
     // 取得合約狀態
     const sendChick = (e) => {
@@ -84,10 +86,13 @@ const Returnqu = () => {
     };
 
     const uploadImg = (e) => {
+
+        formData.append('photo', e.target.files[0]);
+
         imgToBase64(e.target.files[0], (base64Code) => {
             setquPhoto(base64Code);
         });
-        console.log(e);
+        // console.log(e);
     }
 
     // 取得文字
@@ -100,14 +105,19 @@ const Returnqu = () => {
     const SendMessage = async () => {
         if (checked === '1') {
 
-            // 傳送 文字&照片 到後端
-            const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord }
-              );
+            try {
+                // 傳送 文字&照片 到後端
+                const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord, img:quPhoto}, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
 
-            // 判斷寄信狀態
-            sendOrNot(statusText);
-
-
+                // 判斷寄信狀態
+                sendOrNot(statusText);
+            } catch (error) {
+                console.error(error);
+            }
         } else {
             alert("尚未勾選合約 請確認!")
         }
@@ -223,14 +233,12 @@ const Returnqu = () => {
                         </div>}
                         {/* 用于顯示已输入字數和總字數限制 */}
                         {/* {!open2&&<div id="charCount" />} */}
-                        {photo && <form encType="multipart/form-data">
-                            <div className="form-group" enctype ="multipart/form-data">
+                        {photo && <form encType="multipart/form-data" className="form-group">
                             <label htmlFor="imageUpload" style={{ fontSize: "1.5rem" }}>圖片補充:</label>
                             <input type="file" className="form-control-file" id="imageUpload" style={{ fontSize: "1.1rem" }} onChange={uploadImg} />
-                        </div>
-                        </form>} 
-                        
-                        {photo && <div id="charCount"><img src={quPhoto} alt='請選擇圖片'/></div>}
+                        </form>}
+
+                        {photo && <div id="charCount"><img src={quPhoto} alt='請選擇圖片' /></div>}
                     </div>
 
                     <hr />
