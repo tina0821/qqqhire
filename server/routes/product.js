@@ -184,11 +184,19 @@ router.post('/api/insertCart', (req, res) => {
 })
 
 //評分
-router.post('/api/rating',(req,res) => {
+router.post('/api/rating', (req, res) => {
     const ratingdata = req.body.ratingdata;
-    const ratingsql = 'insert into ratings(rating,Comment,buyer) value (?,?,?)';
-    conn.query(ratingsql,[ratingdata.rating,ratingdata.Comment,ratingdata.buyer],(err,data)=>{
-        err?console.log('插入失敗'):res.status(200).json(data)
+    const ratingsql = 'insert into ratings(rating,Comment,buyer,productId) value (?,?,?,?)';
+    conn.query(ratingsql, [ratingdata.rating, ratingdata.Comment, ratingdata.buyer, ratingdata.productId], (err, data) => {
+        err ? console.log('插入失敗') : res.status(200).json(data)
+    })
+})
+
+router.post('/api/rating/select', (req, res) => {
+    const selectRating = req.body.selectRating;
+    const ratingsql = 'SELECT * FROM ratings WHERE productId = ? and Buyer = ?';
+    conn.query(ratingsql, [selectRating.productId, selectRating.buyer], (err, data) => {
+        err ? console.log('查詢失敗') : res.status(200).json(data)
     })
 })
 

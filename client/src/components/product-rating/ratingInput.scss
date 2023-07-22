@@ -1,5 +1,24 @@
 @import '../../assets/var.scss';
 
+.rating-btn {
+  button {
+    font-size: $font-normal;
+    background-color: $main-color;
+    color: white;
+    border: 1px solid $main-color;
+    border-radius: 5px;
+
+    &:active {
+      background-color: darken($main-color, 10%);
+    }
+  }
+  p {
+    font-size: $font-normal;
+    color: orange;
+    margin: 0;
+  }
+}
+
 .ratinginput {
   position: fixed;
   text-align: center;
@@ -23,16 +42,19 @@
     margin-bottom: 20px;
     border-radius: 10px 10px 0px 0px;
     color: white;
-    button{
+    button {
       background-color: white;
       height: 40px;
       width: 40px;
-      border-color: $main-color;
+      border: 1px solid $main-color;
       border-radius: 10px;
       font-size: $font-xs;
+      &:active {
+        border: 2px solid $main-color;
+      }
     }
   }
-  .ratingStar{
+  .ratingStar {
     margin-bottom: 20px;
   }
 
@@ -49,16 +71,21 @@
     }
   }
 
-  .RI-bottom{
+  .RI-bottom {
     padding: 20px;
     display: flex;
     justify-content: flex-end;
-    button{
+    button {
       font-size: $font-xs;
       margin: 5px;
       background-color: white;
       border-radius: 5px;
+      color: $main-color;
+      border: 1px solid $main-color;
+      &:active {
+        background-color: darken($main-color, 1%); /* 讓按鈕稍微變深10% */
+        color: white;
+      }
     }
   }
-
 }

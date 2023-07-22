@@ -5,7 +5,6 @@ import './A_productSeller.scss'
 
 import ProductSellerCard from './productSellerCard';
 import ProductCard from '../product/productCard';
-import RatingInput from '../product-rating/ratingInput';
 
 function A_PRODUCT_SELLER() {
   const { account } = useParams();
@@ -21,7 +20,6 @@ function A_PRODUCT_SELLER() {
 
 
   return (<>
-    <RatingInput/>
     <div className='container' id='P-seller-page' >
       {ProductSeller.length > 0 ? (
         <>
@@ -45,7 +43,7 @@ function A_PRODUCT_SELLER() {
           {/* <ProductTop /> */}
           <div className='psg-title'>【 出租人資訊 】</div>
           <ProductSellerCard key={ProductSeller[0].account} productSeller={ProductSeller[0]} />
-          {ProductSeller[0].productId !== null ?(
+          {ProductSeller[0].productId !== null ? (
             <div className='row'>
               {ProductSeller.map((product) => (
                 <Link key={product.productId} target="_blank" className="col-md-4 pd-link" to={`/productItem/${product.productId}`}>
@@ -53,8 +51,8 @@ function A_PRODUCT_SELLER() {
                 </Link>
               ))}
             </div>
-          ):(<div className='notpd'>未有出租商品</div>)
-          
+          ) : (<div className='notpd'>未有出租商品</div>)
+
           }
 
         </>
