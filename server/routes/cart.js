@@ -1,6 +1,7 @@
 //接收開啟伺服器功能
 var express = require("express");
 var coon = require("./db");
+const { json } = require("body-parser");
 //小組管理專案分工需要架設分業系統(暫定解釋)
 var page = express.Router();
 //開始架設份派到自己的業務
@@ -232,27 +233,30 @@ page.post("/getChatList", (req, res) => {
 });
 
 page.put("/upDateChatContain", (req, res) => {
-  const sql = `UPDATE chatroom  SET contain = ? WHERE (chatroom.account = ? AND chatroom.productAccount = ?) OR (chatroom.account = ? OR chatroom.productAccount = ?);`;
+  const sql = `UPDATE chatroom  SET contain = ? WHERE (account = ? AND productAccount = ?) OR (account = ? AND productAccount = ?)`;
   const account = req.body.account;
   const productAccount = req.body.productAccount;
+  const contain = JSON.stringify(req.body.contain);
   coon.query(
     sql,
-    [req.contain, account, productAccount, productAccount, account],
+    [contain, account, productAccount, productAccount, account],
     (err, result) => {
       err ? res.send(err) : res.send(result);
     }
   );
-}); 
+});
 
 page.post("/upDateChatContain", (req, res) => {
-  const sql = `SELECT * FROM chatroom  WHERE (chatroom.account = ? AND chatroom.productAccount = ?) OR (chatroom.account = ? OR chatroom.productAccount = ?);`;
+  const sql = `SELECT * FROM chatroom  WHERE (account = ? AND productAccount = ?) OR (account = ? AND productAccount = ?);`;
   const account = req.body.account;
   const productAccount = req.body.productAccount;
   coon.query(
     sql,
     [account, productAccount, productAccount, account],
     (err, result) => {
-      err ? res.send(err) : res.send(result[0].contain);
+      if (result.length !== 0) {
+        err ? res.send(err) : res.send(JSON.stringify(result[0].contain));
+      }
     }
   );
 });

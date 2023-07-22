@@ -98,7 +98,7 @@ export const Main = ({ socket,chatInfo,showRoom }) => {
             <Col span={18}>
               <Row>
                 <Col span={24}>
-                  <ChatBody setRemoveRoom={setRemoveRoom} socket={socket} setMessages={setMessages} messages={messages} roomName={roomName} />
+                  <ChatBody productAccount={productAccount} setRemoveRoom={setRemoveRoom} socket={socket} setMessages={setMessages} messages={messages} roomName={roomName} />
                 </Col>
                 <Col span={24}>
                   <ChatFooter socket={socket} message={message} setMessage={setMessage} roomName={roomName} />

@@ -1,13 +1,27 @@
+import axios from "axios";
 import React, { useRef, useEffect } from "react";
 
-export const ChatBody = ({ roomName, socket,setRemoveRoom, setMessages, messages }) => {
-
+export const ChatBody = ({
+  roomName,
+  socket,
+  setRemoveRoom,
+  setMessages,
+  messages,
+  productAccount,
+}) => {
   socket.on(`${roomName}`, (data) => {
-    setRemoveRoom(roomName)
+    setRemoveRoom(roomName);
     data.roomName === roomName && setMessages([...messages, data]);
-    socket.off(`${roomName}`);
-    console.log(messages);
   });
+
+  useEffect(() => {
+    messages.length !== 0 &&
+      axios.put("http://localhost:8000/cart/upDateChatContain", {
+        account: localStorage.getItem("userName"),
+        productAccount: productAccount,
+        contain: messages,
+      });
+  }, [messages]);
 
   const scrollContainerRef = useRef(null);
 
@@ -24,17 +38,17 @@ export const ChatBody = ({ roomName, socket,setRemoveRoom, setMessages, messages
   });
 
   return (
-    <>
+    <React.Fragment key={"0"}>
       <div
         ref={scrollContainerRef}
         id="scroll"
         className="scroll-container"
         style={{ height: "500px", overflow: "auto", backgroundColor: "white" }}
       >
-        {messages.map((message) => {
+        {messages.map((message, index) => {
           if (message.name === localStorage.getItem("userName")) {
             return (
-              <>
+              <React.Fragment key={index}>
                 <div
                   style={{
                     textAlign: "end",
@@ -74,11 +88,11 @@ export const ChatBody = ({ roomName, socket,setRemoveRoom, setMessages, messages
                     {message.text}
                   </div>
                 </div>
-              </>
+              </React.Fragment>
             );
           } else {
             return (
-              <>
+              <React.Fragment key={index}>
                 <div
                   style={{
                     maxWidth: "300px",
@@ -115,11 +129,11 @@ export const ChatBody = ({ roomName, socket,setRemoveRoom, setMessages, messages
                     {message.date}
                   </div>
                 </div>
-              </>
+              </React.Fragment>
             );
           }
         })}
       </div>
-    </>
+    </React.Fragment>
   );
 };
