@@ -119,11 +119,6 @@ export const ChatBody = ({ roomName, socket,setRemoveRoom, setMessages, messages
             );
           }
         })}
-
-        {/* 当有用户正在输入，则被触发 */}
-        <div style={{ bottom: "0px", right: "0px", position: "absolute" }}>
-          正在輸入...
-        </div>
       </div>
     </>
   );

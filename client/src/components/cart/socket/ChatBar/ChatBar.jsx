@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "antd";
 import axios from "axios";
-import Item from "antd/es/list/Item";
 
 const ChatBar = ({
-  cart,
   socket,
   removeRoom,
   setRoomName,
@@ -43,7 +40,6 @@ const ChatBar = ({
             className="cursorPointer p-1 btnColor"
             onClick={() => {
               socket.off(removeRoom);
-              cart.changeChatRoom(item.room);
               setRoomName(item.room);
               setProductAccount(item.productAccount);
               setMessages([]);

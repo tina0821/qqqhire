@@ -212,49 +212,69 @@ page.post("/cart", async (req, res) => {
 });
 
 page.post("/getChatList", (req, res) => {
-  const sql = `SELECT * FROM chatroom WHERE account=?`;
-  coon.query(sql, [req.body.account], (err, result) => {
+  const sql = `SELECT * FROM chatroom WHERE account=? or productAccount=?`;
+  coon.query(sql, [req.body.account, req.body.account], (err, result) => {
     if (err) {
       res.send(err);
     } else {
       const allRoom = [];
       result.map((item) => {
-        allRoom.push({ room: item.room, productAccount: item.productAccount });
+        req.body.account === item.account
+          ? allRoom.push({
+              room: item.room,
+              productAccount: item.productAccount,
+            })
+          : allRoom.push({ room: item.room, productAccount: item.account });
       });
       res.send(allRoom);
     }
   });
 });
 
-page.post("/chatInfo", (req, res) => {
-  const qel = `SELECT * FROM chatroom WHERE (account=? AND productAccount=?) or(account=? AND productAccount=?)`;
+page.put("/upDateChatContain", (req, res) => {
+  const sql = `UPDATE chatroom  SET contain = ? WHERE (chatroom.account = ? AND chatroom.productAccount = ?) OR (chatroom.account = ? OR chatroom.productAccount = ?);`;
   const account = req.body.account;
   const productAccount = req.body.productAccount;
   coon.query(
-    qel,
+    sql,
+    [req.contain, account, productAccount, productAccount, account],
+    (err, result) => {
+      err ? res.send(err) : res.send(result);
+    }
+  );
+}); 
+
+page.post("/upDateChatContain", (req, res) => {
+  const sql = `SELECT * FROM chatroom  WHERE (chatroom.account = ? AND chatroom.productAccount = ?) OR (chatroom.account = ? OR chatroom.productAccount = ?);`;
+  const account = req.body.account;
+  const productAccount = req.body.productAccount;
+  coon.query(
+    sql,
+    [account, productAccount, productAccount, account],
+    (err, result) => {
+      err ? res.send(err) : res.send(result[0].contain);
+    }
+  );
+});
+
+page.post("/chatInfo", (req, res) => {
+  const sql = `SELECT * FROM chatroom WHERE (account=? AND productAccount=?) or(account=? AND productAccount=?)`;
+  const account = req.body.account;
+  const productAccount = req.body.productAccount;
+  coon.query(
+    sql,
     [account, productAccount, productAccount, account],
     (err, result) => {
       if (result.length === 0) {
-        const qel2 = `INSERT INTO chatroom ( account , productAccount , room) VALUES (?,?,?),(?,?,?)`;
+        const sql2 = `INSERT INTO chatroom ( account , productAccount , room) VALUES (?,?,?)`;
         const roomName = account + productAccount + Math.random();
-        coon.query(
-          qel2,
-          [
-            account,
-            productAccount,
-            roomName,
-            productAccount,
-            account,
-            roomName,
-          ],
-          (errr) => {
-            if (errr) {
-              res.send(errr);
-            } else {
-              res.send(roomName);
-            }
+        coon.query(sql2, [account, productAccount, roomName], (errr) => {
+          if (errr) {
+            res.send(errr);
+          } else {
+            res.send(roomName);
           }
-        );
+        });
       } else {
         res.send(result[0].room);
       }

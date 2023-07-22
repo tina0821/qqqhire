@@ -11,7 +11,7 @@ import TradeItem from "./tradeItem/tradeItem";
 import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
-import { Main, Chat } from "./socket/socket";
+import { Main } from "./socket/socket";
 import webSocket from "socket.io-client";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
@@ -60,10 +60,9 @@ class Cart extends Component {
       totalMoney: "",
       //錯誤訊息
       err: { address: 0, payMethod: 0, cartInfo: 0 },
-      //聊天框
-      chat: "",
       //聊天對象
-      chatRoom:""
+      chatInfo: "",
+      showRoom: "",
     };
   }
 
@@ -136,11 +135,11 @@ class Cart extends Component {
                 )}
               </Col>
             </Row>
-            {this.state.chat ? (
-              <Main socket={socket} cart={this} />
-            ) : (
-              <Chat cart={this} />
-            )}
+            <Main
+              socket={socket}
+              chatInfo={this.state.chatInfo}
+              showRoom={this.state.showRoom}
+            />
           </div>
         </ConfigProvider>
       </React.Fragment>
@@ -396,32 +395,13 @@ class Cart extends Component {
     this.setState(newstate);
   };
 
-  toggleChat = () => {
+  changeChatInfo = (chatInfo) => {
     let newstate = { ...this.state };
-    newstate.chat ? (newstate.chat = "") : (newstate.chat = 1);
+    newstate.showRoom ? (newstate.showRoom = "") : (newstate.showRoom = 1);
+    newstate.chatInfo !== chatInfo && (newstate.showRoom = 1);
+    newstate.chatInfo = chatInfo;
     this.setState(newstate);
   };
-
-  changeChatInfo = async (chatInfo) => {
-    let newstate = { ...this.state };
-    await axios
-      .post("http://localhost:8000/cart/chatInfo", {
-        account: localStorage.getItem("userInfo").slice(1, -1),
-        productAccount:chatInfo
-      })
-      .then((res) => {
-        console.log(res.data);
-        newstate.chatRoom=res.data
-      });
-    newstate.chat = 1;
-    this.setState(newstate);
-  };
-
-  changeChatRoom =(room)=>{
-    let newstate = { ...this.state };
-    newstate.chatRoom=room
-    this.setState(newstate);
-  }
 }
 
 export default Cart;
