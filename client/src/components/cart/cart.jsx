@@ -12,10 +12,8 @@ import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
 import { Main } from "./socket/socket";
-import webSocket from "socket.io-client";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
-const socket = webSocket.connect("http://localhost:9000");
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
 Object.prototype.iscomplete = 0;
@@ -136,7 +134,6 @@ class Cart extends Component {
               </Col>
             </Row>
             <Main
-              socket={socket}
               chatInfo={this.state.chatInfo}
               showRoom={this.state.showRoom}
             />

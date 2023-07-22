@@ -4,7 +4,10 @@ import axios from "axios";
 import ChatNavBar from "./ChatNavBar/ChatNavBar";
 import ChatBar from "./ChatBar/ChatBar";
 import { ChatBody } from "./ChatBody/ChatBody";
+import webSocket from "socket.io-client";
 import { ChatFooter } from "./ChatFooter/ChatFooter";
+const socket = webSocket.connect("http://localhost:9000");
+
 
 export const Chat = ({setShow}) => {
   return (
@@ -29,7 +32,7 @@ export const Chat = ({setShow}) => {
   );
 };
 
-export const Main = ({ socket,chatInfo,showRoom }) => {
+export const Main = ({chatInfo,showRoom }) => {
   const [show,setShow] = useState("")
   const [roomName, setRoomName] = useState("");
   const [productAccount,setProductAccount]= useState("")
