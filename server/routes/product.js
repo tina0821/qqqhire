@@ -133,14 +133,14 @@ router.post('/api/productDelete', (req, res) => {
 router.get('/api/Pseller/:account', (req, res) => {
     const account = req.params.account
     const sql = `
-        SELECT u.account, u.nickname, u.email, u.profilePictureSrc, u.phoneNumber, p.*,
-        (SELECT im.imageSrc
-        FROM imagemap im
-        WHERE im.productId = p.productId
-        LIMIT 1) AS imageSrc
-        FROM userinfo u
-        INNER JOIN product p ON p.productAccount = u.account
-        WHERE u.account = ?
+    SELECT u.account, u.nickname, u.email, u.profilePictureSrc, u.phoneNumber, p.*,
+    (SELECT im.imageSrc
+    FROM imagemap im
+    WHERE im.productId = p.productId
+    LIMIT 1) AS imageSrc
+    FROM userinfo u
+    LEFT JOIN product p ON p.productAccount = u.account
+    WHERE u.account = ?
 
     `
     conn.query(sql, [account], (err, data) => {
@@ -180,6 +180,23 @@ router.post('/api/insertCart', (req, res) => {
                 err ? console.log('插入失敗') : res.status(200).json(data)
             })
         }
+    })
+})
+
+//評分
+router.post('/api/rating', (req, res) => {
+    const ratingdata = req.body.ratingdata;
+    const ratingsql = 'insert into ratings(rating,Comment,buyer,productId) value (?,?,?,?)';
+    conn.query(ratingsql, [ratingdata.rating, ratingdata.Comment, ratingdata.buyer, ratingdata.productId], (err, data) => {
+        err ? console.log('插入失敗') : res.status(200).json(data)
+    })
+})
+
+router.post('/api/rating/select', (req, res) => {
+    const selectRating = req.body.selectRating;
+    const ratingsql = 'SELECT * FROM ratings WHERE productId = ? and Buyer = ?';
+    conn.query(ratingsql, [selectRating.productId, selectRating.buyer], (err, data) => {
+        err ? console.log('查詢失敗') : res.status(200).json(data)
     })
 })
 

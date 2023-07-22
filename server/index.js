@@ -41,7 +41,7 @@ app.get("/api/members/:account", (req, res) => {
 });
 
 app.listen(8000, function () {
-  console.clear()
+  // console.clear()
   console.log(new Date().toLocaleString());
 });
 
@@ -79,6 +79,6 @@ io.on("connection", (socket) => {
   });
 });
 server.listen(9000, function () {
-  console.clear();
+  // console.clear();
   console.log(new Date().toLocaleString());
 });
