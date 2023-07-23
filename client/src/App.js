@@ -18,11 +18,11 @@ import Footer from './components/Home/footer/footer';
 
 //阿條
 import Up from './components/up/up'; //快速上架
-import Login from './components/login/login';
-import ForgotPassword from './components/login/forget';
-import Registration from './components/register/register';
-import MemberCenter from './components/PersonalData/Personaldata';
-import ResetPassword from './components/login/aaa';
+import Registration from './components/register/register';//註冊
+import Login from './components/login/login';//登入
+import ForgotPassword from './components/login/forget';//忘記密碼
+import ResetPassword from './components/login/reset';//密碼重置
+import MemberCenter from './components/PersonalData/Personaldata';//個人頁面
 
 //日立
 import Product from './page/product'; //商品一覽
