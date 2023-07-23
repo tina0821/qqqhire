@@ -28,7 +28,7 @@ router.post('/api/register/validate', (req, res) => {
 
   coon.query(query, [identityCard, email, phoneNumber], (err, data) => {
     if (err) {
-      
+
       res.status(500).json({ error: '伺服器內部錯誤' });
     } else {
       if (data.length > 0) {
@@ -56,8 +56,8 @@ router.post('/api/register', async (req, res) => {
   try {
     const salt = await bcrypt.genSalt(a);
     const hashedPassword = await bcrypt.hash(aldata.password, salt);
-    const sql = `INSERT INTO userinfo (account, password, phoneNumber, identityCard, email, salt, nickname, gender, name, birthday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
+    const sql = `INSERT INTO userinfo (account, password, phoneNumber, identityCard, email, salt, nickname, gender, name, birthday,	profilePictureSrc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
+    const defaultAvatar = 'http://localhost:8000/img/prc_1.png'
     coon.query(
       sql,
       [
@@ -71,6 +71,7 @@ router.post('/api/register', async (req, res) => {
         aldata.gender,
         aldata.name,
         aldata.birthday,
+        defaultAvatar
       ],
       (error, results) => {
         if (error) {
