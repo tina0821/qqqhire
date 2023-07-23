@@ -117,7 +117,7 @@ const Returnqu = () => {
 
         if (checked === '1') {
 
-            // 傳送文字
+            // 傳送照片&文字
             const { statusText } = await axios({
                 url: "http://localhost:8000/send",
                 method: "post",
