@@ -19,8 +19,10 @@ import Footer from './components/Home/footer/footer';
 //阿條
 import Up from './components/up/up'; //快速上架
 import Login from './components/login/login';
+import ForgotPassword from './components/login/forget';
 import Registration from './components/register/register';
 import MemberCenter from './components/PersonalData/Personaldata';
+import ResetPassword from './components/login/aaa';
 
 //日立
 import Product from './page/product'; //商品一覽
@@ -69,6 +71,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/RegistrationForm" element={<Registration />} />
           <Route path="/Member" element={<MemberCenter />} />
+          <Route path="/forget" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
           <Route path="/cart" element={<Cart />} />
 

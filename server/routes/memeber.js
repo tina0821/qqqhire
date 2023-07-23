@@ -74,7 +74,6 @@ router.post('/upload-photo', upload.single('photo'), (req, res) => {
     // console.log('Photo saved at:', photoPath);
     // console.log(photoPath2);
 
-    // 将上传的照片路径保存到数据库
     const account = req.body.account;
     const updatePhotoQuery = `UPDATE userinfo SET profilePictureSrc = ? WHERE account = ?`;
 
@@ -83,7 +82,6 @@ router.post('/upload-photo', upload.single('photo'), (req, res) => {
             console.error('資料庫錯誤:', err);
         } else {
             if (result.affectedRows > 0) {
-                // 更新成功
                 res.json({ success: true });
             } else {
                 res.status(404).json({ message: '找不到帳號' });

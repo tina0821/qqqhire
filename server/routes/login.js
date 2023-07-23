@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var coon = require('./db');
 var bcrypt = require('bcrypt');
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 //註冊
 //驗證帳號
@@ -57,7 +60,7 @@ router.post('/api/register', async (req, res) => {
     const salt = await bcrypt.genSalt(a);
     const hashedPassword = await bcrypt.hash(aldata.password, salt);
     const sql = `INSERT INTO userinfo (account, password, phoneNumber, identityCard, email, salt, nickname, gender, name, birthday,	profilePictureSrc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
-    const defaultAvatar = 'http://localhost:8000/img/prc_1.png'
+    const defaultAvatar = 'profilePictureSrc/default.jpg'
     coon.query(
       sql,
       [
@@ -89,17 +92,10 @@ router.post('/api/register', async (req, res) => {
   }
 });
 
-
-
-
-
-
-
 //登入
 router.post('/api/login', async (req, res) => {
   const { account, password } = req.body;
   const query = 'SELECT * FROM userinfo WHERE account = ?';
-
   coon.query(query, [account], async (err, results) => {
     if (err) {
       console.error('錯誤', err);
@@ -128,5 +124,83 @@ router.post('/api/login', async (req, res) => {
     }
   });
 });
+
+//忘記密碼
+router.post('/api/forgot-password', (req, res) => {
+  const { email } = req.body;
+  console.log(email);
+  const aa ='SELECT * FROM userinfo WHERE email =?'
+  coon.query(aa,[email],async (err, results) => {
+      if (err) {
+        console.error('MySQL查詢錯誤：', err);
+        return res.status(500).json({ message: '發生了一些錯誤，請稍後再試。' });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({ message: '該電子郵件地址未註冊。' });
+      }
+
+      // 生成JWT令牌
+      const token = jwt.sign({ email }, 'your_secret_key', { expiresIn: '1h' });
+
+      // 發送包含驗證連結的郵件
+      const transporter = nodemailer.createTransport({
+        service: 'Gmail', // 例如：Gmail、Outlook、QQ等
+        auth: {
+          user: 'tina0821.chen@gmail.com',
+          pass: 'hxahmxewiqdiuvxa',
+        },
+      });
+
+      const mailOptions = {
+        from: 'tina0821.chen@gmail.com',
+        to: email,
+        subject: '密碼重置請求',
+        text: `請點擊以下鏈接重置密碼：\n\nhttp://localhost:3000/reset-password?token=${token}`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('郵件發送失敗：', error);
+          return res.status(500).json({ message: '發生了一些錯誤，請稍後再試。' });
+        }
+
+        console.log('郵件發送成功：', info.response);
+        return res.status(200).json({ message: '郵件已發送。' });
+      });
+    }
+  );
+});
+
+// 重置密碼
+router.post('/api/reset-password', (req, res) => {
+  const { password, token } = req.body;
+  jwt.verify(token, 'your_secret_key', (err, decodedToken) => {
+    if (err) {
+      console.error('jwt驗證錯誤', err);
+    }
+    const { email } = decodedToken;
+
+    const updateQuery = 'UPDATE userinfo SET password = ? WHERE email = ?';
+    bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
+      if (hashErr) {
+        console.error('加密錯誤', hashErr);
+        
+      }
+    
+      coon.query(updateQuery, [hashedPassword, email], (updateErr, updateResults) => {
+        if (updateErr) {
+          console.error('MySQL錯誤：', updateErr);
+        }
+    
+        console.log('密碼已修改');
+      });
+    });
+   
+  });
+});
+
+
+
 
 module.exports = router

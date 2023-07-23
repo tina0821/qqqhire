@@ -32,7 +32,7 @@ const MemberCenter = () => {
 
       const response = await axios.get(`http://localhost:8000/api/members/${name, isLoggedIn}`);
       // console.log(name);
-      // console.log(response.data[0]);
+      console.log(response.data[0]);
       setAccount(response.data[0].account)
       setPassword(response.data[0].password)
       setName(response.data[0].name)

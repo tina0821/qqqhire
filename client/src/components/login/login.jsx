@@ -39,8 +39,7 @@ const Login = () => {
     };
 
 
-
-
+   
     return (
 
         <div id='loginout' >
@@ -48,14 +47,14 @@ const Login = () => {
                 <Col span={15}>
                     <Carousel autoplay className='Carousel' style={{ height: "100%" }}>
                         <div>
-                        <a href="http://localhost:3000/product"></a>
+                            <a href="http://localhost:3000/product"></a>
                             <img
                                 src="http://localhost:8000/img/login/1.png"
                                 alt="Carousel 1"
                             />
                         </div>
                         <div>
-                        <a href="http://localhost:3000/product"></a>
+                            <a href="http://localhost:3000/product"></a>
                             <img
                                 // style={contentStyle}
                                 src="http://localhost:8000/img/login/2.png"
@@ -124,14 +123,17 @@ const Login = () => {
                             <Form.Item name="remember" valuePropName="checked" noStyle>
                                 <Checkbox>記住我</Checkbox>
                             </Form.Item>
-                            <span className="login-form-forgot">忘記密碼</span>
+                            <a href='/forget' className="login-form-forgot">忘記密碼</a>
+                    
                         </Form.Item>
+                      
+
                         <Form.Item>
                             <Button
                                 type="primary"
                                 htmlType="submit"
                                 className="login-form-button"
-                                style={{ background: "#16778a", color: "#fff", width: "75%",height:"100%" }}
+                                style={{ background: "#16778a", color: "#fff", width: "75%", height: "100%" }}
                             >
                                 登入
                             </Button>
