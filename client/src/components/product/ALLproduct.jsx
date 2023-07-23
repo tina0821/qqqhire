@@ -27,6 +27,8 @@ function AllProduct() {
     fetchProducts();
   }, []);
 
+
+
   //排序方法
   const handleSort = (method) => {
     if (method === sortMethod) {
@@ -49,15 +51,18 @@ function AllProduct() {
         ]);
       } else if (sortMethod === 'latest') {
         setProducts((prevProducts) => [
-          ...prevProducts.sort((a, b) =>
-            sortingFunction(new Date(a.createTime), new Date(b.createTime))
-          ),
+          ...prevProducts.sort((a, b) => new Date(b.createTime) - new Date(a.createTime)),
+        ]);
+      } else if (sortMethod === 'rating') {
+        setProducts((prevProducts) => [...prevProducts.sort((a, b) => b.AvgRating - a.AvgRating)
         ]);
       }
     };
 
     sortProducts();
   }, [sortMethod, sortDirection]);
+
+
 
   //搜尋
   const [searchParams, setSearchParams] = useState({}); // 搜尋狀態
@@ -69,6 +74,7 @@ function AllProduct() {
   const handlefiltere = (filteres) => {
     setfiltere(filteres);
   };
+
   useEffect(() => {
     const filterProducts = () => {
       let filteredProducts = [...products];
@@ -81,8 +87,6 @@ function AllProduct() {
           );
         });
       }
-
-
 
       //出租狀態過濾
       if (filtere.rentalStatus || filtere.rentalStatus1) {
@@ -120,6 +124,8 @@ function AllProduct() {
 
     filterProducts();
   }, [searchParams, products, filtere]);
+
+
 
   //分頁
   const [currentPage, setCurrentPage] = useState(1); // 當前頁數
