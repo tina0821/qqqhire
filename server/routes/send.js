@@ -172,16 +172,20 @@ router.post('/send', upload.any(), (req, res) => {
         <input id="email" type="text" placeholder="E-MAIL" value="johndoeXXX@example.com" readonly>
         <textarea id="message" type="text" placeholder="MESSAGE" readonly>${req.body.text}</textarea>
     </form>
+
+    <img src="cid:01" alt="" style="width: 300px;height:auto">
+
+
    </body>
    </html>
 
    `,
       attachments: [
          {
-            filename: `問題回報照片`,        // 附件檔案名稱
+            filename: `問題回報照片${req.files[0].filename}`,        // 附件檔案名稱
             // path: `${req.body.img}`,     // 照片的檔案路徑
-            // path: file.path,             // 照片的檔案路徑
-            path: req.files[0].path         // 照片的檔案路徑
+            path: req.files[0].path,        // 照片的檔案路徑
+            cid:"01"
          },
       ],
    };

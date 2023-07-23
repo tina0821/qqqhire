@@ -146,6 +146,7 @@ const Returnqu = () => {
     const sendOrNot = (statusText) => {
         if (statusText === "OK") {
             alert('信件成功送出')
+            window.location.reload()
         } else {
             alert('信件發生錯誤')
         }
