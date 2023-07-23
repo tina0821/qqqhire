@@ -1,5 +1,4 @@
 import axios from "axios";
-import { message } from "antd";
 export const checkForm = async (newstate) => {
   newstate.err.address = 0;
   newstate.err.payMethod = 0;
@@ -49,7 +48,6 @@ export const checkForm = async (newstate) => {
       .then((res) => {
         newstate.current = 2;
         newstate.tradeId = res.data;
-        message.success("Processing complete!");
       });
   }
   return newstate;

@@ -74,6 +74,7 @@ class Cart extends Component {
               colorSplit: "#0B7597",
               fontSize: "1.7rem",
               colorPrimary: "#0B7597",
+              controlHeight:"50px"
             },
           }}
           locale={zhCN}
@@ -133,12 +134,12 @@ class Cart extends Component {
                 )}
               </Col>
             </Row>
+          </div>
+        </ConfigProvider>
             <Main
               chatInfo={this.state.chatInfo}
               showRoom={this.state.showRoom}
             />
-          </div>
-        </ConfigProvider>
       </React.Fragment>
     );
   }
@@ -272,7 +273,6 @@ class Cart extends Component {
     await axios
       .delete(`http://localhost:8000/cart/delete/${e.cartMapId}`)
       .then((res) => {
-        console.log(res);
       });
     newstate.cartMap.map((item, index) => {
       newstate.cartMap[index].product = item.product.filter((value) => {
@@ -297,7 +297,10 @@ class Cart extends Component {
       faketradeItem[index].product = [];
       //假如有勾選就塞進去
       item.product.map((v, i) => {
-        v.iscomplete === 1 && faketradeItem[index].product.push(v);
+        v.iscomplete === 1 &&
+          new Date(v.rentStart).getTime() - new Date().getTime() >
+            1000 * 60 * 60 * 24 * 4 &&
+          faketradeItem[index].product.push(v);
         return true;
       });
       return true;

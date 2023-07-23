@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {redirect} from 'react-router-dom'
 import { Row, Col, ConfigProvider, Button } from "antd";
 import axios from "axios";
 import ChatNavBar from "./ChatNavBar/ChatNavBar";
@@ -20,6 +21,7 @@ export const Chat = ({setShow}) => {
         position: "fixed",
         right: "5px",
         bottom: "5px",
+        fontSize:"1.7rem"
       }}
       size="large"
       className="ms-3 btnColor cartFontSize"
@@ -40,16 +42,19 @@ export const Main = ({chatInfo,showRoom }) => {
   const [messages, setMessages] = useState([]);
   const [removeRoom ,setRemoveRoom] = useState("")
 
-  localStorage.setItem(
-    "userName",
-    localStorage.getItem("userInfo").slice(1, -1)
-  );
+  localStorage.getItem("userInfo")?(
+    localStorage.setItem(
+      "userName",
+      localStorage.getItem("userInfo").slice(1, -1)
+    )
+  ):( redirect('/login'))
+
 
   useEffect(() => {
-    if(chatInfo){
+    if(chatInfo.trim()){
        axios
       .post("http://localhost:8000/cart/chatInfo", {
-        account: localStorage.getItem("userInfo").slice(1, -1),
+        account: localStorage.getItem("userInfo").slice(1, -1).trim(),
         productAccount: chatInfo,
       })
       .then((res) => {

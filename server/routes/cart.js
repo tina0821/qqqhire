@@ -246,7 +246,7 @@ page.put("/upDateChatContain", (req, res) => {
   );
 });
 
-page.post("/upDateChatContain", (req, res) => {
+page.post("/upDateChatContain", async(req, res) => {
   const sql = `SELECT * FROM chatroom  WHERE (account = ? AND productAccount = ?) OR (account = ? AND productAccount = ?);`;
   const account = req.body.account;
   const productAccount = req.body.productAccount;

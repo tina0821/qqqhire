@@ -16,7 +16,8 @@ class ProductInfo extends Component {
                     type="checkbox"
                     className="imgActive"
                     value={item.cartMapId}
-                    checked={item.iscomplete && item.iscomplete}
+                    disabled={(new Date(item.rentStart).getTime()-new Date().getTime()) <=(1000*60*60*24*4)}
+                    checked={(new Date(item.rentStart).getTime() - new Date().getTime()) > (1000*60*60*24*4) && item.iscomplete && item.iscomplete}
                     onChange={(e) => {
                       this.props.changeOne(
                         e,
@@ -60,6 +61,9 @@ class ProductInfo extends Component {
                   className="dateFontSize"
                 >
                   {item.rentStart}~{item.rentEnd}
+                  <br/>
+                  <span style={{color:"red",fontWeight:"900"}}>{(new Date(item.rentStart).getTime()-new Date().getTime())<=(1000*60*60*24*4)&&"商品租借起始日最少須在四天後"}</span>
+                  
                 </Col>
                 <Col
                   xs={2}
