@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router();
-
-
-
-
-
-
-// Multer 中介
 const multer = require('multer');
+
+
+
+
+
+
 
 // img storage path(儲存)
 const imgconfig = multer.diskStorage({
@@ -19,12 +18,26 @@ const imgconfig = multer.diskStorage({
    }
 })
 
+
+
+
+
+
+
 // img filter(篩選)
+// const isImage = (req, file, cb) => {
+//    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+//       cb(new Error('Please upload an image'))
+//    }
+//    cb(null, true)
+// }
+
 const isImage = (req, file, cb) => {
-   if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      cb(new Error('Please upload an image'))
-   }
-   cb(null, true)
+   if (file.mimetype.startswith("image/jpeg")) {
+       cb(null, true)
+   } else (
+       cb(new Error("請上傳image或jpege格式"))
+   )
 }
 
 
@@ -34,16 +47,21 @@ const upload = multer({
    dest: 'uploads/',
    limits: {
       fileSize: 10 * 1024 * 1024, // 10 MB 的上傳限制
-      // fileSize: 10000000,           // 10 MB 的上傳限制
    }
 });
 
 
-const imgToBase64 = (target, func) => {
-   const reader = new FileReader();
-   reader.readAsDataURL(target);
-   reader.onload = (e) => func(e.target.result);
-};
+// const imgToBase64 = (target, func) => {
+//    const reader = new FileReader();
+//    reader.readAsDataURL(target);
+//    reader.onload = (e) => func(e.target.result);
+// };
+
+
+
+
+
+
 
 
 
@@ -156,8 +174,8 @@ router.post('/send', upload.single('photo'), (req, res) => {
          {
             filename: `問題回報照片`, // 附件檔案名稱
             // path: `${req.body.img}`,     // 照片的檔案路徑
-            // path: file.path,     // 照片的檔案路徑
-            path: 'C:/Users/USER/Desktop/hire/qqqhire/server/public/img/wave.jpg'
+            path: file.path,     // 照片的檔案路徑
+            // path: 'C:/Users/USER/Desktop/hire/qqqhire/server/public/img/wave.jpg'
          },
       ],
    };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Space, Radio, Form, Select, Typography } from 'antd';
 import axios from 'axios';
 import "./returnqu.css";
@@ -69,8 +69,9 @@ const Returnqu = () => {
 
     const [quWord, setquWord] = useState("");     // 文字
     const [quPhoto, setquPhoto] = useState("");   // 照片
+    const fileImg = useRef(null)                  // 照片
     const [checked, setChecked] = useState("");   // 合約
-    // const formData = new FormData();              // 照片
+    
     
 
     // 取得合約狀態
@@ -78,7 +79,7 @@ const Returnqu = () => {
         setChecked(e.target.value);
     };
 
-    // 取得照片 轉64
+    // 取得照片 轉64位元
     // const imgToBase64 = (target, func) => {
     //     const reader = new FileReader();
     //     reader.readAsDataURL(target);
@@ -86,16 +87,19 @@ const Returnqu = () => {
     // };
 
     const uploadImg = (e) => {
-        const formData = new FormData();
-        formData.append('files', e.target.files[0]);
-        
-        // setquPhoto();
 
-        // 轉64
+        // 1.照片預覽
+        if (e.target.files[0]) {
+            setquPhoto(URL.createObjectURL(e.target.files[0]))
+        }
+        
+       
+        // 2.轉64後預覽
         // imgToBase64(e.target.files[0], (base64Code) => {
         //     setquPhoto(base64Code);
         // });
-        // console.log(e);
+    
+
     }
 
     // 取得文字
@@ -238,8 +242,8 @@ const Returnqu = () => {
                         {/* 用于顯示已输入字數和總字數限制 */}
                         {/* {!open2&&<div id="charCount" />} */}
                         {photo && <form encType="multipart/form-data" className="form-group">
-                            <label htmlFor="imageUpload" style={{ fontSize: "1.5rem" }}>圖片補充:</label>
-                            <input type="file" className="form-control-file" id="imageUpload" style={{ fontSize: "1.1rem" }} onChange={uploadImg} />
+                            <label style={{ fontSize: "1.5rem" }}>圖片補充:</label>
+                            <input type="file" className="form-control-file" style={{ fontSize: "1.1rem" }} onChange={uploadImg} ref={fileImg}/>
                             {/* <button type=''>上傳</button> */}
                         </form>}
 
