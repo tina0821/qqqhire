@@ -120,6 +120,7 @@ class ProductInfo extends Component {
                       icon={<CloseOutlined />}
                       value={item.cartMapId}
                       danger={true}
+                      style={{borderRadius:"50%",height:"30px",width:"30px"}}
                       onClick={() => {
                         this.props.showDeleteWindow(item, 1);
                       }}
