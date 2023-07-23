@@ -82,29 +82,7 @@ function AllProduct() {
         });
       }
 
-      //運送方法
-      // if (
-      //   filtere.shippingMethod ||
-      //   filtere.shippingMethod1 ||
-      //   filtere.shippingMethod2 ||
-      //   filtere.shippingMethod3
-      // ) {
-      //   filteredProducts = filteredProducts.filter((product) => {
-      //     const shippingMethods = [
-      //       filtere.shippingMethod,
-      //       filtere.shippingMethod1,
-      //       filtere.shippingMethod2,
-      //       filtere.shippingMethod3,
-      //     ];
 
-      //     return shippingMethods.some((method) => {
-      //       if (method && product.shippingMethod.includes(method)) {
-      //         return true;
-      //       }
-      //       return false;
-      //     });
-      //   });
-      // }
 
       //出租狀態過濾
       if (filtere.rentalStatus || filtere.rentalStatus1) {
