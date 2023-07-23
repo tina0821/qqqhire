@@ -1,56 +1,61 @@
 var express = require('express');
-var router = express.Router();
 const multer = require('multer');
-
-
-
-
-
+var router = express.Router();
 
 
 // img storage path(儲存)
 const imgconfig = multer.diskStorage({
-   destination: (req, file, callback) => {
-      callback(null, "./public/testimg")
+   // 設定路徑
+   destination: (req, file, cb) => {
+      cb(null, "public/testimg")
    },
-   filename: (req, file, callback) => {
-      callback(null, `image-${Date.now()}.${file.originalname}`)
+   // 自訂上傳檔案名稱
+   filename: (req, file, cb) => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1; 
+      const date = now.getDate();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      cb(null, `${year}_${month}_${date}_${hours}點${minutes}分.${file.mimetype.split("/")[1]}`)
    }
 })
 
-
-
-
-
-
-
-// img filter(篩選)
+// img filter(篩選) 寫法1
 // const isImage = (req, file, cb) => {
 //    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
 //       cb(new Error('Please upload an image'))
 //    }
 //    cb(null, true)
 // }
+// img filter(篩選) 寫法2
+// const isImage = (req, file, cb) => {
+//    if (file.mimetype.startswith("image/jpeg")) {
+//       cb(null, true)
+//    } else (
+//       cb(new Error("請上傳image或jpege格式"))
+//    )
+// }
 
-const isImage = (req, file, cb) => {
-   if (file.mimetype.startswith("image/jpeg")) {
-       cb(null, true)
-   } else (
-       cb(new Error("請上傳image或jpege格式"))
-   )
-}
+
 
 
 const upload = multer({
-   // storage:imgconfig,
-   fileFilter: isImage,
-   dest: 'uploads/',
-   limits: {
-      fileSize: 10 * 1024 * 1024, // 10 MB 的上傳限制
-   }
+   // 1.存照片
+   storage:imgconfig,
+
+   // 2.篩選
+   // fileFilter: isImage,
+
+   // 3.上傳限制
+   // dest: 'uploads/',
+   // limits: {
+   //    fileSize: 10 * 1024 * 1024, 
+   // }
 });
 
 
+// 用base64編碼傳到後端
 // const imgToBase64 = (target, func) => {
 //    const reader = new FileReader();
 //    reader.readAsDataURL(target);
@@ -78,11 +83,12 @@ const transporter = nodemailer.createTransport({
 });
 
 
-router.post('/send', upload.single('photo'), (req, res) => {
+router.post('/send', upload.any(), (req, res) => {
 
+   console.log(req.files[0]);
    // const {file} = req.file;
    // console.log(file);
-   
+
 
 
    const mailOptions = {
@@ -172,10 +178,10 @@ router.post('/send', upload.single('photo'), (req, res) => {
    `,
       attachments: [
          {
-            filename: `問題回報照片`, // 附件檔案名稱
+            filename: `問題回報照片`,        // 附件檔案名稱
             // path: `${req.body.img}`,     // 照片的檔案路徑
-            path: file.path,     // 照片的檔案路徑
-            // path: 'C:/Users/USER/Desktop/hire/qqqhire/server/public/img/wave.jpg'
+            // path: file.path,             // 照片的檔案路徑
+            path: req.files[0].path         // 照片的檔案路徑
          },
       ],
    };

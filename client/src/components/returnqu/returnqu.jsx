@@ -71,8 +71,8 @@ const Returnqu = () => {
     const [quPhoto, setquPhoto] = useState("");   // 照片
     const fileImg = useRef(null)                  // 照片
     const [checked, setChecked] = useState("");   // 合約
-    
-    
+
+
 
     // 取得合約狀態
     const sendChick = (e) => {
@@ -92,13 +92,13 @@ const Returnqu = () => {
         if (e.target.files[0]) {
             setquPhoto(URL.createObjectURL(e.target.files[0]))
         }
-        
-       
+
+
         // 2.轉64後預覽
         // imgToBase64(e.target.files[0], (base64Code) => {
         //     setquPhoto(base64Code);
         // });
-    
+
 
     }
 
@@ -110,22 +110,30 @@ const Returnqu = () => {
 
     // 點擊送出 
     const SendMessage = async () => {
+
+        const formData = new FormData();
+        formData.append('text', quWord);
+        formData.append('image', fileImg.current.files[0]);
+
         if (checked === '1') {
 
-            try {
-                // 傳送 文字&照片 到後端
-                // const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord, img:quPhoto}, formData, {
-                //     headers: {
-                //         'Content-Type': 'multipart/form-data'
-                //     }
-                // });
-                const { statusText } = await axios.post("http://localhost:8000/send", { text: quWord });
+            // 傳送文字
+            const { statusText } = await axios({
+                url: "http://localhost:8000/send",
+                method: "post",
+                transformRequest: [function (data, headers) {
+                    delete headers['Content-Type']
+                    return data
+                }],
+                data: formData
+            });
 
-                // 判斷寄信狀態
-                sendOrNot(statusText);
-            } catch (error) {
-                console.error(error);
-            }
+
+        
+
+            // 判斷寄信狀態
+            sendOrNot(statusText);
+
         } else {
             alert("尚未勾選合約 請確認!")
         }
@@ -241,10 +249,9 @@ const Returnqu = () => {
                         </div>}
                         {/* 用于顯示已输入字數和總字數限制 */}
                         {/* {!open2&&<div id="charCount" />} */}
-                        {photo && <form encType="multipart/form-data" className="form-group">
+                        {photo && <form className="form-group">
                             <label style={{ fontSize: "1.5rem" }}>圖片補充:</label>
-                            <input type="file" className="form-control-file" style={{ fontSize: "1.1rem" }} onChange={uploadImg} ref={fileImg}/>
-                            {/* <button type=''>上傳</button> */}
+                            <input type="file" className="form-control-file" style={{ fontSize: "1.1rem" }} onChange={uploadImg} ref={fileImg} />
                         </form>}
 
                         {photo && <div id="charCount"><img src={quPhoto} alt='請選擇圖片' /></div>}

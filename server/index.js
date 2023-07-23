@@ -20,9 +20,8 @@ app.use('/',kuo)
 
 
 
-// app.use('/send', sendRouter);
-// app.use(upload.single('image'));
 
+app.use('/upload', express.static('upload'));
 const send = require('./routes/send')
 app.use("/",send)
 
