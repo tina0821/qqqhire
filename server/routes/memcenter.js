@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const router = express.Router();
 const coon = require('./db');
+const multer = require('multer')
+const fs = require('fs')
 
 router.use(cors());
 router.use(express.json());
@@ -25,9 +27,45 @@ router.get('/api/mypro/:account', function (req, res) {
   });
 });
 
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/img/test'); // Set the destination folder where images will be stored
+  },
+  filename: function (req, file, cb) {
+    // cb(null, `${Date.now()}_${req.body.}.${file.mimetype.split('/')[1]}`)
+    cb(null, file.originalname); // Use a unique filename to avoid overwriting
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.post('/test', upload.any(), (req, res) => {
+  req.files.map(item => {
+    // `${Date.now()}_${req.body.}.${req.files[0].type.split('/')[1]}`
+    try {
+      fs.renameSync(`public/img/test/${item.originalname}`, `public/img/test/${Math.random()}${Math.random()}.${item.originalname.split(".").pop()}`)
+      console.log(item.originalname.split(".").pop())
+    } catch (err) {
+      throw err
+    }
+  })
+  // const path = `test/${req.file.filename}`
+  // const account = req.body.account
+  // try {
+  //   // Here, you can store the file path in the database or wherever you need it
+  //   const imagePath = req.file.path;
+  //   // Respond with the image path or any other data you want
+  //   res.status(200).json({ success: true, imageUrl: imagePath });
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ success: false, error: 'Internal Server Error' });
+  // }
+  res.send('111')
+})
+
 router.post('/api/fastup/:account', function (req, res) {
   const formData = req.body; // This will contain the form data sent from the frontend
-  console.log(formData);
 
   // 進行了解構賦值的操作，將 formData 物件中的特定屬性拆解成獨立的變數
   // 將前端發送的請求中獲取的表單資料的特定屬性提取出來

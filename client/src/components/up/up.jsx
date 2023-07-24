@@ -1,12 +1,17 @@
-import { Form, Input, Button, Cascader } from 'antd';
+import { Form, Input, Button, Cascader, ConfigProvider } from 'antd';
 import dataitem from "../../data/item2.json";
 import axios from "axios";
 import area from "../../data/CityCountyDataAAA.json";
-import Prconly2 from '../upimg'
+import Prconly2 from './upimg'
+import { useState } from "react"
+import zhCN from 'antd/locale/zh_TW'
 
 import "./up.scss";
 
 const Up = () => {
+  const [data, setdata] = useState([])
+  console.log(data)
+
   const onFinish = async (values) => {
     try {
       // 進行解構賦值操作，將 values 物件的某些屬性拆分成單獨的變數
@@ -37,6 +42,25 @@ const Up = () => {
     } catch (error) {
       console.error(error);
     }
+
+    // const formData = new FormData();
+    // data.forEach(async (item, index) => {
+    //   formData.append(`photo`, item.originFileObj)
+    //   try {
+    //     formData.append(`account`, localStorage.getItem("userInfo").slice(1, -1))
+
+    //     let apple = ""
+
+    //     await axios.post(`http://localhost:8000/test`, {
+    //       formData
+    //     }).then((result)=>{
+    //       result&&console.log(result)
+    //     })
+
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // })
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -48,6 +72,8 @@ const Up = () => {
   };
 
   return (
+    <ConfigProvider 
+    locale={zhCN}>
     <Form
       name="productForm"
       onFinish={onFinish}
@@ -81,7 +107,16 @@ const Up = () => {
       </Form.Item>
 
       <Form.Item label="照片" name="imageSrc" valuePropName="fileList">
-        <Prconly2 />
+        {/* <Upload
+          action="http://localhost:8000/test"
+          listType="picture-card"
+          fileList={fileList}
+          onChange={onChange2}
+          onPreview={onPreview}
+        >
+          {fileList.length < 5 && '+ Upload'}
+        </Upload> */}
+        <Prconly2 setdata={setdata} />
       </Form.Item>
 
       <Form.Item
@@ -126,7 +161,8 @@ const Up = () => {
           提交
         </Button>
       </Form.Item>
-    </Form>
+    </Form>  
+    </ConfigProvider>
   );
 };
 
