@@ -9,7 +9,7 @@ function ProductSellerCard(props) {
         <div className="pd-flex">
           <div className="pd-body-l">
             <img
-              src={`http://localhost:8000/img/${productSeller.profilePictureSrc}`}
+              src={productSeller.profilePictureSrc?(`http://localhost:8000/img/${productSeller.profilePictureSrc}`):(`http://localhost:8000/img/noface/cafc10742b9b77da.jpg`)}
               alt=""
             />
           </div>

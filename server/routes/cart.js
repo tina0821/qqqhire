@@ -1,6 +1,7 @@
 //接收開啟伺服器功能
 var express = require("express");
 var coon = require("./db");
+const { json } = require("body-parser");
 //小組管理專案分工需要架設分業系統(暫定解釋)
 var page = express.Router();
 //開始架設份派到自己的業務
@@ -191,21 +192,98 @@ page.post("/getAccountInfo", (req, res) => {
   );
 });
 
-page.delete("/delete/:cartMapId",(req,res)=>{
-  console.log(req.params.cartMapId)
-  coon.query(`DELETE FROM cartmap WHERE cartmap.cartMapId = ?`,[req.params.cartMapId],(err,result)=>{
-    if(err){
-      res.send(err)
-    }else{
-      res.send(result)
+page.delete("/delete/:cartMapId", (req, res) => {
+  coon.query(
+    `DELETE FROM cartmap WHERE cartmap.cartMapId = ?`,
+    [req.params.cartMapId],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
     }
-  })
-})
+  );
+});
 
 page.post("/cart", async (req, res) => {
   let a = JSON.stringify(req.body);
   res.cookie("address", `${JSON.stringify(a)}`);
   res.send("<script>window.close();</script >");
+});
+
+page.post("/getChatList", (req, res) => {
+  const sql = `SELECT * FROM chatroom WHERE account=? or productAccount=?`;
+  coon.query(sql, [req.body.account, req.body.account], (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      const allRoom = [];
+      result.map((item) => {
+        req.body.account === item.account
+          ? allRoom.push({
+              room: item.room,
+              productAccount: item.productAccount,
+            })
+          : allRoom.push({ room: item.room, productAccount: item.account });
+      });
+      res.send(allRoom);
+    }
+  });
+});
+
+page.put("/upDateChatContain", (req, res) => {
+  const sql = `UPDATE chatroom  SET contain = ? WHERE (account = ? AND productAccount = ?) OR (account = ? AND productAccount = ?)`;
+  const account = req.body.account;
+  const productAccount = req.body.productAccount;
+  const contain = JSON.stringify(req.body.contain);
+  coon.query(
+    sql,
+    [contain, account, productAccount, productAccount, account],
+    (err, result) => {
+      err ? res.send(err) : res.send(result);
+    }
+  );
+});
+
+page.post("/upDateChatContain", async(req, res) => {
+  const sql = `SELECT * FROM chatroom  WHERE (account = ? AND productAccount = ?) OR (account = ? AND productAccount = ?);`;
+  const account = req.body.account;
+  const productAccount = req.body.productAccount;
+  coon.query(
+    sql,
+    [account, productAccount, productAccount, account],
+    (err, result) => {
+      if (result.length !== 0) {
+        err ? res.send(err) : res.send(JSON.stringify(result[0].contain));
+      }
+    }
+  );
+});
+
+page.post("/chatInfo", (req, res) => {
+  const sql = `SELECT * FROM chatroom WHERE (account=? AND productAccount=?) or(account=? AND productAccount=?)`;
+  const account = req.body.account;
+  const productAccount = req.body.productAccount;
+  coon.query(
+    sql,
+    [account, productAccount, productAccount, account],
+    (err, result) => {
+      if (result.length === 0) {
+        const sql2 = `INSERT INTO chatroom ( account , productAccount , room) VALUES (?,?,?)`;
+        const roomName = account + productAccount + Math.random();
+        coon.query(sql2, [account, productAccount, roomName], (errr) => {
+          if (errr) {
+            res.send(errr);
+          } else {
+            res.send(roomName);
+          }
+        });
+      } else {
+        res.send(result[0].room);
+      }
+    }
+  );
 });
 
 //輸出檔案給人彙整

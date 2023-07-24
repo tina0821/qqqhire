@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { HashLink as ScrollLink } from 'react-router-hash-link';
 import { DatePicker, Space } from 'antd';
 import productcategorymap from '../../data/item2.json';
 import './A_product-item.scss'
@@ -9,10 +10,12 @@ import ProductCarousel from './ProductCarousel';
 import ProductSellerCard from '../product-seller/productSellerCard';
 import ButtonCard from './buttonCard';
 import AlertBox from './AlertBox';
+import ProductRating from '../product-rating/productRating';
 
 
-function A_ProductItem() {
+function A_Product_Item() {
   const [productitem, setProductItem] = useState('');
+  const [productRating, setProductRating] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
   const [productSeller, setproductSeller] = useState('');
   const { id } = useParams();
@@ -74,10 +77,18 @@ function A_ProductItem() {
     //相關推薦
     const fetchseller = async () => {
       const res = await axios.get(`http://localhost:8000/api/productseller/${id}`);
-      const data2 = await res.data;
-      setproductSeller(data2);
+      const data = await res.data;
+      setproductSeller(data);
     };
     fetchseller();
+
+    //評分
+    const fetchRating = async () => {
+      const res = await axios.get(`http://localhost:8000/api/productRating/${id}`);
+      const data = await res.data;
+      setProductRating(data);
+    };
+    fetchRating();
 
     setTimeout(() => { setIsLoaded(true); }, 600);
   }, [id]);
@@ -149,6 +160,8 @@ function A_ProductItem() {
   }, []);
 
 
+
+
   return renderContent ? (
     <>
       <>
@@ -183,6 +196,12 @@ function A_ProductItem() {
               <div className="product-item-right">
                 <div className="item-text">
                   <p>{productitem[0].productName}</p>
+                  {productitem[0].AvgRating ? (
+                    <span className='spanout'>
+                      <span>★</span>
+                      <span>{productitem[0].AvgRating}</span>
+                      <ScrollLink title='商品評論則數' smooth to="#reatigtarget">({productRating.length})</ScrollLink>
+                    </span>) : <span className='spanout1'>未有評價... </span>}
                 </div>
                 <div className="item-text">
                   <div className={productitem[0].rentalStatus === '未出租' ? 'rentalstate1' : 'rentalstate2'}>
@@ -231,7 +250,7 @@ function A_ProductItem() {
             {showAlert === 3 && <AlertBox message="請先選擇日期!!!" type="error" />}
             {showAlert === 4 && <AlertBox message="此物品已在租物車中!!!" type="not" />}
             {showAlert === 5 && <AlertBox message="此物品已在收藏中!!!" type="not" />}
-            {showAlert === 6 && <AlertBox message="請先登入!" type="warning" />}
+            {showAlert === 6 && <AlertBox message="請先登入" type="warning" />}
             {showAlert === 7 && <AlertBox message="此商品正在被租借中..." type="warning" />}
 
             <ProductSellerCard
@@ -239,7 +258,7 @@ function A_ProductItem() {
               productSeller={productSeller[0]}
             />
             <div className="product-text">
-              <p>產品描述</p>
+              <p>商品詳細</p>
               <div className="p-body">
                 <table>
                   <tbody>
@@ -270,7 +289,22 @@ function A_ProductItem() {
                   </tbody>
                 </table>
               </div>
+
+
+              <p id="reatigtarget">商品評論</p>
+              {productRating.length > 0 ? (productRating.map((data) => (
+                <ProductRating
+                  key={data.Buyer}
+                  productRating={data}
+                />
+              ))) : (<div className='norating'>目前沒有評論...</div>)}
+              <hr />
+
+
             </div>
+
+
+
 
             <div></div>
           </div>
@@ -284,4 +318,4 @@ function A_ProductItem() {
   ) : null;
 }
 
-export default A_ProductItem;
+export default A_Product_Item;

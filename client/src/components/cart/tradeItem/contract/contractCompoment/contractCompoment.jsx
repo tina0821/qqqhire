@@ -295,11 +295,6 @@ class ContractCompoment extends Component {
                 </Col>
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>
                   <li>
-                    地址：<span className="text-danger">{this.props.item.address}</span>
-                  </li>
-                </Col>
-                <Col span={24} style={{ display: "flex", textAlign: "start" }}>
-                  <li>
                     行動電話：<span className="text-danger">{this.props.item.phoneNumber}</span>
                   </li>
                 </Col>

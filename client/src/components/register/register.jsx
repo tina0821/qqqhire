@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select } from 'antd';
+import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select} from 'antd';
 import "./register.scss"
 import { Link } from 'react-router-dom';
 
@@ -34,28 +34,52 @@ const Registration = () => {
   }, [aldata]);
 
   const handleNext = async (values) => {
-    try {
-      await form.validateFields(); // 驗證表單數據
-      setPage1Data(values);
-      setCurrentStep(currentStep + 1);
-    } catch (error) {
-      console.log('表單驗證失敗:', error);
+    // console.log(values.username);
+
+    if (values.username) {
+      try {
+        await axios.post('http://localhost:8000/api/register/account', { username: values.username });
+        await form.validateFields(); // 驗證表單數據
+        setPage1Data(values);
+        setCurrentStep(currentStep + 1);
+
+      } catch (error) {
+        console.log('請求發生錯誤:', error);
+        alert("帳號重複")
+      }
     }
   };
+
 
   const handlePrev = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleFinish = (values) => {
-    setLoading(true);
-    // 在這裡處理最終提交的邏輯，例如發送API請求等
-    // console.log('Received values:', values);
-    setLoading(false);
-    setPage2Data(values);
-    setCurrentStep(2);
+  const handleFinish = async (values) => {
+    const { identityCard, email, phoneNumber } = values;
 
+    if (identityCard && email && phoneNumber) {
+      try {
+        // 向後端發送一個包含所有字段的請求，同時驗證身分證、email和手機號碼是否重複
+        await axios.post('http://localhost:8000/api/register/validate', {
+          identityCard,
+          email,
+          phoneNumber,
+        });
+        await form.validateFields(); // 驗證表單數據
+        setLoading(true);
+        setPage2Data(values);
+        setCurrentStep(2);
+
+      } catch (error) {
+        const err =error.response.data.duplicateData
+        if(err){
+          alert(Object.values(err).join('\n'))
+          
+          }
+    }
   };
+  }
   const registerchange = () => { };
 
   return (
@@ -72,23 +96,27 @@ const Registration = () => {
               />
             </div>
             <div>
-              <img
-                // style={contentStyle}
-                src="http://localhost:8000/img/login/2.png"
-                alt="Carousel 2"
-              />
+              <a href="http://localhost:3000/product">
+                <img
+                  // style={contentStyle}
+                  src="http://localhost:8000/img/login/2.png"
+                  alt="Carousel 2"
+                />
+              </a>
             </div>
             <div>
-              <img
-                // style={contentStyle}
-                src="http://localhost:8000/img/login/3.png"
-                alt="Carousel 3"
-              />
+              <a href="http://localhost:3000/product">
+                <img
+                  // style={contentStyle}
+                  src="http://localhost:8000/img/login/3.png"
+                  alt="Carousel 3"
+                />
+              </a>
             </div>
           </Carousel>
         </Col>
 
-        <Col span={9}>
+        <Col span={9} >
           <div className='reginertitle'>會員註冊</div>
           <Steps current={currentStep} className='col-10'
             style={{ paddingLeft: '30px' }}>
@@ -101,32 +129,38 @@ const Registration = () => {
 
             <Form form={form} layout="vertical"
               onFinish={handleNext}
-              style={{ }} >
+              style={{}} >
               <Form.Item
 
                 label="帳號"
                 name="username"
+
                 rules={[
                   { required: true, message: '請輸入帳號' },
                   {
-                    // pattern: /^[a-zA-Z0-9_-]{4,12}$/,
+                    pattern: /^[a-zA-Z0-9_-]{4,12}$/,
                     message: '帳號必須由4到12個字母、數字、下劃線或破折號組成',
                   },
                 ]}
               >
-                <Input size='large' prefix={<UserOutlined />} />
+                <Input size='large' prefix={<UserOutlined />}
+                  placeholder="帳號必須由4到12個字母、數字、下劃線或破折號組成"
+                  maxLength={12}
+                  minLength={4} />
               </Form.Item>
 
               <Form.Item
                 label="密碼"
                 name="password"
+
                 rules={[
                   { required: true, message: '請輸入密碼' },
-                  // { min: 6, message: '密碼至少需要6個字符' },
+                  { min: 6, message: '密碼至少需要6個字符' },
 
                 ]}
               >
-                <Input.Password size='large' prefix={<LockOutlined />} />
+                <Input.Password size='large' prefix={<LockOutlined />}
+                  placeholder="密碼至少需要6個字符" />
               </Form.Item>
 
               <Form.Item
@@ -145,7 +179,8 @@ const Registration = () => {
                   }),
                 ]}
               >
-                <Input.Password size='large' prefix={<LockOutlined />} />
+                <Input.Password size='large' prefix={<LockOutlined />}
+                  placeholder="再次輸入密碼" />
               </Form.Item>
 
               <Form.Item>
@@ -206,8 +241,8 @@ const Registration = () => {
                     rules={[{ required: true, message: '請選擇性別' }]}
                   >
                     <Select size="large">
-                      <Select.Option value="1">生理男</Select.Option>
-                      <Select.Option value="2">生理女</Select.Option>
+                      <Select.Option value="1">男</Select.Option>
+                      <Select.Option value="2">女</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -219,13 +254,14 @@ const Registration = () => {
                 rules={[
                   { required: true, message: '請輸入身分證號碼' },
                   {
-                    // pattern: /^[A-Z]{1}[1-2]{1}[0-9]{8}$/,
+                    pattern: /^[A-Z]{1}[1-2]{1}[0-9]{8}$/,
                     message: '身分證格式不正確',
                   },
                 ]}
 
               >
-                <Input size='large' />
+                <Input size='large'
+                  maxLength={10} />
               </Form.Item>
 
               <Form.Item
@@ -233,7 +269,8 @@ const Registration = () => {
                 name="phoneNumber"
                 rules={[{ required: true, message: '請輸入手機號碼' }]}
               >
-                <Input size='large' />
+                <Input size='large'
+                  maxLength={10} />
               </Form.Item>
 
               <Form.Item
@@ -251,7 +288,9 @@ const Registration = () => {
                 <Button type="default" onClick={handlePrev}>
                   上一步
                 </Button>
-                <Button style={{ background: "#16778a", color: "#fff", width: "75%", marginLeft: "20px" }} htmlType="submit" loading={loading}>
+                <Button style={{ background: "#16778a", color: "#fff", width: "75%", marginLeft: "20px" }}
+                  htmlType="submit"
+                  loading={loading}>
                   註冊
                 </Button>
               </Form.Item>
@@ -260,11 +299,9 @@ const Registration = () => {
           )}
           {currentStep === 2 && (
             <div>
-              <h3>已經提交的表單資料：</h3>
-
-              <p>註冊已完成！</p>
-              <Link to='/' type="primary">
-                回首頁
+              <p style={{ marginLeft: "30px", fontSize: "2rem", fontWeight: "bolder" }}>註冊已完成！</p>
+              <Link to='/login' type="primary" style={{ marginLeft: "30px", fontSize: "1.5rem" }}>
+                立即登入
               </Link>
             </div>
           )}
