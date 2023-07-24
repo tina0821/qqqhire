@@ -57,6 +57,13 @@ function Outdoor() {
                     <div className="btn-div2class" id="btn-div2" ref={odAmiCycle}></div>
                     <p className="btn-pClass" id="btn-p" ref={odAmiArrow}>↓</p>
                 </Link>
+
+                <div className='rqu'>
+                    {localStorage.getItem("userInfo") ? (<Link to="/Returnqu">問題回報</Link>) : (<Link to="/login">問題回報</Link>)}
+                    <br />
+                    {localStorage.getItem("userInfo") ? (<Link to="/Backstage">後台</Link>) : (<Link to="/login">後台</Link>)}
+                </div>
+                
             </div>
         </>
     );
