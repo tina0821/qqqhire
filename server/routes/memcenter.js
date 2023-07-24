@@ -12,7 +12,7 @@ router.get('/api/mypro/:account', function (req, res) {
   const account = req.params.account;
   // console.log(req.params)
   const query = `
-    SELECT p.productId, p.rent, p.deposit, p.productName, p.state, i.imageSrc
+    SELECT p.productId, p.rent, p.deposit, p.productName, p.state, p.rentalStatus, i.imageSrc
     FROM product AS p
     INNER JOIN imagemap AS i ON p.productId = i.productId
     WHERE p.productAccount = ? 

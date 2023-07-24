@@ -29,7 +29,7 @@ const Rentalreq = () => {
     if (state === 0) {
       return (
         <div>
-          <Agreebtn tradeitemId={tradeitemId} /> | <Rejectbtn tradeitemId={tradeitemId}/>          
+          <Agreebtn tradeitemId={tradeitemId} /> | <Rejectbtn tradeitemId={tradeitemId} />
         </div>
       );
     } else if (state === 1) {
@@ -89,7 +89,7 @@ const Rentalreq = () => {
           <thead>
             <tr>
               <th>訂單編號</th>
-              <th>商品</th>
+              {/* <th>商品</th> */}
               <th>預約日期</th>
               <th>歸還日期</th>
               <th>天數</th>
@@ -111,13 +111,17 @@ const Rentalreq = () => {
                   .filter((item) => item.tradeitemId === tradeItem.tradeitemId)
                   .reduce((total, item) => total + item.deposit, 0);
                 return (
-                  <tr id="trtd" key={tradeItem.tradeitemId}>
+                  <tr
+                    id="trtd"
+                    key={tradeItem.tradeitemId}
+                    title={`內有 ${tradeItems.filter((item) => item.tradeitemId === tradeItem.tradeitemId).length} 項商品`}
+                  >
                     <td>{tradeItem.tradeitemId}</td>
-                    <td>{limitProductName(tradeItem.productName)}</td>
+                    {/* <td>{limitProductName(tradeItem.productName)}</td> */}
                     <td>{new Date(tradeItem.rentStart).toLocaleDateString()}</td>
                     <td>{new Date(tradeItem.rentEnd).toLocaleDateString()}</td>
                     <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)}</td>
-                    <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd)*rentTotal + depositTotal}</td>
+                    <td>{calculateDays(tradeItem.rentStart, tradeItem.rentEnd) * rentTotal + depositTotal}</td>
                     <td>{orderStatus}</td>
                     <td>
                       <button id='morebtn' onClick={() => handleDetail(tradeItem.tradeitemId)}>詳細</button>
