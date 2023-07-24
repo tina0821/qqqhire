@@ -3,11 +3,34 @@ const multer = require('multer');
 var router = express.Router();
 var conn = require('./db');
 
+// =============================================================================
+
+
+// 刪除會員資料
+router.delete('/BSuser', (req, res) => {
+   // const sql = "delete from 會員資料表 where uid = ?";
+   // conn.query(sql, [req.query.account],
+   //    (err) => {
+   //       if (err) {
+   //          console.log(err);
+   //          res.end();
+   //       } else {
+   //          res.end();
+   //       };
+   //    });
+   console.log(req.query.account)
+});
+
+
+// =============================================================================
+
+
+
 // 抓取使用者資料
-router.get("/BSuser",(req, res)=>{
+router.get("/BSuser", (req, res) => {
    const sql = "SELECT * FROM userinfo "
-   conn.query(sql,(err, data)=>{
-      err?console.log("查詢失敗"):res.json(data)
+   conn.query(sql, (err, data) => {
+      err ? console.log("查詢失敗") : res.json(data)
    })
 })
 
@@ -16,16 +39,16 @@ router.get("/BSuser",(req, res)=>{
 
 
 // 抓會員email帳號
-router.get("/email/:account",(req, res)=>{
-   
+router.get("/email/:account", (req, res) => {
+
    // 確定抓到會員帳號
    const account = req.params.account
    console.log(account);
 
    // sql執行會員帳號查詢 sql的?跟[account]做綁定
    const sql = "SELECT u.email FROM userinfo as u WHERE account =?"
-   conn.query(sql, [account],(err, data)=>{
-      err?console.log("查詢失敗"):res.json(data)
+   conn.query(sql, [account], (err, data) => {
+      err ? console.log("查詢失敗") : res.json(data)
    })
 })
 
@@ -46,7 +69,7 @@ const imgconfig = multer.diskStorage({
    filename: (req, file, cb) => {
       const now = new Date();
       const year = now.getFullYear();
-      const month = now.getMonth() + 1; 
+      const month = now.getMonth() + 1;
       const date = now.getDate();
       const hours = now.getHours();
       const minutes = now.getMinutes();
@@ -75,7 +98,7 @@ const imgconfig = multer.diskStorage({
 
 const upload = multer({
    // 1.存照片
-   storage:imgconfig,
+   storage: imgconfig,
 
    // 2.篩選
    // fileFilter: isImage,
@@ -219,7 +242,7 @@ router.post('/send', upload.any(), (req, res) => {
             filename: `問題回報照片${req.files[0].filename}`,        // 附件檔案名稱
             // path: `${req.body.img}`,     // 照片的檔案路徑
             path: req.files[0].path,        // 照片的檔案路徑
-            cid:"01"
+            cid: "01"
          },
       ],
    };

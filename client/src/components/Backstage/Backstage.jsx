@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, ConfigProvider, Button } from 'antd';
+import { Space, Table, Tag, ConfigProvider, Button, Modal } from 'antd';
 import axios from 'axios';
 import "./Backstage.css";
 
 
 const Backstage = () => {
 
-    // 取會員帳號
+
+    
+
+
+    // 資料庫取出會員資訊
     const [user, setuser] = useState("")
 
     useEffect(() => {
@@ -16,7 +20,7 @@ const Backstage = () => {
             const usersWithIndex = user.map((user, index) => ({
                 ...user,
                 index: index + 1,
-                key:index
+                key: index
             }));
 
             setuser(usersWithIndex)
@@ -44,7 +48,7 @@ const Backstage = () => {
         },
         {
             key: '2',
-            MemberID: '12345',
+            MemberID: '8888',
             MemberAt: 'BBB',
             name: "賣光了",
             phone: "0911111111",
@@ -60,6 +64,48 @@ const Backstage = () => {
             tags: ['cool', 'teacher'],
         },
     ];
+
+    //修改&刪除
+    const [DLaccount, setDLaccount] = useState("")
+    
+    
+    const changeData = () => {
+        console.log("修改");
+        setOpenCG(true);
+    }
+
+    const deleteData = (DLid) => {
+        setDLaccount(DLid)
+        console.log(DLid);
+        setOpenDL(true);
+    }
+
+    // 修改彈出視窗
+    const[openCG, setOpenCG] = useState(false);
+    // 點擊確認或取消按鈕時的回調
+    const handleOk = () => {
+        // 處理確認操作
+        setOpenCG(false);
+    };
+    const handleCancel = () => {
+        // 取消操作
+        setOpenCG(false);
+    };
+
+
+    // 刪除彈出視窗
+    const [openDL, setOpenDL] = useState(false);
+    // 點擊確認或取消按鈕時的回調
+    const handleOk2 = () => {
+        // 處理確認操作
+        setOpenDL(false);
+        axios.delete(`http://localhost:8000/BSuser?account=${DLaccount}`)
+
+    };
+    const handleCancel2 = () => {
+        // 取消操作
+        setOpenDL(false);
+    };
 
 
     // 會員&問題回報 切換
@@ -87,7 +133,7 @@ const Backstage = () => {
                 // Token全部CSS 
                 theme={{ token: { fontSize: '1.2rem' } }} >
 
-                <Table dataSource={user}>
+                <Table dataSource={user} >
                     <ColumnGroup title="會員資料">
                         <Column title="會員編號" dataIndex="index" key="index" />
                         <Column title="帳號名稱" dataIndex="account" key="account" />
@@ -100,8 +146,8 @@ const Backstage = () => {
                         key="action"
                         render={(_, record) => (
                             <Space size="middle">
-                                <a>修改</a>
-                                <a>刪除</a>
+                                <a href='#' onClick={changeData}>修改</a>
+                                <a href='#' onClick={()=>deleteData(record.account)}>刪除</a>
                             </Space>
                         )}
                     />
@@ -142,14 +188,40 @@ const Backstage = () => {
                         key="action"
                         render={(_, record) => (
                             <Space size="middle">
-                                <a>修改 {record.lastName}</a>
-                                <a>刪除</a>
+                                <p >修改 {record.lastName}</p>
+                                <a href='#'>刪除</a>
                             </Space>
                         )}
                     />
                 </Table>
 
             </ConfigProvider>}
+
+
+
+
+
+
+            <div>
+                <Modal
+                    title="修改資料"
+                    open={openCG}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                >
+                    <p>這是頁面</p>
+                </Modal>
+            </div>
+            <div>
+                <Modal
+                    title="是否刪除"
+                    open={openDL}
+                    onOk={handleOk2}
+                    onCancel={handleCancel2}
+                >
+                    <p>這是刪除頁面</p>
+                </Modal>
+            </div>
         </>
     );
 
