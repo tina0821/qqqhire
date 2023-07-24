@@ -12,8 +12,21 @@ const Login = () => {
     const history = useNavigate();
 
     const [googleuser, setgoogleuser] = useState([])
+
+
+    const googlefetch = async () => {
+        const googleuserdata = {
+            account: googleuser.email.split("@")[0],
+            name: googleuser.family_name,
+            nickname: googleuser.family_name,
+            email: googleuser.email
+        }
+        await axios.post('http://localhost:8000/api/google-account', { googleuserdata })
+    }
+
     if (Object.keys(googleuser).length > 0) {
         const userEmail = googleuser.email;
+        googlefetch()
         // 登入成功，可以顯示使用者的資訊或執行其他操作
         localStorage.setItem('userInfo', userEmail);
         alert("登入成功")
@@ -24,6 +37,7 @@ const Login = () => {
         // 未登入，可以顯示登入按鈕或執行其他操作
         console.log('使用者未登入');
     }
+
     useEffect(() => {
 
         window.onGoogleSuccess = async (response) => {
@@ -45,7 +59,7 @@ const Login = () => {
             window.onGoogleSuccess = undefined;
             document.body.removeChild(script)
         }
-    }, []);
+    }, [googleuser]);
 
 
     const onFinish = async () => {
