@@ -54,16 +54,23 @@ export const ChatBody = ({
                     textAlign: "end",
                     marginLeft: "auto",
                     paddingLeft: "10px",
+                    marginRight: "10px",
                     marginTop: "10px",
                     fontSize: "1rem",
                   }}
                 >
                   自己
                 </div>
-                <div style={{ display: "flex", alignItems: "end" }}>
+                <div
+                  style={{
+                    justifyContent: "end",
+                    display: "flex",
+                    alignItems: "end",
+                  }}
+                >
                   <div
                     style={{
-                      width: "300px",
+                      width: "40px",
                       marginLeft: "auto",
                       textAlign: "end",
                       paddingRight: "10px",
@@ -73,12 +80,13 @@ export const ChatBody = ({
                     {message.date}
                   </div>
                   <div
+                    className="test"
                     key={message.id}
                     style={{
-                      maxWidth: "300px",
+                      maxWidth: "400px",
                       backgroundColor: "#ADFF2F",
                       borderRadius: "10px",
-                      marginLeft: "auto",
+                      marginRight: "10px",
                       paddingLeft: "10px",
                       paddingRight: "10px",
                       wordBreak: "break-word",
@@ -109,6 +117,7 @@ export const ChatBody = ({
                     style={{
                       backgroundColor: "#DCDCDC",
                       maxWidth: "300px",
+                      marginLeft:'10px',
                       borderRadius: "10px",
                       paddingLeft: "10px",
                       paddingRight: "10px",

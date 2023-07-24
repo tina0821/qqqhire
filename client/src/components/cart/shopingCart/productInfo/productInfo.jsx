@@ -58,6 +58,7 @@ class ProductInfo extends Component {
                   md={4}
                   lg={4}
                   xl={4}
+                  style={{wordBreak:"break-word"}}
                   className="dateFontSize"
                 >
                   {item.rentStart}~{item.rentEnd}
@@ -81,6 +82,7 @@ class ProductInfo extends Component {
                   md={3}
                   lg={3}
                   xl={3}
+                  style={{wordBreak:"break-word"}}
                   className="cartFontSize"
                 >
                   {item.rent}
@@ -91,6 +93,7 @@ class ProductInfo extends Component {
                   md={2}
                   lg={2}
                   xl={2}
+                  style={{wordBreak:"break-word"}}
                   className="cartFontSize"
                 >
                   {item.deposit}
@@ -101,6 +104,7 @@ class ProductInfo extends Component {
                   md={2}
                   lg={2}
                   xl={2}
+                  style={{wordBreak:"break-word"}}
                   className="cartFontSize"
                 >
                   {item.total}

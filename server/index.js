@@ -71,10 +71,10 @@ io.on("connection", (socket) => {
     // 发送用户列表到客户端
     io.emit("newUserResponse", users);
   });
-
+  
   socket.on("message", (data) => {
     const newdata={...data}
-    newdata.date=new Date().getHours()+':'+new Date().getMinutes()
+    newdata.date=new Date().getHours()+':'+new Date().getMinutes().toString().padStart(2,'0')
     io.emit(data.roomName, newdata);
   });
 });
