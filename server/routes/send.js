@@ -3,6 +3,17 @@ const multer = require('multer');
 var router = express.Router();
 var conn = require('./db');
 
+// 抓取使用者資料
+router.get("/BSuser",(req, res)=>{
+   const sql = "SELECT * FROM userinfo "
+   conn.query(sql,(err, data)=>{
+      err?console.log("查詢失敗"):res.json(data)
+   })
+})
+
+
+// =============================================================================
+
 
 // 抓會員email帳號
 router.get("/email/:account",(req, res)=>{
@@ -20,6 +31,11 @@ router.get("/email/:account",(req, res)=>{
 
 
 
+
+
+// =============================================================================
+
+// 問題回報寄信
 // img storage path(儲存)
 const imgconfig = multer.diskStorage({
    // 設定路徑
@@ -89,6 +105,7 @@ const upload = multer({
 
 // 寄送信件
 const nodemailer = require("nodemailer");
+const coon = require('./db');
 
 const transporter = nodemailer.createTransport({
 

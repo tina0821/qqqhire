@@ -48,6 +48,8 @@ function Outdoor() {
             </div>
             <div className='rqu'>
                 {localStorage.getItem("userInfo")?(<Link to="/Returnqu">問題回報</Link>):(<Link to="/login">問題回報</Link>)}
+                <br />
+                {localStorage.getItem("userInfo")?(<Link to="/Backstage">後台</Link>):(<Link to="/login">問題回報</Link>)}
             </div>
         </>
     );

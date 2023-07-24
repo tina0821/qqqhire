@@ -6,9 +6,7 @@ import "./returnqu.css";
 
 const Returnqu = () => {
 
-    // ======== 抓取會員資訊 ========
     
-
     // ======== 單選按鈕 ========
     // 抓取單選框value值
     // 把值回傳進去input框

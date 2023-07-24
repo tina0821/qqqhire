@@ -12,10 +12,11 @@ import 'jquery-ui-css/jquery-ui'
 // 其他引入的組件
 
 //#
-import Home from './page/home';
-import Navbar2 from './components/Home/navbar2/navbar2';
-import Footer from './components/Home/footer/footer';
-import Returnqu from './components/returnqu/returnqu';
+import Home from './page/home';                          // 首頁
+import Navbar2 from './components/Home/navbar2/navbar2'; // 導覽列
+import Footer from './components/Home/footer/footer';    // 頁尾
+import Returnqu from './components/returnqu/returnqu';   //問題回報
+import Backstage from './components/Backstage/Backstage';
 
 //阿條
 import Up from './components/up/up'; //快速上架
@@ -64,6 +65,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Returnqu" element={<Returnqu />} />
+          <Route path="/Backstage" element={<Backstage />} />
 
 
           <Route path="/up" element={<Up />} />
