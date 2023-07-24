@@ -24,6 +24,7 @@ import ForgotPassword from './components/login/forget';//忘記密碼
 import ResetPassword from './components/login/reset';//密碼重置
 import MemberCenter from './components/PersonalData/Personaldata';//個人頁面
 
+
 //日立
 import Product from './page/product'; //商品一覽
 import ProductItem from './page/productItem'; //商品頁面
@@ -60,7 +61,7 @@ const App = () => {
     <>
       <Router>
 
-        {show && <Navbar2 />}
+        {show && <Navbar2 /> }
         {/* <Navbar2 /> */}
         <Routes>
           <Route path="/RegistrationForm" element={<Registration />} />
@@ -88,6 +89,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
         {show && <Footer />}
+     
         {/* <Footer /> */}
       </Router>
     </>
