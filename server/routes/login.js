@@ -147,13 +147,13 @@ router.post('/api/forgot-password', (req, res) => {
       const transporter = nodemailer.createTransport({
         service: 'Gmail', // 例如：Gmail、Outlook、QQ等
         auth: {
-          user: 'tina0821.chen@gmail.com',
-          pass: 'hxahmxewiqdiuvxa',
+          user: 'HireOutdoor2023@gmail.com',
+          pass: 'kvyceagpbrdesstl',
         },
       });
 
       const mailOptions = {
-        from: 'tina0821.chen@gmail.com',
+        from: 'HireOutdoor2023@gmail.com',
         to: email,
         subject: '密碼重置請求',
         text: `請點擊以下鏈接重置密碼：\n\nhttp://localhost:3000/reset-password?token=${token}`,
