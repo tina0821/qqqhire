@@ -2,6 +2,28 @@ var express = require('express');
 var router = express.Router();
 var conn = require('./db');
 
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client();
+
+router.post('/api/google-login', async (req, res) => {
+    const { credential } = req.body;
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: credential,
+            audience: "570382147021-8fsv658iibb1p1va1malkt5ppq7ll8v3.apps.googleusercontent.com", // 設定你的 Google Client ID
+        });
+        const payload = ticket.getPayload();
+
+
+        res.json(payload);
+    } catch (error) {
+        console.error('Google 登入驗證失敗:', error);
+        res.status(500).json({ success: false, message: 'Google 登入失敗' });
+    }
+});
+
+
+
 //product
 router.get('/api/products', (req, res) => {
     const query = `
@@ -199,6 +221,8 @@ router.post('/api/rating/select', (req, res) => {
         err ? console.log('查詢失敗') : res.status(200).json(data)
     })
 })
+
+
 
 
 module.exports = router
