@@ -30,6 +30,8 @@ const Backstage = () => {
     console.log(user)
 
 
+    // ========================================================================
+
 
     // 表單頁面資訊 會員資料
     const { Column, ColumnGroup } = Table;
@@ -65,55 +67,61 @@ const Backstage = () => {
         },
     ];
 
+
+    // ========================================================================
     //修改&刪除
     const [DLaccount, setDLaccount] = useState("")
     
-    
+    // 修改
     const changeData = () => {
         console.log("修改");
         setOpenCG(true);
     }
 
+    // 刪除
     const deleteData = (DLid) => {
         setDLaccount(DLid)
         console.log(DLid);
         setOpenDL(true);
     }
 
-    // 修改彈出視窗
+    // 修改
     const[openCG, setOpenCG] = useState(false);
-    // 點擊確認或取消按鈕時的回調
+    // 點擊按鈕時的回調
     const handleOk = () => {
-        // 處理確認操作
+        // 處理
         setOpenCG(false);
+        // axios.put(`http://localhost:8000/BSuser?account=${DLaccount}`)
     };
     const handleCancel = () => {
-        // 取消操作
+        // 取消
         setOpenCG(false);
     };
 
 
-    // 刪除彈出視窗
+    // 刪除
     const [openDL, setOpenDL] = useState(false);
-    // 點擊確認或取消按鈕時的回調
+    // 點擊按鈕時的回調
     const handleOk2 = () => {
-        // 處理確認操作
+        // 處理
         setOpenDL(false);
         axios.delete(`http://localhost:8000/BSuser?account=${DLaccount}`)
 
     };
     const handleCancel2 = () => {
-        // 取消操作
+        // 取消
         setOpenDL(false);
     };
 
 
+    // ========================================================================
     // 會員&問題回報 切換
     const [open, setOpen] = useState(false);
 
     const controlBtn = () => {
         setOpen((prev) => { return !prev })
     }
+    // ========================================================================
 
 
 
