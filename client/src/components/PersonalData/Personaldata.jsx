@@ -5,7 +5,7 @@ import { Avatar } from 'antd';
 import Prconly from './Prconly'
 import ChangePassword from './changePassword'
 
-const MemberCenter = () => {
+const Personal = () => {
   // setTradeItems(response.data);
 
 
@@ -201,4 +201,4 @@ const MemberCenter = () => {
   );
 }
 
-export default MemberCenter;
+export default Personal ;

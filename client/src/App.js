@@ -18,11 +18,11 @@ import Footer from './components/Home/footer/footer';
 
 //阿條
 import Up from './components/up/up'; //快速上架
-import Registration from './components/register/register';//註冊
-import Login from './components/login/login';//登入
+import RegistrationForm from './page/register';//註冊
+import LoginForm from './page/login';//登入
 import ForgotPassword from './components/login/forget';//忘記密碼
 import ResetPassword from './components/login/reset';//密碼重置
-import MemberCenter from './components/PersonalData/Personaldata';//個人頁面
+import MemberCenter from './page/Personaldata';//個人頁面
 
 
 //日立
@@ -63,14 +63,12 @@ const App = () => {
 
         {show && <Navbar2 /> }
         {/* <Navbar2 /> */}
-        <Routes>
-          <Route path="/RegistrationForm" element={<Registration />} />
-          <Route path="/login" element={<Login />} />
+        <Routes>      
           <Route path="/" element={<Home />} />
 
           <Route path="/up" element={<Up />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/RegistrationForm" element={<Registration />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/RegistrationForm" element={<RegistrationForm />} />
           <Route path="/Member" element={<MemberCenter />} />
           <Route path="/forget" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
