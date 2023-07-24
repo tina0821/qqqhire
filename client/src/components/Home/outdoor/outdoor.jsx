@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import "./outdoor.css"
+import "./outdoor.scss"
 import { Link } from 'react-router-dom';
 
 function Outdoor() {
@@ -32,10 +33,26 @@ function Outdoor() {
             <div className="outdoor">
                 <img src="http://localhost:8000/img/home/homepage/surf1.jpg" alt='海爾戶外' />
                 <div className="outdoor-word">
-                    <p>Hire outdoor</p>
-                    <p>海爾戶外</p>
+                    <svg width="1000px" height="" viewBox="0 0 900 400">
+                        <text
+                            fill="none"
+                            stroke="#fff"
+                            x="0"
+                            y="140"
+                            stroke-width="6"
+                            font-size="120"
+                            font-family="'Raleway', sans-serif"
+                            font-weight="800">
+                            <tspan x="0" dy="0">Hire outdoor</tspan>
+                            <tspan x="0" dy="1.2em" font-size="80">海爾戶外</tspan>
+                        </text>
+                        <path class="underline" data-name="Path 1"
+                            d="M107,318.31...省略"
+                            transform="translate(60 -188.421)"
+                            fill="none" stroke="#00BFFF" stroke-width="3" />
+                    </svg>
                 </div>
-                <Link to="/"className="outdoor-btn">
+                <Link to="/" className="outdoor-btn">
                     <img src="http://localhost:8000/img/home/hirecircle.png" className="hireClass" id="hireId" alt='戶外2' />
                     <div className="btn-div2class" id="btn-div2" ref={odAmiCycle}></div>
                     <p className="btn-pClass" id="btn-p" ref={odAmiArrow}>↓</p>
