@@ -19,8 +19,8 @@ function NavbarOut() {
                 <li>
                     <Link to="/" className={style.iconMove}><FontAwesomeIcon icon={faCircleUser} className="icon" /></Link>
                     <ul className={`${style["drop-menu"]} ${style["limenu-2"]}`}>
-                        <li><Link to="/">會員登入</Link></li>
-                        <li><Link to="/">會員註冊</Link></li>
+                        <li><Link to="/login">會員登入</Link></li>
+                        <li><Link to="/RegistrationForm">會員註冊</Link></li>
                     </ul>
                 </li>
             </ul>

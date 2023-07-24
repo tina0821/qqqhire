@@ -1,6 +1,23 @@
 var express = require('express');
 const multer = require('multer');
 var router = express.Router();
+var conn = require('./db');
+
+
+// 抓會員email帳號
+router.get("/email/:account",(req, res)=>{
+   
+   // 確定抓到會員帳號
+   const account = req.params.account
+   console.log(account);
+
+   // sql執行會員帳號查詢 sql的?跟[account]做綁定
+   const sql = "SELECT u.email FROM userinfo as u WHERE account =?"
+   conn.query(sql, [account],(err, data)=>{
+      err?console.log("查詢失敗"):res.json(data)
+   })
+})
+
 
 
 // img storage path(儲存)
@@ -168,8 +185,8 @@ router.post('/send', upload.any(), (req, res) => {
    <body>
     <header>PROBLEM REPORT</header>
     <form id="form" class="topBefore">
-        <input id="name" type="text" placeholder="NAME" value="John DoeXXX" readonly>
-        <input id="email" type="text" placeholder="E-MAIL" value="johndoeXXX@example.com" readonly>
+        <input id="name" type="text" placeholder="NAME" value="${req.body.account}" readonly>
+        <input id="email" type="text" placeholder="E-MAIL" value="${req.body.email}" readonly>
         <textarea id="message" type="text" placeholder="MESSAGE" readonly>${req.body.text}</textarea>
     </form>
 

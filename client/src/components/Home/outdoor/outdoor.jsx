@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import "./outdoor.css"
 import { Link } from 'react-router-dom';
+import { HashLink as ScrollLink } from 'react-router-hash-link';
 
 
 
@@ -39,13 +40,15 @@ function Outdoor() {
                     <p>Hire outdoor</p>
                     <p>海爾戶外</p>
                 </div>
-                <Link to="/" className="outdoor-btn">
+                <ScrollLink to="#outdoor2pag" className="outdoor-btn">
                     <img src="http://localhost:8000/img/home/hirecircle.png" className="hireClass" id="hireId" alt='戶外2' />
                     <div className="btn-div2class" id="btn-div2" ref={odAmiCycle}></div>
                     <p className="btn-pClass" id="btn-p" ref={odAmiArrow}>↓</p>
-                </Link>
+                </ScrollLink>
             </div>
-            <div className='rqu'><Link to="/Returnqu">問題回報</Link></div>
+            <div className='rqu'>
+                {localStorage.getItem("userInfo")?(<Link to="/Returnqu">問題回報</Link>):(<Link to="/login">問題回報</Link>)}
+            </div>
         </>
     );
 }

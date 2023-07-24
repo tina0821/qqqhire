@@ -1,10 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button, Space, Radio, Form, Select, Typography } from 'antd';
 import axios from 'axios';
 import "./returnqu.css";
 
 
 const Returnqu = () => {
+
+    // ======== 抓取會員資訊 ========
+    
 
     // ======== 單選按鈕 ========
     // 抓取單選框value值
@@ -66,13 +69,28 @@ const Returnqu = () => {
     };
 
     //  ======== 輸入框取值 傳回後端  並判斷合約狀態========
+    
+    // 取會員帳號
+    const [email, setemail] = useState("")
+    const account = localStorage.getItem("userInfo").slice(1,-1)
+    // 取email帳號
+    useEffect(()=>{
+        const emailApi = async ()=>{
+            const res = await axios.get(`http://localhost:8000/email/${account}`)
+            const email = await res.data;
+            setemail(email[0].email)
+        }   
+        emailApi();
+    },[])
+    console.log(email)
+
+    
+
 
     const [quWord, setquWord] = useState("");     // 文字
     const [quPhoto, setquPhoto] = useState("");   // 照片
     const fileImg = useRef(null)                  // 照片
     const [checked, setChecked] = useState("");   // 合約
-
-
 
     // 取得合約狀態
     const sendChick = (e) => {
@@ -114,6 +132,8 @@ const Returnqu = () => {
         const formData = new FormData();
         formData.append('text', quWord);
         formData.append('image', fileImg.current.files[0]);
+        formData.append('account', account);
+        formData.append('email', email);
 
         if (checked === '1') {
 

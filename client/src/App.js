@@ -15,6 +15,7 @@ import 'jquery-ui-css/jquery-ui'
 import Home from './page/home';
 import Navbar2 from './components/Home/navbar2/navbar2';
 import Footer from './components/Home/footer/footer';
+import Returnqu from './components/returnqu/returnqu';
 
 //阿條
 import Up from './components/up/up'; //快速上架
@@ -61,9 +62,9 @@ const App = () => {
         {show && <Navbar2 />}
         {/* <Navbar2 /> */}
         <Routes>
-          <Route path="/RegistrationForm" element={<Registration />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
+          <Route path="/Returnqu" element={<Returnqu />} />
+
 
           <Route path="/up" element={<Up />} />
           <Route path="/login" element={<Login />} />
@@ -84,10 +85,8 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
 
 
-          <Route path="/Returnqu" element={<Returnqu />} />
           
-
-
+          
         </Routes>
         {show && <Footer />}
         {/* <Footer /> */}
