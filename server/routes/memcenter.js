@@ -25,6 +25,27 @@ router.get('/api/mypro/:account', function (req, res) {
   });
 });
 
+// 編輯商品
+router.patch('/api/updateProduct/:productId', function (req, res) {
+  const productId = req.params.productId;
+  const { productName, rent, deposit } = req.body; // 從請求中取得更新後的商品名稱、租金和押金
+
+  const query = `
+    UPDATE product
+    SET productName = ?, rent = ?, deposit = ?
+    WHERE productId = ?
+  `;
+  coon.query(query, [productName, rent, deposit, productId], function (error, results) {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      res.json({ message: "商品更新成功。" });
+    }
+  });
+});
+
+
 // 下架商品
 router.delete('/api/deleteProduct/:productId', function (req, res) {
   const productId = req.params.productId;

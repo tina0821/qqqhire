@@ -78,6 +78,50 @@ function Mycm() {
     }
   };
 
+  // 編輯模式
+  // 在 Mycm 組件中，return 陳述式之前
+  const [editModeProductId, setEditModeProductId] = useState(null);
+  const [editedProductName, setEditedProductName] = useState('');
+  const [editedRent, setEditedRent] = useState('');
+  const [editedDeposit, setEditedDeposit] = useState('');
+
+  // 編輯按鈕的點擊事件處理
+const handleEdit = (productId) => {
+  const productDetails = products.find((product) => product.productId === productId);
+  if (productDetails) {
+    const { productName, rent, deposit } = productDetails;
+    setEditModeProductId(productId);
+    setEditedProductName(productName);
+    setEditedRent(rent);
+    setEditedDeposit(deposit);
+  }
+};
+
+// 取消編輯的點擊事件處理
+const handleCancelEdit = () => {
+  setEditModeProductId(null);
+};
+
+// 確定變更的點擊事件處理
+const handleSaveChanges = async (productId) => {
+  try {
+    // 發送 PATCH 請求到後端來更新資料
+    await axios.patch(`http://localhost:8000/api/updateProduct/${productId}`, {
+      productName: editedProductName,
+      rent: editedRent,
+      deposit: editedDeposit,
+    });
+    // 更新成功後，重新從資料庫獲取商品列表並結束編輯模式
+    fetchData();
+    handleCancelEdit();
+    window.alert('變更成功');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
   return (
     <div className="tbscss">
       <table className="order-table">
@@ -99,6 +143,7 @@ function Mycm() {
             const { productName, rent, deposit, imageSrc, rentalStatus } = productDetails;
             // state === 0 就是未出租，反之為出租中
             // const statusText = state === 0 ? "未出租" : "出租中";
+            const isEditMode = productId === editModeProductId;
             return (
               <tr key={productId}>
                 <td>
@@ -108,14 +153,55 @@ function Mycm() {
                     alt=""
                   />
                 </td>
-                <td>{limitProductName(productName)}</td>
-                <td>{rent}</td>
-                <td>{deposit}</td>
+                <td>{isEditMode ? (
+                  <input
+                    type="text"
+                    value={editedProductName}
+                    onChange={(e) => setEditedProductName(e.target.value)}
+                    style={{ width: '150px', fontSize: '1.5rem' }}
+                  />
+                ) : (
+                  limitProductName(productName)
+                )}</td>
+                <td>{isEditMode ? (
+                  <input
+                    type="text"
+                    value={editedRent}
+                    onChange={(e) => setEditedRent(e.target.value)}
+                    style={{ width: '50px', fontSize: '1.5rem' }}
+                  />
+                ) : (
+                  rent
+                )}</td>
+                <td>{isEditMode ? (
+                  <input
+                    type="text"
+                    value={editedDeposit}
+                    onChange={(e) => setEditedDeposit(e.target.value)}
+                    style={{ width: '50px', fontSize: '1.5rem' }}
+                  />
+                ) : (
+                  deposit
+                )}</td>
                 <td>{rent + deposit}</td>
                 {/* <td>{statusText}</td> */}
                 <td>{rentalStatus}</td>
                 {/* <td>編輯</td> */}
-                <td><button id='morebtn' onClick={() => handleDelete(productId)}>下架</button></td>
+                <td>
+                  {/* 判斷是否處於編輯模式來顯示不同按鈕 */}
+                  {isEditMode ? (
+                    <>
+                      <button id='morebtn' onClick={() => handleSaveChanges(productId)}>變更</button>
+                      <button id='morebtn' onClick={() => handleCancelEdit()}>取消</button>
+                    </>
+                  ) : (
+                    <>
+                      <button id='morebtn' onClick={() => handleEdit(productId)}>編輯</button>
+                      <button id='morebtn' onClick={() => handleDelete(productId)}>下架</button>
+                    </>
+                  )}
+                </td>
+
               </tr>
             );
           })}
