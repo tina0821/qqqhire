@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './A_productSeller.scss'
+
 import ProductSellerCard from './productSellerCard';
 import ProductCard from '../product/productCard';
 
@@ -26,7 +27,7 @@ function A_PRODUCT_SELLER() {
             <div>
               <Link to="/">海爾戶外</Link> &gt;
               <Link to="/">
-                {ProductSeller[0].account}
+                {account}
               </Link>{' '}
               &gt;
               <Link to="/">
@@ -42,13 +43,18 @@ function A_PRODUCT_SELLER() {
           {/* <ProductTop /> */}
           <div className='psg-title'>【 出租人資訊 】</div>
           <ProductSellerCard key={ProductSeller[0].account} productSeller={ProductSeller[0]} />
-          <div className='row'>
-            {ProductSeller.map((product) => (
-              <Link key={product.productId} target="_blank" className="col-md-4 pd-link" to={`/productItem/${product.productId}`}>
-                <ProductCard product={product} />
-              </Link>
-            ))}
-          </div>
+          {ProductSeller[0].productId !== null ? (
+            <div className='row'>
+              {ProductSeller.map((product) => (
+                <Link key={product.productId} target="_blank" className="col-md-4 pd-link" to={`/productItem/${product.productId}`}>
+                  <ProductCard product={product} />
+                </Link>
+              ))}
+            </div>
+          ) : (<div className='notpd'>未有出租商品</div>)
+
+          }
+
         </>
       ) : null}
     </div>

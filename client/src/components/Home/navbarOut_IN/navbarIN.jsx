@@ -12,11 +12,8 @@ function NavbarIN() {
     const loginout = () => {
         localStorage.clear()
         setTimeout(() => {
-            window.location.reload();
+            window.location.href='/';
         }, 100)
-
-
-
     }
     return (
 

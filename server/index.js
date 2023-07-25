@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/img", express.static("public/img"));
+
 const cart = require("./routes/cart");
 app.use("/cart", cart);
 
@@ -27,28 +28,15 @@ app.use('/', login)
 const member = require('./routes/memeber')
 app.use('/',member)
 
-app.get("/api/members/:account", (req, res) => {
-  const memberData = req.body;
-  const selectQuery = `SELECT * FROM userinfo WHERE account = ?`;
-
-  coon.query(
-    "SELECT * FROM userinfo WHERE account=?",
-    [req.params.account],
-    function (err, rows) {
-      res.send(JSON.stringify(rows));
-    }
-  );
-});
 
 
-app.post("/api/login", (req, res) => {
-  console.log(req.body.aldata);
-  // coon.query()
-  res.send("GG");
-});
+const send = require('./routes/send')
+app.use("/",send)
+
+
 
 app.listen(8000, function () {
-  console.clear()
+  // console.clear()
   console.log(new Date().toLocaleString());
 });
 
@@ -65,6 +53,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
+  
   console.log(`${socket.id} 用户已连接!`);
   socket.on("disconnect", () => {
     console.log(`${socket.id}用户已断开连接`);
@@ -77,13 +66,14 @@ io.on("connection", (socket) => {
     // 发送用户列表到客户端
     io.emit("newUserResponse", users);
   });
-
+  
   socket.on("message", (data) => {
-    console.log(data);
-    io.emit("messageResponse", data);
+    const newdata={...data}
+    newdata.date=new Date().getHours()+':'+new Date().getMinutes().toString().padStart(2,'0')
+    io.emit(data.roomName, newdata);
   });
 });
 server.listen(9000, function () {
-  console.clear();
+  // console.clear();
   console.log(new Date().toLocaleString());
 });

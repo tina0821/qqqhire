@@ -11,11 +11,9 @@ import TradeItem from "./tradeItem/tradeItem";
 import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
-import { Main,Chat } from "./socket/socket";
-import webSocket from "socket.io-client";
+import { Main } from "./socket/socket";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
-const socket = webSocket.connect("http://localhost:9000");
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
 Object.prototype.iscomplete = 0;
@@ -60,8 +58,9 @@ class Cart extends Component {
       totalMoney: "",
       //錯誤訊息
       err: { address: 0, payMethod: 0, cartInfo: 0 },
-      //聊天框
-      chat: "",
+      //聊天對象
+      chatInfo: "",
+      showRoom: "",
     };
   }
 
@@ -75,6 +74,7 @@ class Cart extends Component {
               colorSplit: "#0B7597",
               fontSize: "1.7rem",
               colorPrimary: "#0B7597",
+              controlHeight:"50px"
             },
           }}
           locale={zhCN}
@@ -134,9 +134,12 @@ class Cart extends Component {
                 )}
               </Col>
             </Row>
-        {this.state.chat ? <Main socket={socket} cart={this} />:<Chat cart={this}/>}
           </div>
         </ConfigProvider>
+            <Main
+              chatInfo={this.state.chatInfo}
+              showRoom={this.state.showRoom}
+            />
       </React.Fragment>
     );
   }
@@ -270,7 +273,6 @@ class Cart extends Component {
     await axios
       .delete(`http://localhost:8000/cart/delete/${e.cartMapId}`)
       .then((res) => {
-        console.log(res);
       });
     newstate.cartMap.map((item, index) => {
       newstate.cartMap[index].product = item.product.filter((value) => {
@@ -295,7 +297,10 @@ class Cart extends Component {
       faketradeItem[index].product = [];
       //假如有勾選就塞進去
       item.product.map((v, i) => {
-        v.iscomplete === 1 && faketradeItem[index].product.push(v);
+        v.iscomplete === 1 &&
+          new Date(v.rentStart).getTime() - new Date().getTime() >
+            1000 * 60 * 60 * 24 * 4 &&
+          faketradeItem[index].product.push(v);
         return true;
       });
       return true;
@@ -390,18 +395,13 @@ class Cart extends Component {
     this.setState(newstate);
   };
 
-  toggleChat = () => {
+  changeChatInfo = (chatInfo) => {
     let newstate = { ...this.state };
-    newstate.chat ? (newstate.chat = "") : (newstate.chat = 1);
-    this.setState(newstate);
-  };
-
-  changeChatInfo = (chatInfo) =>{
-    let newstate = { ...this.state };
-    newstate.chat = 1;
+    newstate.showRoom ? (newstate.showRoom = "") : (newstate.showRoom = 1);
+    newstate.chatInfo !== chatInfo && (newstate.showRoom = 1);
     newstate.chatInfo = chatInfo;
     this.setState(newstate);
-  }
+  };
 }
 
 export default Cart;

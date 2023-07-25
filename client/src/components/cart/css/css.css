@@ -84,7 +84,7 @@ a {
   padding: auto;
 }
 .ui-button {
-  font-size: 1.5rem !important;
+  font-size: 1.5rem ;
 }
 .cursorPointer {
   cursor: pointer;
@@ -125,7 +125,7 @@ a {
 }
 
 .ant-select,.ant-select-selector,.ant-select-selector .ant-select-selection-item{
-  height: 50px !important;
+  height: 50px ;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,7 +133,7 @@ a {
   /* font-weight:900; */
 }
 .ant-select-selector{
-  font-size: 1.7rem !important;
+  font-size: 1.7rem;
 }
 
 .likeHr::before {

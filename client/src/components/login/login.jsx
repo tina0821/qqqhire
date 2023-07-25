@@ -57,7 +57,7 @@ const Login = () => {
 
         <div id='loginout' >
 
-            {showAlert === 1 && <AlertBox message={messenger} type="warning" />}
+            {showAlert === 1 && <AlertBox message={messenger} type="success" />}
             {showAlert === 2 && <AlertBox message={messenger} type="warning" />}
             {showAlert === 3 && <AlertBox message={messenger} type="warning" />}
             <Row id='login'>

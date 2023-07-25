@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //寄送方式資料表
 import shippingMethod from "../../../../data/shippingMethod.json";
-import { Select, Button, Space, Input, Cascader, Row, Col } from "antd";
+import { Select, Button, Space, Input, Cascader, Row, Col,ConfigProvider } from "antd";
 import { handleGetStore } from "../test/test";
 import cookie from "react-cookies";
 import CityCountyData from "../../../../data/CityCountyDataAAA.json";
@@ -24,7 +24,7 @@ class ShippingMethod extends Component {
   render() {
     let state = this.state;
     return (
-      <React.Fragment>
+      <ConfigProvider theme={{token:{controlHeight:"50px"}}}>
         <Row align={"middle"}>
           <Col span={22}>
             <Space.Compact
@@ -113,7 +113,7 @@ class ShippingMethod extends Component {
             )}
           </Col>
         </Row>
-      </React.Fragment>
+      </ConfigProvider>
     );
   }
 

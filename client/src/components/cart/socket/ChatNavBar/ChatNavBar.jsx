@@ -1,7 +1,7 @@
 import React from "react";
 import { MessageOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-const ChatNavBar = ({cart}) => {
+const ChatNavBar = ({productAccount,setShow}) => {
   return (
     <React.Fragment>
       <div
@@ -14,8 +14,9 @@ const ChatNavBar = ({cart}) => {
         }}
       >
         <div>聊聊</div>
+        <div>{productAccount}</div>
         <Button onClick={()=>{
-          cart.toggleChat();
+          setShow("");
         }} shape="circle" type="text" icon={<MessageOutlined />}></Button>
       </div>
     </React.Fragment>
