@@ -190,9 +190,9 @@ const Backstage = () => {
                         key="action"
                         render={(_, record) => (
                             <Space size="middle">
-                                <button onClick={() => changeData(record.account)}>修改</button>
-                                <button onClick={() => stopData(record.account)}>停權</button>
-                                <button onClick={() => backData(record.account)}>復權</button>
+                                <button style={{ fontSize: '1.3rem' }} onClick={() => changeData(record.account)}>修改</button>
+                                <button style={{ fontSize: '1.3rem' }} onClick={() => stopData(record.account)}>停權</button>
+                                <button style={{ fontSize: '1.3rem' }} onClick={() => backData(record.account)}>復權</button>
                             </Space>
                         )}
                     />
@@ -260,12 +260,15 @@ const Backstage = () => {
                 // console.log(emailIP)
 
                 >
-                    <p>修改完成請按OK送出!</p>
-                    姓名:<input type="text" placeholder="輸入姓名" onChange={(e) => { setnameIP(e.target.value) }} />
+                    <div style={{ fontSize: '1.5rem' }}>
+                    <p style={{ fontSize: '1.5rem' }}>修改完成請按OK送出!</p>
+                    姓名:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="輸入姓名" onChange={(e) => { setnameIP(e.target.value) }} />
                     <br />
-                    信箱:<input type="text" placeholder="輸入信箱" onChange={(e) => { setemailIP(e.target.value) }} />
+                    信箱:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="輸入信箱" onChange={(e) => { setemailIP(e.target.value) }} />
                     <br />
-                    電話:<input type="text" placeholder="輸入電話" onChange={(e) => { setphoneIP(e.target.value) }} />
+                    電話:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="輸入電話" onChange={(e) => { setphoneIP(e.target.value) }} />
+                    </div>
+
                 </Modal>
             </div>
             <div>
@@ -275,7 +278,7 @@ const Backstage = () => {
                     onOk={handleOk2}
                     onCancel={handleCancel2}
                 >
-                    <p>確定停權嗎?</p>
+                    <p style={{ fontSize: '1.5rem' }}>確定停權嗎?</p>
                 </Modal>
             </div>
             <div>
@@ -285,7 +288,7 @@ const Backstage = () => {
                     onOk={handleOk3}
                     onCancel={handleCancel3}
                 >
-                    <p>確定復權嗎?</p>
+                    <p style={{ fontSize: '1.5rem' }}>確定復權嗎?</p>
                 </Modal>
             </div>
         </>
