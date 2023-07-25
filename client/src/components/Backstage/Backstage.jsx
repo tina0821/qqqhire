@@ -7,7 +7,7 @@ import "./Backstage.css";
 const Backstage = () => {
 
 
-    
+
 
 
     // 資料庫取出會員資訊
@@ -70,28 +70,37 @@ const Backstage = () => {
 
     // ========================================================================
     //修改&刪除
-    const [DLaccount, setDLaccount] = useState("")
-    
+    const [CGDLaccount, setCGDLaccount] = useState("")
+
+
     // 修改
-    const changeData = () => {
-        console.log("修改");
+    const changeData = (CGdata) => {
+        setCGDLaccount(CGdata)
+        console.log(CGdata);
         setOpenCG(true);
     }
 
-    // 刪除
-    const deleteData = (DLid) => {
-        setDLaccount(DLid)
+    // 停權
+    const stopData = (DLid) => {
+        setCGDLaccount(DLid)
         console.log(DLid);
         setOpenDL(true);
     }
 
-    // 修改
-    const[openCG, setOpenCG] = useState(false);
-    // 點擊按鈕時的回調
+    // 復權
+    const backData = (BKid) => {
+        setCGDLaccount(BKid)
+        console.log(BKid);
+        setOpenBK(true);
+    }
+
+    // 點擊OK=>修改
+    const [openCG, setOpenCG] = useState(false);
+    // 點擊按鈕時
     const handleOk = () => {
         // 處理
         setOpenCG(false);
-        // axios.put(`http://localhost:8000/BSuser?account=${DLaccount}`)
+        axios.put(`http://localhost:8000/CGuser?account=${CGDLaccount}`,{name:1},{phoneNumber:1},{email:1})
     };
     const handleCancel = () => {
         // 取消
@@ -99,18 +108,30 @@ const Backstage = () => {
     };
 
 
-    // 刪除
+    // 點擊OK=>停權
     const [openDL, setOpenDL] = useState(false);
-    // 點擊按鈕時的回調
+    // 點擊按鈕時
     const handleOk2 = () => {
         // 處理
         setOpenDL(false);
-        axios.delete(`http://localhost:8000/BSuser?account=${DLaccount}`)
-
+        axios.put(`http://localhost:8000/BSuser?account=${CGDLaccount}`,{isDelete:1})
     };
     const handleCancel2 = () => {
         // 取消
         setOpenDL(false);
+    };
+
+    // 點擊OK=>復權
+    const [openBK, setOpenBK] = useState(false);
+    // 點擊按鈕時
+    const handleOk3 = () => {
+        // 處理
+        setOpenBK(false);
+        axios.put(`http://localhost:8000/BSuser?account=${CGDLaccount}`,{isDelete:0})
+    };
+    const handleCancel3 = () => {
+        // 取消
+        setOpenBK(false);
     };
 
 
@@ -121,6 +142,8 @@ const Backstage = () => {
     const controlBtn = () => {
         setOpen((prev) => { return !prev })
     }
+
+
     // ========================================================================
 
 
@@ -154,8 +177,9 @@ const Backstage = () => {
                         key="action"
                         render={(_, record) => (
                             <Space size="middle">
-                                <a href='#' onClick={changeData}>修改</a>
-                                <a href='#' onClick={()=>deleteData(record.account)}>刪除</a>
+                                <a href='#' onClick={() => changeData(record.account)}>修改</a>
+                                <a href='#' onClick={() => stopData(record.account)}>停權</a>
+                                <a href='#' onClick={() => backData(record.account)}>復權</a>
                             </Space>
                         )}
                     />
@@ -210,24 +234,40 @@ const Backstage = () => {
 
 
 
+
             <div>
                 <Modal
-                    title="修改資料"
+                    title="修改會員資料"
                     open={openCG}
                     onOk={handleOk}
                     onCancel={handleCancel}
                 >
-                    <p>這是頁面</p>
+                    <p>修改完成請按OK送出!</p>
+                    姓名:<input type="text" />
+                    <br />
+                    信箱:<input type="text" />
+                    <br />
+                    電話:<input type="text" />
                 </Modal>
             </div>
             <div>
                 <Modal
-                    title="是否刪除"
+                    title="是否停權該筆帳號"
                     open={openDL}
                     onOk={handleOk2}
                     onCancel={handleCancel2}
                 >
-                    <p>這是刪除頁面</p>
+                    <p>確定停權嗎?</p>
+                </Modal>
+            </div>
+            <div>
+                <Modal
+                    title="是否恢復該筆帳號"
+                    open={openBK}
+                    onOk={handleOk3}
+                    onCancel={handleCancel3}
+                >
+                    <p>確定復權嗎?</p>
                 </Modal>
             </div>
         </>

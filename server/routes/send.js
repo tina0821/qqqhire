@@ -3,21 +3,41 @@ const multer = require('multer');
 var router = express.Router();
 var conn = require('./db');
 
+
 // =============================================================================
 
 
-// 刪除會員資料
-router.delete('/BSuser', (req, res) => {
-   // const sql = "delete from 會員資料表 where uid = ?";
-   // conn.query(sql, [req.query.account],
-   //    (err) => {
-   //       if (err) {
-   //          console.log(err);
-   //          res.end();
-   //       } else {
-   //          res.end();
-   //       };
-   //    });
+// 修改會員資料
+router.put('/CGuser', (req, res) => {
+   const sql = "UPDATE userinfo SET name = ?, phoneNumber = ?, email = ? WHERE userinfo.account = ?";
+   conn.query(sql, [req.body.name,req.body.phoneNumber,req.body.email,req.query.account],
+      (err) => {
+         if (err) {
+            console.log(err);
+            res.end();
+         } else {
+            res.end();
+         };
+      });
+   console.log(req.query)
+});
+
+
+// =============================================================================
+
+
+// 停權&復權會員資料
+router.put('/BSuser', (req, res) => {
+   const sql = "UPDATE userinfo SET isDelete = ? WHERE userinfo.account = ?";
+   conn.query(sql, [req.body.isDelete,req.query.account],
+      (err) => {
+         if (err) {
+            console.log(err);
+            res.end();
+         } else {
+            res.end();
+         };
+      });
    console.log(req.query.account)
 });
 
