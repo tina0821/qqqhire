@@ -136,6 +136,10 @@ class Cart extends Component {
             </Row>
           </div>
         </ConfigProvider>
+            <Main
+              chatInfo={this.state.chatInfo}
+              showRoom={this.state.showRoom}
+            />
       </React.Fragment>
     );
   }
