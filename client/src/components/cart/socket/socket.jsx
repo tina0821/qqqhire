@@ -21,7 +21,8 @@ export const Chat = ({setShow}) => {
         position: "fixed",
         right: "5px",
         bottom: "5px",
-        fontSize:"1.7rem"
+        fontSize:"1.7rem",
+        zIndex:1000
       }}
       size="large"
       className="ms-3 btnColor cartFontSize"
@@ -34,7 +35,7 @@ export const Chat = ({setShow}) => {
   );
 };
 
-export const Main = ({chatInfo,showRoom }) => {
+export const Main = ({chatInfo="",showRoom="" }) => {
   const [show,setShow] = useState("")
   const [roomName, setRoomName] = useState("");
   const [productAccount,setProductAccount]= useState("")
