@@ -47,21 +47,21 @@ const Rentalreq = () => {
     setShowOrderDetail(false);
   };
 
-  const limitProductName = (productName) => {
-    const maxChars = 6;
-    if (productName.length <= maxChars) {
-      return productName;
-    }
-    const truncated = productName.substr(0, maxChars);
-    const remainder = productName.substr(maxChars);
-    return (
-      <>
-        {truncated}
-        <br />
-        {remainder}
-      </>
-    );
-  };
+  // const limitProductName = (productName) => {
+  //   const maxChars = 6;
+  //   if (productName.length <= maxChars) {
+  //     return productName;
+  //   }
+  //   const truncated = productName.substr(0, maxChars);
+  //   const remainder = productName.substr(maxChars);
+  //   return (
+  //     <>
+  //       {truncated}
+  //       <br />
+  //       {remainder}
+  //     </>
+  //   );
+  // };
 
   const calculateDays = (rentStart, rentEnd) => {
     const start = new Date(rentStart);

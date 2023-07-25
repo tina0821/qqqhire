@@ -12,24 +12,24 @@ function Mycm() {
   // 確認 userInfo 的值不是空值（null）再進行 slice 操作
   const user = useract ? useract.slice(1, -1) : '';
 
- 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/mypro/${user}`);
+      const products = response.data;
+      setProducts(products);
+      // Extract unique productIds
+      const uniqueIds = Array.from(new Set(products.map((product) => product.productId)));
+      setUniqueProductIds(uniqueIds);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/api/mypro/${user}`);
-        const products = response.data;
-        setProducts(products);
-        // Extract unique productIds
-        const uniqueIds = Array.from(new Set(products.map((product) => product.productId)));
-        setUniqueProductIds(uniqueIds);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
+
+
     fetchData();
   }, [user]);
-  
+
   // 輔助函數：限製商品名稱的字數並插入換行符
   function limitProductName(productName) {
     const maxChars = 6; // 最大字數限制
@@ -60,6 +60,22 @@ function Mycm() {
   // 換到上一頁
   const prevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  // 處理刪除按鈕點擊事件
+  const handleDelete = async (productId) => {
+    const isConfirmed = window.confirm('是否確定下架？');
+
+    if (isConfirmed) {
+      try {
+        // 發送 DELETE 請求到後端
+        await axios.delete(`http://localhost:8000/api/deleteProduct/${productId}`);
+        // 刪除成功後，重新從資料庫獲取商品列表
+        fetchData();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -98,7 +114,8 @@ function Mycm() {
                 <td>{rent + deposit}</td>
                 {/* <td>{statusText}</td> */}
                 <td>{rentalStatus}</td>
-                <td>編輯</td>
+                {/* <td>編輯</td> */}
+                <td><button id='morebtn' onClick={() => handleDelete(productId)}>下架</button></td>
               </tr>
             );
           })}

@@ -2,6 +2,37 @@ var express = require('express');
 var router = express.Router();
 var conn = require('./db');
 
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client();
+
+router.post('/api/google-login', async (req, res) => {
+    const { credential } = req.body;
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: credential,
+            audience: "570382147021-8fsv658iibb1p1va1malkt5ppq7ll8v3.apps.googleusercontent.com", // 設定你的 Google Client ID
+        });
+        const payload = ticket.getPayload();
+
+
+        res.json(payload);
+    } catch (error) {
+        console.error('Google 登入驗證失敗:', error);
+        res.status(500).json({ success: false, message: 'Google 登入失敗' });
+    }
+});
+
+router.post('/api/google-account', (req, res) => {
+    const googleuserdata = req.body.googleuserdata;
+    console.log(googleuserdata)
+    const ratingsql = 'insert into userinfo(account,name,nickname,email) value (?,?,?,?)';
+    conn.query(ratingsql, [googleuserdata.account, googleuserdata.name, googleuserdata.nickname, googleuserdata.email], (err, data) => {
+        err ? console.log('插入失敗') : res.status(200).json(data)
+    })
+})
+
+
+
 //product
 router.get('/api/products', (req, res) => {
     const query = `
@@ -133,14 +164,14 @@ router.post('/api/productDelete', (req, res) => {
 router.get('/api/Pseller/:account', (req, res) => {
     const account = req.params.account
     const sql = `
-        SELECT u.account, u.nickname, u.email, u.profilePictureSrc, u.phoneNumber, p.*,
-        (SELECT im.imageSrc
-        FROM imagemap im
-        WHERE im.productId = p.productId
-        LIMIT 1) AS imageSrc
-        FROM userinfo u
-        INNER JOIN product p ON p.productAccount = u.account
-        WHERE u.account = ?
+    SELECT u.account, u.nickname, u.email, u.profilePictureSrc, u.phoneNumber, p.*,
+    (SELECT im.imageSrc
+    FROM imagemap im
+    WHERE im.productId = p.productId
+    LIMIT 1) AS imageSrc
+    FROM userinfo u
+    LEFT JOIN product p ON p.productAccount = u.account
+    WHERE u.account = ?
 
     `
     conn.query(sql, [account], (err, data) => {
@@ -182,6 +213,26 @@ router.post('/api/insertCart', (req, res) => {
         }
     })
 })
+
+//評分
+router.post('/api/rating', (req, res) => {
+    const ratingdata = req.body.ratingdata;
+    console.log(ratingdata)
+    const ratingsql = 'insert into ratings(rating,Comment,buyer,productId) value (?,?,?,?)';
+    conn.query(ratingsql, [ratingdata.rating, ratingdata.Comment, ratingdata.buyer, ratingdata.productId], (err, data) => {
+        err ? console.log('插入失敗') : res.status(200).json(data)
+    })
+})
+
+router.post('/api/rating/select', (req, res) => {
+    const selectRating = req.body.selectRating;
+    const ratingsql = 'SELECT * FROM ratings WHERE productId = ? and Buyer = ?';
+    conn.query(ratingsql, [selectRating.productId, selectRating.buyer], (err, data) => {
+        err ? console.log('查詢失敗') : res.status(200).json(data)
+    })
+})
+
+
 
 
 module.exports = router

@@ -24,7 +24,7 @@ const ProductRating = (props) => {
       <div className="rating-comment">
         <div className="buyer-info">
           <div className="buyer-image">
-            <img src={`http://localhost:8000/img/${productRating.profilePictureSrc}`} alt="Buyer" />
+            <img src={productRating.profilePictureSrc?(`http://localhost:8000/img/${productRating.profilePictureSrc}`):(`http://localhost:8000/img/noface/cafc10742b9b77da.jpg`)} alt="Buyer" />
           </div>
           <Link target='_blank' to={`/productSeller/${productRating.Buyer}`} className="buyer-id">
             {productRating.Buyer}

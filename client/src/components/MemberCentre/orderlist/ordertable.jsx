@@ -1,7 +1,8 @@
 // OrderTable.jsx
 import React from 'react';
 // import { getOrderStatus, limitProductName, calculateDays } from './orderutils';
-import { limitProductName, calculateDays } from './orderutils';
+import { calculateDays } from './orderutils';
+// import { limitProductName, calculateDays } from './orderutils';
 // import Orderstate from './orderstate';
 
 const Ordertable = ({ tradeItems, filterState, handleDetail, orderStatusMapping }) => {

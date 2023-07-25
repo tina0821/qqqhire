@@ -1,9 +1,11 @@
 import React from 'react';
-import Appealbtn from './actbtn/appealbtn';
+// import Appealbtn from './actbtn/appealbtn';
 import Cancelbtn from './actbtn/cancelbtn';
 import { Link } from 'react-router-dom';
 
-const OrderDetailCommon = ({ tradeitemId, tradeitems, type, handleBack, showCancelBtn }) => {
+import RatingInput from '../../product-rating/ratingInput';
+
+const OrderDetailCommon = ({ tradeitemId, tradeitems, type, productId, handleBack, showCancelBtn }) => {
   // 根据 tradeitemId 过滤出包含相同 tradeitemId 的详细信息
   const details = tradeitems.filter((tradeitem) => tradeitem.tradeitemId === tradeitemId);
   const uniqueAccounts = Array.from(new Set(details.map((detail) => detail[type])));
@@ -16,10 +18,13 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, handleBack, showCanc
 
         // 判斷資料的state，決定要顯示什麼button
         let buttonComponent = null;
-        if (state === 3) {
-          buttonComponent = <Appealbtn />;
-        } else if (state === 0 && showCancelBtn) {
+        if (state === 0 && showCancelBtn) {
           buttonComponent = <Cancelbtn tradeitemId={tradeitemId} />;
+        }
+
+        let evaluate = null;
+        if (state === 3 && showCancelBtn) {
+          evaluate = <RatingInput productId={productId} />;
         }
 
         return (
@@ -39,9 +44,9 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, handleBack, showCanc
                 <tr>
                   <th>商品圖片</th>
                   <th>商品</th>
-                  <th>預約日期</th>
-                  <th>歸還日期</th>
-                  <th>天數</th>
+                  {/* <th>預約日期</th> */}
+                  {/* <th>歸還日期</th> */}
+                  {/* <th>天數</th> */}
                   <th>租金(天)</th>
                   <th>押金</th>
                   <th>總金額</th>
@@ -52,18 +57,21 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, handleBack, showCanc
                   <tr key={item.productId}>
                     <td>
                       <img
+                        onClick={() => { console.log(item) }}
                         id="proimg"
                         src={`http://localhost:8000/img/${item.imageSrc}`}
                         alt=""
                       />
                     </td>
                     <td>{limitProductName(item.productName)}</td>
-                    <td>{new Date(item.rentStart).toLocaleDateString()}</td>
-                    <td>{new Date(item.rentEnd).toLocaleDateString()}</td>
-                    <td>{calculateDays(item.rentStart, item.rentEnd)}</td>
+
+                    {/* <td>{new Date(item.rentStart).toLocaleDateString()}</td> */}
+                    {/* <td>{new Date(item.rentEnd).toLocaleDateString()}</td> */}
+                    {/* <td>{calculateDays(item.rentStart, item.rentEnd)}</td> */}
                     <td>{item.rent}</td>
                     <td>{item.deposit}</td>
                     <td>{calculateDays(item.rentStart, item.rentEnd) * item.rent + item.deposit}</td>
+                    <td>{evaluate}</td>
                   </tr>
                 ))}
               </tbody>
