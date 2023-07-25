@@ -84,6 +84,10 @@ $main-color: #0b7597;
           align-items: center;
 
           .membername1 {
+            font-size: $font-small;
+            font-weight: bold;
+          }
+          .membername2{
             font-size: $font-xs;
           }
         }

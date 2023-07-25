@@ -120,7 +120,7 @@ const Personal = () => {
   }
   return (
     <div id='memberout'>
-      {showAlert === 1 && <AlertBox message="資訊已修改" type="warning" />}
+      {showAlert === 1 && <AlertBox message="資訊已修改" type="error" />}
       <div className='t1' >|會員中心|</div>
       <div className='t2' >個人資料</div>
       <div className='member'>

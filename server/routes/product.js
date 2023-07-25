@@ -25,7 +25,15 @@ router.post('/api/google-login', async (req, res) => {
 router.post('/api/google-account', (req, res) => {
     const googleuserdata = req.body.googleuserdata;
     console.log(googleuserdata)
-    const ratingsql = 'insert into userinfo(account,name,nickname,email) value (?,?,?,?)';
+    const ratingsql = `
+    INSERT INTO userinfo SET
+    account = ?,
+    name = ?,
+    nickname = ?,
+    email = ?,
+    identityCard = UUID() ,
+    phoneNumber = UUID();`
+
     conn.query(ratingsql, [googleuserdata.account, googleuserdata.name, googleuserdata.nickname, googleuserdata.email], (err, data) => {
         err ? console.log('插入失敗') : res.status(200).json(data)
     })

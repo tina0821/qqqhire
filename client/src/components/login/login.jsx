@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Input, Col, Row, Carousel } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Googlehayaku from '../google-login/Googlehayaku'
 import AlertBox from '../product-item/AlertBox';
 // import Googlehayaku from '../google-login/Googlehayaku';  //google登入元件
 
@@ -90,6 +90,7 @@ const Login = () => {
                     </Carousel>
                 </Col>
                 <Col span={9} id='login-right'>
+                <Googlehayaku/>
                     <p className='logintitle'>登入</p>
                     <Form
                         layout="vertical"

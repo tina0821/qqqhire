@@ -60,7 +60,7 @@ router.post('/api/register', async (req, res) => {
     const salt = await bcrypt.genSalt(a);
     const hashedPassword = await bcrypt.hash(aldata.password, salt);
     const sql = `INSERT INTO userinfo (account, password, phoneNumber, identityCard, email, salt, nickname, gender, name, birthday,	profilePictureSrc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
-    const defaultAvatar = 'profilePictureSrc/default.jpg'
+    const defaultAvatar = 'profilePictureSrc/hire.png'
     coon.query(
       sql,
       [
@@ -103,7 +103,6 @@ router.post('/api/login', async (req, res) => {
     } else if (results.length > 0) {
       const hashedPassword = results[0].password;
 
-      // 使用 bcrypt 进行密码验证
       try {
         const match = await bcrypt.compare(password, hashedPassword);
 
