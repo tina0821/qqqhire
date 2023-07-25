@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, ConfigProvider, Button, Modal } from 'antd';
+import { Space, Table, ConfigProvider, Button, Modal } from 'antd';
 import axios from 'axios';
 import "./Backstage.css";
 
@@ -38,34 +38,34 @@ const Backstage = () => {
 
 
     // 表單頁面資訊 問題回報
-    const { Column1, ColumnGroup1 } = Table;
-    const data1 = [
-        {
-            key: '1',
-            MemberID: '12345',
-            MemberAt: 'AAA',
-            name: "買不到",
-            email: '1/1',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            MemberID: '8888',
-            MemberAt: 'BBB',
-            name: "賣光了",
-            phone: "0911111111",
-            email: '1/2',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            MemberID: '12345',
-            MemberAt: 'CCC',
-            name: "太便宜",
-            email: '1/3',
-            tags: ['cool', 'teacher'],
-        },
-    ];
+    // const { Column1, ColumnGroup1 } = Table;
+    // const data1 = [
+    //     {
+    //         key: '1',
+    //         MemberID: '12345',
+    //         MemberAt: 'AAA',
+    //         name: "買不到",
+    //         email: '1/1',
+    //         tags: ['nice', 'developer'],
+    //     },
+    //     {
+    //         key: '2',
+    //         MemberID: '8888',
+    //         MemberAt: 'BBB',
+    //         name: "賣光了",
+    //         phone: "0911111111",
+    //         email: '1/2',
+    //         tags: ['loser'],
+    //     },
+    //     {
+    //         key: '3',
+    //         MemberID: '12345',
+    //         MemberAt: 'CCC',
+    //         name: "太便宜",
+    //         email: '1/3',
+    //         tags: ['cool', 'teacher'],
+    //     },
+    // ];
 
 
     // ========================================================================
@@ -96,10 +96,10 @@ const Backstage = () => {
 
     // 點擊OK=>修改
     const [openCG, setOpenCG] = useState(false);
-    const [nameIP,setnameIP] = useState("")
-    const [phoneIP,setphoneIP] = useState("")
-    const [emailIP,setemailIP] = useState("")
-    
+    const [nameIP, setnameIP] = useState("")
+    const [phoneIP, setphoneIP] = useState("")
+    const [emailIP, setemailIP] = useState("")
+
     // console.log(nameIP)
     // console.log(phoneIP)
     // console.log(emailIP)
@@ -108,7 +108,11 @@ const Backstage = () => {
     const handleOk = () => {
         // 傳送更新資料
         setOpenCG(false);
-        axios.put(`http://localhost:8000/CGuser?account=${CGDLaccount}`,{name:nameIP},{phoneNumber:phoneIP},{email:emailIP})
+        axios.put(`http://localhost:8000/CGuser?account=${CGDLaccount}`, {
+            name: nameIP,
+            phoneNumber: phoneIP,
+            email: emailIP
+        })
         // alert("更新成功")
     };
     const handleCancel = () => {
@@ -123,7 +127,7 @@ const Backstage = () => {
     const handleOk2 = () => {
         // 處理
         setOpenDL(false);
-        axios.put(`http://localhost:8000/BSuser?account=${CGDLaccount}`,{isDelete:1})
+        axios.put(`http://localhost:8000/BSuser?account=${CGDLaccount}`, { isDelete: 1 })
     };
     const handleCancel2 = () => {
         // 取消
@@ -136,7 +140,7 @@ const Backstage = () => {
     const handleOk3 = () => {
         // 處理
         setOpenBK(false);
-        axios.put(`http://localhost:8000/BSuser?account=${CGDLaccount}`,{isDelete:0})
+        axios.put(`http://localhost:8000/BSuser?account=${CGDLaccount}`, { isDelete: 0 })
     };
     const handleCancel3 = () => {
         // 取消
@@ -163,7 +167,7 @@ const Backstage = () => {
             <div className='BS_BtnStyle'>
                 <Space className='BS_BtnStyle_space'>
                     <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >會員資料</Button>
-                    <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >問題回報</Button>
+                    {/* <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >問題回報</Button> */}
                 </Space>
             </div>
 
@@ -186,9 +190,9 @@ const Backstage = () => {
                         key="action"
                         render={(_, record) => (
                             <Space size="middle">
-                                <a href='#' onClick={() => changeData(record.account)}>修改</a>
-                                <a href='#' onClick={() => stopData(record.account)}>停權</a>
-                                <a href='#' onClick={() => backData(record.account)}>復權</a>
+                                <button onClick={() => changeData(record.account)}>修改</button>
+                                <button onClick={() => stopData(record.account)}>停權</button>
+                                <button onClick={() => backData(record.account)}>復權</button>
                             </Space>
                         )}
                     />
@@ -199,7 +203,7 @@ const Backstage = () => {
 
 
             {/* 第一個部分-問題回報 */}
-            {open && <ConfigProvider
+            {/* {open && <ConfigProvider
                 // Token全部CSS 
                 theme={{ token: { fontSize: '1.2rem' } }} >
 
@@ -236,7 +240,7 @@ const Backstage = () => {
                     />
                 </Table>
 
-            </ConfigProvider>}
+            </ConfigProvider>} */}
 
 
 
@@ -250,13 +254,18 @@ const Backstage = () => {
                     open={openCG}
                     onOk={handleOk}
                     onCancel={handleCancel}
+
+                // console.log(nameIP)
+                // console.log(phoneIP)
+                // console.log(emailIP)
+
                 >
                     <p>修改完成請按OK送出!</p>
-                    姓名:<input type="text" placeholder="輸入姓名" onChange={(e)=>{setnameIP(e.target.value)}}/>
+                    姓名:<input type="text" placeholder="輸入姓名" onChange={(e) => { setnameIP(e.target.value) }} />
                     <br />
-                    信箱:<input type="text" placeholder="輸入信箱" onChange={(e)=>{setemailIP(e.target.value)}}/>
+                    信箱:<input type="text" placeholder="輸入信箱" onChange={(e) => { setemailIP(e.target.value) }} />
                     <br />
-                    電話:<input type="text" placeholder="輸入電話" onChange={(e)=>{setphoneIP(e.target.value)}}/>
+                    電話:<input type="text" placeholder="輸入電話" onChange={(e) => { setphoneIP(e.target.value) }} />
                 </Modal>
             </div>
             <div>
