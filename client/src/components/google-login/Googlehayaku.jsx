@@ -13,8 +13,8 @@ const Googlehayaku = () => {
   const googlefetch = async () => {
     const googleuserdata = {
       account: googleuser.email.split("@")[0],
-      name: googleuser.family_name,
-      nickname: googleuser.family_name,
+      name: googleuser.name,
+      nickname: googleuser.family_name ? googleuser.family_name : googleuser.given_name,
       email: googleuser.email
     }
     await axios.post('http://localhost:8000/api/google-account', { googleuserdata })
