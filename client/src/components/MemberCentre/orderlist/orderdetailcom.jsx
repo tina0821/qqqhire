@@ -22,11 +22,6 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, productId, handleBac
           buttonComponent = <Cancelbtn tradeitemId={tradeitemId} />;
         }
 
-        let evaluate = null;
-        if (state === 3 && showCancelBtn) {
-          evaluate = <RatingInput productId={productId} />;
-        }
-
         return (
           <div key={account}>
             <div id="trititle">
@@ -71,7 +66,7 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, productId, handleBac
                     <td>{item.rent}</td>
                     <td>{item.deposit}</td>
                     <td>{calculateDays(item.rentStart, item.rentEnd) * item.rent + item.deposit}</td>
-                    <td>{evaluate}</td>
+                    <td>{state === 3 && showCancelBtn&&(<RatingInput productId={item.productId} />)}</td>
                   </tr>
                 ))}
               </tbody>

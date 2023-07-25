@@ -139,11 +139,10 @@ router.post('/api/fastup/:account', function (req, res) {
   );
 });
 
-
 router.get("/api/myorder/:account", function (req, res) {
   const account = req.params.account;
   const query = `
-    SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc
+    SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit,p.productId, i.imageSrc
     FROM tradeitem AS t
     INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
     INNER JOIN product AS p ON m.productId = p.productId
