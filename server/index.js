@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/img", express.static("public/img"));
+
 const cart = require("./routes/cart");
 app.use("/cart", cart);
 
