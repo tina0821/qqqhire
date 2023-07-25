@@ -16,7 +16,8 @@ class ProductInfo extends Component {
                     type="checkbox"
                     className="imgActive"
                     value={item.cartMapId}
-                    checked={item.iscomplete && item.iscomplete}
+                    disabled={(new Date(item.rentStart).getTime()-new Date().getTime()) <=(1000*60*60*24*4)}
+                    checked={(new Date(item.rentStart).getTime() - new Date().getTime()) > (1000*60*60*24*4) && item.iscomplete && item.iscomplete}
                     onChange={(e) => {
                       this.props.changeOne(
                         e,
@@ -57,9 +58,13 @@ class ProductInfo extends Component {
                   md={4}
                   lg={4}
                   xl={4}
+                  style={{wordBreak:"break-word"}}
                   className="dateFontSize"
                 >
                   {item.rentStart}~{item.rentEnd}
+                  <br/>
+                  <span style={{color:"red",fontWeight:"900"}}>{(new Date(item.rentStart).getTime()-new Date().getTime())<=(1000*60*60*24*4)&&"商品租借起始日最少須在四天後"}</span>
+                  
                 </Col>
                 <Col
                   xs={2}
@@ -77,6 +82,7 @@ class ProductInfo extends Component {
                   md={3}
                   lg={3}
                   xl={3}
+                  style={{wordBreak:"break-word"}}
                   className="cartFontSize"
                 >
                   {item.rent}
@@ -87,6 +93,7 @@ class ProductInfo extends Component {
                   md={2}
                   lg={2}
                   xl={2}
+                  style={{wordBreak:"break-word"}}
                   className="cartFontSize"
                 >
                   {item.deposit}
@@ -97,6 +104,7 @@ class ProductInfo extends Component {
                   md={2}
                   lg={2}
                   xl={2}
+                  style={{wordBreak:"break-word"}}
                   className="cartFontSize"
                 >
                   {item.total}
@@ -116,6 +124,7 @@ class ProductInfo extends Component {
                       icon={<CloseOutlined />}
                       value={item.cartMapId}
                       danger={true}
+                      style={{borderRadius:"50%",height:"30px",width:"30px"}}
                       onClick={() => {
                         this.props.showDeleteWindow(item, 1);
                       }}

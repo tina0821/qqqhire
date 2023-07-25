@@ -35,8 +35,9 @@ class DeletedPrompt extends Component {
             this.props.data.state.deletePrompt && (
               <React.Fragment>
                 <div className="col-12 d-flex flex-wrap">
-                  <div className="col-12 d-flex justify-content-center mb-5">
-                    確定刪除{this.props.data.state.deletePrompt.productName}?
+                  <div className="col-12" style={{boxSizing:"border-box",textAlign:"center"}}>確定刪除</div>
+                  <div className="col-12 mb-5 ps-4 pe-4" style={{boxSizing:"border-box",textAlign:"center"}}>
+                    <span style={{color:"red"}}>{this.props.data.state.deletePrompt.productName}</span>?
                   </div>
                   <div className="col-12 d-flex justify-content-center ">
                     <Button

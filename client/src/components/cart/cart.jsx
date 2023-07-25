@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { ConfigProvider } from "antd";
-import { Button, message, Steps, Col, Row } from "antd";
+import { Button, Steps, Col, Row } from "antd";
 import axios from "axios";
-// import { onLogin, checkLogin, logOut } from "../cookie/cookie";
 
 //引用自做檔案
 import ShopingCart from "./shopingCart/index";
@@ -11,10 +11,9 @@ import TradeItem from "./tradeItem/tradeItem";
 import TradeSuccess from "./tradeSuccess/tradeSuccess";
 import zhCN from "antd/locale/zh_TW";
 import { checkForm } from "./tradeItem/checkForm/checkForm";
+import { Main } from "./socket/socket";
 import "dayjs/locale/zh-cn";
 import "./css/css.css";
-// import { ajax } from "jquery";
-// import paymentMethod from '../../data/paymentMethod.json'
 
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
 Object.prototype.iscomplete = 0;
@@ -58,8 +57,10 @@ class Cart extends Component {
       //結帳商品總金額
       totalMoney: "",
       //錯誤訊息
-      err: { address: 0, payMethod: 0 },
-      cartInfo: 0,
+      err: { address: 0, payMethod: 0, cartInfo: 0 },
+      //聊天對象
+      chatInfo: "",
+      showRoom: "",
     };
   }
 
@@ -73,6 +74,7 @@ class Cart extends Component {
               colorSplit: "#0B7597",
               fontSize: "1.7rem",
               colorPrimary: "#0B7597",
+              controlHeight:"50px"
             },
           }}
           locale={zhCN}
@@ -124,22 +126,24 @@ class Cart extends Component {
                   </Button>
                 )}
                 {this.state.current === this.state.steps.length - 1 && (
-                  <Button
-                    type="primary"
-                    onClick={() => message.success("Processing complete!")}
-                    size="large"
-                  >
-                    結帳
-                  </Button>
+                  <Link to={"/"}>
+                    <Button type="primary" size="large">
+                      完成
+                    </Button>
+                  </Link>
                 )}
               </Col>
             </Row>
           </div>
         </ConfigProvider>
+            <Main
+              chatInfo={this.state.chatInfo}
+              showRoom={this.state.showRoom}
+            />
       </React.Fragment>
     );
   }
-
+  componentDidUpdate() {}
   //第一次更新資訊
   componentDidMount = async () => {
     if (localStorage.getItem("userInfo")) {
@@ -161,8 +165,8 @@ class Cart extends Component {
         });
       //更新資料
       this.setState(newstate);
-    }else{
-      document.location.href='http://localhost:3000/login'
+    } else {
+      document.location.href = "http://localhost:3000/login";
     }
   };
 
@@ -269,7 +273,6 @@ class Cart extends Component {
     await axios
       .delete(`http://localhost:8000/cart/delete/${e.cartMapId}`)
       .then((res) => {
-        console.log(res);
       });
     newstate.cartMap.map((item, index) => {
       newstate.cartMap[index].product = item.product.filter((value) => {
@@ -294,7 +297,10 @@ class Cart extends Component {
       faketradeItem[index].product = [];
       //假如有勾選就塞進去
       item.product.map((v, i) => {
-        v.iscomplete === 1 && faketradeItem[index].product.push(v);
+        v.iscomplete === 1 &&
+          new Date(v.rentStart).getTime() - new Date().getTime() >
+            1000 * 60 * 60 * 24 * 4 &&
+          faketradeItem[index].product.push(v);
         return true;
       });
       return true;
@@ -321,7 +327,7 @@ class Cart extends Component {
   };
 
   //記錄每一位賣家訂單的寄送地址
-  addAddress = (addressValue, productAccount, shippingMethod = 0) => {
+  addAddress = (addressValue, productAccount, shippingMethod = 0, data = 0) => {
     let newstate = { ...this.state };
     const productAccountList = [];
     newstate.tradeItem.map((value) => {
@@ -334,6 +340,9 @@ class Cart extends Component {
     shippingMethod &&
       (newstate.tradeItem[productAccountNumber].shippingMethod =
         shippingMethod);
+    data &&
+      (newstate.tradeItem[productAccountNumber].tradeTypePriceId =
+        data.tradeTypePriceId);
     this.setState(newstate);
   };
 
@@ -383,6 +392,14 @@ class Cart extends Component {
     newstate.err.address = 0;
     newstate.err.payMethod = 0;
     newstate.err.cartInfo = 0;
+    this.setState(newstate);
+  };
+
+  changeChatInfo = (chatInfo) => {
+    let newstate = { ...this.state };
+    newstate.showRoom ? (newstate.showRoom = "") : (newstate.showRoom = 1);
+    newstate.chatInfo !== chatInfo && (newstate.showRoom = 1);
+    newstate.chatInfo = chatInfo;
     this.setState(newstate);
   };
 }

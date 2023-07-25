@@ -196,7 +196,7 @@ class ContractCompoment extends Component {
           <ul className="">
             <Col span={24} style={{ display: "flex", textAlign: "start" }}>
               <li>
-                甲方租借如逾期，若未提前12小時提出延長承租之要求，則需支付產品租金兩倍罰金於乙方。(若有不可抗力之因素致無法如期歸還者除外)
+                甲方租借如逾期，若未提前1日提出延長承租之要求，則需支付產品租金兩倍罰金於乙方。(若有不可抗力之因素致無法如期歸還者除外)
               </li>
             </Col>
           </ul>
@@ -260,14 +260,6 @@ class ContractCompoment extends Component {
                 </Col>
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>
                   <li>
-                    地址：
-                    <span className="text-danger">
-                      {this.props.data.state.accountInfo.address}
-                    </span>
-                  </li>
-                </Col>
-                <Col span={24} style={{ display: "flex", textAlign: "start" }}>
-                  <li>
                     行動電話：
                     <span className="text-danger" id="phone_number">
                       {this.props.data.state.accountInfo.phoneNumber}
@@ -299,11 +291,6 @@ class ContractCompoment extends Component {
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>
                   <li>
                     身份證字號：<span className="text-danger">{this.props.item.identityCard}</span>
-                  </li>
-                </Col>
-                <Col span={24} style={{ display: "flex", textAlign: "start" }}>
-                  <li>
-                    地址：<span className="text-danger">{this.props.item.address}</span>
                   </li>
                 </Col>
                 <Col span={24} style={{ display: "flex", textAlign: "start" }}>

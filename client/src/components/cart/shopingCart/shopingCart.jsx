@@ -44,6 +44,9 @@ class ShopingCart extends Component {
                       }}
                       size="large"
                       className="ms-3 btnColor cartFontSize"
+                      onClick={()=>{
+                        this.props.data.changeChatInfo(item.productAccount);
+                      }}
                     >
                       聊聊<i className="ps-2 bi bi-messenger"></i>
                     </Button>

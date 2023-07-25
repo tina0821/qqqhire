@@ -1,4 +1,3 @@
-// import React from 'react';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
@@ -21,6 +20,7 @@ import Footer from './components/Home/footer/footer';
 import Up from './components/up/up'; //快速上架
 import Login from './components/login/login';
 import Registration from './components/register/register';
+import MemberCenter from './components/PersonalData/Personaldata';
 
 //日立
 import Product from './page/product'; //商品一覽
@@ -35,8 +35,6 @@ import Cart from "./components/cart/index";
 import Aboutus from './page/aboutus';
 import Order from './page/order';
 import Cmmgmt from './page/cmmgmt';
-import Profastup from './page/profastup';
-import Proedit from './page/proedit';
 
 import NotFound from './page/NotFound';
 
@@ -56,7 +54,6 @@ const App = () => {
 
 
 
-
   return (
     <>
       <Router>
@@ -64,12 +61,14 @@ const App = () => {
         {show && <Navbar2 />}
         {/* <Navbar2 /> */}
         <Routes>
-
+          <Route path="/RegistrationForm" element={<Registration />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
 
           <Route path="/up" element={<Up />} />
           <Route path="/login" element={<Login />} />
           <Route path="/RegistrationForm" element={<Registration />} />
+          <Route path="/Member" element={<MemberCenter />} />
 
           <Route path="/cart" element={<Cart />} />
 
@@ -81,8 +80,6 @@ const App = () => {
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/order" element={<Order />} />
           <Route path="/cmmgmt" element={<Cmmgmt />} />
-          <Route path="/profastup" element={<Profastup />} />
-          <Route path="/proedit" element={<Proedit />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

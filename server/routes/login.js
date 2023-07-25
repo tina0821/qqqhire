@@ -4,6 +4,51 @@ var coon = require('./db');
 var bcrypt = require('bcrypt');
 
 //註冊
+//驗證帳號
+router.post('/api/register/account', (req, res) => {
+  const query = 'SELECT * FROM userinfo WHERE account = ?'
+  const { username } = req.body;
+  coon.query(query, [username], (err, data) => {
+
+    if (data.length > 0) {
+      // 有重複帳號
+      res.status(409).json({ error: '帳號已經存在' });
+    } else {
+      res.status(200).json({ message: '帳號可以使用' });
+    }
+  });
+
+
+})
+//驗證身分證
+router.post('/api/register/validate', (req, res) => {
+  const query = 'SELECT * FROM userinfo WHERE identityCard = ? OR email = ? OR phoneNumber = ?';
+  const { identityCard, email, phoneNumber } = req.body;
+  const duplicateData = {};
+
+  coon.query(query, [identityCard, email, phoneNumber], (err, data) => {
+    if (err) {
+      
+      res.status(500).json({ error: '伺服器內部錯誤' });
+    } else {
+      if (data.length > 0) {
+        if (data.some((cheak) => cheak.identityCard === identityCard)) {
+          duplicateData.identityCard = '身分證重複';
+        }
+        if (data.some((cheak) => cheak.email === email)) {
+          duplicateData.email = 'email重複';
+        }
+        if (data.some((cheak) => cheak.phoneNumber === phoneNumber)) {
+          duplicateData.phoneNumber = '手機號碼重複';
+        }
+        res.status(409).json({ error: '以下字段重複使用', duplicateData });
+      } else {
+        res.status(200).json({ message: '資訊可使用' });
+      }
+    }
+  });
+});
+
 router.post('/api/register', async (req, res) => {
   const { aldata } = req.body;
   const a = 10;

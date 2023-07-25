@@ -59,6 +59,7 @@ class TradeItem extends Component {
                   <ShippingMethod
                     data={this.props.data}
                     productAccount={item.productAccount}
+                    item={item}
                   />
                   <PayType
                     data={this.props.data}

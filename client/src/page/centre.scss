@@ -13,7 +13,7 @@ $paddingTop: 5vh;
   height: 1200px;
   // height: 100vh;
   background-image: url('../../../server/public/img/wave1.png');
-  background-size: 100% auto;
+  // background-size: 100% auto;
   /* 调整此处 */
   background-repeat: no-repeat;
   background-position: center;
@@ -77,7 +77,7 @@ $paddingTop: 5vh;
   // ============================ 取消訂單按鈕 ============================
   #actbtn {
     color: orangered;
-    font-weight:bold;
+    font-weight: bold;
     background-color: rgba(0, 0, 0, 0);
     font-size: $medtwoFontSize;
     border: none;
@@ -98,7 +98,7 @@ $paddingTop: 5vh;
     margin-top: 50px;
     border-collapse: collapse;
     position: relative;
-    // ============================================
+    // ===================毛玻璃=========================
     backdrop-filter: blur(21px);
     -webkit-backdrop-filter: blur(21px);
     border: 0px solid rgba(255, 255, 255, 0.18);
@@ -125,7 +125,7 @@ $paddingTop: 5vh;
       border-radius: 17px;
       -webkit-border-radius: 17px;
     }
-  
+
     th,
     td {
       padding: 20px;
@@ -256,9 +256,9 @@ $paddingTop: 5vh;
     display: flex;
     gap: 50px;
 
-    p{
+    p {
       font-size: $littleFontSize;
-      
+
     }
   }
 
@@ -271,19 +271,103 @@ $paddingTop: 5vh;
     font-size: $medtwoFontSize;
     border: none;
   }
+
   .modal-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 半透明黑色背景 */
     z-index: 9999;
   }
-  
+
   .modal-open {
-    overflow: hidden; /* 禁止滚动页面 */
+    overflow: hidden;
+    /* 禁止滚动页面 */
   }
-  
+
+
+  // 分頁按鈕
+  .btncon {
+    display: flex;
+    justify-content: center;
+    /* 將按鈕置中 */
+    margin-top: 20px;
+
+    /* 可選：設置按鈕與表格之間的間距 */
+    #back {
+      margin: 0 5px;
+      /* 可選：設置按鈕之間的間距 */
+    }
+  }
+
+  .proimg {
+    width: 25px;
+  }
+
+}
+
+// 請先登入
+.logbg {
+  position: relative;
+  height: 60vh;
+  background-image: url('../../../server/public/img/wave1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 20vh;
+
+  .glass {
+    padding-top: 10vh;
+    padding-left: 20vw;
+    width: 50%;
+    height: 50%;
+    backdrop-filter: blur(21px);
+    -webkit-backdrop-filter: blur(21px);
+    border: 0px solid rgba(255, 255, 255, 0.18);
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    border-radius: 17px;
+    -webkit-border-radius: 17px;
+  }
+
+  .ml11 {
+    font-weight: 700;
+    font-size: $largeFontSize;
+  }
+
+  .ml11 .text-wrapper {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.1em;
+    padding-right: 0.05em;
+    padding-bottom: 0.15em;
+  }
+
+  .ml11 .line {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 3px;
+    background-color: #fff;
+    transform-origin: 0 50%;
+  }
+
+  .ml11 .line1 {
+    top: 0;
+    left: 0;
+  }
+
+  .ml11 .letter {
+    display: inline-block;
+    line-height: 1em;
+  }
+
 
 }

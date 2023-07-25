@@ -1,0 +1,166 @@
+$font-big: 2.25rem;
+$font-normal: 2rem;
+$font-small: 1.75rem;
+$font-xs: 1.5rem;
+$main-color: #0b7597;
+#memberout {
+  background-image: url(../../../../server/public/img/wave1.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 30px;
+
+  .member {
+    background-color: rgba(255, 255, 255, 0.571);
+    backdrop-filter: blur(21px);
+    -webkit-backdrop-filter: blur(21px);
+    border: 0px solid rgba(255, 255, 255, 0.18);
+    box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    -webkit-box-shadow: rgba(142, 142, 142, 0.19) 0px 6px 15px 0px;
+    border-radius: 17px;
+    -webkit-border-radius: 17px;
+    color: rgb(0, 0, 0);
+    min-width: 90%;
+
+    
+.member1{
+  display: flex;
+    .membertitleline {
+
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    .input-group,
+    .info-group {
+      margin-bottom: 10px;
+
+      label {
+        display: inline-block;
+        margin-bottom: 5px;
+      }
+
+      input {
+        display: inline-block;
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 5px;
+      }
+    }
+
+    .memberprc{
+      // margin-top: 50px;
+      margin-left: 175px;
+    }
+    .avatar-upload-label {
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .avatar-upload-label input {
+      display: none;
+    }
+
+    .avatar-preview {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: #6d74b6 5px solid;
+      background-color: #ffffff;
+      margin-top: 30px;
+    }
+
+    .avatar-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-color: #ffffff;
+    }
+
+    // .ant-row{
+    //   margin-top: 80px;
+    // } 
+
+    .memberform1 {
+      // min-width: 800px;
+      margin-left: 30px;
+      legend{
+        font-size:$font-normal ;
+        font-weight: bold;
+      }
+      label,div{
+        font-size: $font-small;
+      }
+      input[type=text],  input[type=date],input[date], select {
+  
+      font-size: $font-small;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      
+    }
+
+    .memberform2 {
+     
+      legend{
+        font-size:$font-normal ;
+        font-weight: bold;
+      }
+      // label{
+      //   font-size:$font-small 
+      // }
+
+
+      
+    }
+
+    .memberform1 {
+      min-width: 800px;
+      legend{
+        font-size:$font-normal ;
+        font-weight: bold;
+      }
+      label,div{
+        font-size: $font-small;
+      }
+      input[type=text],  input[type=date], select {
+  
+      font-size: $font-small;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: $main-color;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100px;;
+    }
+    .ReactModal__Content.ReactModal__Content--after-open {
+      width: 300px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 600px;
+      margin-top: 50px;
+  }
+  }
+}
+}

@@ -12,8 +12,12 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/img", express.static("public/img"));
+
 const cart = require("./routes/cart");
 app.use("/cart", cart);
+
+const memcenter = require("./routes/memcenter");
+app.use("/", memcenter);
 
 const product = require("./routes/product");
 app.use("/", product);
@@ -21,27 +25,8 @@ app.use("/", product);
 const login = require('./routes/login')
 app.use('/', login)
 
-app.get("/api/myorder/:account", function (req, res) {
-  const account = req.params.account;
-  const query = `
-    SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc
-    FROM tradeitem AS t
-    INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
-    INNER JOIN product AS p ON m.productId = p.productId
-    INNER JOIN imagemap AS i ON p.productId = i.productId
-    WHERE t.account = ?
-    GROUP BY p.productId
-    ORDER BY t.tradeitemId
-  `;
-  coon.query(query, [account], function (error, results) {
-    if (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    } else {
-      res.json(results);
-    }
-  });
-});
+const member = require('./routes/memeber')
+app.use('/',member)
 
 app.get("/api/members/:account", (req, res) => {
   const memberData = req.body;
@@ -56,33 +41,45 @@ app.get("/api/members/:account", (req, res) => {
   );
 });
 
-app.post("/api/cancelOrder", function (req, res) {
-  const { tradeitemId } = req.body;
-  // 檢查 tradeitemId 的值
-  console.log("Received tradeitemId:", tradeitemId);
-
-  const updateQuery = "UPDATE tradeitem SET state = 4 WHERE tradeitemId = ?";
-  coon.query(updateQuery, [tradeitemId], function (error, results) {
-    if (error) {
-      console.log(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    } else {
-      if (results.affectedRows > 0) {
-        res.status(200).json({ message: "Order canceled successfully" });
-      } else {
-        res.status(404).json({ error: "Order not found" });
-      }
-    }
-  });
-});
-
-app.post("/api/login", (req, res) => {
-  console.log(req.body.aldata);
-  // coon.query()
-  res.send("GG");
-});
-
 app.listen(8000, function () {
   // console.clear()
-  console.log(new Date().toLocaleDateString());
+  console.log(new Date().toLocaleString());
+});
+
+
+
+// ==即時通訊====================================================================================
+let users = [];
+const { Server } = require("socket.io");
+const server = require("http").Server(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.on("connection", (socket) => {
+  
+  console.log(`${socket.id} 用户已连接!`);
+  socket.on("disconnect", () => {
+    console.log(`${socket.id}用户已断开连接`);
+  });
+
+  socket.on("newUser", (data) => {
+    // 添加新用户到 users 中
+    users.push(data);
+    // console.log(users);
+    // 发送用户列表到客户端
+    io.emit("newUserResponse", users);
+  });
+  
+  socket.on("message", (data) => {
+    const newdata={...data}
+    newdata.date=new Date().getHours()+':'+new Date().getMinutes().toString().padStart(2,'0')
+    io.emit(data.roomName, newdata);
+  });
+});
+server.listen(9000, function () {
+  // console.clear();
+  console.log(new Date().toLocaleString());
 });
