@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './productSellerCard.scss';
+// import { Main } from './../../components/cart/socket/socket'
 function ProductSellerCard(props) {
   const { productSeller } = props
   return (
@@ -9,7 +10,7 @@ function ProductSellerCard(props) {
         <div className="pd-flex">
           <div className="pd-body-l">
             <img
-              src={productSeller.profilePictureSrc?(`http://localhost:8000/img/${productSeller.profilePictureSrc}`):(`http://localhost:8000/img/noface/cafc10742b9b77da.jpg`)}
+              src={productSeller.profilePictureSrc ? (`http://localhost:8000/img/${productSeller.profilePictureSrc}`) : (`http://localhost:8000/img/noface/cafc10742b9b77da.jpg`)}
               alt=""
             />
           </div>
@@ -27,6 +28,7 @@ function ProductSellerCard(props) {
                 出租商品一覽
                 <i className="bi bi-house-fill" />
               </Link>
+
             </div>
           </div>
         </div>
