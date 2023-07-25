@@ -13,6 +13,7 @@ import 'jquery-ui-css/jquery-ui'
 
 //#
 import Home from './page/home';                          // 首頁
+// import Navbar from './components/Home/navbar/navbar'; // 導覽列                       
 import Navbar2 from './components/Home/navbar2/navbar2'; // 導覽列
 import Footer from './components/Home/footer/footer';    // 頁尾
 import Returnqu from './components/returnqu/returnqu';   //問題回報
@@ -61,6 +62,7 @@ const App = () => {
       <Router>
 
         {show && <Navbar2 />}
+        {/* {show && <Navbar />} */}
         {/* <Navbar2 /> */}
         <Routes>
           <Route path="/" element={<Home />} />
