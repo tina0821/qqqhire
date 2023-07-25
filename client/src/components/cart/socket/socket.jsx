@@ -26,7 +26,8 @@ export const Chat = ({ setShow }) => {
       size="large"
       className="ms-3 btnColor cartFontSize"
       onClick={() => {
-        setShow("1");
+        localStorage.getItem("userInfo") ?(setShow("1")):(window.location.href='/login')
+        
       }}
     >
       聊聊<i className="ps-2 bi bi-messenger"></i>
