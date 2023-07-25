@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import "./outdoor.css"
 import "./outdoor.scss"
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { HashLink as ScrollLink } from 'react-router-hash-link';
 
 function Outdoor() {
     const odAmiCycle = useRef(null);
@@ -52,11 +53,19 @@ function Outdoor() {
                             fill="none" stroke="#00BFFF" stroke-width="3" />
                     </svg>
                 </div>
-                <Link to="/" className="outdoor-btn">
+
+                <ScrollLink to="#outdoor2pag" className="outdoor-btn">
                     <img src="http://localhost:8000/img/home/hirecircle.png" className="hireClass" id="hireId" alt='戶外2' />
                     <div className="btn-div2class" id="btn-div2" ref={odAmiCycle}></div>
                     <p className="btn-pClass" id="btn-p" ref={odAmiArrow}>↓</p>
-                </Link>
+                </ScrollLink>
+
+                {/* <div className='rqu'>
+                    {localStorage.getItem("userInfo") ? (<Link to="/Returnqu">問題回報</Link>) : (<Link to="/login">問題回報</Link>)}
+                    <br />
+                    {localStorage.getItem("userInfo") ? (<Link to="/Backstage">後台</Link>) : (<Link to="/login">後台</Link>)}
+                </div> */}
+
             </div>
         </>
     );

@@ -4,11 +4,16 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import AlertBox from '../product-item/AlertBox';
+// import Googlehayaku from '../google-login/Googlehayaku';  //google登入元件
+
 import "./login.scss"
 
 const Login = () => {
     const [account, setaccount] = useState('');
     const [password, setPassword] = useState('');
+    const [showAlert, setShowAlert] = useState(0);
+    const [messenger, setMessenger] = useState('');
     const history = useNavigate();
 
     const [googleuser, setgoogleuser] = useState([])
@@ -73,28 +78,41 @@ const Login = () => {
                 console.log('ok');
                 const userInfo = `${account}`;
                 localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                alert("登入成功")
-                history("/")
-                window.location.reload();
+                setMessenger("登入成功")
+                setShowAlert(1)
+                setTimeout(() => {
+                    history("/")
+                    window.location.reload();
+                    setShowAlert(0);
+                }, 1000)
+
+
 
 
             } else if (response.status === 401) {
                 console.log('帳號或密碼錯');
-                alert("帳號或密碼錯誤 請重新輸入！")
+                setMessenger("帳號或密碼錯誤 請重新輸入！")
+                setShowAlert(2)
+                setTimeout(() => { setShowAlert(0); }, 1000)
             }
 
         } catch (error) {
-            console.error('请求失败:', error);
-            alert("帳號或密碼錯誤 請重新輸入！")
+            setMessenger("帳號或密碼錯誤 請重新輸入！")
+            setShowAlert(3)
+            setTimeout(() => { setShowAlert(0); }, 1000)
         }
     };
 
 
-
+    const onChange = () => { };
 
     return (
 
         <div id='loginout' >
+
+            {showAlert === 1 && <AlertBox message={messenger} type="success" />}
+            {showAlert === 2 && <AlertBox message={messenger} type="warning" />}
+            {showAlert === 3 && <AlertBox message={messenger} type="warning" />}
             <Row id='login'>
                 <Col span={15}>
                     <Carousel autoplay className='Carousel' style={{ height: "100%" }}>
@@ -175,8 +193,10 @@ const Login = () => {
                             <Form.Item name="remember" valuePropName="checked" noStyle>
                                 <Checkbox>記住我</Checkbox>
                             </Form.Item>
-                            <span className="login-form-forgot">忘記密碼</span>
+                            <a href='/forget' className="login-form-forgot">忘記密碼</a>
+
                         </Form.Item>
+
                         <Form.Item>
                             <Button
                                 type="primary"
@@ -186,28 +206,13 @@ const Login = () => {
                             >
                                 登入
                             </Button>
+
                             或 <a href="/RegistrationForm">註冊</a>
                         </Form.Item>
                     </Form>
                 </Col>
             </Row>
-            <div id="g_id_onload"
-                data-client_id={"570382147021-8fsv658iibb1p1va1malkt5ppq7ll8v3.apps.googleusercontent.com"}
-                data-callback="onGoogleSuccess" // as defined above
-                data-context="signin"
-                data-ux_mode="popup"
-                data-auto_prompt="false"
-                data-login_uri="http://localhost:3000/login">
-            </div>
-
-            <div className="g_id_signin"
-                data-type="standard"
-                data-shape="rectangular"
-                data-theme="filled_blue"
-                data-text="signin_with"
-                data-size="large"
-                data-logo_alignment="left">
-            </div>
+            {/* <Googlehayaku />元件 */}
         </div>
     );
 };

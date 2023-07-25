@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
 import "./Personaldata.scss"
-import { Col, Row } from 'antd';
-import Prconly from '../Prconly'
+import { Avatar, Row, Col } from 'antd';
+import Prconly from './Prconly';
+import ChangePassword from './changePassword';
+import AlertBox from '../product-item/AlertBox';
 
-
-const MemberCenter = () => {
+const Personal = () => {
   // setTradeItems(response.data);
 
 
-  const [editMode1, setEditMode1] = useState(false);
   const [editMode2, setEditMode2] = useState(false);
 
   const [account, setAccount] = useState('');
-  const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [nickname, setNickname] = useState('');
   const [loggedIn, setLoggedIn] = useState('');
@@ -23,17 +21,21 @@ const MemberCenter = () => {
   const [identityCard, setIdentityCard] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
+  const [profilePictureSrc, setProfilePictureSrc] = useState('');//個人照片顯示
+  const [showAlertprc, setShowAlertprc] = useState(false);//照片
+  const [showChange, setShowChange] = useState(false);//修改密碼
+  const [showAlert, setShowAlert] = useState(0);//顧問組件
 
   const isLoggedIn = localStorage.getItem('userInfo').slice(1, -1);
 
   useEffect(() => {
+    
     const fetchData = async () => {
 
       const response = await axios.get(`http://localhost:8000/api/members/${name, isLoggedIn}`);
-      console.log(name);
-      console.log(response.data[0].email);
+      // console.log(name);
+      console.log(response.data[0]);
       setAccount(response.data[0].account)
-      setPassword(response.data[0].password)
       setName(response.data[0].name)
       setEmail(response.data[0].email)
       setIdentityCard(response.data[0].identityCard)
@@ -41,6 +43,7 @@ const MemberCenter = () => {
       setNickname(response.data[0].nickname)
       setPhoneNumber(response.data[0].phoneNumber)
       setBirthday(response.data[0].birthday.substring(0, 10))
+      setProfilePictureSrc(response.data[0].profilePictureSrc)
 
 
     };
@@ -64,12 +67,11 @@ const MemberCenter = () => {
 
 
   useEffect(() => {
-
     const fetchMemberData = () => {
+      // console.log(updatedData)
       axios.put(`http://localhost:8000/api/members/account`, [updatedData])
         .then((response) => {
           setAccount(response.data[0].account)
-          setPassword(response.data[0].password)
           setName(response.data[0].name)
           setNickname(response.data[0].email)
           setNickname(response.data[0].identityCard)
@@ -78,8 +80,7 @@ const MemberCenter = () => {
           // setBirthday(response.data[0].birthday.substring(0, 10))
         })
         .catch((error) => {
-          console.error('错误??', error);
-          console.log(nickname)
+          // console.error('错误??', error);
 
 
         });
@@ -93,85 +94,67 @@ const MemberCenter = () => {
     }
   };
 
-
-  const handleSubmit1 = (e) => {
-    e.preventDefault();
-    setEditMode1(false);
-
-
-  };
+  const save = () => {
+    setShowAlert(1)
+    setTimeout(() => {
+      setShowAlert(0);
+    }, 1000)
+  }
 
   const handleSubmit2 = (e) => {
     e.preventDefault();
     setEditMode2(false);
   };
 
-
+  const changeimg = () => {
+    setShowAlertprc(true)
+  }
+  const closePrconly = () => {
+    setShowAlertprc(false)
+  }
+  const changePassword = () => {
+    setShowChange(true)
+  }
+  const closechange = () => {
+    setShowChange(false)
+  }
   return (
     <div id='memberout'>
+      {showAlert === 1 && <AlertBox message="資訊已修改" type="warning" />}
+      <div className='t1' >|會員中心|</div>
+      <div className='t2' >個人資料</div>
       <div className='member'>
-        <div style={{ fontSize: "2rem", marginLeft: "600px", color: "#0b7597", fontWeight: "bold", marginTop: "20px" }}>|個人資料|</div>
         <div className='member1'>
+          <Row>
+            <Col >
+              <div className='memberprc'>
+                <Avatar src={`http://localhost:8000/img/${profilePictureSrc}`} alt="avatar" size={200} />
 
-          <div className='memberprc'>
-            <Prconly />
-          </div>
-          <Row gutter={20}>
-
-            <Col span={20}>
-              <div className='membertitleline'>
-                {editMode1 ? (
-                  <form className='memberform1' onSubmit={handleSubmit1}>
-                    <fieldset>
-                      <legend>帳號密碼</legend>
-                      <div className='membertitleline'>
-                        <label>
-                          帳號：{account}
-                        </label>
-                        <label>
-                          密碼：
-                          <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                          />
-                        </label>
-                        <label>
-                          再次輸入密碼：
-                          <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setBirthday(e.target.value)}
-                          />
-                        </label>
-
-                        <button type="submit" >儲存</button>
-
-                      </div>
-                    </fieldset>
-                  </form>
-                ) : (
-                  <form className='memberform1'>
-                    <fieldset>
-                      <legend>帳號密碼</legend>
-                      {/* Form 1 data */}
-                      <div>帳號： {account}</div>
-                      <div>密碼： ******</div>
-                      <div>再次輸入密碼：******</div>
-
-                      <button onClick={() => { setEditMode1(true) }}>修改</button>
-                    </fieldset>
-                  </form>
-                )}
+                <div className='memberwelcome'>
+                  <div className='welcome'>Welcome！</div>
+                  <div className='membername' >
+                    <p className='membername1'>{name}</p>
+                    <p className='membername2'>({account})</p>
+                  </div>
+                </div>
+                <div className='memberBtn'>
+                  <button onClick={() => changeimg()}>更改</button>
+                  {showAlertprc && <Prconly account={account} onClose={closePrconly} />}
+                  <button onClick={() => changePassword()}>修改密碼</button>
+                  {showChange && <ChangePassword account={account} onClose={closechange} />}
+                </div>
               </div>
             </Col>
-            <Col span={20}>
+            <Col >
               <div className='membertitleline'>
                 {editMode2 ? (
-                  <form className='memberform1' onSubmit={handleSubmit2}>
+                  <form className='memberform' onSubmit={handleSubmit2}>
                     <fieldset>
                       <legend>基本資料</legend>
-                      <div className='membertitleline'>
+                      <div>
+                        <div className='displaybtn' >
+                          <button type="submit" onClick={save}>儲存</button><br />
+                        </div>
                         {/* Form 2 inputs */}
                         <label>
                           姓名：
@@ -181,6 +164,7 @@ const MemberCenter = () => {
                             onChange={(e) => setName(e.target.value)}
                           />
                         </label>
+                        <br />
                         <label>
                           暱稱：
                           <input
@@ -195,9 +179,11 @@ const MemberCenter = () => {
                         <label>
                           性別：{gender}
                         </label>
+                        <br />
                         <label>
                           身分證：{identityCard}
                         </label>
+                        <br />
                         <label>
                           手機：
                           <input
@@ -206,6 +192,7 @@ const MemberCenter = () => {
                             onChange={(e) => setPhoneNumber(e.target.value)}
                           />
                         </label>
+                        <br />
                         <label>
                           電子信箱：
                           <input
@@ -214,15 +201,18 @@ const MemberCenter = () => {
                             onChange={(e) => setEmail(e.target.value)}
                           />
                         </label>
-                        <button type="submit" >儲存</button>
+                        <br />
                       </div>
                     </fieldset>
                   </form>
                 ) : (
-                  <form className='memberform1'>
+                  <form className='memberformdiv'>
                     <fieldset>
                       <legend>基本資料</legend>
                       {/* Form 2 data */}
+                      <div className='displaybtn'>
+                        <button onClick={handleEditClick2}>修改</button>
+                      </div>
                       <div>姓名： {name}</div>
                       <div>暱稱： {nickname}</div>
                       <div>生日： {birthday}</div>
@@ -230,19 +220,16 @@ const MemberCenter = () => {
                       <div>身分證： {identityCard}</div>
                       <div>手機： {phoneNumber}</div>
                       <div>電子信箱： {email}</div>
-                      <button onClick={handleEditClick2}>修改</button>
                     </fieldset>
                   </form>
                 )}
               </div>
             </Col>
-
           </Row>
-
         </div>
       </div>
     </div>
   );
 }
 
-export default MemberCenter;
+export default Personal;

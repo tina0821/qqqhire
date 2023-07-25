@@ -86,6 +86,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -105,10 +106,12 @@
     0% {
         transform: rotate(0deg);
     }
-    5%{
+
+    5% {
         transform: rotate(-180deg);
     }
-    100%{
+
+    100% {
         transform: rotate(360deg);
     }
 }
@@ -224,3 +227,10 @@
     }
 }
 
+.rqu {
+    color: aliceblue;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 1rem;
+}

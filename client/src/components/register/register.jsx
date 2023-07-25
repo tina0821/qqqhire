@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select} from 'antd';
+import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select } from 'antd';
 import "./register.scss"
 import { Link } from 'react-router-dom';
+import AlertBox from '../product-item/AlertBox';
+
 
 const { Step } = Steps;
 
@@ -15,6 +17,10 @@ const Registration = () => {
   const [page1Data, setPage1Data] = useState({});
   const [page2Data, setPage2Data] = useState({});
   const [aldata, setaldata] = useState({})
+  const [showAlert, setShowAlert] = useState(0);
+  const [messenger, setMessenger] = useState('');
+
+
 
   useEffect(() => {
     if (currentStep === 2) {
@@ -45,8 +51,11 @@ const Registration = () => {
 
       } catch (error) {
         console.log('請求發生錯誤:', error);
-        alert("帳號重複")
-      }
+        setMessenger("帳號重複")
+        setShowAlert(1)
+      } setTimeout(() => {
+        setShowAlert(0);
+      }, 1000)
     }
   };
 
@@ -72,18 +81,26 @@ const Registration = () => {
         setCurrentStep(2);
 
       } catch (error) {
-        const err =error.response.data.duplicateData
-        if(err){
-          alert(Object.values(err).join('\n'))
+        const err = error.response.data.duplicateData
+        if (err) {
+          const mass = Object.values(err).join('\n')
+          // alert(mass)
+          setMessenger(mass)
           
-          }
-    }
-  };
+          setShowAlert(2)
+          setTimeout(() => {
+            setShowAlert(0);
+          }, 1000)
+        }
+      }
+    };
   }
   const registerchange = () => { };
 
   return (
     <div id='registerout'>
+      {showAlert === 1 && <AlertBox message={messenger} type="warning" />}
+      {showAlert === 2 && <AlertBox message={messenger} type="warning" />}
       <Row id='register' gutter={20} >
 
         <Col span={15}>
