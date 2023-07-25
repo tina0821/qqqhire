@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProductInfo from "./productInfo/index";
 import Listname from "../listname/listname";
 import { Link } from "react-router-dom";
-import { Button, Divider, ConfigProvider } from "antd";
+import {Divider, ConfigProvider } from "antd";
 import {ChatButtom} from "../socket/socket"
 
 class ShopingCart extends Component {
