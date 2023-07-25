@@ -96,21 +96,20 @@ router.post('/upload-photo', upload.single('photo'), (req, res) => {
 //修改密碼
 router.post('/api/change-password', async (req, res) => {
   const { account, oldPassword, newPassword } = req.body;
-
   try {
-    // 從資料庫中查詢使用者資料
-    const query = 'SELECT * FROM userinfo WHERE account = ?';
-    coon.query(query, [account], async (err, results) => {
-      if (err) throw err;
-
-      if (results.length === 0) {
-        return res.status(404).json({ message: '找不到該使用者' });
-      }
-
-      const user = results[0];
+      // 從資料庫中查詢使用者資料
+      const query = 'SELECT * FROM userinfo WHERE account = ?';
+      coon.query(query, [account], async (err, results) => {
+          if (err) throw err;
+          
+          if (results.length === 0) {
+              return res.status(404).json({ message: '找不到該使用者' });
+            }
+            
+            const account = results[0];
 
       // 比對舊密碼是否正確
-      const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+      const passwordMatch = await bcrypt.compare(oldPassword, account.password);
 
       if (!passwordMatch) {
         return res.status(401).json({ message: '舊密碼不正確' });
@@ -119,14 +118,14 @@ router.post('/api/change-password', async (req, res) => {
       // 更新新密碼
       const hashedNewPassword = await bcrypt.hash(newPassword, 10);
       const updateQuery = 'UPDATE userinfo SET password = ? WHERE account = ?';
-      coon.query(updateQuery, [hashedNewPassword, user.id], (err, updateResult) => {
+      coon.query(updateQuery, [hashedNewPassword, account.account], (err, updateResult) => {
         if (err) throw err;
-        return res.json({ message: '密碼更新成功' });
+        return res.sendStatus(200).end();
       });
     });
   } catch (error) {
-    console.error('錯誤：', error);
-    return res.status(500).json({ message: '伺服器錯誤' });
+  
+    return res.sendStatus(500).end();
   }
 });
 

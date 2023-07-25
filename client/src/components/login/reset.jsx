@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AlertBox from '../product-item/AlertBox';
+import "./reset.scss"
 
 const ResetPassword = () => {
-  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [messenger, setMessenger] = useState('');
   const [success, setSuccess] = useState('');
+  const [showAlert, setShowAlert] = useState('');
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    setError('');
+    setMessenger('');
     setSuccess('');
 
     const searchParams = new URLSearchParams(window.location.search);
     const token = searchParams.get('token');
 
     if (!token) {
-      setError('無效的重置密碼連結。');
+      setMessenger('無效的重置密碼連結。');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('密碼與確認密碼不匹配。');
+      setMessenger('密碼與確認密碼不匹配。');
       return;
     }
 
@@ -34,39 +35,42 @@ const ResetPassword = () => {
       });
 
       if (response.status === 200) {
-        setSuccess('密碼重置成功。');
+        setShowAlert(1)
+        setSuccess(`密碼重置成功！\n請重新登入`);
+        setTimeout(() => {window.location = "/login"}, 1000)
+
       } else {
-        setError('密碼重置失敗，請稍後再試。');
+        setMessenger('密碼重置失敗，請稍後再試。');
       }
     } catch (error) {
-      setError('密碼重置失敗，請稍後再試1。');
+      setMessenger('密碼重置失敗，請稍後再試1。');
     }
   };
 
   return (
-    <div>
-      <h2>重置密碼</h2>
-      {error && <div>{error}</div>}
-      {success && <div>{success}</div>}
+    <div id='resetout' >
+      {showAlert === 1 && <AlertBox message={success} type="warning" />}
+      <p className='resettitle' >重置密碼</p>
       <form onSubmit={handleResetPassword}>
-        <label>
-          新密碼：
+        <div>
+          <p className='reset'>新密碼：</p>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        <label>
-          確認密碼：
+        </div>
+        <div>
+          <p className='reset'>確認密碼：</p>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </label>
+        </div>
+        {messenger && <p className='resetcheak'>{messenger}</p>}
         <button type="submit">重置密碼</button>
       </form>
     </div>

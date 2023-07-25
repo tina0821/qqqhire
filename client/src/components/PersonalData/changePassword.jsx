@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
-import './Prconly.scss';
+import './changePassword.scss';
 import axios from 'axios';
+import AlertBox from '../product-item/AlertBox';
 
-const ChangePassword = ({ onClose,account }) => {
+
+const ChangePassword = ({ onClose, account }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [showAlert, setShowAlert] = useState(0);
+  const [message, setMessage] = useState('');
+
 
   const handleConfirmClick = () => {
+
+    if (newPassword !== confirmNewPassword) {
+      setShowAlert(2);
+      setMessage('新密碼與再次輸入的新密碼不符');
+      setTimeout(() => {
+        setShowAlert(0);
+      }, 1000);
+      return;
+    }
     // 先判斷舊密碼與資料庫是否符合
-    // 假設您的 API 端點是 http://localhost:8000/api/change-password
     axios
       .post('http://localhost:8000/api/change-password', {
         oldPassword,
@@ -18,43 +31,58 @@ const ChangePassword = ({ onClose,account }) => {
         account
       })
       .then((response) => {
-        // 回傳的 response 中可能包含成功訊息或其他處理結果
         console.log(response.data);
-        // 更新成功後可進行其他處理，例如顯示成功訊息、關閉彈出視窗等
-        onClose();
+        setShowAlert(1)
+        setTimeout(() => {
+          setShowAlert(0);
+          onClose();
+        }, 1000)
+
       })
       .catch((error) => {
-        // 處理錯誤，例如顯示錯誤訊息
-        console.error('錯誤：', error);
+        setShowAlert(2)
+        const err = error.response.data.message
+        setMessage(err)
+        setTimeout(() => {
+          setShowAlert(0);
+        }, 1000)
+
+
       });
   };
 
   return (
-    <div id=''>
+    <div id='passwordout'>
+      {showAlert === 1 && <AlertBox message="密碼已修改" type="warning" />}
+      {showAlert === 2 && <AlertBox message={message} type="warning" />}
       <div>修改密碼</div>
-      <label htmlFor='oldPassword'>舊密碼</label>
-      <input
-        type='password'
-        id='oldPassword'
-        value={oldPassword}
-        onChange={(e) => setOldPassword(e.target.value)}
-      />
-      <label htmlFor='newPassword'>新密碼</label>
-      <input
-        type='password'
-        id='newPassword'
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-      />
-      <label htmlFor='confirmNewPassword'>再次輸入新密碼</label>
-      <input
-        type='password'
-        id='confirmNewPassword'
-        value={confirmNewPassword}
-        onChange={(e) => setConfirmNewPassword(e.target.value)}
-      />
-      <button onClick={handleConfirmClick}>確認</button>
-      <button onClick={onClose}>取消</button>
+      <div className='passwordIn'>
+        <label htmlFor='oldPassword'>舊密碼</label>
+        <input
+          type='password'
+          id='oldPassword'
+          value={oldPassword}
+          onChange={(e) => setOldPassword(e.target.value)}
+        />
+        <label htmlFor='newPassword'>新密碼</label>
+        <input
+          type='password'
+          id='newPassword'
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+        <label htmlFor='confirmNewPassword'>再次輸入新密碼</label>
+        <input
+          type='password'
+          id='confirmNewPassword'
+          value={confirmNewPassword}
+          onChange={(e) => setConfirmNewPassword(e.target.value)}
+        />
+      </div>
+      <div className='passwordbtn'>
+        <button onClick={handleConfirmClick}>確認</button>
+        <button onClick={onClose}>取消</button>
+      </div>
     </div>
   );
 };

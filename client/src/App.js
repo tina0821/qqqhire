@@ -23,7 +23,7 @@ import LoginForm from './page/login';//登入
 import ForgotPassword from './components/login/forget';//忘記密碼
 import ResetPassword from './components/login/reset';//密碼重置
 import MemberCenter from './page/Personaldata';//個人頁面
-
+import Bouble from './components/bouble/bouble'
 
 //日立
 import Product from './page/product'; //商品一覽
@@ -60,9 +60,9 @@ const App = () => {
   return (
     <>
       <Router>
-
         {show && <Navbar2 /> }
         {/* <Navbar2 /> */}
+      <Bouble/>
         <Routes>      
           <Route path="/" element={<Home />} />
 
@@ -85,6 +85,7 @@ const App = () => {
           <Route path="/cmmgmt" element={<Cmmgmt />} />
 
           <Route path="*" element={<NotFound />} />
+      
         </Routes>
         {show && <Footer />}
      

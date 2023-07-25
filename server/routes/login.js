@@ -129,46 +129,46 @@ router.post('/api/login', async (req, res) => {
 router.post('/api/forgot-password', (req, res) => {
   const { email } = req.body;
   console.log(email);
-  const aa ='SELECT * FROM userinfo WHERE email =?'
-  coon.query(aa,[email],async (err, results) => {
-      if (err) {
-        console.error('MySQL查詢錯誤：', err);
+  const aa = 'SELECT * FROM userinfo WHERE email =?'
+  coon.query(aa, [email], async (err, results) => {
+    if (err) {
+      console.error('MySQL查詢錯誤：', err);
+      return res.status(500).json({ message: '發生了一些錯誤，請稍後再試。' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: '該電子郵件地址未註冊。' });
+    }
+
+    // 生成JWT令牌
+    const token = jwt.sign({ email }, 'your_secret_key', { expiresIn: '1h' });
+
+    // 發送包含驗證連結的郵件
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail', // 例如：Gmail、Outlook、QQ等
+      auth: {
+        user: 'HireOutdoor2023@gmail.com',
+        pass: 'kvyceagpbrdesstl',
+      },
+    });
+
+    const mailOptions = {
+      from: 'HireOutdoor2023@gmail.com',
+      to: email,
+      subject: '密碼重置請求',
+      text: `請點擊以下鏈接重置密碼：\n\nhttp://localhost:3000/reset-password?token=${token}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('郵件發送失敗：', error);
         return res.status(500).json({ message: '發生了一些錯誤，請稍後再試。' });
       }
-      
-      if (results.length === 0) {
-        return res.status(404).json({ message: '該電子郵件地址未註冊。' });
-      }
 
-      // 生成JWT令牌
-      const token = jwt.sign({ email }, 'your_secret_key', { expiresIn: '1h' });
-
-      // 發送包含驗證連結的郵件
-      const transporter = nodemailer.createTransport({
-        service: 'Gmail', // 例如：Gmail、Outlook、QQ等
-        auth: {
-          user: 'HireOutdoor2023@gmail.com',
-          pass: 'kvyceagpbrdesstl',
-        },
-      });
-
-      const mailOptions = {
-        from: 'HireOutdoor2023@gmail.com',
-        to: email,
-        subject: '密碼重置請求',
-        text: `請點擊以下鏈接重置密碼：\n\nhttp://localhost:3000/reset-password?token=${token}`,
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error('郵件發送失敗：', error);
-          return res.status(500).json({ message: '發生了一些錯誤，請稍後再試。' });
-        }
-
-        console.log('郵件發送成功：', info.response);
-        return res.status(200).json({ message: '郵件已發送。' });
-      });
-    }
+      console.log('郵件發送成功：', info.response);
+      return res.status(200).json({ message: '郵件已發送。' });
+    });
+  }
   );
 });
 
@@ -178,6 +178,7 @@ router.post('/api/reset-password', (req, res) => {
   jwt.verify(token, 'your_secret_key', (err, decodedToken) => {
     if (err) {
       console.error('jwt驗證錯誤', err);
+      res.status(401).json({ error: 'Token verification failed' });
     }
     const { email } = decodedToken;
 
@@ -185,18 +186,20 @@ router.post('/api/reset-password', (req, res) => {
     bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
       if (hashErr) {
         console.error('加密錯誤', hashErr);
-        
+        res.status(500).json({ error: 'Password hashing failed' });
       }
-    
+
       coon.query(updateQuery, [hashedPassword, email], (updateErr, updateResults) => {
         if (updateErr) {
           console.error('MySQL錯誤：', updateErr);
+          res.status(500).json({ error: 'Database error' })
         }
-    
+
         console.log('密碼已修改');
+        res.status(200).json({ message: 'Password updated successfully' });
       });
     });
-   
+
   });
 });
 
