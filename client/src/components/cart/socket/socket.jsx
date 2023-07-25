@@ -9,6 +9,32 @@ import webSocket from "socket.io-client";
 import { ChatFooter } from "./ChatFooter/ChatFooter";
 const socket = webSocket.connect("http://localhost:9000");
 
+export const ChatButtom = ({ chatInfo = "" }) => {
+  const [show2, setShow2] = useState("");
+  const [chatInfo2,setChatInfo2] = useState("")
+  return (
+    <>
+      <Button
+        style={{
+          height: 50,
+          display: "flex",
+          alignItems: "center",
+        }}
+        size="large"
+        className="ms-3 btnColor cartFontSize"
+        onClick={() => {
+          show2?setShow2(""):setShow2("1")
+          setChatInfo2("")
+          setChatInfo2(chatInfo)
+        }}
+      >
+        聊聊<i className="ps-2 bi bi-messenger"></i>
+      </Button>
+      <Main chatInfo={chatInfo2} showRoom={show2}/>
+    </>
+  );
+};
+
 export const Chat = ({ setShow }) => {
   return (
     <Button
@@ -21,13 +47,14 @@ export const Chat = ({ setShow }) => {
         right: "5px",
         bottom: "5px",
         fontSize: "1.7rem",
-        zIndex: 1000,
+        zIndex: 999,
       }}
       size="large"
       className="ms-3 btnColor cartFontSize"
       onClick={() => {
-        localStorage.getItem("userInfo") ?(setShow("1")):(window.location.href='/login')
-        
+        localStorage.getItem("userInfo")
+          ? setShow("1")
+          : (window.location.href = "/login");
       }}
     >
       聊聊<i className="ps-2 bi bi-messenger"></i>

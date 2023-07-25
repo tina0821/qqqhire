@@ -3,6 +3,7 @@ import ProductInfo from "./productInfo/index";
 import Listname from "../listname/listname";
 import { Link } from "react-router-dom";
 import { Button, Divider, ConfigProvider } from "antd";
+import {ChatButtom} from "../socket/socket"
 
 class ShopingCart extends Component {
   render() {
@@ -36,20 +37,7 @@ class ShopingCart extends Component {
                     >
                       <div className="">{item.productAccount}</div>
                     </Link>
-                    <Button
-                      style={{
-                        height: 50,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                      size="large"
-                      className="ms-3 btnColor cartFontSize"
-                      onClick={()=>{
-                        this.props.data.changeChatInfo(item.productAccount);
-                      }}
-                    >
-                      聊聊<i className="ps-2 bi bi-messenger"></i>
-                    </Button>
+                      <ChatButtom chatInfo={item.productAccount}/>
                   </div>
                   <ConfigProvider
                     theme={{ token: { lineWidth: 4, margin: 0 } }}
