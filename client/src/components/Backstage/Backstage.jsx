@@ -7,9 +7,6 @@ import "./Backstage.css";
 const Backstage = () => {
 
 
-
-
-
     // 資料庫取出會員資訊
     const [user, setuser] = useState("")
 
@@ -159,11 +156,12 @@ const Backstage = () => {
 
     // ========================================================================
 
-
+    const account = localStorage.getItem('userInfo').slice(1,-1)
+    
 
     return (
         <>
-
+        {account==="abc12345"?(<>
             <div className='BS_BtnStyle'>
                 <Space className='BS_BtnStyle_space'>
                     <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >會員資料</Button>
@@ -242,12 +240,6 @@ const Backstage = () => {
 
             </ConfigProvider>} */}
 
-
-
-
-
-
-
             <div>
                 <Modal
                     title="修改會員資料"
@@ -291,6 +283,10 @@ const Backstage = () => {
                     <p style={{ fontSize: '1.5rem' }}>確定復權嗎?</p>
                 </Modal>
             </div>
+        
+        
+        </>):(<div>你不是管理者</div>)}
+
         </>
     );
 
