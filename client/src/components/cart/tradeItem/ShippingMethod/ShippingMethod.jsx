@@ -1,7 +1,16 @@
 import React, { Component } from "react";
 //寄送方式資料表
 import shippingMethod from "../../../../data/shippingMethod.json";
-import { Select, Button, Space, Input, Cascader, Row, Col,ConfigProvider } from "antd";
+import {
+  Select,
+  Button,
+  Space,
+  Input,
+  Cascader,
+  Row,
+  Col,
+  ConfigProvider,
+} from "antd";
 import { handleGetStore } from "../test/test";
 import cookie from "react-cookies";
 import CityCountyData from "../../../../data/CityCountyDataAAA.json";
@@ -24,7 +33,7 @@ class ShippingMethod extends Component {
   render() {
     let state = this.state;
     return (
-      <ConfigProvider theme={{token:{controlHeight:"50px"}}}>
+      <ConfigProvider theme={{ token: { controlHeight: "50px" } }}>
         <Row align={"middle"}>
           <Col span={22}>
             <Space.Compact
@@ -79,7 +88,9 @@ class ShippingMethod extends Component {
                   this.writeAddress(e);
                   this.props.data.addAddress(
                     this.state.chooseShippingMethod === "BlackCat"
-                      ? this.state.CityCountyData + e.target.value
+                      ? e.target.value !== ""
+                        ? this.state.CityCountyData + e.target.value
+                        : ""
                       : e.target.value,
                     this.props.productAccount,
                     0,
@@ -102,7 +113,7 @@ class ShippingMethod extends Component {
                 )}
             </Space.Compact>
           </Col>
-          <Col style={{display:'flex'}} span={2}>
+          <Col style={{ display: "flex" }} span={2}>
             {this.props.item.tradeTypePriceId && (
               <div>
                 運費
