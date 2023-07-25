@@ -33,7 +33,7 @@ import ProductCollect from "./page/productCollect"; //收藏
 
 //酋長
 import Cart from "./components/cart/index";
-import {Main} from "./components/cart/socket/socket";
+// import { Main } from "./components/cart/socket/socket";
 
 //阿宋
 import Aboutus from "./page/aboutus";
@@ -61,7 +61,7 @@ const App = () => {
         {show && <Navbar2 />}
         {/* <Navbar2 /> */}
         <Bouble />
-        <Main />
+        {/* <Main /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Returnqu" element={<Returnqu />} />
