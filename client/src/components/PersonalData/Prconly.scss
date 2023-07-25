@@ -41,5 +41,15 @@ $main-color: #0b7597;
      }
     }
   
-    
+    button {
+        padding: 10px 20px;
+        background-color: $main-color;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        width: 100px;
+
+      }
 }

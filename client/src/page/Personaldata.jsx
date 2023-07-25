@@ -2,7 +2,8 @@ import React from 'react';
 import Personal  from '../components/PersonalData/Personaldata';
 const Personaldata  = () => {
     return (
-        <div>
+
+        <div id='personalout'>
             <Personal />
         </div>
     );

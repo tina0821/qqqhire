@@ -23,7 +23,7 @@ import LoginForm from './page/login';//登入
 import ForgotPassword from './components/login/forget';//忘記密碼
 import ResetPassword from './components/login/reset';//密碼重置
 import MemberCenter from './page/Personaldata';//個人頁面
-import Bouble from './components/bouble/bouble'
+import Bouble from './components/bouble/bouble'//
 
 //日立
 import Product from './page/product'; //商品一覽

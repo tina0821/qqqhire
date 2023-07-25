@@ -29,6 +29,7 @@ const Personal = () => {
   const isLoggedIn = localStorage.getItem('userInfo').slice(1, -1);
 
   useEffect(() => {
+    
     const fetchData = async () => {
 
       const response = await axios.get(`http://localhost:8000/api/members/${name, isLoggedIn}`);
@@ -151,8 +152,9 @@ const Personal = () => {
                     <fieldset>
                       <legend>基本資料</legend>
                       <div>
-                      <button type="submit" onClick={save}>儲存</button>
-
+                        <div className='displaybtn' >
+                          <button type="submit" onClick={save}>儲存</button><br />
+                        </div>
                         {/* Form 2 inputs */}
                         <label>
                           姓名：
@@ -208,7 +210,9 @@ const Personal = () => {
                     <fieldset>
                       <legend>基本資料</legend>
                       {/* Form 2 data */}
-                      <button onClick={handleEditClick2}>修改</button><br />
+                      <div className='displaybtn'>
+                        <button onClick={handleEditClick2}>修改</button>
+                      </div>
                       <div>姓名： {name}</div>
                       <div>暱稱： {nickname}</div>
                       <div>生日： {birthday}</div>

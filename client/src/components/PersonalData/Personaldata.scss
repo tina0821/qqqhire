@@ -26,6 +26,7 @@ $main-color: #0b7597;
     font-size: $font-normal;
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
     // font-weight: bold;
   }
 
@@ -42,12 +43,13 @@ $main-color: #0b7597;
     min-width: 90%;
 
     padding: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 150px;
 
 
     .member1 {
       .ant-row {
         justify-content: space-evenly;
+        padding: 100px;
       }
 
 
@@ -153,16 +155,21 @@ $main-color: #0b7597;
           box-sizing: border-box;
         }
 
-        button {
-          padding: 10px 20px;
-          background-color: $main-color;
-          color: #ffffff;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          margin-top: 10px;
-          width: 100px;
-          ;
+        .displaybtn {
+          display: flex;
+          flex-direction: row-reverse;
+
+          button {
+            padding: 10px 20px;
+            background-color: $main-color;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100px;
+            left: 230px;
+          }
         }
       }
 
@@ -203,17 +210,23 @@ $main-color: #0b7597;
           background-color: #0b749700;
         }
 
-        button {
-          padding: 10px 20px;
-          background-color: $main-color;
-          color: #ffffff;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          margin-top: 10px;
-          width: 100px;
-          ;
+        .displaybtn {
+          display: flex;
+          flex-direction: row-reverse;
+
+          button {
+            padding: 10px 20px;
+            background-color: $main-color;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100px;
+
+          }
         }
+
       }
 
 
@@ -229,5 +242,16 @@ $main-color: #0b7597;
         margin-top: 50px;
       }
     }
+  }
+  button {
+    padding: 10px 20px;
+    background-color: $main-color;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100px;
+
   }
 }
