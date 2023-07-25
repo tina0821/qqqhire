@@ -96,11 +96,20 @@ const Backstage = () => {
 
     // 點擊OK=>修改
     const [openCG, setOpenCG] = useState(false);
-    // 點擊按鈕時
+    const [nameIP,setnameIP] = useState("")
+    const [phoneIP,setphoneIP] = useState("")
+    const [emailIP,setemailIP] = useState("")
+    
+    // console.log(nameIP)
+    // console.log(phoneIP)
+    // console.log(emailIP)
+
+    // 點擊ok => 更新
     const handleOk = () => {
-        // 處理
+        // 傳送更新資料
         setOpenCG(false);
-        axios.put(`http://localhost:8000/CGuser?account=${CGDLaccount}`,{name:1},{phoneNumber:1},{email:1})
+        axios.put(`http://localhost:8000/CGuser?account=${CGDLaccount}`,{name:nameIP},{phoneNumber:phoneIP},{email:emailIP})
+        alert("更新成功")
     };
     const handleCancel = () => {
         // 取消
@@ -243,11 +252,11 @@ const Backstage = () => {
                     onCancel={handleCancel}
                 >
                     <p>修改完成請按OK送出!</p>
-                    姓名:<input type="text" />
+                    姓名:<input type="text" placeholder="輸入姓名" onChange={(e)=>{setnameIP(e.target.value)}}/>
                     <br />
-                    信箱:<input type="text" />
+                    信箱:<input type="text" placeholder="輸入信箱" onChange={(e)=>{setemailIP(e.target.value)}}/>
                     <br />
-                    電話:<input type="text" />
+                    電話:<input type="text" placeholder="輸入電話" onChange={(e)=>{setphoneIP(e.target.value)}}/>
                 </Modal>
             </div>
             <div>
