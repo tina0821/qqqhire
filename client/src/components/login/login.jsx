@@ -25,10 +25,10 @@ const Login = () => {
     }
 
     if (Object.keys(googleuser).length > 0) {
-        const userEmail = googleuser.email;
+        const userEmail = googleuser.email.split("@")[0];
         googlefetch()
         // 登入成功，可以顯示使用者的資訊或執行其他操作
-        localStorage.setItem('userInfo', userEmail);
+        localStorage.setItem('userInfo', JSON.stringify(userEmail));
         alert("登入成功")
         history("/")
         window.location.reload();
