@@ -13,12 +13,10 @@ const Bouble = () => (
       }}
       icon={<CustomerServiceOutlined />}
     >
-      <Link to="/"> 
-        <FloatButton />
-      </Link>
-      <Link to="/other-page"> 
-        <FloatButton icon={<CommentOutlined />} />
-      </Link>
+       {localStorage.getItem("userInfo")?<Link to="/Returnqu"><FloatButton /></Link>:<Link to="/login"><FloatButton /></Link>}
+
+       {localStorage.getItem("userInfo")?<Link to="/Backstage"><FloatButton icon={<CommentOutlined />}/></Link>:<Link to="/login"><FloatButton icon={<CommentOutlined />}/></Link>}
+
     </FloatButton.Group>
   </>
 );

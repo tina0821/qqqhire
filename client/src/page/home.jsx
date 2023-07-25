@@ -7,7 +7,7 @@ import Outdoor from '../components/Home/outdoor/outdoor';
 import Outdoor2 from '../components/Home/outdoor2/outdoor2';
 import Outdoor3 from '../components/Home/outdoor3/outdoor3';
 import Outdoor4 from '../components/Home/outdoor4/outdoor4';
-
+import Bouble from '../components/bouble/bouble';
 
 const Home = () => {
     const [show, setShow] = useState(0);
@@ -30,6 +30,7 @@ const Home = () => {
         <>
             {/* <Navbar2/> */}
             {/* <Navbar/> */}
+            <Bouble/>
             {show === 1 && <Outdoor />}
             {show1 === 1 && (<><Outdoor2 /><Outdoor3 /> <Outdoor4 /></>)}
         </>

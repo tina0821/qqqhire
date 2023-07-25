@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import "./outdoor.css"
 import "./outdoor.scss"
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { HashLink as ScrollLink } from 'react-router-hash-link';
 
 function Outdoor() {
@@ -60,11 +60,11 @@ function Outdoor() {
                     <p className="btn-pClass" id="btn-p" ref={odAmiArrow}>↓</p>
                 </ScrollLink>
 
-                <div className='rqu'>
+                {/* <div className='rqu'>
                     {localStorage.getItem("userInfo") ? (<Link to="/Returnqu">問題回報</Link>) : (<Link to="/login">問題回報</Link>)}
                     <br />
                     {localStorage.getItem("userInfo") ? (<Link to="/Backstage">後台</Link>) : (<Link to="/login">後台</Link>)}
-                </div>
+                </div> */}
                 
             </div>
         </>
