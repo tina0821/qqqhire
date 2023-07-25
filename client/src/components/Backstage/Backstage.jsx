@@ -109,7 +109,7 @@ const Backstage = () => {
         // 傳送更新資料
         setOpenCG(false);
         axios.put(`http://localhost:8000/CGuser?account=${CGDLaccount}`,{name:nameIP},{phoneNumber:phoneIP},{email:emailIP})
-        alert("更新成功")
+        // alert("更新成功")
     };
     const handleCancel = () => {
         // 取消
