@@ -196,8 +196,7 @@ const handleSaveChanges = async (productId) => {
                     </>
                   ) : (
                     <>
-                      <button id='morebtn' onClick={() => handleEdit(productId)}>編輯</button>
-                      <button id='morebtn' onClick={() => handleDelete(productId)}>下架</button>
+                      <button id='morebtn' onClick={() => handleEdit(productId)}>編輯</button> | <button id='morebtn' onClick={() => handleDelete(productId)}>下架</button>
                     </>
                   )}
                 </td>
