@@ -87,7 +87,7 @@ const Returnqu = () => {
 
     const [quWord, setquWord] = useState("");     // 文字
     const [quPhoto, setquPhoto] = useState("");   // 照片
-    const fileImg = useRef(null)                  // 照片
+    const fileImg = useRef("")                  // 照片
     const [checked, setChecked] = useState("");   // 合約
 
     // 取得合約狀態
