@@ -314,6 +314,7 @@ function A_Product_Item() {
           <ButtonCard
             key={productitem[0].productCategoryChild}
             productCategoryChild={productitem[0].productCategoryChild}
+            productId={id}
           />
         </div>
       </>

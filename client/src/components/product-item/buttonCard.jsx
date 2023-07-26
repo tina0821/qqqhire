@@ -12,15 +12,16 @@ import ProductCard from '../product/productCard';
 
 export default function ButtonCard(props) {
   const [products, setProducts] = useState([]);
-  const { productCategoryChild } = props
+  const { productCategoryChild, productId } = props
+
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await axios.get(`http://localhost:8000/api/products/${productCategoryChild}`);
+      const response = await axios.get(`http://localhost:8000/api/productsCategory?param1=${productCategoryChild}&param2=${productId}`);
       const data = response.data;
       setProducts(data);
     };
     fetchProducts();
-  }, [productCategoryChild]);
+  }, [productCategoryChild, productId]);
 
   return (
     <>
