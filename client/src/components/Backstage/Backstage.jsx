@@ -180,9 +180,9 @@ const Backstage = () => {
                         <Column title="會員編號" dataIndex="index" key="index" />
                         <Column title="帳號名稱" dataIndex="account" key="account" />
                     </ColumnGroup>
-                    <Column title="姓名" dataIndex="name" key="name" />
-                    <Column title="信箱" dataIndex="email" key="email" />
-                    <Column title="手機" dataIndex="phoneNumber" key="phoneNumber" />
+                    <Column title="性別" dataIndex="gender" key="gender" />
+                    <Column title="生日" dataIndex="birthday" key="birthday" />
+                    <Column title="身分證字號" dataIndex="identityCard" key="identityCard" />
                     <Column
                         title="操作"
                         key="action"
@@ -254,11 +254,11 @@ const Backstage = () => {
                 >
                     <div style={{ fontSize: '1.5rem' }}>
                     <p style={{ fontSize: '1.5rem' }}>修改完成請按OK送出!</p>
-                    姓名:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="輸入姓名" onChange={(e) => { setnameIP(e.target.value) }} />
+                    性別:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="男生填入1/女生填入2" onChange={(e) => { setnameIP(e.target.value) }} />
                     <br />
-                    信箱:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="輸入信箱" onChange={(e) => { setemailIP(e.target.value) }} />
+                    生日:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="xxxx-xx-xx" onChange={(e) => { setemailIP(e.target.value) }} />
                     <br />
-                    電話:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="輸入電話" onChange={(e) => { setphoneIP(e.target.value) }} />
+                    身分證字號:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="Fxxxxxxxxx" onChange={(e) => { setphoneIP(e.target.value) }} />
                     </div>
 
                 </Modal>

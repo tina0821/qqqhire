@@ -9,8 +9,8 @@ var conn = require('./db');
 
 // 修改會員資料
 router.put('/CGuser', (req, res) => {
-   const sql = "UPDATE userinfo SET name = ?, phoneNumber = ?, email = ? WHERE userinfo.account = ?";
-   conn.query(sql, [req.body.name,req.body.phoneNumber,req.body.email,req.query.account],
+   const sql = "UPDATE userinfo SET gender = ?, birthday = ?, identityCard = ? WHERE userinfo.account = ?";
+   conn.query(sql, [req.body.gender,req.body.birthday,req.body.identityCard,req.query.account],
       (err) => {
          if (err) {
             console.log(err);
