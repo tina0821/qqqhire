@@ -165,8 +165,11 @@ color: red;
 .btnColor{
   background-color: #D1DDDB;
 }
+.btnColor2{
+  background-color: white;
+}
 /* 碰到按鈕 */
-.btnColor:hover{
+.btnColor:hover,.btnColor2:hover{
   background-color: #d1dddb9b ;
   border: 1px solid black;
 }

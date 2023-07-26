@@ -21,7 +21,7 @@ const ChatBar = ({
   return (
     <div
       style={{
-        backgroundColor: "#ACE4DD",
+        backgroundColor: "white",
         height: "100%",
         borderRadius: 4,
       }}
@@ -38,7 +38,7 @@ const ChatBar = ({
               overflow: "hidden",
               width: "95%",
             }}
-            className="cursorPointer p-1 btnColor"
+            className="cursorPointer p-1 btnColor2"
             onClick={async() => {
               socket.off(removeRoom);
               setRoomName(item.room);
