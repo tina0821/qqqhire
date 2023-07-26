@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Googlehayaku from '../google-login/Googlehayaku'
 import AlertBox from '../product-item/AlertBox';
-// import Googlehayaku from '../google-login/Googlehayaku';  //google登入元件
+
 
 import "./login.scss"
 
@@ -90,7 +90,7 @@ const Login = () => {
                     </Carousel>
                 </Col>
                 <Col span={9} id='login-right'>
-                <Googlehayaku/>
+                
                     <p className='logintitle'>登入</p>
                     <Form
                         layout="vertical"
@@ -146,7 +146,7 @@ const Login = () => {
                             <a href='/forget' className="login-form-forgot">忘記密碼</a>
 
                         </Form.Item>
-
+                        <Googlehayaku/><br />
                         <Form.Item>
                             <Button
                                 type="primary"

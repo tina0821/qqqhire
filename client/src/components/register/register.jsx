@@ -5,7 +5,7 @@ import { Form, Input, Button, Steps, Carousel, Col, Row, DatePicker, Select } fr
 import "./register.scss"
 import { Link } from 'react-router-dom';
 import AlertBox from '../product-item/AlertBox';
-
+import Googlehayaku from '../google-login/Googlehayaku';  //google登入元件
 
 const { Step } = Steps;
 
@@ -86,7 +86,7 @@ const Registration = () => {
           const mass = Object.values(err).join('\n')
           // alert(mass)
           setMessenger(mass)
-          
+
           setShowAlert(2)
           setTimeout(() => {
             setShowAlert(0);
@@ -205,6 +205,8 @@ const Registration = () => {
                   下一步
                 </Button>
               </Form.Item>
+              <hr /><br />
+              <Googlehayaku />
             </Form>
 
           )}
@@ -311,8 +313,8 @@ const Registration = () => {
                   註冊
                 </Button>
               </Form.Item>
+            
             </Form>
-
           )}
           {currentStep === 2 && (
             <div>
