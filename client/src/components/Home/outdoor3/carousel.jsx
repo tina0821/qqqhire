@@ -9,19 +9,35 @@ const mySlides = {
 };
 const img = [
   {
-    src: 'http://localhost:8000/img/home/returnImage/beach-g7b0bf9194_1280.jpg',
+    src: 'http://localhost:8000/img/home/returnImage/2/2.jpg',
     alt: 'gg'
   },
   {
-    src: 'http://localhost:8000/img/home/returnImage/beach-g7b0bf9194_1280.jpg',
+    src: 'http://localhost:8000/img/home/returnImage/2/7.jpg',
     alt: 'gg'
   },
   {
-    src: 'http://localhost:8000/img/home/returnImage/beach-g7b0bf9194_1280.jpg',
+    src: 'http://localhost:8000/img/home/returnImage/2/11.jpg',
     alt: 'gg'
   },
   {
-    src: 'http://localhost:8000/img/home/returnImage/beach-g7b0bf9194_1280.jpg',
+    src: 'http://localhost:8000/img/home/returnImage/2/5.jpg',
+    alt: 'gg'
+  },
+  {
+    src: 'http://localhost:8000/img/home/returnImage/2/8.jpg',
+    alt: 'gg'
+  },
+  {
+    src: 'http://localhost:8000/img/home/returnImage/2/1.jpg',
+    alt: 'gg'
+  },
+  {
+    src: 'http://localhost:8000/img/home/returnImage/2/6.jpg',
+    alt: 'gg'
+  },
+  {
+    src: 'http://localhost:8000/img/home/returnImage/2/9.jpg',
     alt: 'gg'
   }
 ]
