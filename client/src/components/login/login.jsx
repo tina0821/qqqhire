@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Input, Col, Row, Carousel } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Googlehayaku from '../google-login/Googlehayaku'
 import AlertBox from '../product-item/AlertBox';
 // import Googlehayaku from '../google-login/Googlehayaku';  //google登入元件
 
@@ -90,7 +90,7 @@ const Login = () => {
                     </Carousel>
                 </Col>
                 <Col span={9} id='login-right'>
-                    <p className='logintitle'>登入</p>
+                    <p className='logintitle'>登入 Login</p>
                     <Form
                         layout="vertical"
                         name="normal_login"
@@ -138,26 +138,29 @@ const Login = () => {
                                 onChange={e => setPassword(e.target.value)} // 更新密码的状态
                             />
                         </Form.Item>
-                        <Form.Item>
-                            <Form.Item name="remember" valuePropName="checked" noStyle>
-                                <Checkbox>記住我</Checkbox>
-                            </Form.Item>
-                            <a href='/forget' className="login-form-forgot">忘記密碼</a>
 
+                        <Form.Item name="remember" valuePropName="checked" noStyle>
+                            <div className='remember'>
+                                <Checkbox>記住我</Checkbox>
+                                <a href='/forget' className="login-form-forgot">忘記密碼嗎?</a>
+                            </div>
                         </Form.Item>
+
 
                         <Form.Item>
                             <Button
                                 type="primary"
                                 htmlType="submit"
                                 className="login-form-button"
-                                style={{ background: "#16778a", color: "#fff", width: "75%", height: "100%" }}
+                                style={{ background: "#16778a", color: "#fff", width: "100%", height: "100%" }}
                             >
                                 登入
                             </Button>
 
-                            或 <a href="/RegistrationForm">註冊</a>
+                        
                         </Form.Item>
+                        <div>快速登入</div><hr /><br />
+                        <Googlehayaku /><br />
                     </Form>
                 </Col>
             </Row>
