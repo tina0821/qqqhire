@@ -33,8 +33,8 @@ const Login = () => {
                     setMessenger("管理者登入");
                     setShowAlert(1);
                     setTimeout(() => {
-                        window.location ="/Backstage"
-                       
+                        window.location = "/Backstage"
+
                         setShowAlert(0);
                     }, 1000);
                 } else {
@@ -49,27 +49,21 @@ const Login = () => {
                         setShowAlert(0);
                     }, 1000)
                 }
-
-
-
-
-
-            } else if (response.status === 401) {
-                console.log('帳號或密碼錯');
-                setMessenger("帳號或密碼錯誤 請重新輸入！")
-                setShowAlert(2)
-                setTimeout(() => { setShowAlert(0); }, 1000)
             }
 
         } catch (error) {
-            setMessenger("帳號或密碼錯誤 請重新輸入！")
-            setShowAlert(3)
-            setTimeout(() => { setShowAlert(0); }, 1000)
-        }
+         
+             if (error.request.status === 401) {
+                setMessenger("帳號或密碼錯誤 請重新輸入！")
+                setShowAlert(2)
+                setTimeout(() => { setShowAlert(0); }, 1000)
+            } else if (error.request.status === 403) {
+                setMessenger("帳號已被停權")
+                setShowAlert(2)
+                setTimeout(() => { setShowAlert(0); }, 1000)
+            }
+          }        
     };
-
-
-    const onChange = () => { };
 
     return (
 

@@ -94,16 +94,19 @@ router.post('/api/register', async (req, res) => {
 
 //登入
 router.post('/api/login', async (req, res) => {
-  const { account, password } = req.body;
+  const { account, password, isDelete } = req.body;
   const query = 'SELECT * FROM userinfo WHERE account = ?';
   coon.query(query, [account], async (err, results) => {
     if (err) {
       console.error('錯誤', err);
       res.status(500).send(' Server ErrorQQ');
     } else if (results.length > 0) {
+      if (results[0].isDelete === 1) {
+        return res.status(403).send('帳號已被停權，如有疑問請聯繫我們');
+      }
+
       const hashedPassword = results[0].password;
       const administrator = account === '3x7Y90';
-
       //bcrypt 
       try {
         const match = await bcrypt.compare(password, hashedPassword);
@@ -117,7 +120,7 @@ router.post('/api/login', async (req, res) => {
             res.status(200).json({ administratorok: false });
           }
         } else {
-                res.status(401).send('nooo');
+          res.status(401).send('nooo');
         }
       } catch (error) {
         console.error('錯誤', error);
