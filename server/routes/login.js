@@ -55,7 +55,7 @@ router.post('/api/register/validate', (req, res) => {
 router.post('/api/register', async (req, res) => {
   const { aldata } = req.body;
   const a = 10;
-console.log(aldata)
+  console.log(aldata)
   try {
     const salt = await bcrypt.genSalt(a);
     const hashedPassword = await bcrypt.hash(aldata.password, salt);
@@ -102,28 +102,34 @@ router.post('/api/login', async (req, res) => {
       res.status(500).send(' Server ErrorQQ');
     } else if (results.length > 0) {
       const hashedPassword = results[0].password;
+      const administrator = account === '3x7Y90';
 
-      // 使用 bcrypt 进行密码验证
+      //bcrypt 
       try {
         const match = await bcrypt.compare(password, hashedPassword);
 
         if (match) {
-          //成功
-          res.status(200).send('okkk');
+          //管理者成功
+          if (administrator) {
+            res.status(200).json({ administratorok: true });
+            //管理者失敗
+          } else {
+            res.status(200).json({ administratorok: false });
+          }
         } else {
-          //失败
-          res.status(401).send('nooo');
+                res.status(401).send('nooo');
         }
       } catch (error) {
         console.error('錯誤', error);
         res.status(500).send('錯誤QQ');
       }
     } else {
-      // 用户不存在
+      // 使用者不存在
       res.status(401).send('nooo');
     }
   });
 });
+
 
 //忘記密碼
 router.post('/api/forgot-password', (req, res) => {

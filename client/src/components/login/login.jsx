@@ -24,16 +24,32 @@ const Login = () => {
             });
 
             if (response.status === 200) {
-                console.log('ok');
-                const userInfo = `${account}`;
-                localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                setMessenger("登入成功")
-                setShowAlert(1)
-                setTimeout(() => {
-                    history("/")
-                    window.location.reload();
-                    setShowAlert(0);
-                }, 1000)
+
+                if (response.data.administratorok) {
+                    // 是管理者帐号
+                    console.log('管理者登入成功！')
+                    const userInfo = `${account}`;
+                    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                    setMessenger("管理者登入");
+                    setShowAlert(1);
+                    setTimeout(() => {
+                        window.location ="/Backstage"
+                       
+                        setShowAlert(0);
+                    }, 1000);
+                } else {
+                    console.log('ok');
+                    const userInfo = `${account}`;
+                    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                    setMessenger("登入成功")
+                    setShowAlert(1)
+                    setTimeout(() => {
+                        history("/")
+                        window.location.reload();
+                        setShowAlert(0);
+                    }, 1000)
+                }
+
 
 
 
@@ -157,7 +173,7 @@ const Login = () => {
                                 登入
                             </Button>
 
-                        
+
                         </Form.Item>
                         <div>快速登入</div><hr /><br />
                         <Googlehayaku /><br />
