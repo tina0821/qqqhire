@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AlertBox from '../product-item/AlertBox';
 
 
 
@@ -8,6 +9,7 @@ const Googlehayaku = () => {
   const history = useNavigate();
 
   const [googleuser, setgoogleuser] = useState([])
+  const [alertshow, setalertshow] = useState(0)
 
 
   const googlefetch = async () => {
@@ -20,19 +22,28 @@ const Googlehayaku = () => {
     await axios.post('http://localhost:8000/api/google-account', { googleuserdata })
   }
 
-  if (Object.keys(googleuser).length > 0) {
-    const userEmail = googleuser.email.split("@")[0];
-    googlefetch()
-    // 登入成功，可以顯示使用者的資訊或執行其他操作
-    localStorage.setItem('userInfo', JSON.stringify(userEmail));
-    alert("登入成功")
-    history("/")
-    window.location.reload();
-    console.log('使用者已登入:', googleuser);
-  } else {
-    // 未登入，可以顯示登入按鈕或執行其他操作
-    console.log('使用者未登入');
-  }
+  useEffect(() => {
+    if (Object.keys(googleuser).length > 0) {
+      console.log(googleuser)
+      const userEmail = googleuser.email.split("@")[0];
+      const googlesub = googleuser.sub
+      googlefetch()
+
+      localStorage.setItem('userInfo', JSON.stringify(userEmail));
+      localStorage.setItem('googleSub', googlesub);
+
+      setalertshow(1)
+      setTimeout(() => {
+        setalertshow(0)
+        // history("/")
+        window.location.href = '/';
+      }, 1500)
+
+    } else {
+      console.log('使用者未登入');
+    }
+  }, [googleuser])
+
 
   useEffect(() => {
 
@@ -61,12 +72,17 @@ const Googlehayaku = () => {
 
 
 
-
+  const obgb = {
+    g: 'google登入成功',
+    b: '1秒後回首頁...'
+  }
+  const mass = Object.values(obgb).join('\n')
 
 
   return (
 
     <>
+      {alertshow === 1 && <AlertBox message={'google登入成功 \n 1秒後回首頁...'} type={'success'} />}
       <div id="g_id_onload"
         data-client_id={"570382147021-8fsv658iibb1p1va1malkt5ppq7ll8v3.apps.googleusercontent.com"}
         data-callback="onGoogleSuccess" // as defined above
