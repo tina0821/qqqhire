@@ -38,7 +38,7 @@ const Registration = () => {
       postApi();
     }
   }, [aldata]);
-
+  // console.log(aldata)
   const handleNext = async (values) => {
     // console.log(values.username);
 
@@ -86,7 +86,7 @@ const Registration = () => {
           const mass = Object.values(err).join('\n')
           // alert(mass)
           setMessenger(mass)
-          
+
           setShowAlert(2)
           setTimeout(() => {
             setShowAlert(0);
@@ -249,7 +249,9 @@ const Registration = () => {
 
                   >
                     <DatePicker style={{ width: '100%' }} />
+
                   </Form.Item>
+
                 </Col>
                 <Col span={12}>
                   <Form.Item

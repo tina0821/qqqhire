@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 //註冊
 //驗證帳號
@@ -57,6 +58,9 @@ router.post('/api/register', async (req, res) => {
   const a = 10;
   console.log(aldata)
   try {
+    const aa = moment(aldata.birthday, 'YYYY-MM-DDTHH:mm:ss.sssZ');
+    const adjustedDate = aa.add(8, 'hours');
+    const formattedDate = adjustedDate.format('YYYY-MM-DD');
     const salt = await bcrypt.genSalt(a);
     const hashedPassword = await bcrypt.hash(aldata.password, salt);
     const sql = `INSERT INTO userinfo (account, password, phoneNumber, identityCard, email, salt, nickname, gender, name, birthday,	profilePictureSrc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
@@ -73,7 +77,7 @@ router.post('/api/register', async (req, res) => {
         aldata.nickname,
         aldata.gender,
         aldata.name,
-        aldata.birthday,
+        formattedDate,
         defaultAvatar
       ],
       (error, results) => {
