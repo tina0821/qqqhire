@@ -28,7 +28,6 @@ router.put('/api/members/account', (req, res) => {
     SET name = ?,
     birthday = ?,
     nickname = ?, 
-    gender = ?,
     identityCard = ?,
     phoneNumber = ?,
     email = ?
@@ -37,7 +36,6 @@ router.put('/api/members/account', (req, res) => {
         updatedData.name,
         updatedData.birthday,
         updatedData.nickname,
-        updatedData.gender,
         updatedData.identityCard,
         updatedData.phoneNumber,
         updatedData.email,

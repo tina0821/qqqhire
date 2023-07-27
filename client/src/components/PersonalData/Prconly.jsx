@@ -71,8 +71,8 @@ const Prconly = ({ account, onClose }) => {
         </Upload>
       </ImgCrop>
       <div className='prconlBtn'>
-        <button onClick={handleConfirm}>確認</button>
         <button onClick={onClose}>取消</button>
+        <button onClick={handleConfirm}>確認</button>
       </div>
     </div>
   );

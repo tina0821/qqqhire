@@ -55,7 +55,7 @@ router.post('/api/register/validate', (req, res) => {
 router.post('/api/register', async (req, res) => {
   const { aldata } = req.body;
   const a = 10;
-
+console.log(aldata)
   try {
     const salt = await bcrypt.genSalt(a);
     const hashedPassword = await bcrypt.hash(aldata.password, salt);

@@ -228,7 +228,6 @@ $main-color: #0b7597;
           border-bottom: 1.5px solid $main-color;
           background-color: #0b749700;
         }
-
         .displaybtn {
           display: flex;
           flex-direction: row-reverse;
@@ -241,11 +240,14 @@ $main-color: #0b7597;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 10px;
-            width: 100px;
-
+            // width: 100px;
+            left: 230px;
+            font-size: $font-xs;
           }
         }
 
+
+        
       }
 
 
