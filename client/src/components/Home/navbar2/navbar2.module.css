@@ -54,17 +54,17 @@
 /* 原始圖片 400*130 */
 .header-logo {
     /* border: 2px solid red; */
-    /* width: 200px; */
-    /* height: 60px; */
+    width: 200px;
+    height: 80px;
     /* padding: 5px; */
     display: flex;
     margin-left: 10px;
+    
 }
 
 .header-logo img { 
 /* border: 2px solid yellow; */
-width: 200px;
-height: 70px;
+height: 100%;
 }
 
 .header-logo a {
