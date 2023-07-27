@@ -84,6 +84,11 @@ $main-color: #0b7597;
           align-items: center;
 
           .membername1 {
+            font-size: $font-small;
+            font-weight: bold;
+          }
+
+          .membername2 {
             font-size: $font-xs;
           }
         }
@@ -95,6 +100,19 @@ $main-color: #0b7597;
         .memberBtn {
           display: flex;
           flex-direction: column
+        }
+
+        button {
+          padding: 10px 20px;
+          background-color: $main-color;
+          color: #ffffff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-top: 10px;
+          width: 150px;
+          font-size: $font-xs;
+
         }
       }
 
@@ -167,8 +185,9 @@ $main-color: #0b7597;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 10px;
-            width: 100px;
+            // width: 100px;
             left: 230px;
+            font-size: $font-xs;
           }
         }
       }
@@ -243,15 +262,5 @@ $main-color: #0b7597;
       }
     }
   }
-  button {
-    padding: 10px 20px;
-    background-color: $main-color;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    width: 100px;
 
-  }
 }
