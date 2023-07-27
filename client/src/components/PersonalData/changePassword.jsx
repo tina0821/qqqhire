@@ -55,7 +55,7 @@ const ChangePassword = ({ onClose, account }) => {
     <div id='passwordout'>
       {showAlert === 1 && <AlertBox message="密碼已修改" type="warning" />}
       {showAlert === 2 && <AlertBox message={message} type="warning" />}
-      <div>修改密碼</div>
+      <div className='ptitle'>修改密碼</div>
       <div className='passwordIn'>
         <label htmlFor='oldPassword'>舊密碼</label>
         <input
@@ -80,8 +80,8 @@ const ChangePassword = ({ onClose, account }) => {
         />
       </div>
       <div className='passwordbtn'>
-        <button onClick={handleConfirmClick}>確認</button>
         <button onClick={onClose}>取消</button>
+        <button onClick={handleConfirmClick}>確認</button>
       </div>
     </div>
   );

@@ -17,11 +17,14 @@ $main-color: #0b7597;
             width: 80%;
         }
     }
-    .logintitle{
+
+    .logintitle {
         font-size: $font-big;
         margin-bottom: 20px;
         color: #0b7597;
         font-weight: bold;
+        display: flex;
+        justify-content: center
     }
 }
 
@@ -39,8 +42,9 @@ $main-color: #0b7597;
     }
 
     #login-right {
-        margin-top: 100px;
+        margin-top: 70px;
     }
+
     .ant-form-item-required {
         font-size: $font-small;
     }
@@ -62,11 +66,35 @@ $main-color: #0b7597;
     .ant-select-selector {
         border: 2px solid #16778a;
     }
-    a{
+
+   
+    Button {
         font-size: $font-xs;
     }
-    Button{
-        font-size: $font-xs;
+  
+
+    .remember {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        a {
+            font-size: 1.2rem;;
+            color: #0b7597;
+            font-weight: bold;
+        }
+        a:hover{
+           color:#abc7d0
+        }
+        span{
+            font-size: 1.2rem;;
+            color: #0b7597;
+            font-weight: bold;
+        }
+        span:hover{
+            color:#abc7d0
+        }
+        
+    
     }
 
 }

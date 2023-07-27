@@ -55,12 +55,12 @@ router.post('/api/register/validate', (req, res) => {
 router.post('/api/register', async (req, res) => {
   const { aldata } = req.body;
   const a = 10;
-
+console.log(aldata)
   try {
     const salt = await bcrypt.genSalt(a);
     const hashedPassword = await bcrypt.hash(aldata.password, salt);
     const sql = `INSERT INTO userinfo (account, password, phoneNumber, identityCard, email, salt, nickname, gender, name, birthday,	profilePictureSrc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
-    const defaultAvatar = 'profilePictureSrc/default.jpg'
+    const defaultAvatar = 'profilePictureSrc/hire.png'
     coon.query(
       sql,
       [
