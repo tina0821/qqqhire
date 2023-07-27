@@ -53,7 +53,7 @@ const ChangePassword = ({ onClose, account }) => {
 
   return (
     <div id='passwordout'>
-      {showAlert === 1 && <AlertBox message="密碼已修改" type="warning" />}
+      {showAlert === 1 && <AlertBox message="密碼已修改" type="error" />}
       {showAlert === 2 && <AlertBox message={message} type="warning" />}
       <div className='ptitle'>修改密碼</div>
       <div className='passwordIn'>
