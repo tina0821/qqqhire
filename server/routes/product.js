@@ -34,7 +34,7 @@ router.post('/api/google-account', (req, res) => {
     identityCard = UUID() ,
     phoneNumber = UUID();`
 
-    
+
     conn.query(ratingsql, [googleuserdata.account, googleuserdata.name, googleuserdata.nickname, googleuserdata.email], (err, data) => {
         err ? console.log('插入失敗') : res.status(200).json(data)
     })
@@ -145,14 +145,15 @@ router.get('/api/productsCategory', (req, res) => {
 router.get('/api/collect/:account', (req, res) => {
     const account = req.params.account
     const sql = `
-    SELECT  p.*,
-        (SELECT im.imageSrc
+    SELECT p.*,
+       (SELECT im.imageSrc
         FROM imagemap im
         WHERE im.productId = f.productId
         LIMIT 1) AS imageSrc
         FROM favorites f
         INNER JOIN product p ON p.productId = f.productId
         WHERE f.account = ?
+        ORDER BY f.createtime DESC;
     `
 
     conn.query(sql, [account], (err, data) => {
