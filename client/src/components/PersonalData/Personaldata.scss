@@ -3,6 +3,7 @@ $font-normal: 2rem;
 $font-small: 1.75rem;
 $font-xs: 1.5rem;
 $main-color: #0b7597;
+$main-color2: #EABA71;
 
 #memberout {
   background-image: url(../../../../server/public/img/wave1.png);
@@ -19,7 +20,13 @@ $main-color: #0b7597;
     justify-content: center;
     font-weight: bold;
     color: $main-color ;
+    text-shadow: -1px -2px 0 #ffffff,
+              1px -1px 0 #ffffff,
+              -1px 1px 0 #ffffff,
+              1px 1px 0 #ffffff;
+    
     margin-bottom: 20px;
+    margin-top: 45px;
   }
 
   .t2 {
