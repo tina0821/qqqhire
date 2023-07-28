@@ -162,7 +162,7 @@ const Backstage = () => {
 
     return (
         <>
-        {account==="abc12345"?(<>
+        {account==="3x7Y90"?(<>
             <div className='BS_BtnStyle'>
                 <Space className='BS_BtnStyle_space'>
                     <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >會員資料</Button>
