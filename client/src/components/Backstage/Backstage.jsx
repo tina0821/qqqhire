@@ -18,7 +18,7 @@ const Backstage = () => {
                 ...user,
                 index: index + 1,
                 key: index,
-                // birthday: user.birthday.split('T')[0] 
+                birthday: user.birthday.split('T')[0] 
             }));
 
             setuser(usersWithIndex)
