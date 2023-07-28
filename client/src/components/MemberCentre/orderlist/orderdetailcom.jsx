@@ -22,6 +22,10 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, productId, handleBac
           buttonComponent = <Cancelbtn tradeitemId={tradeitemId} />;
         }
 
+        // 只取得第一筆商品的 "天數"
+        const firstProduct = products[0];
+        const days = calculateDays(firstProduct.rentStart, firstProduct.rentEnd);
+
         return (
           <div key={account}>
             <div id="trititle">
@@ -31,6 +35,8 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, productId, handleBac
                   {account}
                 </p>
                 <p>訂單編號 {tradeitemId}</p>
+                <p>天數 {days}</p>
+                <p>總金額 {calculateTotalAmount(products)}</p>
               </div>
               {buttonComponent}
             </div>
@@ -43,8 +49,9 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, productId, handleBac
                   {/* <th>歸還日期</th> */}
                   {/* <th>天數</th> */}
                   <th>租金(天)</th>
+                  <th>總租金</th>
                   <th>押金</th>
-                  <th>總金額</th>
+                  <th>商品金額</th>
                 </tr>
               </thead>
               <tbody>
@@ -58,15 +65,16 @@ const OrderDetailCommon = ({ tradeitemId, tradeitems, type, productId, handleBac
                         alt=""
                       />
                     </td>
-                    <td>{limitProductName(item.productName)}</td>
-
+                    <td><Link to={`http://localhost:3000/productItem/${item.productId}`}>{limitProductName(item.productName)}</Link></td>
+                    {/* <td><Link to={`http://localhost:3000/productItem/${item.productId}`}>{item.productId}</Link></td> */}
                     {/* <td>{new Date(item.rentStart).toLocaleDateString()}</td> */}
                     {/* <td>{new Date(item.rentEnd).toLocaleDateString()}</td> */}
                     {/* <td>{calculateDays(item.rentStart, item.rentEnd)}</td> */}
                     <td>{item.rent}</td>
+                    <td>{calculateDays(item.rentStart, item.rentEnd) * item.rent}</td>
                     <td>{item.deposit}</td>
                     <td>{calculateDays(item.rentStart, item.rentEnd) * item.rent + item.deposit}</td>
-                    <td>{state === 3 && showCancelBtn&&(<RatingInput productId={item.productId} />)}</td>
+                    <td>{state === 3 && showCancelBtn && (<RatingInput productId={item.productId} />)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -105,6 +113,16 @@ function calculateDays(rentStart, rentEnd) {
   const timeDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24)); // 计算天数
 
   return timeDiff;
+}
+
+// 輔助函數：計算總金額
+function calculateTotalAmount(products) {
+  let totalAmount = 0;
+  products.forEach((item) => {
+    totalAmount += calculateDays(item.rentStart, item.rentEnd) * item.rent + item.deposit;
+  });
+
+  return totalAmount;
 }
 
 export default OrderDetailCommon;

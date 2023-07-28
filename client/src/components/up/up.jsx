@@ -92,13 +92,15 @@ const Up = ({ setdata }) => {
     };
 
   return (
+    <div id='fastout'>
+    <h1 class="psg-title">【 快速上架 】</h1>
     <Form
       name="productForm"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 14 }}
-      id='fastout'
+      className="product-form container"
     >
       <Form.Item
         label="商品名稱"
@@ -137,7 +139,7 @@ const Up = ({ setdata }) => {
           {fileList.length > 0 ? (
             <img src={URL.createObjectURL(fileList[0].originFileObj)} alt="preview" style={{ maxHeight: '200px' }} />
           ) : (
-            <Button>點擊上傳</Button>
+            <Button>上傳</Button>
           )}
         </Upload>
       </Form.Item>
@@ -145,6 +147,7 @@ const Up = ({ setdata }) => {
         label="商品分類"
         name="category"
         rules={[{ required: true, message: '請選擇商品分類' }]}
+        className="category-form-item"
       >
         <Cascader
           options={dataitem}
@@ -152,6 +155,13 @@ const Up = ({ setdata }) => {
           placeholder="請選擇商品分類"
           fieldNames={{ children: "subOptions", value: "value", label: "label" }}
         />
+      </Form.Item>
+      <Form.Item
+        label="配件(非必填)"
+        name="accessory"
+        rules={[{ required: true, message: '輸入配件名稱(非必填)' }]}
+      >
+        <Input />
       </Form.Item>
       <Form.Item
         label="地區"
@@ -163,6 +173,7 @@ const Up = ({ setdata }) => {
           onChange={onChange}
           placeholder="請選擇地區"
           fieldNames={{ children: "AreaList", label: "Name", value: "Name" }}
+          inputStyle={{ fontSize: '80px'}}
         />
       </Form.Item>
       <Form.Item
@@ -175,11 +186,11 @@ const Up = ({ setdata }) => {
           placeholder="請輸入商品描述，限300字內"
         />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
+      <div className="uploadimg" wrapperCol={{ offset: 6, span: 14 }}>
         <Button type="primary" htmlType="submit">
-          提交
+          上架
         </Button>
-      </Form.Item>
+      </div>
       <Modal
         visible={showModal}
         onCancel={() => setShowModal(false)}
@@ -190,6 +201,7 @@ const Up = ({ setdata }) => {
         上架成功!
       </Modal>
     </Form>
+    </div>
   );
 };
 export default Up;

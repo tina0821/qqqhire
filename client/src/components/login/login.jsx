@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Googlehayaku from '../google-login/Googlehayaku'
 import AlertBox from '../product-item/AlertBox';
+
 // import Googlehayaku from '../google-login/Googlehayaku';  //google登入元件
 
 import "./login.scss"
@@ -26,7 +27,7 @@ const Login = () => {
             if (response.status === 200) {
 
                 if (response.data.administratorok) {
-                    // 是管理者帐号
+                    // 管理者
                     console.log('管理者登入成功！')
                     const userInfo = `${account}`;
                     localStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -52,8 +53,8 @@ const Login = () => {
             }
 
         } catch (error) {
-         
-             if (error.request.status === 401) {
+
+            if (error.request.status === 401) {
                 setMessenger("帳號或密碼錯誤 請重新輸入！")
                 setShowAlert(2)
                 setTimeout(() => { setShowAlert(0); }, 1000)
@@ -62,13 +63,13 @@ const Login = () => {
                 setShowAlert(2)
                 setTimeout(() => { setShowAlert(0); }, 1000)
             }
-          }        
+        }
     };
 
     return (
 
         <div id='loginout' >
-
+        
             {showAlert === 1 && <AlertBox message={messenger} type="success" />}
             {showAlert === 2 && <AlertBox message={messenger} type="warning" />}
             {showAlert === 3 && <AlertBox message={messenger} type="warning" />}
@@ -100,7 +101,7 @@ const Login = () => {
                     </Carousel>
                 </Col>
                 <Col span={9} id='login-right'>
-                    <p className='logintitle'>登入 Login</p>
+                    <p className='logintitle'>登入</p>
                     <Form
                         layout="vertical"
                         name="normal_login"

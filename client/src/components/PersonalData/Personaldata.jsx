@@ -33,7 +33,11 @@ const Personal = () => {
     const fetchData = async () => {
 
       const response = await axios.get(`http://localhost:8000/api/members/${name, isLoggedIn}`);
-      // console.log(name);
+      const birthdayDate = new Date(response.data[0].birthday);
+      birthdayDate.setHours(birthdayDate.getHours() + 8);
+      setBirthday(birthdayDate.toISOString().substring(0, 10));
+
+
       console.log(response.data[0]);
       setAccount(response.data[0].account)
       setName(response.data[0].name)
@@ -42,7 +46,6 @@ const Personal = () => {
       setGender((response.data[0].gender === '1' ? '男' : '女'))
       setNickname(response.data[0].nickname)
       setPhoneNumber(response.data[0].phoneNumber)
-      setBirthday(response.data[0].birthday.substring(0, 10))
       setProfilePictureSrc(response.data[0].profilePictureSrc)
 
 

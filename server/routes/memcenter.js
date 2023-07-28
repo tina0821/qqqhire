@@ -94,18 +94,18 @@ router.post('/api/fastup/:account', function (req, res) {
   // 進行了解構賦值的操作，將 formData 物件中的特定屬性拆解成獨立的變數
   // 將前端發送的請求中獲取的表單資料的特定屬性提取出來
   const {
-    productName, rent, deposit, user, productCategoryChild,
+    productName, rent, deposit, user, productCategoryChild, accessory,
     cityCounty, area, productDetail
   } = formData;
   // Insert data into "product" table
   const proInsert = `
-    INSERT INTO product (productName, rent, deposit, productAccount, productCategoryChild, cityCounty, area, productDetail)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO product (productName, rent, deposit, productAccount, productCategoryChild, accessory, cityCounty, area, productDetail)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
   coon.query(
     proInsert,
     [
-      productName, rent, deposit, user, productCategoryChild,
+      productName, rent, deposit, user, productCategoryChild, accessory,
       cityCounty, area, productDetail
     ],
     function (error, productResults) {
@@ -164,7 +164,7 @@ router.get("/api/myorder/:account", function (req, res) {
 router.get('/api/myrent/:productAccount', function (req, res) {
   const productAccount = req.params.productAccount;
   const query = `
-    SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.rent, p.deposit, i.imageSrc
+    SELECT t.tradeitemId, t.account, t.productAccount, t.state, m.rentStart, m.rentEnd, p.productName, p.productId, p.rent, p.deposit, i.imageSrc
     FROM tradeitem AS t
     INNER JOIN tradeitemmap AS m ON t.tradeitemId = m.tradeitemId
     INNER JOIN product AS p ON m.productId = p.productId
