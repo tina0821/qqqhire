@@ -129,7 +129,9 @@ const Returnqu = () => {
 
         const formData = new FormData();
         formData.append('text', quWord);
-        formData.append('image', fileImg.current.files[0]);
+        if(fileImg.current){
+            formData.append('image', fileImg.current.files[0]);
+        }
         formData.append('account', account);
         formData.append('email', email);
 

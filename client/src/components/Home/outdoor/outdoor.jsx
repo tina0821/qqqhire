@@ -32,7 +32,7 @@ function Outdoor() {
         <>
             {/* 主頁畫面 */}
             <div className="outdoor">
-                <img src="http://localhost:8000/img/home/homepage/surf1.jpg" alt='海爾戶外' />
+                <img src="http://localhost:8000/img/home/homepage/111.jpg" alt='海爾戶外' />
                 <div className="outdoor-word">
                     <svg width="1000px" height="" viewBox="0 0 900 400">
                         <text
