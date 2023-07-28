@@ -41,12 +41,12 @@ function Outdoor() {
                             stroke="#fff"
                             x="0"
                             y="140"
-                            stroke-width="6"
+                            stroke-width="8"
                             font-size="120"
                             font-family="'Raleway', sans-serif"
                             font-weight="800">
                             <tspan x="0" dy="0" font-size="120">Hire Outdoor</tspan>
-                            <tspan x="10" dy="1.3em" font-size="50">海爾戶外</tspan>
+                            <tspan x="20" dy="1.3em" font-size="50">海爾戶外</tspan>
                         </text>
                         {/* <path class="underline" data-name="Path 1"
                             d="M107,318.31...省略"
