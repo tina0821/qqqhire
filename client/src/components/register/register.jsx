@@ -38,7 +38,7 @@ const Registration = () => {
       postApi();
     }
   }, [aldata]);
-
+  // console.log(aldata)
   const handleNext = async (values) => {
     // console.log(values.username);
 
@@ -86,7 +86,7 @@ const Registration = () => {
           const mass = Object.values(err).join('\n')
           // alert(mass)
           setMessenger(mass)
-          
+
           setShowAlert(2)
           setTimeout(() => {
             setShowAlert(0);
@@ -134,7 +134,7 @@ const Registration = () => {
         </Col>
 
         <Col span={9} >
-          <div className='reginertitle'>會員註冊</div>
+          <div className='reginertitle'>註冊</div>
           <Steps current={currentStep} className='col-10'
             style={{ paddingLeft: '30px' }}>
             <Step title="帳號密碼" />
@@ -249,7 +249,9 @@ const Registration = () => {
 
                   >
                     <DatePicker style={{ width: '100%' }} />
+
                   </Form.Item>
+
                 </Col>
                 <Col span={12}>
                   <Form.Item

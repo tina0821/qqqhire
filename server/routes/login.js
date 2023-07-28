@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 //註冊
 //驗證帳號
@@ -55,12 +56,15 @@ router.post('/api/register/validate', (req, res) => {
 router.post('/api/register', async (req, res) => {
   const { aldata } = req.body;
   const a = 10;
-
+  console.log(aldata)
   try {
+    const aa = moment(aldata.birthday, 'YYYY-MM-DDTHH:mm:ss.sssZ');
+    const adjustedDate = aa.add(8, 'hours');
+    const formattedDate = adjustedDate.format('YYYY-MM-DD');
     const salt = await bcrypt.genSalt(a);
     const hashedPassword = await bcrypt.hash(aldata.password, salt);
     const sql = `INSERT INTO userinfo (account, password, phoneNumber, identityCard, email, salt, nickname, gender, name, birthday,	profilePictureSrc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
-    const defaultAvatar = 'profilePictureSrc/default.jpg'
+    const defaultAvatar = 'profilePictureSrc/hire.png'
     coon.query(
       sql,
       [
@@ -73,7 +77,7 @@ router.post('/api/register', async (req, res) => {
         aldata.nickname,
         aldata.gender,
         aldata.name,
-        aldata.birthday,
+        formattedDate,
         defaultAvatar
       ],
       (error, results) => {
@@ -94,24 +98,33 @@ router.post('/api/register', async (req, res) => {
 
 //登入
 router.post('/api/login', async (req, res) => {
-  const { account, password } = req.body;
+  const { account, password, isDelete } = req.body;
   const query = 'SELECT * FROM userinfo WHERE account = ?';
   coon.query(query, [account], async (err, results) => {
     if (err) {
       console.error('錯誤', err);
       res.status(500).send(' Server ErrorQQ');
     } else if (results.length > 0) {
-      const hashedPassword = results[0].password;
+      if (results[0].isDelete === 1) {
+        console.log(results);
+        return res.status(403).send('帳號已被停權，如有疑問請聯繫我們');
+      }
 
-      // 使用 bcrypt 进行密码验证
+      const hashedPassword = results[0].password;
+      const administrator = account === '3x7Y90';
+      //bcrypt 
       try {
         const match = await bcrypt.compare(password, hashedPassword);
 
         if (match) {
-          //成功
-          res.status(200).send('okkk');
+          //管理者成功
+          if (administrator) {
+            res.status(200).json({ administratorok: true });
+            //管理者失敗
+          } else {
+            res.status(200).json({ administratorok: false });
+          }
         } else {
-          //失败
           res.status(401).send('nooo');
         }
       } catch (error) {
@@ -119,11 +132,12 @@ router.post('/api/login', async (req, res) => {
         res.status(500).send('錯誤QQ');
       }
     } else {
-      // 用户不存在
+      // 使用者不存在
       res.status(401).send('nooo');
     }
   });
 });
+
 
 //忘記密碼
 router.post('/api/forgot-password', (req, res) => {

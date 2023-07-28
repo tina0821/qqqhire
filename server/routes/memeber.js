@@ -26,18 +26,14 @@ router.put('/api/members/account', (req, res) => {
 
     const update = `UPDATE userinfo 
     SET name = ?,
-    birthday = ?,
     nickname = ?, 
-    gender = ?,
     identityCard = ?,
     phoneNumber = ?,
     email = ?
     WHERE account = ?`;
     coon.query(update, [
         updatedData.name,
-        updatedData.birthday,
         updatedData.nickname,
-        updatedData.gender,
         updatedData.identityCard,
         updatedData.phoneNumber,
         updatedData.email,

@@ -17,7 +17,8 @@ const Backstage = () => {
             const usersWithIndex = user.map((user, index) => ({
                 ...user,
                 index: index + 1,
-                key: index
+                key: index,
+                birthday: user.birthday.split('T')[0] 
             }));
 
             setuser(usersWithIndex)
@@ -25,6 +26,21 @@ const Backstage = () => {
         userApi();
     }, [])
     console.log(user)
+
+
+    if(user){
+        const aaa = user.map((users) => {
+            return {
+              birthday: users.birthday,
+              account: users.account
+            };
+          });
+        console.log(aaa)
+    }
+
+    
+
+    
 
 
     // ========================================================================

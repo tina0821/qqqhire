@@ -29,11 +29,15 @@ const Personal = () => {
   const isLoggedIn = localStorage.getItem('userInfo').slice(1, -1);
 
   useEffect(() => {
-    
+
     const fetchData = async () => {
 
       const response = await axios.get(`http://localhost:8000/api/members/${name, isLoggedIn}`);
-      // console.log(name);
+      const birthdayDate = new Date(response.data[0].birthday);
+      birthdayDate.setHours(birthdayDate.getHours() + 8);
+      setBirthday(birthdayDate.toISOString().substring(0, 10));
+
+
       console.log(response.data[0]);
       setAccount(response.data[0].account)
       setName(response.data[0].name)
@@ -42,7 +46,6 @@ const Personal = () => {
       setGender((response.data[0].gender === '1' ? '男' : '女'))
       setNickname(response.data[0].nickname)
       setPhoneNumber(response.data[0].phoneNumber)
-      setBirthday(response.data[0].birthday.substring(0, 10))
       setProfilePictureSrc(response.data[0].profilePictureSrc)
 
 
@@ -120,7 +123,7 @@ const Personal = () => {
   }
   return (
     <div id='memberout'>
-      {showAlert === 1 && <AlertBox message="資訊已修改" type="warning" />}
+      {showAlert === 1 && <AlertBox message="資訊已修改" type="error" />}
       <div className='t1' >|會員中心|</div>
       <div className='t2' >個人資料</div>
       <div className='member'>
@@ -138,7 +141,7 @@ const Personal = () => {
                   </div>
                 </div>
                 <div className='memberBtn'>
-                  <button onClick={() => changeimg()}>更改</button>
+                  <button onClick={() => changeimg()}>修改頭像</button>
                   {showAlertprc && <Prconly account={account} onClose={closePrconly} />}
                   <button onClick={() => changePassword()}>修改密碼</button>
                   {showChange && <ChangePassword account={account} onClose={closechange} />}
@@ -211,7 +214,7 @@ const Personal = () => {
                       <legend>基本資料</legend>
                       {/* Form 2 data */}
                       <div className='displaybtn'>
-                        <button onClick={handleEditClick2}>修改</button>
+                        <button onClick={handleEditClick2}>編輯資料</button>
                       </div>
                       <div>姓名： {name}</div>
                       <div>暱稱： {nickname}</div>

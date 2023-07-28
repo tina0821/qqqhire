@@ -1,7 +1,9 @@
 
 $stroke-width: 5px;
 
-
+html{
+  scroll-behavior: smooth;
+}
 .logo{
   background-color: black;
 }

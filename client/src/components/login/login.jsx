@@ -3,8 +3,9 @@ import { Button, Checkbox, Form, Input, Col, Row, Carousel } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Googlehayaku from '../google-login/Googlehayaku'
 import AlertBox from '../product-item/AlertBox';
+
 // import Googlehayaku from '../google-login/Googlehayaku';  //google登入元件
 
 import "./login.scss"
@@ -24,41 +25,51 @@ const Login = () => {
             });
 
             if (response.status === 200) {
-                console.log('ok');
-                const userInfo = `${account}`;
-                localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                setMessenger("登入成功")
-                setShowAlert(1)
-                setTimeout(() => {
-                    history("/")
-                    window.location.reload();
-                    setShowAlert(0);
-                }, 1000)
 
+                if (response.data.administratorok) {
+                    // 管理者
+                    console.log('管理者登入成功！')
+                    const userInfo = `${account}`;
+                    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                    setMessenger("管理者登入");
+                    setShowAlert(1);
+                    setTimeout(() => {
+                        window.location = "/Backstage"
 
-
-
-            } else if (response.status === 401) {
-                console.log('帳號或密碼錯');
-                setMessenger("帳號或密碼錯誤 請重新輸入！")
-                setShowAlert(2)
-                setTimeout(() => { setShowAlert(0); }, 1000)
+                        setShowAlert(0);
+                    }, 1000);
+                } else {
+                    console.log('ok');
+                    const userInfo = `${account}`;
+                    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                    setMessenger("登入成功")
+                    setShowAlert(1)
+                    setTimeout(() => {
+                        history("/")
+                        window.location.reload();
+                        setShowAlert(0);
+                    }, 1000)
+                }
             }
 
         } catch (error) {
-            setMessenger("帳號或密碼錯誤 請重新輸入！")
-            setShowAlert(3)
-            setTimeout(() => { setShowAlert(0); }, 1000)
+
+            if (error.request.status === 401) {
+                setMessenger("帳號或密碼錯誤 請重新輸入！")
+                setShowAlert(2)
+                setTimeout(() => { setShowAlert(0); }, 1000)
+            } else if (error.request.status === 403) {
+                setMessenger("帳號已被停權")
+                setShowAlert(2)
+                setTimeout(() => { setShowAlert(0); }, 1000)
+            }
         }
     };
-
-
-    const onChange = () => { };
 
     return (
 
         <div id='loginout' >
-
+        
             {showAlert === 1 && <AlertBox message={messenger} type="success" />}
             {showAlert === 2 && <AlertBox message={messenger} type="warning" />}
             {showAlert === 3 && <AlertBox message={messenger} type="warning" />}
@@ -138,26 +149,29 @@ const Login = () => {
                                 onChange={e => setPassword(e.target.value)} // 更新密码的状态
                             />
                         </Form.Item>
-                        <Form.Item>
-                            <Form.Item name="remember" valuePropName="checked" noStyle>
-                                <Checkbox>記住我</Checkbox>
-                            </Form.Item>
-                            <a href='/forget' className="login-form-forgot">忘記密碼</a>
 
+                        <Form.Item name="remember" valuePropName="checked" noStyle>
+                            <div className='remember'>
+                                <Checkbox>記住我</Checkbox>
+                                <a href='/forget' className="login-form-forgot">忘記密碼嗎?</a>
+                            </div>
                         </Form.Item>
+
 
                         <Form.Item>
                             <Button
                                 type="primary"
                                 htmlType="submit"
                                 className="login-form-button"
-                                style={{ background: "#16778a", color: "#fff", width: "75%", height: "100%" }}
+                                style={{ background: "#16778a", color: "#fff", width: "100%", height: "100%" }}
                             >
                                 登入
                             </Button>
 
-                            或 <a href="/RegistrationForm">註冊</a>
+
                         </Form.Item>
+                        <div>快速登入</div><hr /><br />
+                        <Googlehayaku /><br />
                     </Form>
                 </Col>
             </Row>

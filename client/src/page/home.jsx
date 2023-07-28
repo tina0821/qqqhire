@@ -7,7 +7,7 @@ import Outdoor from '../components/Home/outdoor/outdoor';
 import Outdoor2 from '../components/Home/outdoor2/outdoor2';
 import Outdoor3 from '../components/Home/outdoor3/outdoor3';
 import Outdoor4 from '../components/Home/outdoor4/outdoor4';
-
+import TutorialGuide from '../components/login/TutorialGuide';
 
 const Home = () => {
     const [show, setShow] = useState(0);
@@ -28,6 +28,7 @@ const Home = () => {
 
     return (
         <>
+            <TutorialGuide />
             {/* <Navbar2/> */}
             {/* <Navbar/> */}
             {show === 1 && <Outdoor />}
