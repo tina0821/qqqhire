@@ -38,7 +38,6 @@ import Cart from "./components/cart/index";
 import Aboutus from "./page/aboutus";
 import Order from "./page/order";
 import Cmmgmt from "./page/cmmgmt";
-
 import NotFound from "./page/NotFound";
 
 const App = () => {
