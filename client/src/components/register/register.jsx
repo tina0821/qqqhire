@@ -134,7 +134,7 @@ const Registration = () => {
         </Col>
 
         <Col span={9} >
-          <div className='reginertitle'>註冊 Create Account</div>
+          <div className='reginertitle'>註冊</div>
           <Steps current={currentStep} className='col-10'
             style={{ paddingLeft: '30px' }}>
             <Step title="帳號密碼" />
