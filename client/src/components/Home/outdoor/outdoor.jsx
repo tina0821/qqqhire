@@ -44,13 +44,13 @@ function Outdoor() {
                             font-size="120"
                             font-family="'Raleway', sans-serif"
                             font-weight="800">
-                            <tspan x="0" dy="0">Hire outdoor</tspan>
-                            <tspan x="0" dy="1.2em" font-size="80">海爾戶外</tspan>
+                            <tspan x="0" dy="0" font-size="120">Hire Outdoor</tspan>
+                            <tspan x="10" dy="1.3em" font-size="50">海爾戶外</tspan>
                         </text>
-                        <path class="underline" data-name="Path 1"
+                        {/* <path class="underline" data-name="Path 1"
                             d="M107,318.31...省略"
                             transform="translate(60 -188.421)"
-                            fill="none" stroke="#00BFFF" stroke-width="3" />
+                            fill="none" stroke="#00BFFF" stroke-width="3" /> */}
                     </svg>
                 </div>
 

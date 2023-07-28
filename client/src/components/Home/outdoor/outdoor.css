@@ -17,19 +17,19 @@
 .outdoor-word {
     /* border: 2px red solid; */
     position: absolute;
-    top: 35%;
-    left: 4%;
+    top: 25%;
+    left: 12%;
 }
 
 .outdoor-word :first-child {
-    font-size: 4vw;
+    /* font-size: vw; */
     color: rgba(252, 252, 252, 0.779);
     margin-bottom: -0.5rem;
 
 }
 
 .outdoor-word :last-child {
-    font-size: 2vw;
+    /* font-size: 2vw; */
     color: aliceblue;
     margin-top: -0.5rem;
 }
