@@ -159,7 +159,6 @@ const Up = ({ setdata }) => {
       <Form.Item
         label="配件(非必填)"
         name="accessory"
-        rules={[{ required: true, message: '輸入配件名稱(非必填)' }]}
       >
         <Input />
       </Form.Item>
