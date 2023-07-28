@@ -111,7 +111,7 @@ router.post('/api/login', async (req, res) => {
       }
 
       const hashedPassword = results[0].password;
-      const administrator = account === '';
+      const administrator = account === 'qaz12345';
       //bcrypt 
       try {
         const match = await bcrypt.compare(password, hashedPassword);
