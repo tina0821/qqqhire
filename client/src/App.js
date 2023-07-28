@@ -38,16 +38,21 @@ import Cart from "./components/cart/index";
 import Aboutus from "./page/aboutus";
 import Order from "./page/order";
 import Cmmgmt from "./page/cmmgmt";
-
 import NotFound from "./page/NotFound";
 
 const App = () => {
   const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShow(true);
-    }, 1000);
+
+      setTimeout(() => {
+        setShow1(true);
+      },4000)
+
+    },50);
 
     return () => {
       clearTimeout(timer);
@@ -85,7 +90,7 @@ const App = () => {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {show && <Footer />}
+        {show1 && <Footer />}
         {/* <Footer /> */}
       </Router>
     </>

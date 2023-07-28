@@ -32,7 +32,8 @@ function Outdoor() {
         <>
             {/* 主頁畫面 */}
             <div className="outdoor">
-                <img src="http://localhost:8000/img/home/homepage/surf1.jpg" alt='海爾戶外' />
+                <img src="http://localhost:8000/img/home/homepage/111.jpg" alt='海爾戶外' />
+                <img src="http://localhost:8000/img/home/homepage/222.png" alt='海爾戶外' />
                 <div className="outdoor-word">
                     <svg width="1000px" height="" viewBox="0 0 900 400">
                         <text
@@ -40,17 +41,17 @@ function Outdoor() {
                             stroke="#fff"
                             x="0"
                             y="140"
-                            stroke-width="6"
+                            stroke-width="8"
                             font-size="120"
                             font-family="'Raleway', sans-serif"
                             font-weight="800">
-                            <tspan x="0" dy="0">Hire outdoor</tspan>
-                            <tspan x="0" dy="1.2em" font-size="80">海爾戶外</tspan>
+                            <tspan x="0" dy="0" font-size="120">Hire Outdoor</tspan>
+                            <tspan x="20" dy="1.3em" font-size="50">海爾戶外</tspan>
                         </text>
-                        <path class="underline" data-name="Path 1"
+                        {/* <path class="underline" data-name="Path 1"
                             d="M107,318.31...省略"
                             transform="translate(60 -188.421)"
-                            fill="none" stroke="#00BFFF" stroke-width="3" />
+                            fill="none" stroke="#00BFFF" stroke-width="3" /> */}
                     </svg>
                 </div>
 
