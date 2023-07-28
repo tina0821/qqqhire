@@ -122,9 +122,9 @@ const Backstage = () => {
         // 傳送更新資料
         setOpenCG(false);
         axios.put(`http://localhost:8000/CGuser?account=${CGDLaccount}`, {
-            name: nameIP,
-            phoneNumber: phoneIP,
-            email: emailIP
+            gender: nameIP,
+            birthday: phoneIP,
+            identityCard: emailIP
         })
         // alert("更新成功")
     };

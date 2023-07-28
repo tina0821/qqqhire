@@ -33,14 +33,14 @@
 
 .outdoor-word :first-child {
     font-size: 10vw;
-    color: rgba(252, 252, 252, 0.779);
+    color: rgba(99, 99, 99, 0.779);
     margin-bottom: -0.5rem;
 
 }
 
 .outdoor-word :last-child {
     font-size: 4vw;
-    color: aliceblue;
+    color: rgb(99, 99, 99);
     margin-top: -0.5rem;
 }
 
