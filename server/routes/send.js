@@ -118,7 +118,7 @@ const imgconfig = multer.diskStorage({
 
 const upload = multer({
    // 1.存照片
-   storage: imgconfig,
+   // storage: imgconfig,
 
    // 2.篩選
    // fileFilter: isImage,

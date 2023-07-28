@@ -87,7 +87,7 @@ const Returnqu = () => {
 
     const [quWord, setquWord] = useState("");     // 文字
     const [quPhoto, setquPhoto] = useState("");   // 照片
-    const fileImg = useRef("")                  // 照片
+    const fileImg = useRef("")                    // 預覽照片
     const [checked, setChecked] = useState("");   // 合約
 
     // 取得合約狀態
@@ -134,6 +134,8 @@ const Returnqu = () => {
         formData.append('email', email);
 
         if (checked === '1') {
+
+            // console.log(fileImg.current.files[0])
 
             // 傳送照片&文字
             const { statusText } = await axios({

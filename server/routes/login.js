@@ -106,6 +106,7 @@ router.post('/api/login', async (req, res) => {
       res.status(500).send(' Server ErrorQQ');
     } else if (results.length > 0) {
       if (results[0].isDelete === 1) {
+        console.log(results);
         return res.status(403).send('帳號已被停權，如有疑問請聯繫我們');
       }
 
