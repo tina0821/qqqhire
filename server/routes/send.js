@@ -257,27 +257,27 @@ router.post('/send', upload.any(), (req, res) => {
    </html>
 
    `,
-        attachments: [
-         {
-            filename: `問題回報照片${req.files[0].filename}`,        // 附件檔案名稱
-            // path: `${req.body.img}`,     // 照片的檔案路徑
-            path: req.files[0].path,        // 照片的檔案路徑
-            cid: "01"
-         },
-      ],
-   };
-
-
-
-   //    attachments: req.files[0] ? [
+   //      attachments: [
    //       {
    //          filename: `問題回報照片${req.files[0].filename}`,        // 附件檔案名稱
    //          // path: `${req.body.img}`,     // 照片的檔案路徑
    //          path: req.files[0].path,        // 照片的檔案路徑
    //          cid: "01"
    //       },
-   //    ] : [],
+   //    ],
    // };
+
+
+
+      attachments: req.files[0] ? [
+         {
+            filename: `問題回報照片${req.files[0].filename}`,        // 附件檔案名稱
+            // path: `${req.body.img}`,     // 照片的檔案路徑
+            path: req.files[0].path,        // 照片的檔案路徑
+            cid: "01"
+         },
+      ] : [],
+   };
 
 
 
