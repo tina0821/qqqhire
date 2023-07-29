@@ -311,11 +311,14 @@ const Backstage = () => {
                     >
                         <div style={{ fontSize: '1.5rem' }}>
                             <p style={{ fontSize: '1.5rem' }}>修改完成請按OK送出!</p>
-                            性別:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="男生填入1/女生填入2" onChange={(e) => { setgender(e.target.value); handleGenderChange(e) }} />
+                            {/* 性別:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="男生填入1/女生填入2" onChange={(e) => { setgender(e.target.value); handleGenderChange(e) }} /> */}
+                            性別:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="男生填入1/女生填入2" onChange={(e) => { setgender(e.target.value) }} />
                             <br />
-                            生日:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="19910711" onChange={(e) => { birthdayNumber(); handleBirthdayChange(e) }} />
+                            {/* 生日:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="19910711" onChange={(e) => { birthdayNumber(); handleBirthdayChange(e) }} /> */}
+                            生日:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="19910711" onChange={birthdayNumber} />
                             <br />
-                            身分證字號:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="Fxxxxxxxxx" onChange={(e) => { setidentityCardIP(e.target.value); handleIdentityCardChange(e) }} />
+                            {/* 身分證字號:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="Fxxxxxxxxx" onChange={(e) => { setidentityCardIP(e.target.value); handleIdentityCardChange(e) }} /> */}
+                            身分證字號:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="Fxxxxxxxxx" onChange={(e) => { setidentityCardIP(e.target.value) }} />
                         </div>
 
                     </Modal>
