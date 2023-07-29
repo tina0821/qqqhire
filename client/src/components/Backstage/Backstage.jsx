@@ -109,12 +109,12 @@ const Backstage = () => {
 
     // 點擊OK=>修改
     const [openCG, setOpenCG] = useState(false);
-    const [nameIP, setnameIP] = useState("")
-    const [phoneIP, setphoneIP] = useState("")
-    const [emailIP, setemailIP] = useState("")
+    const [genderIP, setgender] = useState("")
+    const [birthdayIP, setbirthday] = useState("")
+    const [identityCardIP, setidentityCardIP] = useState("")
 
     // console.log(nameIP)
-    // console.log(phoneIP)
+    console.log(typeof birthdayIP)
     // console.log(emailIP)
 
     // 點擊ok => 更新
@@ -122,9 +122,9 @@ const Backstage = () => {
         // 傳送更新資料
         setOpenCG(false);
         axios.put(`http://localhost:8000/CGuser?account=${CGDLaccount}`, {
-            gender: nameIP,
-            birthday: phoneIP,
-            identityCard: emailIP
+            gender: genderIP,
+            birthday: birthdayIP,   // 2001-09-02T16:00:00.000Z
+            identityCard: identityCardIP,
         })
         // alert("更新成功")
     };
@@ -270,11 +270,11 @@ const Backstage = () => {
                 >
                     <div style={{ fontSize: '1.5rem' }}>
                     <p style={{ fontSize: '1.5rem' }}>修改完成請按OK送出!</p>
-                    性別:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="男生填入1/女生填入2" onChange={(e) => { setnameIP(e.target.value) }} />
+                    性別:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="男生填入1/女生填入2" onChange={(e) => { setgender(e.target.value) }} />
                     <br />
-                    生日:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="xxxx-xx-xx" onChange={(e) => { setemailIP(e.target.value) }} />
+                    生日:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="xxxx-xx-xx" onChange={(e) => { setbirthday(e.target.value ) }} />
                     <br />
-                    身分證字號:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="Fxxxxxxxxx" onChange={(e) => { setphoneIP(e.target.value) }} />
+                    身分證字號:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="Fxxxxxxxxx" onChange={(e) => { setidentityCardIP(e.target.value) }} />
                     </div>
 
                 </Modal>
