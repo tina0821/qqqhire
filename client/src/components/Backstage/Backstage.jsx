@@ -120,37 +120,37 @@ const Backstage = () => {
 
 
 
-    // 會員修改正規表達式
-    const handleGenderChange = (e) => {
-        // 使用正規表達式判斷是否為合法的性別輸入（1 或 2）
-        const genderRegex = /^[12]$/;
-        if (genderRegex.test(e.target.value)) {
-            setgender(e.target.value);
-            console.log("gender YES")
-        }else{
-            console.log("gender NO")
-        }
-    };
-    const handleBirthdayChange = (e) => {
-        // 使用正規表達式判斷是否為合法的生日輸入（8位數字）
-        const birthdayRegex = /^\d{8}$/;
-        if (birthdayRegex.test(e.target.value)) {
-            setbirthday(e.target.value);
-            console.log("birthday YES")
-        }else{
-            console.log("birthday NO")        }
-    };
-    const handleIdentityCardChange = (e) => {
-        // 使用正規表達式判斷是否為合法的身分證字號輸入（F後接 9 個數字）
-        const identityCardRegex = /^[A-Z][12]\d{8}$/;
-        if (identityCardRegex.test(e.target.value)) {
-            setidentityCardIP(e.target.value);
-            console.log("identityCard YES")
+    // // 會員修改正規表達式
+    // const handleGenderChange = (e) => {
+    //     // 使用正規表達式判斷是否為合法的性別輸入（1 或 2）
+    //     const genderRegex = /^[12]$/;
+    //     if (genderRegex.test(e.target.value)) {
+    //         setgender(e.target.value);
+    //         console.log("gender YES")
+    //     }else{
+    //         console.log("gender NO")
+    //     }
+    // };
+    // const handleBirthdayChange = (e) => {
+    //     // 使用正規表達式判斷是否為合法的生日輸入（8位數字）
+    //     const birthdayRegex = /^\d{8}$/;
+    //     if (birthdayRegex.test(e.target.value)) {
+    //         setbirthday(e.target.value);
+    //         console.log("birthday YES")
+    //     }else{
+    //         console.log("birthday NO")        }
+    // };
+    // const handleIdentityCardChange = (e) => {
+    //     // 使用正規表達式判斷是否為合法的身分證字號輸入（F後接 9 個數字）
+    //     const identityCardRegex = /^[A-Z][12]\d{8}$/;
+    //     if (identityCardRegex.test(e.target.value)) {
+    //         setidentityCardIP(e.target.value);
+    //         console.log("identityCard YES")
 
-        }else{
-            console.log("identityCard NO")
-        }
-    };
+    //     }else{
+    //         console.log("identityCard NO")
+    //     }
+    // };
 
 
     //生日天數+1 規避時區問題
