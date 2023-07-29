@@ -18,7 +18,8 @@ const Backstage = () => {
                 ...user,
                 index: index + 1,
                 key: index,
-                birthday: user.birthday.split('T')[0] 
+                birthday: user.birthday.split('T')[0]
+                // birthday: user.birthday,
             }));
 
             setuser(usersWithIndex)
@@ -28,19 +29,19 @@ const Backstage = () => {
     console.log(user)
 
 
-    if(user){
+    if (user) {
         const aaa = user.map((users) => {
             return {
-              birthday: users.birthday,
-              account: users.account
+                birthday: users.birthday,
+                account: users.account
             };
-          });
+        });
         console.log(aaa)
     }
 
-    
 
-    
+
+
 
 
     // ========================================================================
@@ -114,8 +115,51 @@ const Backstage = () => {
     const [identityCardIP, setidentityCardIP] = useState("")
 
     // console.log(nameIP)
-    console.log(typeof birthdayIP)
+    // console.log(typeof birthdayIP)
     // console.log(emailIP)
+
+
+
+    // 會員修改正規表達式
+    const handleGenderChange = (e) => {
+        // 使用正規表達式判斷是否為合法的性別輸入（1 或 2）
+        const genderRegex = /^[12]$/;
+        if (genderRegex.test(e.target.value)) {
+            setgender(e.target.value);
+            console.log("gender YES")
+        }else{
+            console.log("gender NO")
+        }
+    };
+    const handleBirthdayChange = (e) => {
+        // 使用正規表達式判斷是否為合法的生日輸入（8位數字）
+        const birthdayRegex = /^\d{8}$/;
+        if (birthdayRegex.test(e.target.value)) {
+            setbirthday(e.target.value);
+            console.log("birthday YES")
+        }else{
+            console.log("birthday NO")        }
+    };
+    const handleIdentityCardChange = (e) => {
+        // 使用正規表達式判斷是否為合法的身分證字號輸入（F後接 9 個數字）
+        const identityCardRegex = /^[A-Z][12]\d{8}$/;
+        if (identityCardRegex.test(e.target.value)) {
+            setidentityCardIP(e.target.value);
+            console.log("identityCard YES")
+
+        }else{
+            console.log("identityCard NO")
+        }
+    };
+
+
+    //生日天數+1 規避時區問題
+    const birthdayNumber = (e) => {
+        const Numbercg = Number(e.target.value) + 1
+        console.log(Numbercg)
+        setbirthday(Numbercg)
+    }
+
 
     // 點擊ok => 更新
     const handleOk = () => {
@@ -172,52 +216,52 @@ const Backstage = () => {
 
     // ========================================================================
 
-    const account = localStorage.getItem('userInfo').slice(1,-1)
-    
+    const account = localStorage.getItem('userInfo').slice(1, -1)
+
 
     return (
         <>
-        {account==="qaz12345"?(<>
-            <div className='BS_BtnStyle'>
-                <Space className='BS_BtnStyle_space'>
-                    <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >會員資料</Button>
-                    {/* <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >問題回報</Button> */}
-                </Space>
-            </div>
+            {account === "qaz12345" ? (<>
+                <div className='BS_BtnStyle'>
+                    <Space className='BS_BtnStyle_space'>
+                        <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >會員資料</Button>
+                        {/* <Button type="primary" className='BS_BtnStyle_Button' onClick={controlBtn} >問題回報</Button> */}
+                    </Space>
+                </div>
 
 
-            {/* 第一個部分-會員資料 */}
-            {!open && <ConfigProvider
-                // Token全部CSS 
-                theme={{ token: { fontSize: '1.2rem' } }} >
+                {/* 第一個部分-會員資料 */}
+                {!open && <ConfigProvider
+                    // Token全部CSS 
+                    theme={{ token: { fontSize: '1.2rem' } }} >
 
-                <Table dataSource={user} >
-                    <ColumnGroup title="會員資料">
-                        <Column title="會員編號" dataIndex="index" key="index" />
-                        <Column title="帳號名稱" dataIndex="account" key="account" />
-                    </ColumnGroup>
-                    <Column title="性別" dataIndex="gender" key="gender" />
-                    <Column title="生日" dataIndex="birthday" key="birthday" />
-                    <Column title="身分證字號" dataIndex="identityCard" key="identityCard" />
-                    <Column
-                        title="操作"
-                        key="action"
-                        render={(_, record) => (
-                            <Space size="middle">
-                                <button style={{ fontSize: '1.3rem' }} onClick={() => changeData(record.account)}>修改</button>
-                                <button style={{ fontSize: '1.3rem' }} onClick={() => stopData(record.account)}>停權</button>
-                                <button style={{ fontSize: '1.3rem' }} onClick={() => backData(record.account)}>復權</button>
-                            </Space>
-                        )}
-                    />
-                </Table>
+                    <Table dataSource={user} >
+                        <ColumnGroup title="會員資料">
+                            <Column title="會員編號" dataIndex="index" key="index" />
+                            <Column title="帳號名稱" dataIndex="account" key="account" />
+                        </ColumnGroup>
+                        <Column title="性別" dataIndex="gender" key="gender" />
+                        <Column title="生日" dataIndex="birthday" key="birthday" />
+                        <Column title="身分證字號" dataIndex="identityCard" key="identityCard" />
+                        <Column
+                            title="操作"
+                            key="action"
+                            render={(_, record) => (
+                                <Space size="middle">
+                                    <button style={{ fontSize: '1.3rem' }} onClick={() => changeData(record.account)}>修改</button>
+                                    <button style={{ fontSize: '1.3rem' }} onClick={() => stopData(record.account)}>停權</button>
+                                    <button style={{ fontSize: '1.3rem' }} onClick={() => backData(record.account)}>復權</button>
+                                </Space>
+                            )}
+                        />
+                    </Table>
 
-            </ConfigProvider>}
+                </ConfigProvider>}
 
 
 
-            {/* 第一個部分-問題回報 */}
-            {/* {open && <ConfigProvider
+                {/* 第一個部分-問題回報 */}
+                {/* {open && <ConfigProvider
                 // Token全部CSS 
                 theme={{ token: { fontSize: '1.2rem' } }} >
 
@@ -256,52 +300,49 @@ const Backstage = () => {
 
             </ConfigProvider>} */}
 
-            <div>
-                <Modal
-                    title="修改會員資料"
-                    open={openCG}
-                    onOk={handleOk}
-                    onCancel={handleCancel}
+                <div>
+                    <Modal
+                        title="修改會員資料"
+                        open={openCG}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
 
-                // console.log(nameIP)
-                // console.log(phoneIP)
-                // console.log(emailIP)
 
-                >
-                    <div style={{ fontSize: '1.5rem' }}>
-                    <p style={{ fontSize: '1.5rem' }}>修改完成請按OK送出!</p>
-                    性別:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="男生填入1/女生填入2" onChange={(e) => { setgender(e.target.value) }} />
-                    <br />
-                    生日:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="xxxx-xx-xx" onChange={(e) => { setbirthday(e.target.value ) }} />
-                    <br />
-                    身分證字號:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="Fxxxxxxxxx" onChange={(e) => { setidentityCardIP(e.target.value) }} />
-                    </div>
+                    >
+                        <div style={{ fontSize: '1.5rem' }}>
+                            <p style={{ fontSize: '1.5rem' }}>修改完成請按OK送出!</p>
+                            性別:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="男生填入1/女生填入2" onChange={(e) => { setgender(e.target.value); handleGenderChange(e) }} />
+                            <br />
+                            生日:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="19910711" onChange={(e) => { birthdayNumber(); handleBirthdayChange(e) }} />
+                            <br />
+                            身分證字號:<input type="text" style={{ fontSize: '1.3rem' }} placeholder="Fxxxxxxxxx" onChange={(e) => { setidentityCardIP(e.target.value); handleIdentityCardChange(e) }} />
+                        </div>
 
-                </Modal>
-            </div>
-            <div>
-                <Modal
-                    title="是否停權該筆帳號"
-                    open={openDL}
-                    onOk={handleOk2}
-                    onCancel={handleCancel2}
-                >
-                    <p style={{ fontSize: '1.5rem' }}>確定停權嗎?</p>
-                </Modal>
-            </div>
-            <div>
-                <Modal
-                    title="是否恢復該筆帳號"
-                    open={openBK}
-                    onOk={handleOk3}
-                    onCancel={handleCancel3}
-                >
-                    <p style={{ fontSize: '1.5rem' }}>確定復權嗎?</p>
-                </Modal>
-            </div>
-        
-        
-        </>):(<div>你不是管理者 無法進入後台</div>)}
+                    </Modal>
+                </div>
+                <div>
+                    <Modal
+                        title="是否停權該筆帳號"
+                        open={openDL}
+                        onOk={handleOk2}
+                        onCancel={handleCancel2}
+                    >
+                        <p style={{ fontSize: '1.5rem' }}>確定停權嗎?</p>
+                    </Modal>
+                </div>
+                <div>
+                    <Modal
+                        title="是否恢復該筆帳號"
+                        open={openBK}
+                        onOk={handleOk3}
+                        onCancel={handleCancel3}
+                    >
+                        <p style={{ fontSize: '1.5rem' }}>確定復權嗎?</p>
+                    </Modal>
+                </div>
+
+
+            </>) : (<div>你不是管理者 無法進入後台</div>)}
 
         </>
     );
