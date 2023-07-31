@@ -50,7 +50,7 @@ const App = () => {
 
       setTimeout(() => {
         setShow1(true);
-      },4000)
+      },1000)
 
     },50);
 
