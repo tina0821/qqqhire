@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button, Space, Radio, Form, Select, Typography } from 'antd';
+import { Button, Space, Radio, Form, Select, Typography, Checkbox} from 'antd';
 import axios from 'axios';
 import "./returnqu.css";
 
@@ -92,7 +92,8 @@ const Returnqu = () => {
 
     // 取得合約狀態
     const sendChick = (e) => {
-        setChecked(e.target.value);
+        setChecked(e.target.checked);
+        console.log(e.target.checked)
     };
 
     // 取得照片 轉64位元
@@ -137,7 +138,7 @@ const Returnqu = () => {
 
         console.log(typeof fileImg.current)
 
-        if (checked === '1') {
+        if (checked) {
 
             // console.log(fileImg.current.files[0])
 
@@ -285,7 +286,7 @@ const Returnqu = () => {
                     <hr />
 
 
-                    <Radio className='RadioWord' checked={checked} onChange={sendChick} value="1">我已詳細閱讀合約&規範與線上回報相關注意事項內容，並同意遵守所有規定</Radio>
+                    <Checkbox className='RadioWord' Checked={checked} onClick={sendChick} >我已詳細閱讀合約&規範與線上回報相關注意事項內容，並同意遵守所有規定</Checkbox>
                     <Space wrap size={"large"} className='btnDiv'>
                         <Button type="primary" className='btnWord' onClick={controlBtn}>上一步</Button>
                         {/* SendMessage() controlSendBtn() */}
