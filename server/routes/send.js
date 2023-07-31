@@ -118,7 +118,7 @@ const imgconfig = multer.diskStorage({
 
 const upload = multer({
    // 1.存照片
-   // storage: imgconfig,
+   storage: imgconfig,
 
    // 2.篩選
    // fileFilter: isImage,
@@ -162,7 +162,7 @@ const transporter = nodemailer.createTransport({
 
 router.post('/send', upload.any(), (req, res) => {
 
-   // console.log(req.files[0]);
+   console.log(req.files[0]);
    // const {file} = req.file;
    // console.log(file);
 
@@ -257,6 +257,18 @@ router.post('/send', upload.any(), (req, res) => {
    </html>
 
    `,
+   //      attachments: [
+   //       {
+   //          filename: `問題回報照片${req.files[0].filename}`,        // 附件檔案名稱
+   //          // path: `${req.body.img}`,     // 照片的檔案路徑
+   //          path: req.files[0].path,        // 照片的檔案路徑
+   //          cid: "01"
+   //       },
+   //    ],
+   // };
+
+
+
       attachments: req.files[0] ? [
          {
             filename: `問題回報照片${req.files[0].filename}`,        // 附件檔案名稱
@@ -266,6 +278,8 @@ router.post('/send', upload.any(), (req, res) => {
          },
       ] : [],
    };
+
+
 
    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
